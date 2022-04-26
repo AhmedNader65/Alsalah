@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_azkar"
-        android:name="com.crazyidea.alsalah.ui.dashboard.DashboardFragment"
+        android:name="com.crazyidea.alsalah.ui.azkar.AzkarFragment"
         android:label="@string/title_azkar"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_azkar" />
 
     <fragment
         android:id="@+id/navigation_notifications"
