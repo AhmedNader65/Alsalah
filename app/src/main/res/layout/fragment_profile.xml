@@ -7,16 +7,295 @@
     tools:context=".ui.profile.ProfileFragment">
 
     <TextView
-        android:id="@+id/text_notifications"
+        android:id="@+id/title"
+        style="@style/boldText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:background="@color/text_green_color"
+        android:paddingBottom="@dimen/_8sdp"
+        android:text="Ahmed Nader"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/profile_img_container"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        app:cardBackgroundColor="@color/text_green_color"
+        app:cardCornerRadius="@dimen/_30sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:strokeColor="@color/text_green_color"
+        app:strokeWidth="1dp">
+
+        <ImageView
+            android:id="@+id/profile_img"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_gravity="center" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/profile_name"
+        style="@style/boldText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Ahmed Nader"
+        android:textColor="@color/text_green_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_img_container" />
+
+    <TextView
+        android:id="@+id/profile_email"
+        style="@style/lightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ahmed.nader1994@gmail.com"
+        android:textColor="@color/text_green_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_name" />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/text_green_color"
+        app:layout_constraintEnd_toEndOf="@+id/notifications_switch"
+        app:layout_constraintStart_toStartOf="@id/notifications_switch_tv"
+        app:layout_constraintTop_toBottomOf="@id/profile_email"/>
+
+    <ImageView
+        android:id="@+id/notifications_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:src="@drawable/ic_bell"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+    <TextView
+        android:id="@+id/notifications_switch_tv"
+        style="@style/mediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:text="الاشعارات"
+        app:layout_constraintStart_toEndOf="@id/notifications_icon"
+        app:layout_constraintTop_toTopOf="@id/notifications_icon" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/notifications_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/notifications_icon" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/text_green_color"
+        app:layout_constraintEnd_toEndOf="@+id/notifications_switch"
+        app:layout_constraintStart_toStartOf="@id/notifications_switch_tv"
+        app:layout_constraintTop_toBottomOf="@id/notifications_switch"/>
+
+    <ImageView
+        android:id="@+id/theme_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:src="@drawable/ic_theme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+    <TextView
+        android:id="@+id/theme_tv"
+        style="@style/mediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:text="الثيم"
+        app:layout_constraintStart_toEndOf="@id/theme_icon"
+        app:layout_constraintTop_toTopOf="@id/theme_icon" />
+
+    <TextView
+        android:id="@+id/night_mode_tv"
+        style="@style/mediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:text="الوضع الليلي"
+        android:textColor="@color/text_green_color"
+        app:layout_constraintStart_toEndOf="@id/theme_icon"
+        app:layout_constraintTop_toBottomOf="@id/theme_icon" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/night_mode_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/night_mode_tv" />
+
+    <View
+        android:id="@+id/line3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/text_green_color"
+        app:layout_constraintEnd_toEndOf="@+id/night_mode_switch"
+        app:layout_constraintStart_toStartOf="@id/theme_tv"
+        app:layout_constraintTop_toBottomOf="@id/night_mode_switch" />
+
+    <ImageView
+        android:id="@+id/second_color_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:src="@drawable/ic_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line3" />
+
+    <TextView
+        android:id="@+id/color_tv"
+        style="@style/mediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:text="اللون الثانوي"
+        app:layout_constraintStart_toEndOf="@id/second_color_icon"
+        app:layout_constraintTop_toTopOf="@id/second_color_icon" />
+
+    <ImageView
+        android:id="@+id/orange_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:src="@drawable/ic_orange_ball_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/color_tv" />
+
+    <ImageView
+        android:id="@+id/selected_orange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_done_24"
+        app:layout_constraintBottom_toBottomOf="@+id/orange_color"
+        app:layout_constraintEnd_toEndOf="@+id/orange_color"
+        app:layout_constraintStart_toStartOf="@+id/orange_color"
+        app:layout_constraintTop_toTopOf="@+id/orange_color" />
+
+    <ImageView
+        android:id="@+id/pink_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:src="@drawable/ic_pink_circle_24"
+        app:layout_constraintEnd_toStartOf="@+id/orange_color"
+        app:layout_constraintBottom_toBottomOf="@+id/color_tv" />
+
+    <ImageView
+        android:id="@+id/selected_pink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_done_24"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/pink_color"
+        app:layout_constraintEnd_toEndOf="@+id/pink_color"
+        app:layout_constraintStart_toStartOf="@+id/pink_color"
+        app:layout_constraintTop_toTopOf="@+id/pink_color" />
+
+    <ImageView
+        android:id="@+id/blue_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:src="@drawable/ic_blue_circle_24"
+        app:layout_constraintEnd_toStartOf="@+id/pink_color"
+        app:layout_constraintBottom_toBottomOf="@+id/color_tv" />
+
+    <ImageView
+        android:id="@+id/selected_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_done_24"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/blue_color"
+        app:layout_constraintEnd_toEndOf="@+id/blue_color"
+        app:layout_constraintStart_toStartOf="@+id/blue_color"
+        app:layout_constraintTop_toTopOf="@+id/blue_color" />
+
+    <View
+        android:id="@+id/line4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/text_green_color"
+        app:layout_constraintEnd_toEndOf="@+id/orange_color"
+        app:layout_constraintStart_toStartOf="@id/color_tv"
+        app:layout_constraintTop_toBottomOf="@id/blue_color"/>
+
+    <ImageView
+        android:id="@+id/help_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:src="@drawable/ic_help"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line4" />
+
+    <TextView
+        android:id="@+id/help_tv"
+        style="@style/mediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:text="المساعدة"
+        app:layout_constraintStart_toEndOf="@id/help_icon"
+        app:layout_constraintTop_toTopOf="@id/help_icon" />
+
+    <View
+        android:id="@+id/line5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@color/text_green_color"
+        app:layout_constraintEnd_toEndOf="@+id/orange_color"
+        app:layout_constraintStart_toStartOf="@id/color_tv"
+        app:layout_constraintTop_toBottomOf="@id/help_tv"/>
+
+    <ImageView
+        android:id="@+id/about_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:src="@drawable/ic_about"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line5" />
+
+    <TextView
+        android:id="@+id/about_tv"
+        style="@style/mediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:text="عن التطبيق"
+        app:layout_constraintStart_toEndOf="@id/about_icon"
+        app:layout_constraintTop_toTopOf="@id/about_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
