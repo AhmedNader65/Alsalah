@@ -22,7 +22,7 @@ class AzkarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
+        val azkarViewModel =
             ViewModelProvider(this).get(AzkarViewModel::class.java)
 
         _binding = FragmentAzkarBinding.inflate(inflater, container, false)
