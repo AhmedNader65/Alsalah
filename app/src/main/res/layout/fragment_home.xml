@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/next_prayer"
+            style="@style/mediumText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="@string/next_prayer"
+            android:textAlignment="center"
+            android:textColor="@color/text_green_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/next_prayer_time"
+            style="@style/regularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_minus9sdp"
+            android:text="@string/next_prayer_time"
+            android:textAlignment="center"
+            android:textColor="@color/text_orange_color"
+            android:textSize="@dimen/_20ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/next_prayer" />
+
+        <ImageView
+            android:id="@+id/prayer_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_200sdp"
+            android:src="@drawable/zuhr_pic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/next_prayer_time" />
+
+        <include
+            android:id="@+id/date_layout"
+            layout="@layout/date_layout" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fajr_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/shorooq_layout"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date_layout"
+            app:layout_constraintWidth_percent=".15"
+            app:strokeColor="@color/text_green_color"
+            app:strokeWidth=".5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/fajr_tv"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:lines="1"
+                    android:text="@string/fajr"
+                    app:autoSizeMaxTextSize="@dimen/_18ssp"
+                    app:autoSizeMinTextSize="@dimen/_8ssp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/fajr_time"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3:12"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/fajr_am"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fajr_tv" />
+
+                <TextView
+                    android:id="@+id/fajr_am"
+                    style="@style/lightText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ص"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/fajr_time"
+                    app:layout_constraintTop_toBottomOf="@id/fajr_tv" />
+
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:src="@drawable/ic_fajr"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fajr_time" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/shorooq_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/zuhr_layout"
+            app:layout_constraintStart_toEndOf="@+id/fajr_layout"
+            app:layout_constraintTop_toBottomOf="@id/date_layout"
+            app:layout_constraintWidth_percent=".15"
+            app:strokeColor="@color/text_green_color"
+            app:strokeWidth=".5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/shorooq_tv"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:lines="1"
+                    android:text="@string/shorooq"
+                    app:autoSizeMaxTextSize="@dimen/_18ssp"
+                    app:autoSizeMinTextSize="@dimen/_8ssp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/shorooq_time"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3:12"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/shorooq_am"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/shorooq_tv" />
+
+                <TextView
+                    android:id="@+id/shorooq_am"
+                    style="@style/lightText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ص"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/shorooq_time"
+                    app:layout_constraintTop_toBottomOf="@id/shorooq_tv" />
+
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:src="@drawable/ic_shorooq"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/shorooq_time" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/zuhr_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/asr_layout"
+            app:layout_constraintStart_toEndOf="@+id/shorooq_layout"
+            app:layout_constraintTop_toBottomOf="@id/date_layout"
+            app:layout_constraintWidth_percent=".15"
+            app:strokeColor="@color/text_green_color"
+            app:strokeWidth=".5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#4E7850"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/zuhr_tv"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:lines="1"
+                    android:text="@string/zuhr"
+                    android:textColor="@color/white"
+                    app:autoSizeMaxTextSize="@dimen/_18ssp"
+                    app:autoSizeMinTextSize="@dimen/_8ssp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/zuhr_time"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3:12"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/zuhr_am"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/zuhr_tv" />
+
+                <TextView
+                    android:id="@+id/zuhr_am"
+                    style="@style/lightText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ص"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/zuhr_time"
+                    app:layout_constraintTop_toBottomOf="@id/zuhr_tv" />
+
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:src="@drawable/ic_zuhr_selected"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/zuhr_time" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/asr_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/maghrib_layout"
+            app:layout_constraintStart_toEndOf="@+id/zuhr_layout"
+            app:layout_constraintTop_toBottomOf="@id/date_layout"
+            app:layout_constraintWidth_percent=".15"
+            app:strokeColor="@color/text_green_color"
+            app:strokeWidth=".5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/asr_tv"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:lines="1"
+                    android:text="@string/asr"
+                    app:autoSizeMaxTextSize="@dimen/_18ssp"
+                    app:autoSizeMinTextSize="@dimen/_8ssp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/asr_time"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3:12"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/asr_am"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/asr_tv" />
+
+                <TextView
+                    android:id="@+id/asr_am"
+                    style="@style/lightText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ص"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/asr_time"
+                    app:layout_constraintTop_toBottomOf="@id/asr_tv" />
+
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:src="@drawable/ic_asr"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/asr_time" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/maghrib_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/eshaa_layout"
+            app:layout_constraintStart_toEndOf="@+id/asr_layout"
+            app:layout_constraintTop_toBottomOf="@id/date_layout"
+            app:layout_constraintWidth_percent=".15"
+            app:strokeColor="@color/text_green_color"
+            app:strokeWidth=".5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/maghrib_tv"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:lines="1"
+                    android:text="@string/maghrib"
+                    app:autoSizeMaxTextSize="@dimen/_18ssp"
+                    app:autoSizeMinTextSize="@dimen/_8ssp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/maghrib_time"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3:12"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/maghrib_am"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/maghrib_tv" />
+
+                <TextView
+                    android:id="@+id/maghrib_am"
+                    style="@style/lightText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ص"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/maghrib_time"
+                    app:layout_constraintTop_toBottomOf="@id/maghrib_tv" />
+
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:src="@drawable/ic_maghrib"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/maghrib_time" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/eshaa_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/maghrib_layout"
+            app:layout_constraintTop_toBottomOf="@id/date_layout"
+            app:layout_constraintWidth_percent=".15"
+            app:strokeColor="@color/text_green_color"
+            app:strokeWidth=".5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/eshaa_tv"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:lines="1"
+                    android:text="@string/eshaa"
+                    app:autoSizeMaxTextSize="@dimen/_18ssp"
+                    app:autoSizeMinTextSize="@dimen/_8ssp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/eshaa_time"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3:12"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/eshaa_am"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/eshaa_tv" />
+
+                <TextView
+                    android:id="@+id/eshaa_am"
+                    style="@style/lightText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ص"
+                    android:textColor="@color/light_green"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/eshaa_time"
+                    app:layout_constraintTop_toBottomOf="@id/eshaa_tv" />
+
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:src="@drawable/ic_ishaa"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/eshaa_time" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/midnight_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/timer"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fajr_layout"
+            app:strokeColor="@color/text_green_color"
+            app:strokeWidth=".5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/midnight_tv"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/midnight" />
+
+                <TextView
+                    android:id="@+id/midnight_time"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:text="12:00"
+                    android:textColor="@color/text_brown_color" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_timer"
+            app:layout_constraintBottom_toBottomOf="@+id/midnight_layout"
+            app:layout_constraintEnd_toStartOf="@+id/night_last_quarter_layout"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/midnight_layout"
+            app:layout_constraintTop_toTopOf="@+id/midnight_layout" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/night_last_quarter_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/timer"
+            app:layout_constraintTop_toTopOf="@id/midnight_layout"
+            app:strokeColor="@color/text_green_color"
+            app:strokeWidth=".5dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/tholth_tv"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_quarter" />
+
+                <TextView
+                    android:id="@+id/last_quarter_time"
+                    style="@style/boldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:text="03:13"
+                    android:textColor="@color/text_brown_color" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/after_prayer_azkar_title"
+            style="@style/boldText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            android:background="@drawable/bg_titles"
+            android:gravity="center"
+            android:text="أذكار بعد الصلاة"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/midnight_layout" />
+
+        <TextView
+            android:id="@+id/after_prayer_azkar"
+            style="@style/regularText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:text="@string/azkar_exp"
+            android:textAlignment="center"
+            android:textColor="@color/text_green_color"
+            app:layout_constraintTop_toBottomOf="@id/after_prayer_azkar_title" />
+
+        <Button
+            android:id="@+id/read_after_prayers_now_btn"
+            style="@style/regularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="اقرأها الآن"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/text_orange_color"
+            app:cornerRadius="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/after_prayer_azkar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/qebla_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@drawable/bg_styled_view"
+            android:padding="@dimen/_16sdp"
+            app:layout_constraintTop_toBottomOf="@id/read_after_prayers_now_btn">
+
+            <ImageView
+                android:id="@+id/qebla_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_qebla"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/boldText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="القِبلـة"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_24ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/qebla_img"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/khatma_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@drawable/bg_styled_view"
+            android:padding="@dimen/_16sdp"
+            app:layout_constraintTop_toBottomOf="@id/qebla_layout">
+
+            <ImageView
+                android:id="@+id/khatma_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_khatma"
+                app:layout_constraintBottom_toBottomOf="@id/start_khatma"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/khatma" />
+
+            <TextView
+                android:id="@+id/khatma"
+                style="@style/boldText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ختمــة"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_24ssp"
+                app:layout_constraintEnd_toStartOf="@id/khatma_img"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/start_khatma"
+                style="@style/mediumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:text="ابدأ الآن"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/text_orange_color"
+                app:cornerRadius="@dimen/_16sdp"
+                app:layout_constraintEnd_toEndOf="@id/khatma"
+                app:layout_constraintStart_toStartOf="@id/khatma"
+                app:layout_constraintTop_toBottomOf="@id/khatma" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/azkar_title"
+            style="@style/boldText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            android:background="@drawable/bg_titles"
+            android:gravity="center"
+            android:text="الأذكـــار"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/khatma_layout" />
+
+        <TextView
+            android:id="@+id/azkar"
+            style="@style/regularText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:text="@string/azkar_exp"
+            android:textAlignment="center"
+            android:textColor="@color/text_green_color"
+            app:layout_constraintTop_toBottomOf="@id/azkar_title" />
+
+        <Button
+            android:id="@+id/read_azkar_btn"
+            style="@style/regularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="اقرأ"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/text_orange_color"
+            app:cornerRadius="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/azkar" />
+
+        <include
+            android:id="@+id/blog_item"
+            layout="@layout/item_blog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            app:layout_constraintTop_toBottomOf="@id/read_azkar_btn" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            app:layout_constraintTop_toBottomOf="@id/blog_item" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">alsalah</string>
+    <string name="title_home">الرئيسية</string>
+    <string name="title_azkar">الأذكار</string>
+    <string name="title_profile">البروفايل</string>
+    <string name="title_alarm">منبة الطاعات</string>
+    <string name="next_prayer">صلاة الظهر بعد</string>
+    <string name="next_prayer_time">00:01:30</string>
+    <string name="fajr">الفجر</string>
+    <string name="zuhr">الظهر</string>
+    <string name="asr">العصر</string>
+    <string name="eshaa">العشاء</string>
+    <string name="maghrib">المغرب</string>
+    <string name="shorooq">الشروق</string>
+    <string name="midnight">منتصف الليل</string>
+    <string name="last_quarter">الثلث الأخير</string>
+    <string name="azkar_exp">أَسْـتَغْفِرُ الله، أَسْـتَغْفِرُ الله، أَسْـتَغْفِرُ الله
+اللّهُـمَّ أَنْـتَ السَّلامُ ، وَمِـنْكَ السَّلام ،
+تَبارَكْتَ يا ذا الجَـلالِ وَالإِكْـرام</string>
+    <string name="blog_exp">القاهرة- خص الله تعالى شهر رمضان بليلة مباركة تتطلّع فيها القلوب المؤمنة بالرجاء والدعوات، يقول تعالى في كتابه العزيز: “إنا أنزلناه في ليلة القدر، وما أدراك ما ليلة القدر، ليلة القدر خير من ألف شهر”.. وهي ليلة السلام والتسامح، وتحظى بمنزلة خاصة في قلوب المسلمين، وفرصة تتكرر كل عام ليوثق فيها العبد علاقته مع الخالق جل جلاله.</string>
+    <string name="title_menu">القائمة</string>
+</resources>
