@@ -92,14 +92,14 @@
         app:layout_constraintStart_toEndOf="@id/notifications_icon"
         app:layout_constraintTop_toTopOf="@id/notifications_icon" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
+    <com.suke.widget.SwitchButton
         android:id="@+id/notifications_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/notifications_icon" />
-
+        app:layout_constraintTop_toTopOf="@id/notifications_icon"
+        app:sb_checked="true" />
     <View
         android:id="@+id/line2"
         android:layout_width="0dp"
@@ -141,14 +141,14 @@
         app:layout_constraintStart_toEndOf="@id/theme_icon"
         app:layout_constraintTop_toBottomOf="@id/theme_icon" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
+    <com.suke.widget.SwitchButton
         android:id="@+id/night_mode_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/night_mode_tv" />
-
+        app:layout_constraintTop_toTopOf="@id/night_mode_tv"
+        app:sb_checked="true" />
     <View
         android:id="@+id/line3"
         android:layout_width="0dp"
