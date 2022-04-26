@@ -148,7 +148,7 @@
         android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/night_mode_tv"
-        app:sb_checked="true" />
+        app:sb_checked="false" />
     <View
         android:id="@+id/line3"
         android:layout_width="0dp"
