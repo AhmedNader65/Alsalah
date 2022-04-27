@@ -22,4 +22,14 @@
         android:name="com.crazyidea.alsalah.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.crazyidea.alsalah.ui.menu.MenuFragment"
+        tools:layout="@layout/fragment_menu"
+        android:label="MenuFragment" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.crazyidea.alsalah.ui.menu.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

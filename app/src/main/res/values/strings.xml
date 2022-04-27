@@ -37,4 +37,27 @@
     <string name="azkarSetting">اعدادت الاذكار</string>
     <string name="azanSetting">اعدادت الاذان</string>
     <string name="azanScreen">شاشة الاذان</string>
+    <string name="notifications">التنبيهات</string>
+    <string name="notification_sound">صوت التنبية</string>
+    <string name="azanIkama">اذان واقامة</string>
+    <string name="nawafel">النوافل</string>
+    <string name="friday">الجمعة</string>
+    <string name="fasting">الصيام</string>
+    <string name="silencePhone">جعل الهاتف صامت اثناء الصلاة</string>
+    <string name="azkarNotification">تنبيهات الاذكار</string>
+    <string name="heartsNotification">تنبيهات الفوائد</string>
+    <string name="main">الرئيسية</string>
+    <string name="setting">الاعدادت</string>
+    <string name="sebha">السبحة</string>
+    <string name="compass">القبلة</string>
+    <string name="quran">ورد القران</string>
+    <string name="fwaed">الفوائد</string>
+    <string name="mosques">مساجد</string>
+    <string name="calendar">التقويم</string>
+    <string name="fajrList">قائمة الفجر</string>
+    <string name="it_support">الدعم الفني</string>
+    <string name="faq">الاسئلة الشاعة</string>
+    <string name="who_are_we">من نحن</string>
+    <string name="follow_us">تابعنا</string>
+    <string name="rate_app">قيم البرنامج</string>
 </resources>
