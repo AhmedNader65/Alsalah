@@ -40,6 +40,9 @@ class MenuFragment : Fragment() {
         binding.compass.setOnClickListener {
             findNavController().navigate(R.id.compassFragment)
         }
+        binding.fajrList.setOnClickListener {
+            findNavController().navigate(R.id.fajrListFragment)
+        }
     }
 
     override fun onDestroyView() {

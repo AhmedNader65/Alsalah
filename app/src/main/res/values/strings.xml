@@ -63,4 +63,6 @@
     <string name="usingCompass">بالبوصلة</string>
     <string name="by_sun_and_moon">بالشمس والقمر</string>
     <string name="by_vision">المرئية</string>
+    <string name="welcome_to_fajrlist">مرحبا بك في \n قائمة الفجر</string>
+    <string name="addContacts">اضف جهات اتصال</string>
 </resources>

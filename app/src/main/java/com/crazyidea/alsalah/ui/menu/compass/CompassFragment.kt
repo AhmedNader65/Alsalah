@@ -46,10 +46,20 @@ class CompassFragment : Fragment(), SensorEventListener {
         super.onViewCreated(view, savedInstanceState)
         SensorManage = requireActivity().getSystemService(SENSOR_SERVICE) as SensorManager
 
+
         binding.byVision.setOnClickListener { checkButtons(binding.byVision) }
         binding.bySunAndMoon.setOnClickListener { checkButtons(binding.bySunAndMoon) }
         binding.byCompassBtn.setOnClickListener { checkButtons(binding.byCompassBtn) }
         binding.byCompassBtn.performClick()
+    }
+
+    fun getMeccaDegrees() {
+//        val lonDelta: Float = lon2 - lon1
+//        val y = (Math.sin(lonDelta.toDouble()) * Math.cos(lat2)).toFloat()
+//        val x =
+//            (Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lonDelta.toDouble())).toFloat()
+//        val brng: Float = Math.atan2(y.toDouble(), x.toDouble()).toDeg()
+//        DegreeStart = brng
     }
 
     override fun onDestroyView() {

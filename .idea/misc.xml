@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/drawable/button_selector.xml" value="0.213" />
         <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/drawable/ic_alarm.xml" value="0.1935" />
         <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.1935" />
         <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/drawable/ic_calendar_big.xml" value="0.1935" />
         <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/drawable/ic_quran.xml" value="0.1935" />
         <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/layout/compass_view.xml" value="0.358695652173913" />
         <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/layout/fragment_azkar.xml" value="0.358695652173913" />
+        <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/layout/fragment_fajr_list.xml" value="0.358695652173913" />
         <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/layout/fragment_menu.xml" value="0.33" />
         <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/layout/fragment_profile.xml" value="0.358695652173913" />
         <entry key="..\:/Android studio projects/Alsalah/app/src/main/res/layout/fragment_qibla.xml" value="0.25" />

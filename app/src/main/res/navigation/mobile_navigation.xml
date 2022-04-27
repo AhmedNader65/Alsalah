@@ -37,4 +37,9 @@
         android:name="com.crazyidea.alsalah.ui.menu.compass.CompassFragment"
         android:label="CompassFragment"
         tools:layout="@layout/fragment_qibla"/>
+    <fragment
+        android:id="@+id/fajrListFragment"
+        android:name="com.crazyidea.alsalah.ui.menu.fajrlist.FajrListFragment"
+        android:label="FajrListFragment"
+        tools:layout="@layout/fragment_fajr_list" />
 </navigation>
