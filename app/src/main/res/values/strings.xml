@@ -60,4 +60,7 @@
     <string name="who_are_we">من نحن</string>
     <string name="follow_us">تابعنا</string>
     <string name="rate_app">قيم البرنامج</string>
+    <string name="usingCompass">بالبوصلة</string>
+    <string name="by_sun_and_moon">بالشمس والقمر</string>
+    <string name="by_vision">المرئية</string>
 </resources>

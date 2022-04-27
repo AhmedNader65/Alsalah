@@ -37,6 +37,9 @@ class MenuFragment : Fragment() {
         binding.setting.setOnClickListener {
             findNavController().navigate(R.id.settingFragment)
         }
+        binding.compass.setOnClickListener {
+            findNavController().navigate(R.id.compassFragment)
+        }
     }
 
     override fun onDestroyView() {
