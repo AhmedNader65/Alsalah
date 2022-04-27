@@ -19,4 +19,9 @@
 تَبارَكْتَ يا ذا الجَـلالِ وَالإِكْـرام</string>
     <string name="blog_exp">القاهرة- خص الله تعالى شهر رمضان بليلة مباركة تتطلّع فيها القلوب المؤمنة بالرجاء والدعوات، يقول تعالى في كتابه العزيز: “إنا أنزلناه في ليلة القدر، وما أدراك ما ليلة القدر، ليلة القدر خير من ألف شهر”.. وهي ليلة السلام والتسامح، وتحظى بمنزلة خاصة في قلوب المسلمين، وفرصة تتكرر كل عام ليوثق فيها العبد علاقته مع الخالق جل جلاله.</string>
     <string name="title_menu">القائمة</string>
+    <string name="language">اللغة</string>
+    <string name="generalSetting">الاعدادات العامة</string>
+    <string name="backgroundPermission">تفعيل المصلي للعمل في الخلفية</string>
+    <string name="solveAzanProblem">حل مشاكل الاذان لبعض الاجهزة</string>
+    <string name="azanSoundType">اختيار نمط صوت الاذان</string>
 </resources>
