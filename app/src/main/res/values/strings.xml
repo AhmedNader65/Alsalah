@@ -33,4 +33,8 @@
     <string name="defaultSettingPrayer">الاعدادات الافتراضية للصلاة</string>
     <string name="location">الموقع</string>
     <string name="getLocaAutomatically">تحديد الموقع اليا</string>
+    <string name="travelMode">وضع السفر</string>
+    <string name="azkarSetting">اعدادت الاذكار</string>
+    <string name="azanSetting">اعدادت الاذان</string>
+    <string name="azanScreen">شاشة الاذان</string>
 </resources>
