@@ -24,4 +24,13 @@
     <string name="backgroundPermission">تفعيل المصلي للعمل في الخلفية</string>
     <string name="solveAzanProblem">حل مشاكل الاذان لبعض الاجهزة</string>
     <string name="azanSoundType">اختيار نمط صوت الاذان</string>
+    <string name="editPrayerTime">تصحيح مواقيت الصلاة</string>
+    <string name="calculateWay">طريقة الحساب</string>
+    <string name="almazhab">المذهب - تصحيح صلاة العصر</string>
+    <string name="summerTime">التوقيت الصيفي</string>
+    <string name="localTime">المنطقة الزمنية</string>
+    <string name="poleCalculateWay">طريقة حساب الاماكن القطبية</string>
+    <string name="defaultSettingPrayer">الاعدادات الافتراضية للصلاة</string>
+    <string name="location">الموقع</string>
+    <string name="getLocaAutomatically">تحديد الموقع اليا</string>
 </resources>
