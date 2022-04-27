@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_styled_white"
     android:orientation="vertical"
-    tools:context=".ui.azkar.AzkarFragment">
+    tools:context=".ui.azkar.main.AzkarFragment">
 
     <TextView
         android:id="@+id/title"
@@ -26,12 +26,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_styled_white"
-        tools:context=".ui.azkar.AzkarFragment">
+        tools:context=".ui.azkar.main.AzkarFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.azkar.AzkarFragment">
+            tools:context=".ui.azkar.main.AzkarFragment">
 
             <TextView
                 android:id="@+id/language_title"

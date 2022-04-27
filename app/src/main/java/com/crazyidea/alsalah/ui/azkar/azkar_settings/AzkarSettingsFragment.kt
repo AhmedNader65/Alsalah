@@ -1,4 +1,4 @@
-package com.crazyidea.alsalah.ui.azkar_settings
+package com.crazyidea.alsalah.ui.azkar.azkar_settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
