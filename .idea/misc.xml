@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/Alsalah/app/src/main/res/drawable/circle_progressbar.xml" value="0.3025" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/Alsalah/app/src/main/res/drawable/circle_shape.xml" value="0.3025" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/Alsalah/app/src/main/res/drawable/gradiant_progress.xml" value="0.3025" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/Alsalah/app/src/main/res/drawable/rounded_progress.xml" value="0.3025" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/Alsalah/app/src/main/res/layout/fragment_azkar.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/Alsalah/app/src/main/res/layout/fragment_azkar_details.xml" value="0.25" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/Alsalah/app/src/main/res/layout/fragment_azkar_settings.xml" value="0.278125" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/Alsalah/app/src/main/res/layout/fragment_profile.xml" value="1.25" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/Alsalah/app/src/main/res/layout/layout_bottom_reading_toolbar.xml" value="0.25" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/card_view_shadow.xml" value="0.153" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/circle_shape.xml" value="0.153" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/gradiant_progress.xml" value="0.153" />

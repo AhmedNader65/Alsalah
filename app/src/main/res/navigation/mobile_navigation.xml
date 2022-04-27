@@ -15,11 +15,20 @@
         android:id="@+id/navigation_azkar"
         android:name="com.crazyidea.alsalah.ui.azkar.AzkarFragment"
         android:label="@string/title_azkar"
-        tools:layout="@layout/fragment_azkar" />
+        tools:layout="@layout/fragment_azkar" >
+        <action
+            android:id="@+id/action_navigation_azkar_to_navigation_azkar_details"
+            app:destination="@id/navigation_azkar_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.crazyidea.alsalah.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_azkar_details"
+        android:name="com.crazyidea.alsalah.ui.azkar_details.AzkarDetailsFragment"
+        tools:layout="@layout/fragment_azkar_details" />
 </navigation>
