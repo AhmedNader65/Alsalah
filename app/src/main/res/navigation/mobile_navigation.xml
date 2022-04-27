@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_navigation_azkar_to_navigation_azkar_details"
             app:destination="@id/navigation_azkar_details" />
+        <action
+            android:id="@+id/action_navigation_azkar_to_sebhaFragment"
+            app:destination="@id/sebhaFragment" />
     </fragment>
 
     <fragment
@@ -40,5 +43,10 @@
         tools:layout="@layout/fragment_azkar_settings"
         android:name="com.crazyidea.alsalah.ui.azkar.azkar_settings.AzkarSettingsFragment"
         android:label="AzkarSettingsFragment" />
+    <fragment
+        android:id="@+id/sebhaFragment"
+        tools:layout="@layout/fragment_sebha"
+        android:name="com.crazyidea.alsalah.ui.azkar.sebha.SebhaFragment"
+        android:label="SebhaFragment" />
 
 </navigation>

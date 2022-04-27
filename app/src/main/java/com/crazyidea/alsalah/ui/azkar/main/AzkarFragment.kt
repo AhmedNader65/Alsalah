@@ -29,6 +29,9 @@ class AzkarFragment : Fragment() {
         binding.morningAzkar.setOnClickListener {
             findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
         }
+        binding.sebha.setOnClickListener {
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToSebhaFragment())
+        }
         return root
     }
 
