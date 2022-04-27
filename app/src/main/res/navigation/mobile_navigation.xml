@@ -30,5 +30,15 @@
     <fragment
         android:id="@+id/navigation_azkar_details"
         android:name="com.crazyidea.alsalah.ui.azkar_details.AzkarDetailsFragment"
-        tools:layout="@layout/fragment_azkar_details" />
+        tools:layout="@layout/fragment_azkar_details" >
+        <action
+            android:id="@+id/action_navigation_azkar_details_to_azkarSettingsFragment"
+            app:destination="@id/azkarSettingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/azkarSettingsFragment"
+        tools:layout="@layout/fragment_azkar_settings"
+        android:name="com.crazyidea.alsalah.ui.azkar_settings.AzkarSettingsFragment"
+        android:label="AzkarSettingsFragment" />
+
 </navigation>

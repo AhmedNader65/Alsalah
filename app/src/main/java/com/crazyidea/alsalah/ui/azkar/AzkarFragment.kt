@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.databinding.FragmentAzkarBinding
+import com.crazyidea.alsalah.ui.azkar_details.AzkarDetailsViewModel
 
 class AzkarFragment : Fragment() {
 
@@ -18,14 +20,13 @@ class AzkarFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val viewModel by viewModels<AzkarViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val azkarViewModel =
-            ViewModelProvider(this).get(AzkarViewModel::class.java)
-
         _binding = FragmentAzkarBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.morningAzkar.setOnClickListener {
