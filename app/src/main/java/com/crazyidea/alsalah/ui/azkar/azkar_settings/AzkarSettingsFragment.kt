@@ -1,18 +1,18 @@
-package com.crazyidea.alsalah.ui.azkar
+package com.crazyidea.alsalah.ui.azkar.azkar_settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.crazyidea.alsalah.databinding.FragmentAzkarBinding
+import androidx.fragment.app.viewModels
+import com.crazyidea.alsalah.databinding.FragmentAzkarSettingsBinding
 
-class AzkarFragment : Fragment() {
+class AzkarSettingsFragment : Fragment() {
 
-    private var _binding: FragmentAzkarBinding? = null
+    private var _binding: FragmentAzkarSettingsBinding? = null
 
+    private  val viewModel by viewModels<AzkarSettingsViewModel>()
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -22,10 +22,8 @@ class AzkarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val azkarViewModel =
-            ViewModelProvider(this).get(AzkarViewModel::class.java)
 
-        _binding = FragmentAzkarBinding.inflate(inflater, container, false)
+        _binding = FragmentAzkarSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root

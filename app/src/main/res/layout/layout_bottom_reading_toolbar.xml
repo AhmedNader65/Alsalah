@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="@dimen/_60sdp"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#519259">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_16sdp">
+
+        <TextView
+            android:id="@+id/font_size"
+            style="@style/lightText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:drawableTopCompat="@drawable/ic_font_size"
+            android:text="حجم الخط"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_6ssp" />
+
+        <TextView
+            android:id="@+id/night_mode"
+            style="@style/lightText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:drawableTopCompat="@drawable/ic_theme"
+            android:text="ليلي"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_6ssp"
+            app:drawableTint="@color/white" />
+
+        <TextView
+            android:id="@+id/share"
+            style="@style/lightText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="مشاركة"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_6ssp"
+            app:drawableTopCompat="@drawable/ic_baseline_share_24"
+            app:drawableTint="@color/white" />
+        <TextView
+            android:id="@+id/settings"
+            style="@style/lightText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="الإعدادات"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_6ssp"
+            app:drawableTopCompat="@drawable/ic_baseline_settings_24"
+            app:drawableTint="@color/white" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

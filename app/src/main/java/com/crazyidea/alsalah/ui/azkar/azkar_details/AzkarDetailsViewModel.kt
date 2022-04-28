@@ -1,10 +1,10 @@
-package com.crazyidea.alsalah.ui.azkar
+package com.crazyidea.alsalah.ui.azkar.azkar_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class AzkarViewModel : ViewModel() {
+class AzkarDetailsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"
