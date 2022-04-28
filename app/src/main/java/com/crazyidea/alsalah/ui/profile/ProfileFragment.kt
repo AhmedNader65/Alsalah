@@ -8,15 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.crazyidea.alsalah.databinding.FragmentProfileBinding
+import com.crazyidea.alsalah.ui.home.HomeViewModel
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
+    private val viewModel by viewModels<ProfileViewModel>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val viewModel by viewModels<ProfileViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
