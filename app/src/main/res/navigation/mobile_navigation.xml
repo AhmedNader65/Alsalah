@@ -26,7 +26,17 @@
         android:id="@+id/navigation_menu"
         android:name="com.crazyidea.alsalah.ui.menu.MenuFragment"
         tools:layout="@layout/fragment_menu"
-        android:label="MenuFragment" />
+        android:label="MenuFragment" >
+        <action
+            android:id="@+id/action_navigation_menu_to_fajrListFragment"
+            app:destination="@id/fajrListFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_compassFragment"
+            app:destination="@id/compassFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.crazyidea.alsalah.ui.menu.setting.SettingFragment"

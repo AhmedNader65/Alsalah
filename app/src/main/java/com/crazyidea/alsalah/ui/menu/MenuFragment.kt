@@ -35,13 +35,13 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.setting.setOnClickListener {
-            findNavController().navigate(R.id.settingFragment)
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToSettingFragment())
         }
         binding.compass.setOnClickListener {
-            findNavController().navigate(R.id.compassFragment)
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToCompassFragment())
         }
         binding.fajrList.setOnClickListener {
-            findNavController().navigate(R.id.fajrListFragment)
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToFajrListFragment())
         }
     }
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentQiblaBinding
@@ -23,6 +24,7 @@ class CompassFragment : Fragment(), SensorEventListener {
     private var _binding: FragmentQiblaBinding? = null
     private var DegreeStart = 0f
     private lateinit var SensorManage: SensorManager
+    private val viewModel by viewModels<CompassViewModel>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -33,8 +35,6 @@ class CompassFragment : Fragment(), SensorEventListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val compassViewModel =
-            ViewModelProvider(this).get(CompassViewModel::class.java)
 
         _binding = FragmentQiblaBinding.inflate(inflater, container, false)
         val root: View = binding.root
