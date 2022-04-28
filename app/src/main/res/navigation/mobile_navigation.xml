@@ -15,7 +15,7 @@
         android:id="@+id/navigation_azkar"
         android:name="com.crazyidea.alsalah.ui.azkar.main.AzkarFragment"
         android:label="@string/title_azkar"
-        tools:layout="@layout/fragment_azkar" >
+        tools:layout="@layout/fragment_azkar">
         <action
             android:id="@+id/action_navigation_azkar_to_navigation_azkar_details"
             app:destination="@id/navigation_azkar_details" />
@@ -29,24 +29,53 @@
         android:name="com.crazyidea.alsalah.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
-
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.crazyidea.alsalah.ui.menu.MenuFragment"
+        android:label="MenuFragment"
+        tools:layout="@layout/fragment_menu">
+        <action
+            android:id="@+id/action_navigation_menu_to_fajrListFragment"
+            app:destination="@id/fajrListFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_compassFragment"
+            app:destination="@id/compassFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.crazyidea.alsalah.ui.menu.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/compassFragment"
+        android:name="com.crazyidea.alsalah.ui.menu.compass.CompassFragment"
+        android:label="CompassFragment"
+        tools:layout="@layout/fragment_qibla" />
+    <fragment
+        android:id="@+id/fajrListFragment"
+        android:name="com.crazyidea.alsalah.ui.menu.fajrlist.FajrListFragment"
+        android:label="FajrListFragment"
+        tools:layout="@layout/fragment_fajr_list" />
     <fragment
         android:id="@+id/navigation_azkar_details"
         android:name="com.crazyidea.alsalah.ui.azkar.azkar_details.AzkarDetailsFragment"
-        tools:layout="@layout/fragment_azkar_details" >
+        tools:layout="@layout/fragment_azkar_details">
         <action
             android:id="@+id/action_navigation_azkar_details_to_azkarSettingsFragment"
             app:destination="@id/azkarSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/azkarSettingsFragment"
-        tools:layout="@layout/fragment_azkar_settings"
         android:name="com.crazyidea.alsalah.ui.azkar.azkar_settings.AzkarSettingsFragment"
-        android:label="AzkarSettingsFragment" />
+        android:label="AzkarSettingsFragment"
+        tools:layout="@layout/fragment_azkar_settings" />
     <fragment
         android:id="@+id/sebhaFragment"
-        tools:layout="@layout/fragment_sebha"
         android:name="com.crazyidea.alsalah.ui.azkar.sebha.SebhaFragment"
-        android:label="SebhaFragment" />
+        android:label="SebhaFragment"
+        tools:layout="@layout/fragment_sebha" />
 
 </navigation>

@@ -16,8 +16,8 @@ class AzkarFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
     private val viewModel by viewModels<AzkarViewModel>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -1,4 +1,4 @@
-package com.crazyidea.alsalah.ui.profile
+package com.crazyidea.alsalah.ui.menu.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.crazyidea.alsalah.databinding.FragmentProfileBinding
-import com.crazyidea.alsalah.ui.home.HomeViewModel
+import com.crazyidea.alsalah.databinding.FragmentMenuBinding
+import com.crazyidea.alsalah.databinding.FragmentSettingBinding
+import com.crazyidea.alsalah.ui.menu.fajrlist.FajrListViewModel
 
-class ProfileFragment : Fragment() {
+class SettingFragment : Fragment() {
 
-    private var _binding: FragmentProfileBinding? = null
-    private val viewModel by viewModels<ProfileViewModel>()
+    private var _binding: FragmentSettingBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val viewModel by viewModels<SettingViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,7 +26,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
