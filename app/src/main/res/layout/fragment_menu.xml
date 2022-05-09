@@ -630,7 +630,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
-                        android:src="@drawable/ic_call_big"
+                        android:src="@drawable/ic_follow_us"
                         app:tint="@color/text_orange_color" />
                 </com.google.android.material.card.MaterialCardView>
 
