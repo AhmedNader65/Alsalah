@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.crazyidea.alsalah.databinding.ActivityMainBinding
+import com.crazyidea.alsalah.utils.CommonUtils.Companion.setLocale
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RelativeCornerSize
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setLocale("ar")
+        setLocale(this,"ar")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -45,24 +46,4 @@ class MainActivity : AppCompatActivity() {
             .build()
     }
 
-    private fun setLocale(lang: String?) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val overrideConfiguration: Configuration = baseContext.resources.configuration
-            overrideConfiguration.setLocales(LocaleList(Locale(lang)))
-            val context = createConfigurationContext(overrideConfiguration)
-            val resources: Resources = context.resources
-        }else {
-            val res = resources
-            // Change locale settings in the app.
-            val dm = res.displayMetrics
-            val conf = res.configuration
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                conf.setLocale(Locale(lang)) // API 17+ only.
-            }
-            // Use conf.locale = new Locale(...) if targeting lower versions
-            // Use conf.locale = new Locale(...) if targeting lower versions
-            res.updateConfiguration(conf, dm)
-        }
-    }
 }
