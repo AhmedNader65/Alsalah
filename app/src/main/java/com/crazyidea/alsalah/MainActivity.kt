@@ -14,9 +14,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RelativeCornerSize
 import com.google.android.material.shape.RoundedCornerTreatment
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

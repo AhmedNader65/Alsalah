@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentMenuBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MenuFragment : Fragment() {
 
     private var _binding: FragmentMenuBinding? = null

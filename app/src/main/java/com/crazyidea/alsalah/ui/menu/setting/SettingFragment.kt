@@ -10,7 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.crazyidea.alsalah.databinding.FragmentMenuBinding
 import com.crazyidea.alsalah.databinding.FragmentSettingBinding
 import com.crazyidea.alsalah.ui.menu.fajrlist.FajrListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingFragment : Fragment() {
 
     private var _binding: FragmentSettingBinding? = null

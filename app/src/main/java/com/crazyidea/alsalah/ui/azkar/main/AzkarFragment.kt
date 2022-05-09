@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.databinding.FragmentAzkarBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AzkarFragment : Fragment() {
 
     private var _binding: FragmentAzkarBinding? = null

@@ -13,8 +13,10 @@ import com.crazyidea.alsalah.databinding.FragmentFajrListBinding
 import com.crazyidea.alsalah.ui.menu.compass.CompassViewModel
 import com.crazyidea.alsalah.utils.ContactData
 import com.crazyidea.alsalah.utils.retrieveAllContacts
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class FajrListFragment : Fragment() {
 
     private var _binding: FragmentFajrListBinding? = null

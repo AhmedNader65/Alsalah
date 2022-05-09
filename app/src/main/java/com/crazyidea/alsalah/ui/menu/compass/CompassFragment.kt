@@ -17,8 +17,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentQiblaBinding
 import com.google.android.material.button.MaterialButton
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class CompassFragment : Fragment(), SensorEventListener {
 
     private var _binding: FragmentQiblaBinding? = null

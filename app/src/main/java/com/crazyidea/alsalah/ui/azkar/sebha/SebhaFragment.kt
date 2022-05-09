@@ -12,7 +12,9 @@ import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentAzkarDetailsBinding
 import com.crazyidea.alsalah.databinding.FragmentSebhaBinding
 import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SebhaFragment : Fragment() {
 
     private var _binding: FragmentSebhaBinding? = null

@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.crazyidea.alsalah.databinding.FragmentProfileBinding
 import com.crazyidea.alsalah.ui.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
