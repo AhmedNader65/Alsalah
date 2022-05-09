@@ -26,11 +26,23 @@ class AzkarFragment : Fragment() {
     ): View {
         _binding = FragmentAzkarBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.morningAzkar.setOnClickListener {
+        binding.morningAzkarButton.setOnClickListener {
             findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
         }
-        binding.sebha.setOnClickListener {
+        binding.eveningAzkarButton.setOnClickListener {
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
+        }
+        binding.sleepingAzkarButton.setOnClickListener {
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
+        }
+        binding.afterPrayerAzkarButton.setOnClickListener {
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
+        }
+        binding.sebhaButton.setOnClickListener {
             findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToSebhaFragment())
+        }
+        binding.morningAzkarButton.setOnClickListener {
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
         }
         return root
     }

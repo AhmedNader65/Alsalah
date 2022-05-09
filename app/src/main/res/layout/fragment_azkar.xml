@@ -133,7 +133,9 @@
     <TextView
         android:id="@+id/morning_azkar"
         style="@style/mediumText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toStartOf="@+id/next1"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -142,8 +144,17 @@
         android:textSize="@dimen/_14ssp"
         app:layout_constraintStart_toEndOf="@+id/sun"
         app:layout_constraintTop_toBottomOf="@+id/top_card" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/morning_azkar"
+        app:layout_constraintBottom_toBottomOf="@id/line1"
+        android:id="@+id/morning_azkar_button"/>
 
     <ImageView
+        android:id="@+id/next1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_24sdp"
@@ -176,7 +187,9 @@
     <TextView
         android:id="@+id/evening_azkar"
         style="@style/mediumText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toStartOf="@+id/next2"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -185,8 +198,16 @@
         android:textSize="@dimen/_14ssp"
         app:layout_constraintStart_toEndOf="@+id/night"
         app:layout_constraintTop_toBottomOf="@+id/line1" />
-
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/line1"
+        app:layout_constraintBottom_toBottomOf="@id/line2"
+        android:id="@+id/evening_azkar_button"/>
     <ImageView
+        android:id="@+id/next2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_24sdp"
@@ -219,7 +240,9 @@
     <TextView
         android:id="@+id/sleeping_azkar"
         style="@style/mediumText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toStartOf="@+id/next3"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -228,8 +251,17 @@
         android:textSize="@dimen/_14ssp"
         app:layout_constraintStart_toEndOf="@+id/sleeping"
         app:layout_constraintTop_toBottomOf="@+id/line2" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/line2"
+        app:layout_constraintBottom_toBottomOf="@id/line3"
+        android:id="@+id/sleeping_azkar_button"/>
 
     <ImageView
+        android:id="@+id/next3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_24sdp"
@@ -262,7 +294,9 @@
     <TextView
         android:id="@+id/after_prayer_azkar"
         style="@style/mediumText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toStartOf="@+id/next1"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -272,6 +306,14 @@
         app:layout_constraintStart_toEndOf="@+id/after_prayer"
         app:layout_constraintTop_toBottomOf="@+id/line3" />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/line3"
+        app:layout_constraintBottom_toBottomOf="@id/line4"
+        android:id="@+id/after_prayer_azkar_button"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -306,7 +348,9 @@
     <TextView
         android:id="@+id/sebha"
         style="@style/mediumText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toStartOf="@+id/next1"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -316,6 +360,14 @@
         app:layout_constraintStart_toEndOf="@+id/sebha_img"
         app:layout_constraintTop_toBottomOf="@+id/line4" />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/line4"
+        app:layout_constraintBottom_toBottomOf="@id/line5"
+        android:id="@+id/sebha_button"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -349,7 +401,9 @@
     <TextView
         android:id="@+id/more_azkar"
         style="@style/mediumText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toStartOf="@+id/next1"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -359,6 +413,14 @@
         app:layout_constraintStart_toEndOf="@+id/more_azkar_img"
         app:layout_constraintTop_toBottomOf="@+id/line5" />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/line5"
+        app:layout_constraintBottom_toBottomOf="@id/more_azkar"
+        android:id="@+id/more_azkar_button"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
