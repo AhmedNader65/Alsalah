@@ -13,14 +13,14 @@ class PrayersLocalDataSource @Inject constructor(
     private val appDatabase: AppDatabase,
     private val externalScope: CoroutineScope
 ) {
-    suspend fun insertData(remoteResponse: List<PrayerResponseApiModel>) {
+    suspend fun insertData(cityName: String, remoteResponse: List<PrayerResponseApiModel>) {
         appDatabase.prayersDao().deleteDates()
         appDatabase.prayersDao().deleteMeta()
         appDatabase.prayersDao().deleteTimings()
         withContext(externalScope.coroutineContext) {
             remoteResponse.forEach {
                 val metaId = appDatabase.prayersDao().insertMeta(
-                    Meta(null, it.meta.method.id, "Mansoura", it.date.gregorian.month.number)
+                    Meta(null, it.meta.method.id, cityName, it.date.gregorian.month.number)
                 )
                 val timingId = appDatabase.prayersDao().insertTiming(
                     Timing(
@@ -45,6 +45,7 @@ class PrayersLocalDataSource @Inject constructor(
                         it.date.timestamp,
                         it.date.gregorian.date,
                         it.date.gregorian.day,
+                        it.date.gregorian.month.number,
                         it.date.gregorian.month.en,
                         it.date.gregorian.year,
                         it.date.hijri.date,
@@ -64,6 +65,13 @@ class PrayersLocalDataSource @Inject constructor(
     suspend fun shouldFetchData(city: String, month: Int): Boolean {
         return withContext(externalScope.coroutineContext) {
             appDatabase.prayersDao().shouldFetchData(city, month) == 0
+        }
+    }
+
+    suspend fun getDayTimings(day: Int, month: String): Timing {
+        return withContext(externalScope.coroutineContext) {
+            val dateWithTiming = appDatabase.prayersDao().getTodayTimings(String.format("%02d", day) ,month)
+            dateWithTiming.timing
         }
     }
 }

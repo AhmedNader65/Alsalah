@@ -9,5 +9,5 @@ data class DateWithTiming(
         parentColumn = "timingId",
         entityColumn = "id"
     )
-    val timingsList: Timing
+    val timing: Timing
 )

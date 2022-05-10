@@ -1,5 +1,6 @@
 package com.crazyidea.alsalah.ui.home
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -49,6 +50,8 @@ class HomeViewModel @Inject constructor(
     val prayerData: StateFlow<Resource<PrayerResponseApiModel>> = _prayerData.asStateFlow()
 
     fun fetchPrayerData(
+        cityName: String,
+        day: Int,
         month: String,
         year: String,
         lat: String,
@@ -58,31 +61,22 @@ class HomeViewModel @Inject constructor(
     ) {
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
-            prayerRepository.getPrayersData(month,year, lat,lng, method, tune)
-//                .collect { resource ->
-//                if (resource != null) {
-//                    _prayerData.emit(resource)
-//                    resource.data?.timings.let { timings ->
-//                        if (timings != null) {
-//
-//                            fajrTime.value = twentyFourConverter(timings.Fajr)
-//                            zuhrTime.value = twentyFourConverter(timings.Dhuhr)
-//                            shorokTime.value = twentyFourConverter(timings.Sunrise)
-//                            asrTime.value = twentyFourConverter(timings.Asr)
-//                            maghribTime.value = twentyFourConverter(timings.Maghrib)
-//                            eshaTime.value = twentyFourConverter(timings.Isha)
-//                            fajrTimeAPM.value = twentyFourConverter(timings.Fajr, true)
-//                            zuhrTimeAPM.value = twentyFourConverter(timings.Dhuhr, true)
-//                            shorokTimeAPM.value = twentyFourConverter(timings.Sunrise, true)
-//                            asrTimeAPM.value = twentyFourConverter(timings.Asr, true)
-//                            maghribTimeAPM.value = twentyFourConverter(timings.Maghrib, true)
-//                            eshaTimeAPM.value = twentyFourConverter(timings.Isha, true)
-//                            midnightTime.value = twentyFourConverter(timings.Midnight)
-//                            lastQuarterTime.value = timings.Imsak
-//                        }
-//                    }
-//                }
-//            }
+            var timings =
+                prayerRepository.getPrayersData(cityName, day, month, year, lat, lng, method, tune)
+            fajrTime.value = twentyFourConverter(timings.Fajr)
+            zuhrTime.value = twentyFourConverter(timings.Dhuhr)
+            shorokTime.value = twentyFourConverter(timings.Sunrise)
+            asrTime.value = twentyFourConverter(timings.Asr)
+            maghribTime.value = twentyFourConverter(timings.Maghrib)
+            eshaTime.value = twentyFourConverter(timings.Isha)
+            fajrTimeAPM.value = twentyFourConverter(timings.Fajr, true)
+            zuhrTimeAPM.value = twentyFourConverter(timings.Dhuhr, true)
+            shorokTimeAPM.value = twentyFourConverter(timings.Sunrise, true)
+            asrTimeAPM.value = twentyFourConverter(timings.Asr, true)
+            maghribTimeAPM.value = twentyFourConverter(timings.Maghrib, true)
+            eshaTimeAPM.value = twentyFourConverter(timings.Isha, true)
+            midnightTime.value = twentyFourConverter(timings.Midnight)
+            lastQuarterTime.value = timings.Imsak
         }
     }
 

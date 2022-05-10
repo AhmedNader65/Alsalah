@@ -4,6 +4,7 @@ import com.crazyidea.alsalah.data.dataSource.PrayersLocalDataSource
 import com.crazyidea.alsalah.data.dataSource.PrayersRemoteDataSource
 import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
 import com.crazyidea.alsalah.data.model.Resource
+import com.crazyidea.alsalah.data.room.entity.Timing
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,19 +20,21 @@ class PrayersRepository @Inject constructor(
 ) {
 
     suspend fun getPrayersData(
+        cityName: String,
+        day: Int,
         month: String,
         year: String,
         lat: String,
         lng: String,
         method: Int,
         tune: String?
-    ) {
-        if (localDataSource.shouldFetchData("Mansoura", month.toInt()))
+    ): Timing {
+        if (localDataSource.shouldFetchData(cityName, month.toInt()))
             withContext(externalScope.coroutineContext) {
                 val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
-                localDataSource.insertData(result.data!!)
+                localDataSource.insertData(cityName, result.data!!)
             }
-
+        return localDataSource.getDayTimings(day, month)
     }
 
 }

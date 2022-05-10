@@ -28,6 +28,7 @@ data class Date(
     @ColumnInfo(name = "g_date") val g_date: String,
     @ColumnInfo(name = "g_day") val g_day: String,
     @ColumnInfo(name = "g_month") val g_month: String,
+    @ColumnInfo(name = "g_month_en") val g_month_en: String,
     @ColumnInfo(name = "g_year") val g_year: String,
     @ColumnInfo(name = "h_date") val h_date: String,
     @ColumnInfo(name = "h_day") val h_day: String,
