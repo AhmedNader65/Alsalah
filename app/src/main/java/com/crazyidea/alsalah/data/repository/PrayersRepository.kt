@@ -19,15 +19,17 @@ class PrayersRepository @Inject constructor(
 ) {
 
     suspend fun getPrayersData(
-        date: String,
-        address: String,
+        month: String,
+        year: String,
+        lat: String,
+        lng: String,
         method: Int,
         tune: String?
     ): Flow<Resource<PrayerResponseApiModel>?> {
         return withContext(externalScope.coroutineContext) {
             flow {
                 emit(Resource.loading())
-                val result = remoteDataSource.getDayPrayers(date, address, method, tune)
+                val result = remoteDataSource.getDayPrayers(month,year, lat,lng, method, tune)
                 emit(result)
             }.flowOn(Dispatchers.IO)
         }

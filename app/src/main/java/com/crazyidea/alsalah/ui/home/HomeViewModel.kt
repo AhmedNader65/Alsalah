@@ -41,9 +41,6 @@ class HomeViewModel @Inject constructor(
     val maghribTimeAPM = MutableLiveData("AM")
     val eshaTimeAPM = MutableLiveData("AM")
 
-    init {
-        fetchPrayerData("09-05-2022", "Mansoura,EG", 5, null)
-    }
 
     private var prayerDataJob: Job? = null
 
@@ -51,15 +48,17 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(Resource<PrayerResponseApiModel>(Status.INIT, null, null))
     val prayerData: StateFlow<Resource<PrayerResponseApiModel>> = _prayerData.asStateFlow()
 
-    private fun fetchPrayerData(
-        date: String,
-        address: String,
+    fun fetchPrayerData(
+        month: String,
+        year: String,
+        lat: String,
+        lng: String,
         method: Int,
         tune: String?
     ) {
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
-            prayerRepository.getPrayersData(date, address, method, tune).collect { resource ->
+            prayerRepository.getPrayersData(month,year, lat,lng, method, tune).collect { resource ->
                 if (resource != null) {
                     _prayerData.emit(resource)
                     resource.data?.timings.let { timings ->

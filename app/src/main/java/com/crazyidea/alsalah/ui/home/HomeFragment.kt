@@ -16,6 +16,7 @@ import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -42,6 +43,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault());
+
+        viewModel.fetchPrayerData(
+            calendar.get(Calendar.MONTH).toString(),
+            calendar.get(Calendar.YEAR).toString(),
+            "51.508515",
+            "-0.1254872",
+            5,
+            null
+        )
         collectData()
     }
 

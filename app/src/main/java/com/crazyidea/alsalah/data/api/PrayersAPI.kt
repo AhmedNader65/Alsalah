@@ -9,10 +9,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PrayersAPI {
-    @GET("timingsByAddress/{date}")
+    @GET("calendar")
     suspend fun getPrayersTimingByAddress(
-        @Path("date") date:String,
-        @Query("address") address:String,
+        @Query("latitude") latitude:String,
+        @Query("longitude") longitude:String,
+        @Query("month") month:String,
+        @Query("year") year:String,
         @Query("method") method:Int,
         @Query("tune") tune:String?
     ): Response<ServerResponse<PrayerResponseApiModel>>

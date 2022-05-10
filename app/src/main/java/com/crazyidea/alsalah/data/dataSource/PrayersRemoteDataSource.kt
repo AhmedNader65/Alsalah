@@ -9,14 +9,16 @@ import javax.inject.Inject
 class PrayersRemoteDataSource @Inject constructor(private val prayersAPI: PrayersAPI) {
 
     suspend fun getDayPrayers(
-        date: String,
-        address: String,
+        month: String,
+        year: String,
+        lat: String,
+        lng: String,
         method: Int,
         tune: String?
     ): Resource<PrayerResponseApiModel> {
         return getResponse(
             request = {
-                prayersAPI.getPrayersTimingByAddress(date, address, method, tune)
+                prayersAPI.getPrayersTimingByAddress( lat,lng,month,year, method, tune)
             },
             defaultErrorMessage = "Error getting prayers try again"
         )
