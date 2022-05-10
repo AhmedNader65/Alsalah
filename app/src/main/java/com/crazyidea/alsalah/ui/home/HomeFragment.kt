@@ -145,7 +145,7 @@ class HomeFragment : Fragment(), PermissionListener {
                             it.longitude,
                             1
                         )
-                        val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault());
+                        val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
                         val cityName: String = addresses[0].locality
                         viewModel.fetchPrayerData(
                             cityName,
