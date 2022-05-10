@@ -25,14 +25,12 @@ class PrayersRepository @Inject constructor(
         lng: String,
         method: Int,
         tune: String?
-    ): Flow<Resource<PrayerResponseApiModel>?> {
-        return withContext(externalScope.coroutineContext) {
-            flow {
-                emit(Resource.loading())
-                val result = remoteDataSource.getDayPrayers(month,year, lat,lng, method, tune)
-                emit(result)
-            }.flowOn(Dispatchers.IO)
-        }
+    ) {
+        if (localDataSource.shouldFetchData("Mansoura", month.toInt()))
+            withContext(externalScope.coroutineContext) {
+                val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
+                localDataSource.insertData(result.data!!)
+            }
 
     }
 

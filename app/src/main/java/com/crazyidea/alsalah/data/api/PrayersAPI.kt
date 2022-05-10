@@ -17,6 +17,6 @@ interface PrayersAPI {
         @Query("year") year:String,
         @Query("method") method:Int,
         @Query("tune") tune:String?
-    ): Response<ServerResponse<PrayerResponseApiModel>>
+    ): Response<ServerResponse<List<PrayerResponseApiModel>>>
 
 }

@@ -1,10 +1,12 @@
 package com.crazyidea.alsalah.di
 
 import android.content.Context
+import androidx.room.Room
 import com.crazyidea.alsalah.data.api.PrayersAPI
 import com.crazyidea.alsalah.data.dataSource.PrayersLocalDataSource
 import com.crazyidea.alsalah.data.dataSource.PrayersRemoteDataSource
 import com.crazyidea.alsalah.data.repository.PrayersRepository
+import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.Module
 import dagger.Provides
@@ -28,6 +30,15 @@ class DataModule {
 
     @Provides
     @Singleton
+    fun provideDB(@ApplicationContext context: Context): AppDatabase =
+        Room.databaseBuilder(
+            context,
+            AppDatabase::class.java, "SalahDB"
+        )
+            .fallbackToDestructiveMigration().build()
+
+    @Provides
+    @Singleton
     fun providePrayersRemoteDataSource(
         prayersAPI: PrayersAPI
     ) =
@@ -35,8 +46,8 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providePrayersLocalDataSource() =
-        PrayersLocalDataSource()
+    fun providePrayersLocalDataSource(coroutineScope: CoroutineScope,appDatabase: AppDatabase) =
+        PrayersLocalDataSource(appDatabase,coroutineScope)
 
     @Provides
     @Singleton
@@ -50,5 +61,5 @@ class DataModule {
         remoteDataSource: PrayersRemoteDataSource,
         localDataSource: PrayersLocalDataSource
     ) =
-        PrayersRepository(remoteDataSource, localDataSource,coroutineScope)
+        PrayersRepository(remoteDataSource, localDataSource, coroutineScope)
 }

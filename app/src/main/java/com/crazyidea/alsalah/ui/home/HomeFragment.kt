@@ -46,10 +46,10 @@ class HomeFragment : Fragment() {
         val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault());
 
         viewModel.fetchPrayerData(
-            calendar.get(Calendar.MONTH).toString(),
+            (calendar.get(Calendar.MONTH)+1).toString(),
             calendar.get(Calendar.YEAR).toString(),
-            "51.508515",
-            "-0.1254872",
+            "31.0409",
+            "31.3785",
             5,
             null
         )
