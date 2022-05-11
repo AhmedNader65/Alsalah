@@ -1,4 +1,4 @@
-package com.crazyidea.alsalah
+package com.crazyidea.alsalah.receiver
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -10,16 +10,16 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.AudioAttributes
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.DEFAULT_ALL
+import com.crazyidea.alsalah.MainActivity
+import com.crazyidea.alsalah.R
 import java.util.*
 
 
@@ -86,7 +86,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 channel.setSound(soundUri, audioAttributes)
                 channel.lightColor = Color.GRAY;
                 channel.enableLights(true);
-                channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+                channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC;
 
                 // Register the channel with the system
                 val notificationManager: NotificationManager =

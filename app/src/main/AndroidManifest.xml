@@ -42,7 +42,7 @@
                 android:value="androidx.startup"
                 tools:node="remove" />
         </provider>
-        <receiver  android:name=".AlarmReceiver"
+        <receiver  android:name=".receiver.AlarmReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="alarm.running"/>

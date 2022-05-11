@@ -15,7 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.crazyidea.alsalah.data.workManager.DailyAzanWorker
+import com.crazyidea.alsalah.workManager.DailyAzanWorker
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener

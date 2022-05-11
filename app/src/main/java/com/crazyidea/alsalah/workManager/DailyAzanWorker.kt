@@ -1,4 +1,4 @@
-package com.crazyidea.alsalah.data.workManager
+package com.crazyidea.alsalah.workManager
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -13,7 +13,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.crazyidea.alsalah.AlarmReceiver
+import com.crazyidea.alsalah.receiver.AlarmReceiver
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.dao.PrayerDao
 import dagger.assisted.Assisted
