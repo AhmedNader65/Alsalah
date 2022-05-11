@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Build
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -101,6 +102,7 @@ public class DailyAzanWorker @AssistedInject constructor(
     }
 
     private fun setAlarm(title: String, timeInMillis: Long) {
+        Log.e(title,"$timeInMillis")
         val alarmManager =
             applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(applicationContext, AlarmReceiver::class.java)
@@ -120,13 +122,13 @@ public class DailyAzanWorker @AssistedInject constructor(
 
         if (Build.VERSION.SDK_INT >= 23) {
             alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC,
+                AlarmManager.RTC_WAKEUP,
                 timeInMillis,
                 pendingIntent
             )
         } else {
             alarmManager.setExact(
-                AlarmManager.RTC,
+                AlarmManager.RTC_WAKEUP,
                 timeInMillis,
                 pendingIntent
             )

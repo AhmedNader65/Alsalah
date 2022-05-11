@@ -74,4 +74,11 @@ class PrayersLocalDataSource @Inject constructor(
             dateWithTiming.timing
         }
     }
+
+    suspend fun getNextPrayer(minute: String, hour: String, day: Int, month: String, year: String): Timing {
+        return withContext(externalScope.coroutineContext) {
+            val dateWithTiming = appDatabase.prayersDao().getTodayTimings(String.format("%02d", day) ,month)
+            dateWithTiming.timing
+        }
+    }
 }

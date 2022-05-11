@@ -142,9 +142,8 @@ class HomeFragment : Fragment(), PermissionListener {
                         val cityName: String = addresses[0].locality
                         viewModel.fetchPrayerData(
                             cityName,
-                            calendar.get(Calendar.DAY_OF_MONTH),
-                            (calendar.get(Calendar.MONTH) + 1).toString(),
-                            calendar.get(Calendar.YEAR).toString(),
+                            calendar
+                            ,
                             it.latitude.toString(),
                             it.longitude.toString(),
                             5,
