@@ -28,13 +28,14 @@ class PrayersRepository @Inject constructor(
         lng: String,
         method: Int,
         tune: String?
-    ): Timing {
-        if (localDataSource.shouldFetchData(cityName, month.toInt()))
+    ): Pair<Timing,Boolean> {
+        val shouldFetch = localDataSource.shouldFetchData(cityName, month.toInt())
+        if (shouldFetch)
             withContext(externalScope.coroutineContext) {
                 val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
                 localDataSource.insertData(cityName, result.data!!)
             }
-        return localDataSource.getDayTimings(day, month)
+        return Pair(localDataSource.getDayTimings(day, month),shouldFetch)
     }
 
 }

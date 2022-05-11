@@ -67,4 +67,13 @@
     <string name="addContacts">اضف جهات اتصال</string>
     <string name="tasbeh_exp">لَا إلَه إلّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلُّ شَيْءِ قَدِيرِ.
 كانت له عدل عشر رقاب، وكتبت له مئة حسنة، ومحيت عنه مئة سيئة، وكانت له حرزا من الشيطان.</string>
+    <string name="fajr_prayer_notification">حان الآن موعد صلاة الفجر</string>
+    <string name="zuhr_prayer_notification">حان الآن موعد صلاة الظهر</string>
+    <string name="asr_prayer_notification">حان الآن موعد صلاة العصر</string>
+    <string name="maghrib_prayer_notification">حان الآن موعد صلاة المغرب</string>
+    <string name="isha_prayer_notification">حان الآن موعد صلاة العشاء</string>
+    <string name="prayer_notification">حان الآن موعد الصلاة</string>
+    <string name="continue_using">للاستمرار في تلقى الاشعارات برجاء فتح التطبيق باستمرار</string>
+    <string name="channel_name">prayer_times</string>
+    <string name="channel_description">مواعيد الصلاة</string>
 </resources>

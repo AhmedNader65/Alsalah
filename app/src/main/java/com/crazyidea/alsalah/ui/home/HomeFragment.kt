@@ -12,21 +12,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.crazyidea.alsalah.data.model.Status
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.crazyidea.alsalah.data.workManager.DailyAzanWorker
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import java.util.*
 
 
+private const val TAG_OUTPUT: String = "DailyAzanWorker"
 private const val TAG: String = "HOME FRAGMENT"
 
 @AndroidEntryPoint
@@ -63,32 +62,26 @@ class HomeFragment : Fragment(), PermissionListener {
 
         permissionHelper.launchPermissionDialogForMultiplePermissions(
             arrayOf(
+                Manifest.permission.SYSTEM_ALERT_WINDOW,
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         )
         collectData()
     }
 
     private fun collectData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.prayerData.collect { it ->
-                    when (it.status) {
-                        Status.SUCCESS -> {
-                        }
-                        Status.LOADING -> {
-
-                        }
-                        Status.ERROR -> {
-
-                        }
-                    }
-                }
-            }
+        viewModel.prayerData.observe(viewLifecycleOwner) {
+            val dailyWorkRequest = OneTimeWorkRequestBuilder<DailyAzanWorker>()
+//            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
+                .addTag(TAG_OUTPUT).build()
+            WorkManager.getInstance(requireContext()).enqueueUniqueWork(
+                TAG_OUTPUT,
+                ExistingWorkPolicy.KEEP, dailyWorkRequest
+            )
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

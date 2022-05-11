@@ -1,6 +1,7 @@
 package com.crazyidea.alsalah.ui.home
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,7 @@ import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
 import com.crazyidea.alsalah.data.model.Resource
 import com.crazyidea.alsalah.data.model.Status
 import com.crazyidea.alsalah.data.repository.PrayersRepository
+import com.crazyidea.alsalah.data.room.entity.Timing
 import com.crazyidea.alsalah.utils.CommonUtils
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,9 +47,8 @@ class HomeViewModel @Inject constructor(
 
     private var prayerDataJob: Job? = null
 
-    private val _prayerData =
-        MutableStateFlow(Resource<PrayerResponseApiModel>(Status.INIT, null, null))
-    val prayerData: StateFlow<Resource<PrayerResponseApiModel>> = _prayerData.asStateFlow()
+    private val _prayerData = MutableLiveData<Timing>()
+    val prayerData: LiveData<Timing> = _prayerData
 
     fun fetchPrayerData(
         cityName: String,
@@ -61,8 +62,9 @@ class HomeViewModel @Inject constructor(
     ) {
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
-            var timings =
+            var pair =
                 prayerRepository.getPrayersData(cityName, day, month, year, lat, lng, method, tune)
+            val timings = pair.first
             fajrTime.value = twentyFourConverter(timings.Fajr)
             zuhrTime.value = twentyFourConverter(timings.Dhuhr)
             shorokTime.value = twentyFourConverter(timings.Sunrise)
@@ -77,6 +79,8 @@ class HomeViewModel @Inject constructor(
             eshaTimeAPM.value = twentyFourConverter(timings.Isha, true)
             midnightTime.value = twentyFourConverter(timings.Midnight)
             lastQuarterTime.value = timings.Imsak
+            if (pair.second)
+                _prayerData.value = timings
         }
     }
 

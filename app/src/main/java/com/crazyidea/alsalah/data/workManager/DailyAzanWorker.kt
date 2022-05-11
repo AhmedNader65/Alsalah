@@ -3,17 +3,17 @@ package com.crazyidea.alsalah.data.workManager
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Build
-import android.util.Log
-import androidx.core.app.AlarmManagerCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.crazyidea.alsalah.MainActivity
+import com.crazyidea.alsalah.AlarmReceiver
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.dao.PrayerDao
 import dagger.assisted.Assisted
@@ -33,7 +33,6 @@ public class DailyAzanWorker @AssistedInject constructor(
     private var prayerDao: PrayerDao = appDatabase.prayersDao()
 
     override fun doWork(): Result {
-        Log.e("worker is", "Fireeeed")
         val currentDate = Calendar.getInstance()
         val dueDate = Calendar.getInstance()
         // Set Execution around 05:00:00 AM
@@ -56,61 +55,83 @@ public class DailyAzanWorker @AssistedInject constructor(
 
     private fun setupAlarms() {
         val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault());
-
+        val currentDate: Calendar = Calendar.getInstance(TimeZone.getDefault());
         val timings = prayerDao.getTodayTimings(
             calendar.get(Calendar.DAY_OF_MONTH).toString(),
             (calendar.get(Calendar.MONTH) + 1).toString()
         )
 
-        val mAlarmMgr = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val myIntent = Intent(applicationContext, MainActivity::class.java)
-        myIntent.putExtra("show_dialog", true)
-
-        val mPi = PendingIntent.getActivity(
-            applicationContext, 0, myIntent, FLAG_IMMUTABLE
-        )
         val fajrTime = timings.timing.Fajr.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, fajrTime[0].toInt())
         calendar.set(Calendar.MINUTE, fajrTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
-        setExactAndAllowWhileIdle(mAlarmMgr, AlarmManager.RTC_WAKEUP, calendar.timeInMillis, mPi)
+
+        if (calendar.after(currentDate)) {
+            setAlarm("fajr", calendar.timeInMillis)
+        }
         val ZuhrTime = timings.timing.Dhuhr.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, ZuhrTime[0].toInt())
         calendar.set(Calendar.MINUTE, ZuhrTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
-        setExactAndAllowWhileIdle(mAlarmMgr, AlarmManager.RTC_WAKEUP, calendar.timeInMillis, mPi)
+
+        if (calendar.after(currentDate)) {
+            setAlarm("zuhr", calendar.timeInMillis)
+        }
         val AsrTime = timings.timing.Asr.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, AsrTime[0].toInt())
         calendar.set(Calendar.MINUTE, AsrTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
-        setExactAndAllowWhileIdle(mAlarmMgr, AlarmManager.RTC_WAKEUP, calendar.timeInMillis, mPi)
+        if (calendar.after(currentDate)) {
+            setAlarm("asr", calendar.timeInMillis)
+        }
         val MaghribTime = timings.timing.Maghrib.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, MaghribTime[0].toInt())
         calendar.set(Calendar.MINUTE, MaghribTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
-        setExact(mAlarmMgr, AlarmManager.RTC_WAKEUP, calendar.timeInMillis, mPi)
+        if (calendar.after(currentDate)) {
+            setAlarm("maghrib", calendar.timeInMillis)
+        }
         val IshaTime = timings.timing.Isha.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, IshaTime[0].toInt())
         calendar.set(Calendar.MINUTE, IshaTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
-        setExact(mAlarmMgr, AlarmManager.RTC_WAKEUP, calendar.timeInMillis, mPi)
-    }
-
-    fun setExactAndAllowWhileIdle(
-        alarmManager: AlarmManager, type: Int,
-        triggerAtMillis: Long, operation: PendingIntent
-    ) {
-        if (Build.VERSION.SDK_INT >= 23) {
-            alarmManager.setExactAndAllowWhileIdle(type, triggerAtMillis, operation)
-        } else {
-            AlarmManagerCompat.setExact(alarmManager, type, triggerAtMillis, operation)
+        if (calendar.after(currentDate)) {
+            setAlarm("isha", calendar.timeInMillis)
         }
     }
-//
-    fun setExact(
-        alarmManager: AlarmManager, type: Int, triggerAtMillis: Long,
-        operation: PendingIntent
-    ) {
-        alarmManager.setExact(type, triggerAtMillis, operation)
+
+    private fun setAlarm(title: String, timeInMillis: Long) {
+        val alarmManager =
+            applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(applicationContext, AlarmReceiver::class.java)
+        intent.flags = FLAG_ACTIVITY_NEW_TASK
+        intent.action = title
+        intent.putExtra("salah", title)
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getBroadcast(
+                applicationContext,
+                0,
+                intent,
+                FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
+            )
+        } else {
+            PendingIntent.getBroadcast(applicationContext, 0, intent, 0)
+        }
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC,
+                timeInMillis,
+                pendingIntent
+            )
+        } else {
+            alarmManager.setExact(
+                AlarmManager.RTC,
+                timeInMillis,
+                pendingIntent
+            )
+        }
+
     }
+
 }
