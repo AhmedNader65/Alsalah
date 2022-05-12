@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             .setTopRightCorner(RoundedCornerTreatment())
             .setTopRightCornerSize(RelativeCornerSize(.8f))
             .build()
-        setAlarm("asr", System.currentTimeMillis())
+//        setAlarm("asr", System.currentTimeMillis())
     }
 
     private fun setAlarm(title: String, timeInMillis: Long) {
@@ -72,12 +72,12 @@ class MainActivity : AppCompatActivity() {
                 timeInMillis,
                 pendingIntent
             )
-        } else {
             alarmManager.setExact(
                 AlarmManager.RTC_WAKEUP,
                 timeInMillis,
                 pendingIntent
             )
+        } else {
         }
     }
 }

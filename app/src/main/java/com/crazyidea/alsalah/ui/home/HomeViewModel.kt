@@ -65,7 +65,7 @@ class HomeViewModel @Inject constructor(
         prayerDataJob = viewModelScope.launch {
             var pair =
                 prayerRepository.getPrayersData(cityName, day, month, year, lat, lng, method, tune)
-            prayerRepository.getFirstAzkarByCategory()
+            prayerRepository.getAzkar()
             getFirstAzkar()
             val timings = pair.first
             fajrTime.value = twentyFourConverter(timings.Fajr)

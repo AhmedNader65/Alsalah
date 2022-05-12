@@ -33,7 +33,7 @@ class PrayersRepository @Inject constructor(
         return Pair(localDataSource.getDayTimings(day, month), shouldFetch)
     }
 
-    suspend fun getFirstAzkarByCategory() {
+    suspend fun getAzkar() {
         val shouldFetch = localDataSource.shouldFetchAzkar()
         if (shouldFetch)
             withContext(externalScope.coroutineContext) {
@@ -44,6 +44,9 @@ class PrayersRepository @Inject constructor(
 
     suspend fun getFirstAzkarByCategory(category: String): Azkar {
         return localDataSource.getFirstAzkarByCategory(category)
+    }
+    suspend fun getAzkarByCategory(category: String): List<Azkar> {
+        return localDataSource.getAzkarByCategory(category)
     }
     suspend fun getFirstAzkar(): Azkar {
         return localDataSource.getFirstAzkar()

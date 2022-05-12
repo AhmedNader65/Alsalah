@@ -13,12 +13,15 @@ import com.crazyidea.alsalah.databinding.FragmentAzkarDetailsBinding
 import com.crazyidea.alsalah.databinding.FragmentSebhaBinding
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SebhaFragment : Fragment() {
 
     private var _binding: FragmentSebhaBinding? = null
-
+    private val viewModel by viewModels<SebhaViewModel>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -32,11 +35,17 @@ class SebhaFragment : Fragment() {
 
         _binding = FragmentSebhaBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        binding.model = viewModel
+        binding.lifecycleOwner = this
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        GlobalScope.launch(Dispatchers.Main) {
+            viewModel.getSebha()
+
+        }
         binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {
                 binding.sebhaImg.isVisible = tab.position == 0

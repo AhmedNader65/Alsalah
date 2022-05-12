@@ -1,4 +1,4 @@
-package com.crazyidea.alsalah.ui.azkar.azkar_details
+package com.crazyidea.alsalah.ui.azkar.sebha
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,17 +10,17 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class AzkarDetailsViewModel @Inject constructor(
+class SebhaViewModel @Inject constructor(
     private val prayerRepository: PrayersRepository,
 ) : ViewModel() {
 
     val azkar = MutableLiveData<Azkar>()
     var currentIndex = MutableLiveData(0)
     val azkarCounter = MutableLiveData(0)
-    val allAzkar = MutableLiveData<List<Azkar>>()
-    suspend fun getAzkar(category: String) {
+    val allAzkar = MutableLiveData<List<Azkar>>(listOf(Azkar(1, "", 2, "", "", "")))
+    suspend fun getSebha() {
         withContext(viewModelScope.coroutineContext) {
-            allAzkar.value = prayerRepository.getAzkarByCategory(category)
+            allAzkar.value = prayerRepository.getAzkarByCategory("تسابيح")
             azkar.value = allAzkar.value!![0]
         }
     }

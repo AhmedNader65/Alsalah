@@ -1,177 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_styled_white"
-    tools:context=".ui.azkar.main.AzkarFragment">
+<layout>
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/boldText"
+    <data>
+
+        <variable
+            name="model"
+            type="com.crazyidea.alsalah.ui.azkar.sebha.SebhaViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/text_green_color"
-        android:paddingBottom="@dimen/_8sdp"
-        android:text="السبحة"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_18ssp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_styled_white"
+        tools:context=".ui.azkar.main.AzkarFragment">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_36sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_36sdp"
-        android:background="@drawable/tab_layout_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:tabIndicator="@drawable/tab_layout_fg"
-        app:tabIndicatorGravity="stretch"
-        app:tabPaddingBottom="@dimen/_4sdp"
-        app:tabRippleColor="@null"
-        app:tabTextAppearance="@style/mediumText"
-        app:tabTextColor="@color/white">
+        <TextView
+            android:id="@+id/title"
+            style="@style/boldText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/text_green_color"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="السبحة"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.tabs.TabItem
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_36sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_36sdp"
+            android:background="@drawable/tab_layout_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:tabIndicator="@drawable/tab_layout_fg"
+            app:tabIndicatorGravity="stretch"
+            app:tabPaddingBottom="@dimen/_4sdp"
+            app:tabRippleColor="@null"
+            app:tabTextAppearance="@style/mediumText"
+            app:tabTextColor="@color/white">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="السبحة" />
+
+            <com.google.android.material.tabs.TabItem
+                style="@style/mediumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="العداد" />
+
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <ImageView
+            android:id="@+id/mute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="السبحة" />
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/ic_mute_sebha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/vibration"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
-        <com.google.android.material.tabs.TabItem
-            style="@style/mediumText"
+        <ImageView
+            android:id="@+id/vibration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="العداد" />
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:src="@drawable/ic_vib_sebha"
+            app:layout_constraintEnd_toStartOf="@+id/mute"
+            app:layout_constraintStart_toEndOf="@+id/count"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
+        <ImageView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:src="@drawable/ic_count_sebha"
+            app:layout_constraintEnd_toStartOf="@+id/vibration"
+            app:layout_constraintStart_toEndOf="@+id/menu"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
-    </com.google.android.material.tabs.TabLayout>
+        <TextView
+            android:id="@+id/count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/count"
+            app:layout_constraintEnd_toEndOf="@+id/count"
+            app:layout_constraintStart_toStartOf="@+id/count"
+            app:layout_constraintTop_toTopOf="@+id/count" />
 
-    <ImageView
-        android:id="@+id/mute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:src="@drawable/ic_mute_sebha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vibration"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:src="@drawable/ic_menu_sebha"
+            app:layout_constraintEnd_toStartOf="@+id/count"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
-    <ImageView
-        android:id="@+id/vibration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:src="@drawable/ic_vib_sebha"
-        app:layout_constraintEnd_toStartOf="@+id/mute"
-        app:layout_constraintStart_toEndOf="@+id/count"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+        <TextView
+            android:id="@+id/azkar_tv"
+            style="@style/regularText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_24sdp"
+            android:text="@{model.azkar.content}"
+            android:textAlignment="center"
+            android:textColor="@color/text_green_color"
+            app:layout_constraintTop_toBottomOf="@id/menu" />
 
-    <ImageView
-        android:id="@+id/count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:src="@drawable/ic_count_sebha"
-        app:layout_constraintEnd_toStartOf="@+id/vibration"
-        app:layout_constraintStart_toEndOf="@+id/menu"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
-    <TextView
-        android:id="@+id/count_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/count"
-        app:layout_constraintEnd_toEndOf="@+id/count"
-        app:layout_constraintTop_toTopOf="@+id/count"
-        app:layout_constraintBottom_toBottomOf="@id/count" />
+        <ImageView
+            android:id="@+id/sebha_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:src="@drawable/img_sebha"
+            app:layout_constraintBottom_toTopOf="@id/bottom_tools" />
 
-    <ImageView
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:src="@drawable/ic_menu_sebha"
-        app:layout_constraintEnd_toStartOf="@+id/count"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+        <FrameLayout
+            android:id="@+id/counter_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:onClick="@{()->model.increaseCounter()}"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/bottom_tools"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/azkar_tv">
 
-    <TextView
-        android:id="@+id/azkar_tv"
-        style="@style/regularText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_24sdp"
-        android:text="@string/tasbeh_exp"
-        android:textAlignment="center"
-        android:textColor="@color/text_green_color"
-        app:layout_constraintTop_toBottomOf="@id/menu" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_gravity="center"
+                app:cardBackgroundColor="@color/text_orange_color"
+                app:cardCornerRadius="@dimen/_60sdp"
+                app:strokeColor="@color/green"
+                app:strokeWidth="1dp">
 
-    <ImageView
-        android:id="@+id/sebha_img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_24sdp"
-        android:src="@drawable/img_sebha"
-        app:layout_constraintBottom_toTopOf="@id/bottom_tools" />
+                <TextView
+                    android:id="@+id/counter"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:gravity="center"
+                    android:text="@{model.azkarCounter.toString()}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_32ssp" />
+            </com.google.android.material.card.MaterialCardView>
 
-    <FrameLayout
-        android:id="@+id/counter_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/azkar_tv"
-        app:layout_constraintBottom_toTopOf="@id/bottom_tools">
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="@dimen/_170sdp"
+                android:layout_height="@dimen/_170sdp"
+                android:layout_gravity="center"
+                android:layoutDirection="ltr"
+                android:max="100"
+                android:progress="@{model.azkar.count==0?0:(int)((double)model.azkarCounter/(double)model.azkar.count * 100)}"
+                android:progressDrawable="@drawable/circle_progressbar"
+                android:progressTint="@color/green"
+                android:secondaryProgressTint="@color/black" />
+        </FrameLayout>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_gravity="center"
-            app:cardBackgroundColor="@color/text_orange_color"
-            app:cardCornerRadius="@dimen/_30sdp"
-            app:strokeColor="@color/green"
-            app:strokeWidth="1dp">
+        <include
+            android:id="@+id/bottom_tools"
+            layout="@layout/layout_bottom_reading_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            <TextView
-                android:id="@+id/counter"
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_60sdp"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_32ssp" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_90sdp"
-            android:layout_gravity="center"
-            android:layoutDirection="ltr"
-            android:max="100"
-            android:progress="40"
-            android:progressDrawable="@drawable/circle_progressbar"
-            android:progressTint="@color/green"
-            android:secondaryProgressTint="@color/black" />
-    </FrameLayout>
-    <include
-        android:id="@+id/bottom_tools"
-        layout="@layout/layout_bottom_reading_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_navigation_azkar_details_to_azkarSettingsFragment"
             app:destination="@id/azkarSettingsFragment" />
+        <argument
+            android:name="category"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/azkarSettingsFragment"

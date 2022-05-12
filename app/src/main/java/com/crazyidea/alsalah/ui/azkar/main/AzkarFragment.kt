@@ -29,22 +29,22 @@ class AzkarFragment : Fragment() {
         _binding = FragmentAzkarBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.morningAzkarButton.setOnClickListener {
-            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails("أذكار الصباح"))
         }
         binding.eveningAzkarButton.setOnClickListener {
-            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails("أذكار المساء"))
         }
         binding.sleepingAzkarButton.setOnClickListener {
-            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails("أذكار النوم"))
         }
         binding.afterPrayerAzkarButton.setOnClickListener {
-            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails("أذكار بعد السلام من الصلاة المفروضة"))
         }
         binding.sebhaButton.setOnClickListener {
             findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToSebhaFragment())
         }
-        binding.morningAzkarButton.setOnClickListener {
-            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails())
+        binding.moreAzkarButton.setOnClickListener {
+            findNavController().navigate(AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails("اخرى"))
         }
         return root
     }

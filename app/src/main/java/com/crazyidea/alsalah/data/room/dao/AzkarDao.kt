@@ -11,11 +11,16 @@ import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 interface AzkarDao {
     @Transaction
     @Query("SELECT * FROM Azkar where category = :category")
-    fun getAzkarByCategory(category: String): Azkar
+    fun getAzkarByCategory(category: String): List<Azkar>
+
+    @Transaction
+    @Query("SELECT * FROM Azkar where category NOT IN (\"أذكار الصباح\",\"أذكار النوم\",\"تسابيح\",\"أذكار بعد السلام من الصلاة المفروضة\",\"أذكار المساء\")")
+    fun getOtherAzkar(): List<Azkar>
 
     @Transaction
     @Query("SELECT * FROM Azkar where category = :category LIMIT 1")
     fun getFirstAzkarByCategory(category: String): Azkar
+
 
     @Transaction
     @Query("SELECT * FROM Azkar LIMIT 1")

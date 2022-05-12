@@ -89,6 +89,14 @@ class PrayersLocalDataSource @Inject constructor(
             azkar
         }
     }
+    suspend fun getAzkarByCategory(category:String): List<Azkar> {
+        return withContext(externalScope.coroutineContext) {
+            if (category=="اخرى")
+            appDatabase.azkarDao().getOtherAzkar()
+            else
+             appDatabase.azkarDao().getAzkarByCategory(category)
+        }
+    }
 
     suspend fun getFirstAzkar(): Azkar {
         return withContext(externalScope.coroutineContext) {
