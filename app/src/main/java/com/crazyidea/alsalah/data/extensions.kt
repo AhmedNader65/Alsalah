@@ -29,3 +29,25 @@ suspend fun <T> getResponse(
         Resource.error(defaultErrorMessage, null)
     }
 }
+
+suspend fun <T> getResponseNoServerResource(
+    request: suspend () -> Response<T>,
+    defaultErrorMessage: String
+): Resource<T> {
+    return try {
+        val result = request.invoke()
+        if (result.isSuccessful) {
+            val response: T? = result.body()
+            return Resource.success(response)
+        } else {
+            val gson = Gson()
+            val type = object : TypeToken<ServerResponse<String>?>() {}.type
+            val errorResponse: ServerResponse<String> =
+                gson.fromJson(result.errorBody()!!.charStream(), type)
+            Resource.error(errorResponse.status, null)
+        }
+    } catch (e: Throwable) {
+        e.printStackTrace()
+        Resource.error(defaultErrorMessage, null)
+    }
+}

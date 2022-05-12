@@ -79,7 +79,5 @@ class MainActivity : AppCompatActivity() {
                 pendingIntent
             )
         }
-
     }
-
 }

@@ -1,10 +1,12 @@
 package com.crazyidea.alsalah.data.dataSource
 
+import com.crazyidea.alsalah.data.model.AzkarResponseApiModel
 import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
+import com.crazyidea.alsalah.data.model.Resource
 import com.crazyidea.alsalah.data.room.AppDatabase
-import com.crazyidea.alsalah.data.room.entity.Date
-import com.crazyidea.alsalah.data.room.entity.Meta
-import com.crazyidea.alsalah.data.room.entity.Timing
+import com.crazyidea.alsalah.data.room.entity.prayers.Date
+import com.crazyidea.alsalah.data.room.entity.prayers.Meta
+import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -67,6 +69,11 @@ class PrayersLocalDataSource @Inject constructor(
             appDatabase.prayersDao().shouldFetchData(city, month) == 0
         }
     }
+    suspend fun shouldFetchAzkar(): Boolean {
+        return withContext(externalScope.coroutineContext) {
+            appDatabase.azkarDao().shouldFetchData() == 0
+        }
+    }
 
     suspend fun getDayTimings(day: Int, month: String): Timing {
         return withContext(externalScope.coroutineContext) {
@@ -75,10 +82,32 @@ class PrayersLocalDataSource @Inject constructor(
         }
     }
 
-    suspend fun getNextPrayer(minute: String, hour: String, day: Int, month: String, year: String): Timing {
-        return withContext(externalScope.coroutineContext) {
-            val dateWithTiming = appDatabase.prayersDao().getTodayTimings(String.format("%02d", day) ,month)
-            dateWithTiming.timing
+
+    fun insertAzkar(result: AzkarResponseApiModel) {
+        appDatabase.azkarDao().deleteAzkar()
+        result.morning_azkar.forEach {
+            appDatabase.azkarDao().insertData(it)
+        }
+        result.evening_azkar.forEach {
+            appDatabase.azkarDao().insertData(it)
+        }
+        result.afterPrayer_azkar.forEach {
+            appDatabase.azkarDao().insertData(it)
+        }
+        result.prophets_duaa.forEach {
+            appDatabase.azkarDao().insertData(it)
+        }
+        result.quran_duaa.forEach {
+            appDatabase.azkarDao().insertData(it)
+        }
+        result.sleeping_azkar.forEach {
+            appDatabase.azkarDao().insertData(it)
+        }
+        result.tasabeh.forEach {
+            appDatabase.azkarDao().insertData(it)
+        }
+        result.wakeup_azkar.forEach {
+            appDatabase.azkarDao().insertData(it)
         }
     }
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.repository.PrayersRepository
-import com.crazyidea.alsalah.data.room.entity.Timing
+import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -63,6 +63,7 @@ class HomeViewModel @Inject constructor(
         prayerDataJob = viewModelScope.launch {
             var pair =
                 prayerRepository.getPrayersData(cityName, day, month, year, lat, lng, method, tune)
+            prayerRepository.getAzkar()
             val timings = pair.first
             fajrTime.value = twentyFourConverter(timings.Fajr)
             zuhrTime.value = twentyFourConverter(timings.Dhuhr)

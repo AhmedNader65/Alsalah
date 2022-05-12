@@ -1,11 +1,10 @@
 package com.crazyidea.alsalah.data.room.dao
 
 import androidx.room.*
-import com.crazyidea.alsalah.data.model.PrayerTimingApiModel
-import com.crazyidea.alsalah.data.room.entity.Date
-import com.crazyidea.alsalah.data.room.entity.DateWithTiming
-import com.crazyidea.alsalah.data.room.entity.Meta
-import com.crazyidea.alsalah.data.room.entity.Timing
+import com.crazyidea.alsalah.data.room.entity.prayers.Date
+import com.crazyidea.alsalah.data.room.entity.prayers.DateWithTiming
+import com.crazyidea.alsalah.data.room.entity.prayers.Meta
+import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 
 @Dao
 interface PrayerDao {

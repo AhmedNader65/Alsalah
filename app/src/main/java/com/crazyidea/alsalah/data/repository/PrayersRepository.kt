@@ -2,14 +2,8 @@ package com.crazyidea.alsalah.data.repository
 
 import com.crazyidea.alsalah.data.dataSource.PrayersLocalDataSource
 import com.crazyidea.alsalah.data.dataSource.PrayersRemoteDataSource
-import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
-import com.crazyidea.alsalah.data.model.Resource
-import com.crazyidea.alsalah.data.room.entity.Timing
+import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -28,14 +22,23 @@ class PrayersRepository @Inject constructor(
         lng: String,
         method: Int,
         tune: String?
-    ): Pair<Timing,Boolean> {
+    ): Pair<Timing, Boolean> {
         val shouldFetch = localDataSource.shouldFetchData(cityName, month.toInt())
         if (shouldFetch)
             withContext(externalScope.coroutineContext) {
                 val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
                 localDataSource.insertData(cityName, result.data!!)
             }
-        return Pair(localDataSource.getDayTimings(day, month),shouldFetch)
+        return Pair(localDataSource.getDayTimings(day, month), shouldFetch)
+    }
+
+    suspend fun getAzkar() {
+        val shouldFetch = localDataSource.shouldFetchAzkar()
+        if (shouldFetch)
+            withContext(externalScope.coroutineContext) {
+                val result = remoteDataSource.getAzkar()
+                result.data?.let { localDataSource.insertAzkar(it) }
+            }
     }
 
 

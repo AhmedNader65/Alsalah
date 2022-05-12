@@ -1,4 +1,4 @@
-package com.crazyidea.alsalah.data.room.entity
+package com.crazyidea.alsalah.data.room.entity.prayers
 
 import androidx.room.Embedded
 import androidx.room.Relation
