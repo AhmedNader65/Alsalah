@@ -4,6 +4,7 @@ import com.crazyidea.alsalah.data.model.AzkarResponseApiModel
 import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
 import com.crazyidea.alsalah.data.model.Resource
 import com.crazyidea.alsalah.data.room.AppDatabase
+import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import com.crazyidea.alsalah.data.room.entity.prayers.Date
 import com.crazyidea.alsalah.data.room.entity.prayers.Meta
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
@@ -79,6 +80,20 @@ class PrayersLocalDataSource @Inject constructor(
         return withContext(externalScope.coroutineContext) {
             val dateWithTiming = appDatabase.prayersDao().getTodayTimings(String.format("%02d", day) ,month)
             dateWithTiming.timing
+        }
+    }
+
+    suspend fun getFirstAzkarByCategory(category:String): Azkar {
+        return withContext(externalScope.coroutineContext) {
+            val azkar = appDatabase.azkarDao().getFirstAzkarByCategory(category)
+            azkar
+        }
+    }
+
+    suspend fun getFirstAzkar(): Azkar {
+        return withContext(externalScope.coroutineContext) {
+            val azkar = appDatabase.azkarDao().getFirstAzkarGeneral()
+            azkar
         }
     }
 

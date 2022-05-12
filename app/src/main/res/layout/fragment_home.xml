@@ -626,7 +626,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:text="@string/azkar_exp"
+                android:text="@{model.azkarAfterPrayer}"
                 android:textAlignment="center"
                 android:textColor="@color/text_green_color"
                 app:layout_constraintTop_toBottomOf="@id/after_prayer_azkar_title" />
@@ -751,7 +751,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:text="@string/azkar_exp"
+                android:text="@{model.azkar}"
                 android:textAlignment="center"
                 android:textColor="@color/text_green_color"
                 app:layout_constraintTop_toBottomOf="@id/azkar_title" />

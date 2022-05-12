@@ -13,6 +13,14 @@ interface AzkarDao {
     @Query("SELECT * FROM Azkar where category = :category")
     fun getAzkarByCategory(category: String): Azkar
 
+    @Transaction
+    @Query("SELECT * FROM Azkar where category = :category LIMIT 1")
+    fun getFirstAzkarByCategory(category: String): Azkar
+
+    @Transaction
+    @Query("SELECT * FROM Azkar LIMIT 1")
+    fun getFirstAzkarGeneral(): Azkar
+
     @Insert
     fun insertData(azkar: Azkar): Long
 

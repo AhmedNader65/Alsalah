@@ -117,7 +117,6 @@ class HomeFragment : Fragment(), PermissionListener {
         alert.setTitle("Location Permission")
         // show alert dialog
         alert.show()
-
     }
 
     override fun isPermissionGranted(isGranted: Boolean) {

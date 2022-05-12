@@ -2,6 +2,7 @@ package com.crazyidea.alsalah.data.repository
 
 import com.crazyidea.alsalah.data.dataSource.PrayersLocalDataSource
 import com.crazyidea.alsalah.data.dataSource.PrayersRemoteDataSource
+import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
@@ -32,13 +33,20 @@ class PrayersRepository @Inject constructor(
         return Pair(localDataSource.getDayTimings(day, month), shouldFetch)
     }
 
-    suspend fun getAzkar() {
+    suspend fun getFirstAzkarByCategory() {
         val shouldFetch = localDataSource.shouldFetchAzkar()
         if (shouldFetch)
             withContext(externalScope.coroutineContext) {
                 val result = remoteDataSource.getAzkar()
                 result.data?.let { localDataSource.insertAzkar(it) }
             }
+    }
+
+    suspend fun getFirstAzkarByCategory(category: String): Azkar {
+        return localDataSource.getFirstAzkarByCategory(category)
+    }
+    suspend fun getFirstAzkar(): Azkar {
+        return localDataSource.getFirstAzkar()
     }
 
 

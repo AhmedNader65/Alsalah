@@ -39,6 +39,8 @@ class HomeViewModel @Inject constructor(
     val asrTimeAPM = MutableLiveData("AM")
     val maghribTimeAPM = MutableLiveData("AM")
     val eshaTimeAPM = MutableLiveData("AM")
+    val azkarAfterPrayer = MutableLiveData("")
+    val azkar = MutableLiveData("")
 
 
     private var prayerDataJob: Job? = null
@@ -63,7 +65,8 @@ class HomeViewModel @Inject constructor(
         prayerDataJob = viewModelScope.launch {
             var pair =
                 prayerRepository.getPrayersData(cityName, day, month, year, lat, lng, method, tune)
-            prayerRepository.getAzkar()
+            prayerRepository.getFirstAzkarByCategory()
+            getFirstAzkar()
             val timings = pair.first
             fajrTime.value = twentyFourConverter(timings.Fajr)
             zuhrTime.value = twentyFourConverter(timings.Dhuhr)
@@ -170,6 +173,13 @@ class HomeViewModel @Inject constructor(
         } catch (e: ParseException) {
             e.printStackTrace()
             return "am"
+        }
+    }
+
+    private suspend fun getFirstAzkar() {
+        viewModelScope.launch {
+            azkarAfterPrayer.value = prayerRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
+            azkar.value = prayerRepository.getFirstAzkar().content
         }
     }
 
