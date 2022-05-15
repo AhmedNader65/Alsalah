@@ -1,5 +1,8 @@
 package com.crazyidea.alsalah.ui.azkar.azkar_details
 
+import android.util.TypedValue
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,14 +12,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+
 @HiltViewModel
 class AzkarDetailsViewModel @Inject constructor(
     private val prayerRepository: PrayersRepository,
 ) : ViewModel() {
-
     val azkar = MutableLiveData<Azkar>()
     var currentIndex = MutableLiveData(0)
     val azkarCounter = MutableLiveData(0)
+    val fontSize = MutableLiveData(12)
     val allAzkar = MutableLiveData<List<Azkar>>()
     suspend fun getAzkar(category: String) {
         withContext(viewModelScope.coroutineContext) {
@@ -43,5 +47,9 @@ class AzkarDetailsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun changeFontSize() {
+
     }
 }

@@ -52,16 +52,26 @@
                     android:progressDrawable="@drawable/rounded_progress"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/azkar_tv"
-                    style="@style/regularText"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_margin="@dimen/_24sdp"
-                    android:text="@{model.azkar.content}"
-                    android:textAlignment="center"
-                    android:textColor="@color/text_green_color"
-                    app:layout_constraintTop_toBottomOf="@id/overall_azkar_progress" />
+                    app:layout_constraintBottom_toTopOf="@+id/count_tv"
+                    app:layout_constraintTop_toBottomOf="@id/overall_azkar_progress">
+
+                    <TextView
+                        android:id="@+id/azkar_tv"
+                        style="@style/regularText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minLines="3"
+                        android:paddingBottom="@dimen/_16sdp"
+                        android:text="@{model.azkar.content}"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_green_color"
+                        android:textSize="@dimen/_13ssp" />
+
+                </ScrollView>
 
                 <Button
                     android:id="@+id/count_tv"
@@ -73,11 +83,11 @@
                     android:paddingTop="0dp"
                     android:stateListAnimator="@null"
                     android:text="@{`عدد المرات `+model.azkar.count}"
-                    android:textSize="@dimen/_8ssp"
+                    android:textSize="@dimen/_10ssp"
                     app:cornerRadius="@dimen/_16sdp"
+                    app:layout_constraintBottom_toTopOf="@id/counter_container"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/azkar_tv"
                     app:tint="@color/light_green" />
 
                 <FrameLayout
