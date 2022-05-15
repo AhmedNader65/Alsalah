@@ -8,9 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="text_color">#4D4D4D</color>
-    <color name="inverted_text_color">#ffffff</color>
-    <color name="text_green_color">#184A3F</color>
+    <color name="text_green_color">#FFFFFF</color>
     <color name="header_color">#184A3F</color>
+    <color name="inverted_text_color">#000000</color>
     <color name="general_setting_line">#344E41</color>
     <color name="green">#38AD00</color>
     <color name="next_prayer_bg">#4E7850</color>

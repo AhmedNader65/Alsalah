@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -62,11 +63,17 @@ class AzkarDetailsFragment : Fragment() {
         }
         binding.bottomTools.fontSize.setOnClickListener {
             currentFontIndex++
-           val SCREEN_DENSITY = resources.displayMetrics.density;
             binding.azkarTv.setTextSize(
                 TypedValue.COMPLEX_UNIT_PX,
-                resources.getDimension(fonts[currentFontIndex %fonts.size ])
+                resources.getDimension(fonts[currentFontIndex % fonts.size])
             )
+        }
+        binding.bottomTools.nightMode.setOnClickListener {
+            val nightModeEnabled = AppCompatDelegate.getDefaultNightMode()
+            if (nightModeEnabled == AppCompatDelegate.MODE_NIGHT_YES)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            else
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
     }
 
