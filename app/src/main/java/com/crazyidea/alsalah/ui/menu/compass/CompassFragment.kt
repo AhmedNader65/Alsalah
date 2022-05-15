@@ -6,6 +6,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +14,12 @@ import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentQiblaBinding
+import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -27,6 +29,9 @@ class CompassFragment : Fragment(), SensorEventListener {
     private var DegreeStart = 0f
     private lateinit var SensorManage: SensorManager
     private val viewModel by viewModels<CompassViewModel>()
+
+    @Inject
+    lateinit var globalPreferences: GlobalPreferences
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -47,21 +52,33 @@ class CompassFragment : Fragment(), SensorEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         SensorManage = requireActivity().getSystemService(SENSOR_SERVICE) as SensorManager
-
-
+        if (globalPreferences.longituide.length > 3 && globalPreferences.latituide.length > 3)
+            DegreeStart = angleFromCoordinate(
+                21.422487, 39.826206,
+                globalPreferences.latituide.toDouble(),
+                globalPreferences.longituide.toDouble()
+            ).toFloat()
+        Log.e("DegreeStart", "onViewCreated: " + DegreeStart)
         binding.byVision.setOnClickListener { checkButtons(binding.byVision) }
         binding.bySunAndMoon.setOnClickListener { checkButtons(binding.bySunAndMoon) }
         binding.byCompassBtn.setOnClickListener { checkButtons(binding.byCompassBtn) }
         binding.byCompassBtn.performClick()
     }
 
-    fun getMeccaDegrees() {
-//        val lonDelta: Float = lon2 - lon1
-//        val y = (Math.sin(lonDelta.toDouble()) * Math.cos(lat2)).toFloat()
-//        val x =
-//            (Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lonDelta.toDouble())).toFloat()
-//        val brng: Float = Math.atan2(y.toDouble(), x.toDouble()).toDeg()
-//        DegreeStart = brng
+
+    private fun angleFromCoordinate(
+        lat1: Double, long1: Double, lat2: Double,
+        long2: Double
+    ): Double {
+        val dLon = long2 - long1
+        val y = Math.sin(dLon) * Math.cos(lat2)
+        val x = Math.cos(lat1) * Math.sin(lat2) - (Math.sin(lat1)
+                * Math.cos(lat2) * Math.cos(dLon))
+        var brng = Math.atan2(y, x)
+        brng = Math.toDegrees(brng)
+        brng = (brng + 360) % 360
+        brng = 360 - brng // count degrees counter-clockwise - remove to make clockwise
+        return brng
     }
 
     override fun onDestroyView() {
