@@ -92,4 +92,7 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:2.5.0-alpha01")
+
+
+    implementation("com.github.cosinekitty:astronomy:v2.1.0")
 }

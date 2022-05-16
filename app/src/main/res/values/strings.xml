@@ -78,4 +78,23 @@
     <string name="channel_description">مواعيد الصلاة</string>
     <string name="technical_support">الدعم الفني</string>
     <string name="sendInquiry">ارسل استفسارك</string>
+    <string name="stop">stop</string>
+
+    <string name="north">North</string>
+    <string name="east">East</string>
+    <string name="south">South</string>
+    <string name="west">West</string>
+    <string name="qibla">Qibla</string>
+    <string name="mercury">عطارد</string>
+    <string name="venus">الزهرة</string>
+    <string name="earth">الأرض</string>
+    <string name="mars">المريخ</string>
+    <string name="jupiter">المشتري</string>
+    <string name="saturn">زحل</string>
+    <string name="uranus">أورانوس</string>
+    <string name="neptune">نبتون</string>
+    <string name="pluto">بلوتو</string>
+    <string name="sun">الشمس</string>
+    <string name="moon">القمر</string>
+    <string name="empty"></string>
 </resources>

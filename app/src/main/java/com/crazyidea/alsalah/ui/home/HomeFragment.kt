@@ -66,7 +66,7 @@ class HomeFragment : Fragment(), PermissionListener {
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        permissionHelper.launchPermissionDialogForMultiplePermissions(
+        permissionHelper.checkForMultiplePermissions(
             arrayOf(
                 Manifest.permission.SYSTEM_ALERT_WINDOW,
                 Manifest.permission.ACCESS_FINE_LOCATION,

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_bg_light_night"
-    tools:context="ui.menu.compass.CompassFragment">
+    tools:context=".ui.compass.CompassFragment">
 
     <TextView
         android:id="@+id/title"

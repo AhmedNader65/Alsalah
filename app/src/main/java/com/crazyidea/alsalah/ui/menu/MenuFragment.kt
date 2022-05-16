@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentMenuBinding
+import com.crazyidea.alsalah.updateStoredPreference
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,11 +37,12 @@ class MenuFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updateStoredPreference(requireContext())
         binding.setting.setOnClickListener {
             findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToSettingFragment())
         }
         binding.compass.setOnClickListener {
-            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToCompassFragment())
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToCompassFragment2())
         }
         binding.fajrList.setOnClickListener {
             findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToFajrListFragment())

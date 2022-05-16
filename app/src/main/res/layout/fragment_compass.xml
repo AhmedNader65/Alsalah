@@ -83,41 +83,23 @@
 
     </LinearLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/compass_indicator"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:cardBackgroundColor="#00FFFFFF"
-        app:cardCornerRadius="@dimen/_250sdp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/compass_image"
-        app:layout_constraintEnd_toEndOf="@id/compass_image"
-        app:layout_constraintStart_toStartOf="@id/compass_image"
-        app:layout_constraintTop_toTopOf="@id/compass_image"
-        app:strokeColor="@color/light_grey"
-        app:strokeWidth="@dimen/_6sdp" />
-
     <ImageView
-        android:id="@+id/compass_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:src="@drawable/ic_img_compass_middle"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonsLin" />
 
-    <ImageView
-        android:id="@+id/middleCompass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_img_compass_middle"
-        app:layout_constraintBottom_toBottomOf="@+id/compass_image"
-        app:layout_constraintEnd_toEndOf="@+id/compass_image"
-        app:layout_constraintStart_toStartOf="@+id/compass_image"
-        app:layout_constraintTop_toTopOf="@+id/compass_image" />
+    <com.crazyidea.alsalah.ui.tryingggg.compass.CompassView
+        android:id="@+id/compass_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonsLin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
