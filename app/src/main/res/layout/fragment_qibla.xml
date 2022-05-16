@@ -90,6 +90,17 @@
         android:id="@+id/compass_image"
         android:layout_centerHorizontal="true"
         android:src="@drawable/img_compass" />
+
+    <ImageView
+        app:layout_constraintStart_toStartOf="@+id/compass_image"
+        app:layout_constraintEnd_toEndOf="@+id/compass_image"
+        app:layout_constraintTop_toTopOf="@+id/compass_image"
+        app:layout_constraintBottom_toBottomOf="@+id/compass_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/middleCompass"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/img_compass_middle" />
     <TextView
         android:layout_marginTop="@dimen/_16sdp"
         android:id="@+id/compass_direction"

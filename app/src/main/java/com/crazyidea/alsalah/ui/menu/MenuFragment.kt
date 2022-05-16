@@ -45,6 +45,15 @@ class MenuFragment : Fragment() {
         binding.fajrList.setOnClickListener {
             findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToFajrListFragment())
         }
+        binding.followUs.setOnClickListener {
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToFollowUsFragment2())
+        }
+        binding.whoAreWe.setOnClickListener {
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToWhoAreWeFragment())
+        }
+        binding.itSupport.setOnClickListener {
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToTechnicalSupportFragment())
+        }
     }
 
     override fun onDestroyView() {
