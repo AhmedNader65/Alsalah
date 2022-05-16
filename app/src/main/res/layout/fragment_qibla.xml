@@ -35,8 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
 
         <com.google.android.material.button.MaterialButton
@@ -45,71 +45,79 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/button_state_colors"
+            android:fontFamily="@font/din_medium"
             android:padding="@dimen/_8sdp"
-            app:strokeColor="@color/text_orange_color"
-            app:cornerRadius="@dimen/_16sdp"
-            android:textColor="@color/button_text_state_colors"
             android:text="@string/usingCompass"
-            android:fontFamily="@font/din_medium"/>
+            android:textColor="@color/button_text_state_colors"
+            app:cornerRadius="@dimen/_16sdp"
+            app:strokeColor="@color/text_orange_color" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/by_sun_and_moon"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:padding="@dimen/_8sdp"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:backgroundTint="@color/button_state_colors"
-            app:strokeColor="@color/text_orange_color"
-            app:cornerRadius="@dimen/_16sdp"
-            android:textColor="@color/button_text_state_colors"
+            android:fontFamily="@font/din_medium"
+            android:padding="@dimen/_8sdp"
             android:text="@string/by_sun_and_moon"
-            android:fontFamily="@font/din_medium"/>
+            android:textColor="@color/button_text_state_colors"
+            app:cornerRadius="@dimen/_16sdp"
+            app:strokeColor="@color/text_orange_color" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/by_vision"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:padding="@dimen/_8sdp"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
             android:backgroundTint="@color/button_state_colors"
-            app:strokeColor="@color/text_orange_color"
-            app:cornerRadius="@dimen/_16sdp"
-            android:textColor="@color/button_text_state_colors"
+            android:fontFamily="@font/din_medium"
+            android:padding="@dimen/_8sdp"
             android:text="@string/by_vision"
-            android:fontFamily="@font/din_medium"/>
+            android:textColor="@color/button_text_state_colors"
+            app:cornerRadius="@dimen/_16sdp"
+            app:strokeColor="@color/text_orange_color" />
 
 
     </LinearLayout>
 
-    <ImageView
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonsLin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/compass_image"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/img_compass" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/compass_indicator"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#00FFFFFF"
+        app:cardCornerRadius="@dimen/_250sdp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/compass_image"
+        app:layout_constraintEnd_toEndOf="@id/compass_image"
+        app:layout_constraintStart_toStartOf="@id/compass_image"
+        app:layout_constraintTop_toTopOf="@id/compass_image"
+        app:strokeColor="@color/light_grey"
+        app:strokeWidth="@dimen/_6sdp" />
 
     <ImageView
-        app:layout_constraintStart_toStartOf="@+id/compass_image"
-        app:layout_constraintEnd_toEndOf="@+id/compass_image"
-        app:layout_constraintTop_toTopOf="@+id/compass_image"
-        app:layout_constraintBottom_toBottomOf="@+id/compass_image"
+        android:id="@+id/compass_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/middleCompass"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/img_compass_middle" />
-    <TextView
         android:layout_marginTop="@dimen/_16sdp"
-        android:id="@+id/compass_direction"
-        style="@style/regularText"
-        android:layout_width="match_parent"
+        android:src="@drawable/img_compass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonsLin" />
+
+    <ImageView
+        android:id="@+id/middleCompass"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=":اتجاه القبلة من الشمال 45"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/compass_image" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/img_compass_middle"
+        app:layout_constraintBottom_toBottomOf="@+id/compass_image"
+        app:layout_constraintEnd_toEndOf="@+id/compass_image"
+        app:layout_constraintStart_toStartOf="@+id/compass_image"
+        app:layout_constraintTop_toTopOf="@+id/compass_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

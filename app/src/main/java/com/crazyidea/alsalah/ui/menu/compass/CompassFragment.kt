@@ -1,17 +1,18 @@
 package com.crazyidea.alsalah.ui.menu.compass
 
 import android.content.Context.SENSOR_SERVICE
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
+import android.hardware.*
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.crazyidea.alsalah.R
@@ -20,14 +21,22 @@ import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.roundToInt
+import kotlin.math.sin
 
+
+const val KAABA_LAT = 21.422487
+const val KAABA_LNG = 39.826206
 
 @AndroidEntryPoint
 class CompassFragment : Fragment(), SensorEventListener {
 
+    private var currentDegree = 0f
+    private var currentDegreeNeedle = 0f
     private var _binding: FragmentQiblaBinding? = null
-    private var DegreeStart = 0f
-    private lateinit var SensorManage: SensorManager
+    private lateinit var sensorManage: SensorManager
     private val viewModel by viewModels<CompassViewModel>()
 
     @Inject
@@ -51,14 +60,7 @@ class CompassFragment : Fragment(), SensorEventListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        SensorManage = requireActivity().getSystemService(SENSOR_SERVICE) as SensorManager
-        if (globalPreferences.longituide.length > 3 && globalPreferences.latituide.length > 3)
-            DegreeStart = angleFromCoordinate(
-                21.422487, 39.826206,
-                globalPreferences.latituide.toDouble(),
-                globalPreferences.longituide.toDouble()
-            ).toFloat()
-        Log.e("DegreeStart", "onViewCreated: " + DegreeStart)
+        sensorManage = requireActivity().getSystemService(SENSOR_SERVICE) as SensorManager
         binding.byVision.setOnClickListener { checkButtons(binding.byVision) }
         binding.bySunAndMoon.setOnClickListener { checkButtons(binding.bySunAndMoon) }
         binding.byCompassBtn.setOnClickListener { checkButtons(binding.byCompassBtn) }
@@ -67,14 +69,14 @@ class CompassFragment : Fragment(), SensorEventListener {
 
 
     private fun angleFromCoordinate(
-        lat1: Double, long1: Double, lat2: Double,
+        lat2: Double,
         long2: Double
     ): Double {
-        val dLon = long2 - long1
-        val y = Math.sin(dLon) * Math.cos(lat2)
-        val x = Math.cos(lat1) * Math.sin(lat2) - (Math.sin(lat1)
-                * Math.cos(lat2) * Math.cos(dLon))
-        var brng = Math.atan2(y, x)
+        val dLon = long2 - KAABA_LNG
+        val y = sin(dLon) * cos(lat2)
+        val x = cos(KAABA_LAT) * sin(lat2) - (sin(KAABA_LAT)
+                * cos(lat2) * cos(dLon))
+        var brng = atan2(y, x)
         brng = Math.toDegrees(brng)
         brng = (brng + 360) % 360
         brng = 360 - brng // count degrees counter-clockwise - remove to make clockwise
@@ -89,40 +91,100 @@ class CompassFragment : Fragment(), SensorEventListener {
     override fun onPause() {
         super.onPause()
         // to stop the listener and save battery
-        SensorManage.unregisterListener(this)
+        sensorManage.unregisterListener(this)
     }
 
     override fun onResume() {
         super.onResume()
         // code for system's orientation sensor registered listeners
-        SensorManage.registerListener(
-            this, SensorManage.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+        sensorManage.registerListener(
+            this, sensorManage.getDefaultSensor(Sensor.TYPE_ORIENTATION),
             SensorManager.SENSOR_DELAY_GAME
         )
     }
 
     override fun onSensorChanged(event: SensorEvent) {
         // get angle around the z-axis rotated
-        val degree = Math.round(event.values[0]).toFloat()
-        binding.compassDirection.setText(
-            "اتجاه القبلة من الشمال : " + java.lang.Float.toString(
-                degree
-            ) + " درجه"
+        var degree = event.values[0].roundToInt().toFloat()
+
+        val destinationLoc = Location("service Provider")
+        val userLoc = Location("service Provider")
+        destinationLoc.latitude = 21.422487 //kaaba latitude setting
+
+        destinationLoc.longitude = 39.826206 //kaaba longitude setting
+
+        destinationLoc.latitude =
+            globalPreferences.latituide.toDouble() //kaaba latitude setting
+
+        destinationLoc.longitude =
+            globalPreferences.longituide.toDouble() //kaaba longitude setting
+
+        var bearTo: Float = userLoc.bearingTo(destinationLoc)
+
+
+        val geoField = GeomagneticField(
+            java.lang.Double.valueOf(userLoc.latitude).toFloat(), java.lang.Double
+                .valueOf(userLoc.longitude).toFloat(),
+            java.lang.Double.valueOf(userLoc.altitude).toFloat(),
+            System.currentTimeMillis()
         )
-        // rotation animation - reverse turn degree degrees
+
+        degree -= geoField.declination // converts magnetic north into true north
+
+
+        if (bearTo < 0) {
+            bearTo += 360
+        }
+
+//This is where we choose to point it
+        var direction: Float = bearTo - degree
+
+
+// If the direction is smaller than 0, add 360 to get the rotation clockwise.
+        if (direction < 0) {
+            direction += 360
+        }
+
+        val raQibla = RotateAnimation(
+            currentDegreeNeedle,
+            direction,
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
+        )
+        raQibla.duration = 210
+        raQibla.fillAfter = true
+
+        binding.middleCompass.startAnimation(raQibla)
+
+        currentDegreeNeedle = direction
+        if (currentDegreeNeedle < 2 || currentDegreeNeedle > 358) {
+            binding.compassIndicator.visibility = VISIBLE
+            binding.compassIndicator.strokeColor = getColor(requireContext(),R.color.green)
+        } else
+            binding.compassIndicator.visibility = GONE
+// create a rotation animation (reverse turn degree degrees)
         val ra = RotateAnimation(
-            DegreeStart,
+            currentDegree,
             -degree,
-            Animation.RELATIVE_TO_SELF, 0.5f,
-            Animation.RELATIVE_TO_SELF, 0.5f
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
         )
-        // set the compass animation after the end of the reservation status
-        ra.fillAfter = true
-        // set how long the animation for the compass image will take place
-        ra.duration = 210
-        // Start animation of compass image
-        binding.compassImage.startAnimation(ra)
-        DegreeStart = -degree
+
+// how long the animation will take place
+        ra.duration = 210;
+
+
+// set the animation after the end of the reservation status
+        ra.fillAfter = true;
+
+// Start the animation
+        binding.compassImage.startAnimation(ra);
+
+        currentDegree = -degree;
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
