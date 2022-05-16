@@ -76,4 +76,6 @@
     <string name="continue_using">للاستمرار في تلقى الاشعارات برجاء فتح التطبيق باستمرار</string>
     <string name="channel_name">prayer_times</string>
     <string name="channel_description">مواعيد الصلاة</string>
+    <string name="technical_support">الدعم الفني</string>
+    <string name="sendInquiry">ارسل استفسارك</string>
 </resources>

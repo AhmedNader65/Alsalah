@@ -17,12 +17,14 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
+import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 
 private const val TAG_OUTPUT: String = "DailyAzanWorker"
@@ -41,6 +43,9 @@ class HomeFragment : Fragment(), PermissionListener {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var globalPreferences: GlobalPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -137,6 +142,8 @@ class HomeFragment : Fragment(), PermissionListener {
                             it.longitude,
                             1
                         )
+                        globalPreferences.storeLatituide(it.latitude.toString())
+                        globalPreferences.storeLongituide(it.longitude.toString())
                         val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
                         val cityName: String = addresses[0].locality
                         viewModel.fetchPrayerData(
