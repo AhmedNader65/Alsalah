@@ -45,9 +45,6 @@
             android:id="@+id/action_navigation_menu_to_settingFragment"
             app:destination="@id/settingFragment" />
         <action
-            android:id="@+id/action_navigation_menu_to_compassFragment"
-            app:destination="@id/compassFragment" />
-        <action
             android:id="@+id/action_navigation_menu_to_followUsFragment2"
             app:destination="@id/followUsFragment" />
         <action

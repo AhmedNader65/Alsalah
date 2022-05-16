@@ -12,17 +12,21 @@ class SensorEventAnnouncer(@StringRes private val text: Int, initialState: Boole
     private var state = initialState
     private var lastAnnounce = -1L
 
-    fun check(context: Context, newState: Boolean) {
+    fun check(context: Context, newState: Boolean): Boolean {
+        var boolean = false
         if (newState && !state) {
             val now = System.currentTimeMillis()
             if (now - lastAnnounce > 2000L) { // 2 seconds
+                boolean = true
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
                 // https://stackoverflow.com/a/29423018
                 context.getSystemService<AudioManager>()
                     ?.playSoundEffect(AudioManager.FX_KEY_CLICK)
                 lastAnnounce = now
+
             }
         }
         state = newState
+        return boolean
     }
 }

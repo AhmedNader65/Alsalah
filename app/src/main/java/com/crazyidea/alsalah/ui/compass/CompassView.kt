@@ -20,7 +20,8 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.CompassView,
-            0, 0).apply {
+            0, 0
+        ).apply {
 
             try {
                 mShowSunMoon = getBoolean(R.styleable.CompassView_showSunMoon, false)
@@ -30,6 +31,7 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
         }
     }
 
+    private lateinit var canvas: Canvas
     private var mShowSunMoon: Boolean
     var angle = 0f
         set(value) {
@@ -51,6 +53,11 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).also {
         it.color = ContextCompat.getColor(context, R.color.header_color)
         it.strokeWidth = 0.5.dp
+        it.style = Paint.Style.STROKE // Sadece Cember ciziyor.
+    }
+    private val circlePaint2 = Paint(Paint.ANTI_ALIAS_FLAG).also {
+        it.color = ContextCompat.getColor(context, R.color.green)
+        it.strokeWidth = 10.dp
         it.style = Paint.Style.STROKE // Sadece Cember ciziyor.
     }
     private val moonPaint = Paint(Paint.ANTI_ALIAS_FLAG).also {
@@ -138,6 +145,7 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
     }
 
     override fun onDraw(canvas: Canvas) {
+        this.canvas = canvas
         canvas.withRotation(-angle, cx, cy) {
             drawDial()
             drawPath(northwardShapePath, northArrowPaint)
@@ -157,6 +165,7 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
 
 //         Draw the background
 //        compass.draw(this)
+
         drawCircle(cx, cy, radius, circlePaint)
         drawCircle(cx, cy, radius * .975f, circlePaint)
         // Rotate our perspective so that the "top" is
@@ -237,6 +246,7 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
             }
         }
     }
+
     fun isShowSunMoon(): Boolean {
         return mShowSunMoon
     }
@@ -245,5 +255,15 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
         mShowSunMoon = showSunMoon
         invalidate()
         requestLayout()
+    }
+
+    fun showTrueQebla(show: Boolean) {
+        val paint = Paint()
+        if (show) {
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+            canvas.drawCircle(cx, cy, radius + 20, circlePaint2)
+        }else{
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC);
+        }
     }
 }
