@@ -1,7 +1,5 @@
-package com.crazyidea.alsalah.ui.tryingggg.compass
+package com.crazyidea.alsalah.ui.compass
 
-import android.animation.ValueAnimator
-import android.content.Context
 import android.content.res.Configuration
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -11,13 +9,10 @@ import android.os.Bundle
 import android.view.Surface
 import android.view.View
 import android.view.WindowManager
-import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.content.getSystemService
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentCompassBinding
-import com.crazyidea.alsalah.databinding.FragmentQiblaBinding
 import com.crazyidea.alsalah.utils.SensorEventAnnouncer
 import com.google.android.material.button.MaterialButton
 import kotlin.math.abs

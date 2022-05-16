@@ -1,18 +1,16 @@
 // copyedited from https://code.google.com/p/android-salat-times/source/browse/src/com/cepmuvakkit/times/view/QiblaCompassView.java
 // licensed under GPLv3
-package com.crazyidea.alsalah.ui.tryingggg.compass
+package com.crazyidea.alsalah.ui.compass
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.withRotation
-import com.crazyidea.alsalah.*
+import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.Clock
-import com.crazyidea.alsalah.utils.EarthPosition
+import com.crazyidea.alsalah.utils.*
 import java.util.*
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -239,7 +237,7 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
             }
         }
     }
-    fun isShowText(): Boolean {
+    fun isShowSunMoon(): Boolean {
         return mShowSunMoon
     }
 

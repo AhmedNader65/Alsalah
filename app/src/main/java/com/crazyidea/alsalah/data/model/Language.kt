@@ -1,8 +1,7 @@
 package com.crazyidea.alsalah.data.model
 
 import android.annotation.SuppressLint
-import android.content.Context
-import com.crazyidea.alsalah.spacedComma
+import com.crazyidea.alsalah.utils.spacedComma
 import io.github.cosinekitty.astronomy.EclipseKind
 import java.util.*
 

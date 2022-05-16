@@ -65,14 +65,10 @@
         android:name="com.crazyidea.alsalah.ui.setting.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
-    <fragment
-        android:id="@+id/compassFragment"
-        android:name="com.crazyidea.alsalah.ui.compass.CompassFragment"
-        android:label="CompassFragment"
-        tools:layout="@layout/fragment_qibla" />
+
     <fragment
         android:id="@+id/compassFragment2"
-        android:name="com.crazyidea.alsalah.ui.tryingggg.compass.CompassScreen"
+        android:name="com.crazyidea.alsalah.ui.compass.CompassScreen"
         android:label="CompassScreen"
         tools:layout="@layout/fragment_compass" />
     <fragment

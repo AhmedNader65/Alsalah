@@ -3,7 +3,6 @@ package com.crazyidea.alsalah.utils
 import android.content.res.Resources
 import android.view.View
 import com.crazyidea.alsalah.data.model.Language
-import com.crazyidea.alsalah.preferredDigits
 
 
 val Resources.isRtl get() = configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL

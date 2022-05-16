@@ -1,4 +1,4 @@
-package com.crazyidea.alsalah.ui.tryingggg.compass
+package com.crazyidea.alsalah.ui.compass
 
 import android.content.Context
 import android.content.res.ColorStateList

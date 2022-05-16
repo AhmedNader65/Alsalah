@@ -1,9 +1,9 @@
 package com.crazyidea.alsalah.data.model
 
-import com.crazyidea.alsalah.amString
-import com.crazyidea.alsalah.clockIn24
-import com.crazyidea.alsalah.language
-import com.crazyidea.alsalah.pmString
+import com.crazyidea.alsalah.utils.amString
+import com.crazyidea.alsalah.utils.clockIn24
+import com.crazyidea.alsalah.utils.language
+import com.crazyidea.alsalah.utils.pmString
 import com.crazyidea.alsalah.utils.formatNumber
 import java.util.*
 

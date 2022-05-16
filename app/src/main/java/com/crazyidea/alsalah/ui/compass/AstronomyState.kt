@@ -1,17 +1,8 @@
-package com.crazyidea.alsalah.ui.tryingggg.compass
+package com.crazyidea.alsalah.ui.compass
 
-import com.crazyidea.alsalah.utils.planetsTitles
 import com.crazyidea.alsalah.utils.sunlitSideMoonTiltAngle
-import io.github.cosinekitty.astronomy.Aberration
-import io.github.cosinekitty.astronomy.Body
-import io.github.cosinekitty.astronomy.EquatorEpoch
+import io.github.cosinekitty.astronomy.*
 import io.github.cosinekitty.astronomy.Observer
-import io.github.cosinekitty.astronomy.Refraction
-import io.github.cosinekitty.astronomy.Time
-import io.github.cosinekitty.astronomy.equator
-import io.github.cosinekitty.astronomy.equatorialToEcliptic
-import io.github.cosinekitty.astronomy.geoVector
-import io.github.cosinekitty.astronomy.horizon
 import java.util.*
 
 class AstronomyState(observer: Observer, date: GregorianCalendar) {

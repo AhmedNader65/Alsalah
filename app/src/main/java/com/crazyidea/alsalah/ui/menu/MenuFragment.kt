@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentMenuBinding
-import com.crazyidea.alsalah.updateStoredPreference
+import com.crazyidea.alsalah.utils.updateStoredPreference
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
