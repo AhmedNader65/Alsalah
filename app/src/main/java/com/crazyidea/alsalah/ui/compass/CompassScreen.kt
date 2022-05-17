@@ -13,6 +13,8 @@ import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentCompassBinding
+import com.crazyidea.alsalah.utils.STATE_NOT_QEBLA
+import com.crazyidea.alsalah.utils.STATE_QEBLA
 import com.crazyidea.alsalah.utils.SensorEventAnnouncer
 import com.google.android.material.button.MaterialButton
 import kotlin.math.abs
@@ -22,6 +24,7 @@ import kotlin.math.abs
  */
 class CompassScreen : Fragment(R.layout.fragment_compass) {
 
+    private var lastState: Int = STATE_NOT_QEBLA
     private var stopped = false
     private var _binding: FragmentCompassBinding? = null
     private val binding get() = _binding!!
@@ -207,10 +210,19 @@ class CompassScreen : Fragment(R.layout.fragment_compass) {
         westAnnouncer.check(binding.root.context, isNearToDegree(270f, angle))
         val qiblaHeading = binding.compassView.qiblaHeading?.heading?.toFloat()
         if (qiblaHeading != null) {
-            if(qiblaAnnouncer.check(binding.root.context, isNearToDegree(qiblaHeading, angle))){
-                binding.compassView.showTrueQebla(true)
-            }else{
-                binding.compassView.showTrueQebla(false)
+            if (qiblaHeading != 0F) {
+
+                if (isNearToDegree(qiblaHeading, angle)
+                ) {
+                    if (lastState != STATE_QEBLA) {
+                        lastState = STATE_QEBLA
+                        binding.compassView.showTrueQebla(true)
+                    }
+                } else {
+                    binding.compassView.showTrueQebla(false)
+                    lastState = STATE_NOT_QEBLA
+
+                }
             }
         }
     }

@@ -31,6 +31,7 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
         }
     }
 
+    private var showQebla: Boolean = false
     private lateinit var canvas: Canvas
     private var mShowSunMoon: Boolean
     var angle = 0f
@@ -155,6 +156,7 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
                     drawMoon()
                     drawSun()
                 }
+
             }
         }
     }
@@ -233,6 +235,7 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
 
     private fun Canvas.drawQibla() {
         if (!isShowQibla) return
+        showTrueQebla(showQebla)
         val qiblaHeading = qiblaHeading ?: return
         withRotation(qiblaHeading.heading.toFloat(), cx, cy) {
             drawLine(cx, cy - radius, cx, cy + radius, qiblaPaint)
@@ -260,10 +263,14 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
     fun showTrueQebla(show: Boolean) {
         val paint = Paint()
         if (show) {
+            showQebla = true
             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
             canvas.drawCircle(cx, cy, radius + 20, circlePaint2)
         }else{
+            showQebla = false
             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC);
         }
+        invalidate()
+        requestLayout()
     }
 }
