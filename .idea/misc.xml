@@ -25,8 +25,11 @@
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable-xhdpi/ic_sun_small.xml" value="0.135" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/card_view_shadow.xml" value="0.153" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/circle_shape.xml" value="0.153" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/compass_icon.xml" value="0.135" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/gradiant_progress.xml" value="0.153" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/ic_counter_round_bg.xml" value="0.135" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/ic_sun_compass.xml" value="0.135" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/img_counter_round_bg.xml" value="0.135" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/round_green_background.xml" value="0.153" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout-v28/date_layout.xml" value="0.28888888888888886" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout-v28/fragment_home.xml" value="0.16" />
@@ -35,7 +38,7 @@
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/dsad.xml" value="0.67" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fasf.xml" value="0.33" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_azkar.xml" value="0.18" />
-        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_azkar_details.xml" value="0.12" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_azkar_details.xml" value="0.22" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_azkar_settings.xml" value="0.16302083333333334" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_compass.xml" value="0.22" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_home.xml" value="0.14" />
