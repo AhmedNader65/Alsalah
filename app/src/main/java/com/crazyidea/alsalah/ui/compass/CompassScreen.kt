@@ -13,15 +13,15 @@ import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentCompassBinding
-import com.crazyidea.alsalah.utils.STATE_NOT_QEBLA
-import com.crazyidea.alsalah.utils.STATE_QEBLA
-import com.crazyidea.alsalah.utils.SensorEventAnnouncer
 import com.google.android.material.button.MaterialButton
 import kotlin.math.abs
 
 /**
  * Compass/Qibla activity
  */
+
+const val STATE_NOT_QEBLA = 0
+const val STATE_QEBLA = 1
 class CompassScreen : Fragment(R.layout.fragment_compass) {
 
     private var lastState: Int = STATE_NOT_QEBLA
@@ -197,17 +197,9 @@ class CompassScreen : Fragment(R.layout.fragment_compass) {
     }
 
     // Accessibility announcing helpers on when the phone is headed on a specific direction
-    private var northAnnouncer = SensorEventAnnouncer(R.string.north)
-    private var eastAnnouncer = SensorEventAnnouncer(R.string.east, false)
-    private var westAnnouncer = SensorEventAnnouncer(R.string.west, false)
-    private var southAnnouncer = SensorEventAnnouncer(R.string.south, false)
-    private var qiblaAnnouncer = SensorEventAnnouncer(R.string.qibla, false)
+
     private fun checkIfA11yAnnounceIsNeeded(angle: Float) {
         val binding = binding ?: return
-        northAnnouncer.check(binding.root.context, isNearToDegree(0f, angle))
-        eastAnnouncer.check(binding.root.context, isNearToDegree(90f, angle))
-        southAnnouncer.check(binding.root.context, isNearToDegree(180f, angle))
-        westAnnouncer.check(binding.root.context, isNearToDegree(270f, angle))
         val qiblaHeading = binding.compassView.qiblaHeading?.heading?.toFloat()
         if (qiblaHeading != null) {
             if (qiblaHeading != 0F) {
