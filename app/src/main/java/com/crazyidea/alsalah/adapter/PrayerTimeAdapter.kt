@@ -42,7 +42,7 @@ class PrayerTimeAdapter(
 
         context = viewGroup.context
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_language, viewGroup, false)
+            .inflate(R.layout.item_prayer_way, viewGroup, false)
 
         return ViewHolder(view)
 
