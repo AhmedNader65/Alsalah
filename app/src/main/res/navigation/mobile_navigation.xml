@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_settingFragment_to_languageFragment"
             app:destination="@id/languageFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_prayerTimingFragment"
+            app:destination="@id/prayerTimingFragment" />
     </fragment>
 
     <fragment
@@ -126,5 +129,10 @@
         tools:layout="@layout/fragment_fawaed"
         android:name="com.crazyidea.alsalah.ui.fawaed.FawaedFragment"
         android:label="FawaedFragment" />
+    <fragment
+        android:id="@+id/prayerTimingFragment"
+        tools:layout="@layout/fragment_choose_language"
+        android:name="com.crazyidea.alsalah.ui.prayerTiming.PrayerTimingFragment"
+        android:label="PrayerTimingFragment" />
 
 </navigation>

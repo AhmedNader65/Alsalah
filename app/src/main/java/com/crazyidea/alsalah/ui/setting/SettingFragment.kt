@@ -37,6 +37,9 @@ class SettingFragment : Fragment() {
         binding.languageCon.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToLanguageFragment())
         }
+        binding.calculateWay.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToPrayerTimingFragment())
+        }
     }
 
     override fun onDestroyView() {
