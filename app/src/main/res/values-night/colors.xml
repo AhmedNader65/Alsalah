@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="text_color">#4D4D4D</color>
+    <color name="text_green_color">#FFFFFF</color>
+    <color name="header_color">#184A3F</color>
+    <color name="inverted_text_color">#000000</color>
+    <color name="general_setting_line">#344E41</color>
+    <color name="green">#38AD00</color>
+    <color name="next_prayer_bg">#4E7850</color>
+    <color name="text_orange_color">#EEB34B</color>
+    <color name="text_brown_color">#C49C2D</color>
+    <color name="light_green">#94AA41</color>
+    <color name="light_grey">#C9C9C9</color>
+    <color name="green_meduim">#3A5A40</color>
+</resources>

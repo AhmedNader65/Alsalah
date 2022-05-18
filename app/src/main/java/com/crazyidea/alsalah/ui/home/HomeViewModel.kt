@@ -82,20 +82,20 @@ class HomeViewModel @Inject constructor(
             eshaTimeAPM.value = twentyFourConverter(timings.Isha, true)
             midnightTime.value = twentyFourConverter(timings.Midnight)
             lastQuarterTime.value = timings.Imsak
-            getNextPrayer(minute, hour, timings)
+
+            val sdf = SimpleDateFormat("H:mm", Locale("ar"))
+            val currentDate = sdf.parse("$hour:$minute")
+            getNextPrayer(currentDate, timings)
             if (pair.second)
                 _prayerData.value = timings
         }
     }
 
     private fun getNextPrayer(
-        minute: String,
-        hour: String,
+        currentDate:Date,
         timings: Timing,
     ) {
         val sdf = SimpleDateFormat("H:mm", Locale("ar"))
-
-        val currentDate = sdf.parse("$hour:$minute")
         val fajrDate = sdf.parse(timings.Fajr)
         val shorokDate = sdf.parse(timings.Sunrise)
         val zuhrDate = sdf.parse(timings.Dhuhr)
@@ -105,35 +105,42 @@ class HomeViewModel @Inject constructor(
         nextPrayer.value = "صلاة الفجر بعد"
         nextPrayerId.value = 1
         var diff = 30000L
+        var basePrayerForNext = fajrDate
         if (currentDate.after(fajrDate)) {
             nextPrayerId.value = 2
             nextPrayer.value = "صلاة الشروق بعد"
             diff = (shorokDate.time - currentDate.time)
+            basePrayerForNext = shorokDate
         }
         if (currentDate.after(shorokDate)) {
             nextPrayerId.value = 3
             nextPrayer.value = "صلاة الظهر بعد"
             diff = (zuhrDate.time - currentDate.time)
+            basePrayerForNext = zuhrDate
         }
         if (currentDate.after(zuhrDate)) {
             nextPrayerId.value = 4
             nextPrayer.value = "صلاة العصر بعد"
             diff = (asrDate.time - currentDate.time)
+            basePrayerForNext = asrDate
         }
         if (currentDate.after(asrDate)) {
             nextPrayerId.value = 5
             nextPrayer.value = "صلاة المغرب بعد"
             diff = (maghribDate.time - currentDate.time)
+            basePrayerForNext = maghribDate
         }
         if (currentDate.after(maghribDate)) {
             nextPrayer.value = "صلاة العشاء بعد"
             nextPrayerId.value = 6
             diff = (ishaDate.time - currentDate.time)
+            basePrayerForNext = ishaDate
         }
         if (currentDate.after(ishaDate)) {
             nextPrayerId.value = 1
             nextPrayer.value = " صلاة الفجر بعد"
             diff = (zuhrDate.time - fajrDate.time)
+            basePrayerForNext = fajrDate
         }
         object : CountDownTimer(diff, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -146,7 +153,9 @@ class HomeViewModel @Inject constructor(
             }
 
             override fun onFinish() {
-                remainingTime.value = "done!"
+                val timeInSecs: Long = basePrayerForNext.time
+                val afterAdding1Min = Date(timeInSecs + 1 * 60 * 1000)
+                getNextPrayer(afterAdding1Min,timings)
             }
         }.start()
     }
@@ -178,7 +187,8 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun getFirstAzkar() {
         viewModelScope.launch {
-            azkarAfterPrayer.value = prayerRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
+            azkarAfterPrayer.value =
+                prayerRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
             azkar.value = prayerRepository.getFirstAzkar().content
         }
     }

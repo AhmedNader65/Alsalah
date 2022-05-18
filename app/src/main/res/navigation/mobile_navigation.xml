@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.crazyidea.alsalah.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_azkar_details"
+            app:destination="@id/navigation_azkar_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_azkar"
@@ -41,9 +45,6 @@
             android:id="@+id/action_navigation_menu_to_settingFragment"
             app:destination="@id/settingFragment" />
         <action
-            android:id="@+id/action_navigation_menu_to_compassFragment"
-            app:destination="@id/compassFragment" />
-        <action
             android:id="@+id/action_navigation_menu_to_followUsFragment2"
             app:destination="@id/followUsFragment" />
         <action
@@ -52,20 +53,24 @@
         <action
             android:id="@+id/action_navigation_menu_to_whoAreWeFragment"
             app:destination="@id/whoAreWeFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_compassFragment2"
+            app:destination="@id/compassFragment2" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.crazyidea.alsalah.ui.menu.setting.SettingFragment"
+        android:name="com.crazyidea.alsalah.ui.setting.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+
     <fragment
-        android:id="@+id/compassFragment"
-        android:name="com.crazyidea.alsalah.ui.menu.compass.CompassFragment"
-        android:label="CompassFragment"
-        tools:layout="@layout/fragment_qibla" />
+        android:id="@+id/compassFragment2"
+        android:name="com.crazyidea.alsalah.ui.compass.CompassScreen"
+        android:label="CompassScreen"
+        tools:layout="@layout/fragment_compass" />
     <fragment
         android:id="@+id/fajrListFragment"
-        android:name="com.crazyidea.alsalah.ui.menu.fajrlist.FajrListFragment"
+        android:name="com.crazyidea.alsalah.ui.fajrlist.FajrListFragment"
         android:label="FajrListFragment"
         tools:layout="@layout/fragment_fajr_list" />
     <fragment
@@ -90,19 +95,19 @@
         android:label="SebhaFragment"
         tools:layout="@layout/fragment_sebha" />
     <fragment
-        tools:layout="@layout/fragment_follow_us"
         android:id="@+id/followUsFragment"
-        android:name="com.crazyidea.alsalah.ui.menu.followUs.FollowUsFragment"
-        android:label="FollowUsFragment" />
+        android:name="com.crazyidea.alsalah.ui.followUs.FollowUsFragment"
+        android:label="FollowUsFragment"
+        tools:layout="@layout/fragment_follow_us" />
     <fragment
-        tools:layout="@layout/fragment_technical_support"
         android:id="@+id/technicalSupportFragment"
-        android:name="com.crazyidea.alsalah.ui.menu.technicalSupport.TechnicalSupportFragment"
-        android:label="TechnicalSupportFragment" />
+        android:name="com.crazyidea.alsalah.ui.technicalSupport.TechnicalSupportFragment"
+        android:label="TechnicalSupportFragment"
+        tools:layout="@layout/fragment_technical_support" />
     <fragment
-        tools:layout="@layout/fragment_who_are_we"
         android:id="@+id/whoAreWeFragment"
-        android:name="com.crazyidea.alsalah.ui.menu.whoAreWe.WhoAreWeFragment"
-        android:label="WhoAreWeFragment" />
+        android:name="com.crazyidea.alsalah.ui.whoAreWe.WhoAreWeFragment"
+        android:label="WhoAreWeFragment"
+        tools:layout="@layout/fragment_who_are_we" />
 
 </navigation>

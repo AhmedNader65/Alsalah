@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -65,13 +66,27 @@ class HomeFragment : Fragment(), PermissionListener {
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        permissionHelper.launchPermissionDialogForMultiplePermissions(
+        permissionHelper.checkForMultiplePermissions(
             arrayOf(
                 Manifest.permission.SYSTEM_ALERT_WINDOW,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         )
+        binding.readAfterPrayersNowBtn.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionNavigationHomeToNavigationAzkarDetails(
+                    "أذكار بعد السلام من الصلاة المفروضة"
+                )
+            )
+        }
+        binding.readAzkarBtn.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionNavigationHomeToNavigationAzkarDetails(
+                    "اخرى"
+                )
+            )
+        }
         collectData()
     }
 
@@ -148,8 +163,7 @@ class HomeFragment : Fragment(), PermissionListener {
                         val cityName: String = addresses[0].locality
                         viewModel.fetchPrayerData(
                             cityName,
-                            calendar
-                            ,
+                            calendar,
                             it.latitude.toString(),
                             it.longitude.toString(),
                             5,

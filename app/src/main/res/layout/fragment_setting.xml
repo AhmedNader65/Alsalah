@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.menu.setting.SettingFragment">
+    tools:context=".ui.setting.SettingFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -18,7 +18,7 @@
             style="@style/boldText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/text_green_color"
+            android:background="@color/header_color"
             android:paddingBottom="@dimen/_8sdp"
             android:text="الأعدادات"
             android:textAlignment="center"

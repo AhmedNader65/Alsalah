@@ -13,7 +13,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_styled_white"
+        android:background="@drawable/ic_bg_light_night"
         tools:context=".ui.azkar.main.AzkarFragment">
 
         <TextView
@@ -21,7 +21,7 @@
             style="@style/boldText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/text_green_color"
+            android:background="@color/header_color"
             android:paddingBottom="@dimen/_8sdp"
             android:text="السبحة"
             android:textAlignment="center"

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_styled_page_white"
-    tools:context="ui.menu.compass.CompassFragment">
+    android:background="@drawable/ic_bg_light_night"
+    tools:context=".ui.compass.CompassFragment">
 
     <TextView
         android:id="@+id/title"
