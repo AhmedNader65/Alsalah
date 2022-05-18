@@ -55,6 +55,11 @@ class MenuFragment : Fragment() {
         binding.itSupport.setOnClickListener {
             findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToTechnicalSupportFragment())
         }
+
+        binding.fwaed.setOnClickListener {
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToFawaedFragment())
+        }
+
     }
 
     override fun onDestroyView() {

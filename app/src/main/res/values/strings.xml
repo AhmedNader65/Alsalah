@@ -107,4 +107,6 @@
     <string name="indonisian">الاندونيسية</string>
     <string name="urdu">الاوردية</string>
     <string name="igorish">الايغورية</string>
+    <string name="alll">كل اللغات</string>
+    <string name="fawaedNotifications">تفعيل تنبيهات الفوائد</string>
 </resources>

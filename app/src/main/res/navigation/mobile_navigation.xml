@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_navigation_menu_to_compassFragment2"
             app:destination="@id/compassFragment2" />
+        <action
+            android:id="@+id/action_navigation_menu_to_fawaedFragment"
+            app:destination="@id/fawaedFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -118,5 +121,10 @@
         tools:layout="@layout/fragment_choose_language"
         android:name="com.crazyidea.alsalah.ui.language.LanguageFragment"
         android:label="LanguageFragment" />
+    <fragment
+        android:id="@+id/fawaedFragment"
+        tools:layout="@layout/fragment_fawaed"
+        android:name="com.crazyidea.alsalah.ui.fawaed.FawaedFragment"
+        android:label="FawaedFragment" />
 
 </navigation>
