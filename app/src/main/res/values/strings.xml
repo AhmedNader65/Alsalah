@@ -97,4 +97,14 @@
     <string name="sun">الشمس</string>
     <string name="moon">القمر</string>
     <string name="empty"></string>
+    <string name="العربيه">العربية</string>
+    <string name="arabic">العربيه</string>
+    <string name="english">الانجليزية</string>
+    <string name="frecnh">الفرنسية</string>
+    <string name="turkish">التركية</string>
+    <string name="dutch">الدوتشية</string>
+    <string name="spanish">الاسبانية</string>
+    <string name="indonisian">الاندونيسية</string>
+    <string name="urdu">الاوردية</string>
+    <string name="igorish">الايغورية</string>
 </resources>

@@ -61,7 +61,11 @@
         android:id="@+id/settingFragment"
         android:name="com.crazyidea.alsalah.ui.setting.SettingFragment"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_languageFragment"
+            app:destination="@id/languageFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/compassFragment2"
@@ -109,5 +113,10 @@
         android:name="com.crazyidea.alsalah.ui.whoAreWe.WhoAreWeFragment"
         android:label="WhoAreWeFragment"
         tools:layout="@layout/fragment_who_are_we" />
+    <fragment
+        android:id="@+id/languageFragment"
+        tools:layout="@layout/fragment_choose_language"
+        android:name="com.crazyidea.alsalah.ui.language.LanguageFragment"
+        android:label="LanguageFragment" />
 
 </navigation>
