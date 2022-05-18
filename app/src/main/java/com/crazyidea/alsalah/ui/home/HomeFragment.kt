@@ -87,6 +87,11 @@ class HomeFragment : Fragment(), PermissionListener {
                 )
             )
         }
+        binding.qeblaLayout.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionNavigationHomeToCompassFragment2()
+            )
+        }
         collectData()
     }
 
