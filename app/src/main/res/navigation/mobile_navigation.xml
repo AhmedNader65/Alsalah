@@ -59,12 +59,22 @@
         <action
             android:id="@+id/action_navigation_menu_to_compassFragment2"
             app:destination="@id/compassFragment2" />
+        <action
+            android:id="@+id/action_navigation_menu_to_fawaedFragment"
+            app:destination="@id/fawaedFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.crazyidea.alsalah.ui.setting.SettingFragment"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_languageFragment"
+            app:destination="@id/languageFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_prayerTimingFragment"
+            app:destination="@id/prayerTimingFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/compassFragment2"
@@ -112,5 +122,20 @@
         android:name="com.crazyidea.alsalah.ui.whoAreWe.WhoAreWeFragment"
         android:label="WhoAreWeFragment"
         tools:layout="@layout/fragment_who_are_we" />
+    <fragment
+        android:id="@+id/languageFragment"
+        tools:layout="@layout/fragment_choose_language"
+        android:name="com.crazyidea.alsalah.ui.language.LanguageFragment"
+        android:label="LanguageFragment" />
+    <fragment
+        android:id="@+id/fawaedFragment"
+        tools:layout="@layout/fragment_fawaed"
+        android:name="com.crazyidea.alsalah.ui.fawaed.FawaedFragment"
+        android:label="FawaedFragment" />
+    <fragment
+        android:id="@+id/prayerTimingFragment"
+        tools:layout="@layout/fragment_choose_language"
+        android:name="com.crazyidea.alsalah.ui.prayerTiming.PrayerTimingFragment"
+        android:label="PrayerTimingFragment" />
 
 </navigation>
