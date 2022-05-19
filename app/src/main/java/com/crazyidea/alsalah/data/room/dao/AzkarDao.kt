@@ -14,8 +14,8 @@ interface AzkarDao {
     fun getAzkarByCategory(category: String): List<Azkar>
 
     @Transaction
-    @Query("SELECT * FROM Azkar where category NOT IN (\"أذكار الصباح\",\"أذكار النوم\",\"تسابيح\",\"أذكار بعد السلام من الصلاة المفروضة\",\"أذكار المساء\")")
-    fun getOtherAzkar(): List<Azkar>
+    @Query("SELECT * FROM Azkar WHERE category NOT IN (:categories)")
+    fun getOtherAzkar( categories:List<String>): List<Azkar>
 
     @Transaction
     @Query("SELECT * FROM Azkar where category = :category LIMIT 1")

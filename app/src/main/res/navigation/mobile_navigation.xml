@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_azkar_details"
             app:destination="@id/navigation_azkar_details" />
+        <action
+            android:id="@+id/action_navigation_home_to_compassFragment2"
+            app:destination="@id/compassFragment2" />
     </fragment>
 
     <fragment

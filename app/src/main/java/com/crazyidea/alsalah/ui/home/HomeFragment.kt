@@ -2,6 +2,10 @@ package com.crazyidea.alsalah.ui.home
 
 import android.Manifest
 import android.app.AlertDialog
+import android.icu.text.DateFormat
+import android.icu.text.SimpleDateFormat
+import android.icu.util.IslamicCalendar
+import android.icu.util.ULocale
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -16,11 +20,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.crazyidea.alsalah.workManager.DailyAzanWorker
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener
+import com.crazyidea.alsalah.workManager.DailyAzanWorker
+import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,6 +78,22 @@ class HomeFragment : Fragment(), PermissionListener {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         )
+        val iCalendar = UmmalquraCalendar()
+// name of month
+        val locale = ULocale("ar@calendar=islamic")
+
+// name of month
+// full date
+        val df2 = SimpleDateFormat("MMMM yyyy", locale)
+        val df1 = SimpleDateFormat("EEEE", locale)
+        binding.dateLayout.dayNum.text = iCalendar.get(IslamicCalendar.DAY_OF_MONTH).toString()
+        binding.dateLayout.monthYear.text = df2.format(iCalendar.time)
+        binding.dateLayout.today.text = df1.format(iCalendar.time)
+        setupNavigation()
+        collectData()
+    }
+
+    private fun setupNavigation() {
         binding.readAfterPrayersNowBtn.setOnClickListener {
             findNavController().navigate(
                 HomeFragmentDirections.actionNavigationHomeToNavigationAzkarDetails(
@@ -87,7 +108,11 @@ class HomeFragment : Fragment(), PermissionListener {
                 )
             )
         }
-        collectData()
+        binding.qeblaLayout.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionNavigationHomeToCompassFragment2()
+            )
+        }
     }
 
     private fun collectData() {

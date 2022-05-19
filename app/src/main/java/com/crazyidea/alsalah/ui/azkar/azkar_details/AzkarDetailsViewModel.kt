@@ -25,7 +25,10 @@ class AzkarDetailsViewModel @Inject constructor(
     suspend fun getAzkar(category: String) {
         withContext(viewModelScope.coroutineContext) {
             allAzkar.value = prayerRepository.getAzkarByCategory(category)
-            azkar.value = allAzkar.value!![0]
+            allAzkar.value?.let {
+                if (it.isNotEmpty())
+                    azkar.value = it[0]
+            }
         }
     }
 
