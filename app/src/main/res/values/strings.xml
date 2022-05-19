@@ -118,4 +118,13 @@
     <string name="france">فرنسا</string>
     <string name="russia">روسيا</string>
     <string name="specific">تخصيص</string>
+    <string name="three_mazhabs">حنبلي - شافعي - مالكي</string>
+    <string name="hanafi">حنفي</string>
+    <string name="fajrMinutes">تصحيح الفجر بالدقائق</string>
+    <string name="shrooqMinutes">تصحيح الشروق بالدقائق</string>
+    <string name="zuhrMinutes">تصحيح الظهر بالدقائق</string>
+    <string name="asrMinutes">تصحيح العصر بالدقائق</string>
+    <string name="maghribMinutes">تصحيح المغرب بالدقائق</string>
+    <string name="ishaMinutes">تصحيح العشاء بالدقائق</string>
+    <string name="refactor">إعادة ضبط</string>
 </resources>

@@ -74,6 +74,12 @@
         <action
             android:id="@+id/action_settingFragment_to_prayerTimingFragment"
             app:destination="@id/prayerTimingFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_mazhabFragment"
+            app:destination="@id/mazhabFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_refactorPrayerTimingFragment"
+            app:destination="@id/refactorPrayerTimingFragment" />
     </fragment>
 
     <fragment
@@ -137,5 +143,15 @@
         tools:layout="@layout/fragment_choose_language"
         android:name="com.crazyidea.alsalah.ui.prayerTiming.PrayerTimingFragment"
         android:label="PrayerTimingFragment" />
+    <fragment
+        android:id="@+id/mazhabFragment"
+        tools:layout="@layout/fragment_choose_mazhab"
+        android:name="com.crazyidea.alsalah.ui.mazhab.MazhabFragment"
+        android:label="MazhabFragment" />
+    <fragment
+        android:id="@+id/refactorPrayerTimingFragment"
+        tools:layout="@layout/fragment_prayer_time_notification"
+        android:name="com.crazyidea.alsalah.ui.refactorPrayerNotification.RefactorPrayerTimingFragment"
+        android:label="RefactorPrayerTimingFragment" />
 
 </navigation>

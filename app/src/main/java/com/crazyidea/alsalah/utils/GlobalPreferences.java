@@ -3,12 +3,15 @@ package com.crazyidea.alsalah.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.jetbrains.annotations.NotNull;
+
 
 public class GlobalPreferences {
 
     private static final String APP_LANGUAGE = "language";
     private static final String PREFS_NAME = "SalahPref";
     private static final String LATITUIDE = "lat";
+    private static final String MAZHAB = "mazhab";
     private static final String LONGITUIDE = "lng";
     Context context;
     private SharedPreferences prefs;
@@ -36,6 +39,9 @@ public class GlobalPreferences {
     public String getLongituide() {
         return prefs.getString(LONGITUIDE, "");
     }
+    public String getMazhab() {
+        return prefs.getString(MAZHAB, "others");
+    }
 
     public void storeLatituide(String  latitude) {
         prefsEditor.putString(LATITUIDE, latitude);
@@ -44,6 +50,12 @@ public class GlobalPreferences {
     }
     public void storeLongituide(String  longituide) {
         prefsEditor.putString(LONGITUIDE, longituide);
+        prefsEditor.commit();
+
+    }
+
+    public void saveMazhab(@NotNull String mazhab) {
+        prefsEditor.putString(MAZHAB, mazhab);
         prefsEditor.commit();
 
     }

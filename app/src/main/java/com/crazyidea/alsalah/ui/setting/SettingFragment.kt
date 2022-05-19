@@ -40,6 +40,12 @@ class SettingFragment : Fragment() {
         binding.calculateWay.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToPrayerTimingFragment())
         }
+        binding.almazhab.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToMazhabFragment())
+        }
+        binding.editPrayerTime.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToRefactorPrayerTimingFragment())
+        }
     }
 
     override fun onDestroyView() {
