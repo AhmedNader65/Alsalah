@@ -92,7 +92,7 @@ class PrayersLocalDataSource @Inject constructor(
     suspend fun getAzkarByCategory(category:String): List<Azkar> {
         return withContext(externalScope.coroutineContext) {
             if (category=="اخرى")
-            appDatabase.azkarDao().getOtherAzkar()
+            appDatabase.azkarDao().getOtherAzkar(listOf("أذكار الصباح","أذكار النوم","تسابيح","أذكار بعد السلام من الصلاة المفروضة","أذكار المساء"))
             else
              appDatabase.azkarDao().getAzkarByCategory(category)
         }
