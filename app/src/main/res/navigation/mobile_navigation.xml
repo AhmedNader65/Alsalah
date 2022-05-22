@@ -83,6 +83,9 @@
         <action
             android:id="@+id/action_settingFragment_to_poleCalculateWayFragment"
             app:destination="@id/poleCalculateWayFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
     </fragment>
 
     <fragment
@@ -161,5 +164,10 @@
         tools:layout="@layout/fragment_choose_pole_calculate_way"
         android:name="com.crazyidea.alsalah.ui.poleCalculateWay.PoleCalculateWayFragment"
         android:label="PoleCalculateWayFragment" />
+    <fragment
+        android:id="@+id/resetFragment"
+        tools:layout="@layout/fragment_reset"
+        android:name="com.crazyidea.alsalah.ui.reset.ResetFragment"
+        android:label="ResetFragment" />
 
 </navigation>

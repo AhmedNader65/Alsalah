@@ -49,6 +49,9 @@ class SettingFragment : Fragment() {
         binding.poleCalculateWay.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToPoleCalculateWayFragment())
         }
+        binding.defaultSettingPrayer.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToResetFragment())
+        }
     }
 
     override fun onDestroyView() {
