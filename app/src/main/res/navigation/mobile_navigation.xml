@@ -86,6 +86,9 @@
         <action
             android:id="@+id/action_settingFragment_to_resetFragment"
             app:destination="@id/resetFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
     </fragment>
 
     <fragment
@@ -169,5 +172,10 @@
         tools:layout="@layout/fragment_reset"
         android:name="com.crazyidea.alsalah.ui.reset.ResetFragment"
         android:label="ResetFragment" />
+    <fragment
+        android:id="@+id/locationFragment"
+        tools:layout="@layout/fragment_location"
+        android:name="com.crazyidea.alsalah.ui.location.LocationFragment"
+        android:label="LocationFragment" />
 
 </navigation>

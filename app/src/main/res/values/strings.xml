@@ -131,4 +131,8 @@
     <string name="one_of_seven">سبع الليل</string>
     <string name="angelar">باستخدام الزاوية</string>
     <string name="pressHere">اضغط هنا</string>
+    <string name="getLocationAutomatically">تحديد الموقع اليا</string>
+    <string name="sucsessfullyGotLocaction">تم تحديد موقعك بنجاح</string>
+    <string name="agree">موافق</string>
+    <string name="tryAnotherWay">التحديد بطريقة اخرى</string>
 </resources>

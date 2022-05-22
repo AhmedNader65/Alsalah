@@ -52,6 +52,9 @@ class SettingFragment : Fragment() {
         binding.defaultSettingPrayer.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToResetFragment())
         }
+        binding.getLocaAutomatically.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToLocationFragment())
+        }
     }
 
     override fun onDestroyView() {
