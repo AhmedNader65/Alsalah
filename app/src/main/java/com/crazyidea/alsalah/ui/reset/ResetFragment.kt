@@ -13,12 +13,13 @@ import com.crazyidea.alsalah.data.model.PrayerTimeRefrence
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentChooseLanguageBinding
 import com.crazyidea.alsalah.databinding.FragmentPrayerTimeNotificationBinding
+import com.crazyidea.alsalah.databinding.FragmentResetBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ResetFragment : Fragment(){
 
-    private var _binding: FragmentPrayerTimeNotificationBinding? = null
+    private var _binding: FragmentResetBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -31,7 +32,7 @@ class ResetFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentPrayerTimeNotificationBinding.inflate(inflater, container, false)
+        _binding = FragmentResetBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
