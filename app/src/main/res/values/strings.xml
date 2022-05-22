@@ -127,4 +127,7 @@
     <string name="maghribMinutes">تصحيح المغرب بالدقائق</string>
     <string name="ishaMinutes">تصحيح العشاء بالدقائق</string>
     <string name="refactor">إعادة ضبط</string>
+    <string name="nothing">لا يوجد</string>
+    <string name="one_of_seven">سبع الليل</string>
+    <string name="angelar">باستخدام الزاوية</string>
 </resources>

@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_settingFragment_to_refactorPrayerTimingFragment"
             app:destination="@id/refactorPrayerTimingFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_poleCalculateWayFragment"
+            app:destination="@id/poleCalculateWayFragment" />
     </fragment>
 
     <fragment
@@ -153,5 +156,10 @@
         tools:layout="@layout/fragment_prayer_time_notification"
         android:name="com.crazyidea.alsalah.ui.refactorPrayerNotification.RefactorPrayerTimingFragment"
         android:label="RefactorPrayerTimingFragment" />
+    <fragment
+        android:id="@+id/poleCalculateWayFragment"
+        tools:layout="@layout/fragment_choose_pole_calculate_way"
+        android:name="com.crazyidea.alsalah.ui.poleCalculateWay.PoleCalculateWayFragment"
+        android:label="PoleCalculateWayFragment" />
 
 </navigation>

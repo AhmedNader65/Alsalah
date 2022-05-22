@@ -46,6 +46,9 @@ class SettingFragment : Fragment() {
         binding.editPrayerTime.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToRefactorPrayerTimingFragment())
         }
+        binding.poleCalculateWay.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToPoleCalculateWayFragment())
+        }
     }
 
     override fun onDestroyView() {
