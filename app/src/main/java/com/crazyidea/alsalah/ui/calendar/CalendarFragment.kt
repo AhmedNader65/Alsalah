@@ -2,12 +2,12 @@ package com.crazyidea.alsalah.ui.calendar
 
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,13 +18,14 @@ import com.crazyidea.alsalah.databinding.FragmentCalendarBinding
 import com.crazyidea.alsalah.ui.menu.MenuViewModel
 import com.crazyidea.alsalah.utils.daysOfWeekFromLocale
 import com.crazyidea.alsalah.utils.setTextColorRes
+import com.crazyidea.alsalah.utils.withSimpleAdapter
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import com.mrerror.calendarview.model.*
 import com.mrerror.calendarview.ui.DayBinder
 import com.mrerror.calendarview.ui.MonthHeaderFooterBinder
 import com.mrerror.calendarview.ui.ViewContainer
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDateTime
+import org.w3c.dom.Text
 import java.time.format.TextStyle
 import java.util.*
 
@@ -60,13 +61,23 @@ class CalendarFragment : Fragment() {
 
         val daysOfWeek = daysOfWeekFromLocale()
 //HIJRI
-        setupCalendar(UmmalquraCalendar(),TYPE.HIJRI)
+        setupCalendar(UmmalquraCalendar(), TYPE.HIJRI)
         binding.group.addOnButtonCheckedListener { group, checkedId, isChecked ->
-            if (checkedId == R.id.hijri_calendar){
-                setupCalendar(UmmalquraCalendar(),TYPE.HIJRI)
-            }else{
-                setupCalendar(Calendar.getInstance(),TYPE.GREGORIAN)
+            if (checkedId == R.id.hijri_calendar) {
+                setupCalendar(UmmalquraCalendar(), TYPE.HIJRI)
+            } else {
+                setupCalendar(Calendar.getInstance(), TYPE.GREGORIAN)
             }
+        }
+        this@CalendarFragment.binding.eventsRv.withSimpleAdapter(
+            listOf(
+                "حدث في مثل هذا اليوم",
+                "حدث في مثل هذا اليوم",
+                "حدث في مثل هذا اليوم",
+                "حدث في مثل هذا اليوم"
+            ), android.R.layout.simple_list_item_1
+        ) {
+            (itemView as TextView).text = it
         }
         class DayViewContainer(view: View) : ViewContainer(view) {
             lateinit var day: CalendarDay // Will be set when this container is bound.
@@ -76,6 +87,32 @@ class CalendarFragment : Fragment() {
                 view.setOnClickListener {
                     if (day.owner == DayOwner.THIS_MONTH) {
                         if (selectedDate != day.date) {
+                            var ar = Locale("ar")
+                            val monthText =
+                                day.date.yearMonth.getDisplayName(
+                                    Calendar.MONTH,
+                                    Calendar.LONG,
+                                    ar
+                                )
+
+                            val yearText = "${day.date.yearMonth.get(Calendar.YEAR)}"
+                            val dayText = "${day.date.yearMonth.get(Calendar.DAY_OF_MONTH)}"
+
+                            val text =
+                                "<font color=\"#EEB34B\">$dayText</font> <font color=\"#FFFFFF\">$monthText</font> <font color=\"#EEB34B\">$yearText</font>"
+                            this@CalendarFragment.binding.eventsRv.withSimpleAdapter(
+                                listOf(
+                                    "حدث في مثل هذا اليوم",
+                                    "حدث في مثل هذا اليوم",
+                                    "حدث في مثل هذا اليوم",
+                                    "حدث في مثل هذا اليوم"
+                                ), android.R.layout.simple_list_item_1
+                            ) {
+                                (itemView as TextView).text = it
+                            }
+
+                            this@CalendarFragment.binding.eventDate.text =
+                                HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
                             val oldDate = selectedDate
                             selectedDate = day.date
                             val binding = this@CalendarFragment.binding
@@ -103,11 +140,11 @@ class CalendarFragment : Fragment() {
                 if (day.owner == DayOwner.THIS_MONTH) {
 
                     textView.setTextColorRes(R.color.black)
-                    if(DateUtils.isToday(day.date.yearMonth.timeInMillis))  {
+                    if (DateUtils.isToday(day.date.yearMonth.timeInMillis)) {
                         textView.setTextColorRes(R.color.white)
                         textView.setBackgroundResource(R.drawable.today_bg)
-                    }else{
-                    textView.setBackgroundResource(0)
+                    } else {
+                        textView.setBackgroundResource(0)
 
                     }
 //                    layout.setBackgroundResource(if (selectedDate == day.date) R.drawable.example_5_selected_bg else 0)
@@ -165,8 +202,14 @@ class CalendarFragment : Fragment() {
                 )
 
             val yearText = "${month.calendar.get(Calendar.YEAR)}"
+            val dayText = "${month.calendar.get(Calendar.DAY_OF_MONTH)}"
             binding.monthText.text = monthText
             binding.yearText.text = yearText
+            val text =
+                "<font color=\"#EEB34B\">$dayText</font> <font color=\"#FFFFFF\">$monthText</font> <font color=\"#EEB34B\">$yearText</font>"
+
+            binding.eventDate.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+//            binding.eventDate.text= getString(R.string.event_day,dayText,monthText,yearText)
             selectedDate?.let {
                 // Clear selection if we scroll to a new month.
                 selectedDate = null
@@ -188,7 +231,7 @@ class CalendarFragment : Fragment() {
         }
     }
 
-    private fun setupCalendar(currentMonth:Calendar,type:TYPE) {
+    private fun setupCalendar(currentMonth: Calendar, type: TYPE) {
 
         binding.calendarView.setup(
             pastMonths, futureMonths, daysOfWeekFromLocale().first(),
