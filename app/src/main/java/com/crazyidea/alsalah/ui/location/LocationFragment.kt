@@ -32,7 +32,7 @@ class LocationFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentLocationBinding.inflate(inflater, container, false)
+        _binding = FragmentLocationBinding .inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
