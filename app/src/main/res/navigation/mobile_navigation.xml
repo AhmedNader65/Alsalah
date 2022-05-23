@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_home_to_compassFragment2"
             app:destination="@id/compassFragment2" />
+        <action
+            android:id="@+id/action_navigation_home_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
 
     <fragment
@@ -112,5 +115,10 @@
         android:name="com.crazyidea.alsalah.ui.whoAreWe.WhoAreWeFragment"
         android:label="WhoAreWeFragment"
         tools:layout="@layout/fragment_who_are_we" />
+    <fragment
+        tools:layout="@layout/fragment_calendar"
+        android:id="@+id/calendarFragment"
+        android:name="com.crazyidea.alsalah.ui.calendar.CalendarFragment"
+        android:label="CalendarFragment" />
 
 </navigation>

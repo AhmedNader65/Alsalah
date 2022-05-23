@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ui.menu.MenuFragment">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/boldText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/header_color"
+        android:paddingBottom="@dimen/_8sdp"
+        android:text="@string/calendar"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="match_parent"
+        app:checkedButton="@id/hijri_calendar"
+        android:id="@+id/group"
+        app:singleSelection="true"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:layout_height="wrap_content">
+
+        <Button
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:id="@+id/geo_calendar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="ميلادي"
+            app:cornerRadius="@dimen/_16sdp"
+            android:textSize="@dimen/_16ssp"
+            android:fontFamily="@font/dinnextbold"
+            app:layout_constraintEnd_toStartOf="@id/hijri_calendar"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:id="@+id/hijri_calendar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="هجري"
+            app:cornerRadius="@dimen/_16sdp"
+            android:textSize="@dimen/_16ssp"
+            android:fontFamily="@font/dinnextbold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/geo_calendar"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <ImageView
+        android:id="@+id/previousMonthImage"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginEnd="@dimen/_56sdp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toBottomOf="@id/yearText"
+        app:layout_constraintEnd_toStartOf="@+id/yearText"
+        app:layout_constraintTop_toTopOf="@id/monthText"
+        app:srcCompat="@drawable/ic_azkar_prev"
+        app:tint="@color/green" />
+
+    <TextView
+        android:id="@+id/monthText"
+        style="@style/boldText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="#519259"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/group"
+        tools:text="April" />
+
+    <TextView
+        android:id="@+id/yearText"
+        style="@style/lightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/monthText"
+        tools:text="2018" />
+
+    <ImageView
+        android:id="@+id/nextMonthImage"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginStart="@dimen/_56sdp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toBottomOf="@id/yearText"
+        app:layout_constraintStart_toEndOf="@+id/yearText"
+        app:layout_constraintTop_toTopOf="@id/monthText"
+        app:srcCompat="@drawable/ic_azkar_next"
+        app:tint="@color/green" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_end="16dp" />
+
+    <com.mrerror.calendarview.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:cv_dayViewResource="@layout/calendar_day"
+        app:cv_monthHeaderResource="@layout/calendar_header"
+        app:cv_orientation="horizontal"
+        app:cv_outDateStyle="endOfRow"
+        app:cv_scrollMode="paged"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/yearText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:nestedScrollingEnabled="false"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/calendarView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
