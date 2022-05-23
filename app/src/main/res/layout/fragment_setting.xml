@@ -579,7 +579,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/azanScreen"
+                android:id="@+id/azanSoundAndImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -599,7 +599,7 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:paddingBottom="@dimen/_12sdp"
-                    android:text="@string/azanScreen"
+                    android:text="@string/azanSoundAndImage"
                     android:textColor="@color/green_meduim"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

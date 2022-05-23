@@ -142,4 +142,21 @@
     <string name="night_azkar">اذكار المساء</string>
     <string name="sleep_azkar">اذكار النوم</string>
     <string name="after_prayer_azkar">أذكار بعد الصلاة</string>
+    <string name="azanSoundAndImage">اصوات وخلفيات الاذان</string>
+    <string name="azanIkamaSetting">اعدادات الاذان والإقامة</string>
+    <string name="azan_background">خلفيات الاذان</string>
+    <string name="naturalViews">خلفيات طبيعية</string>
+    <string name="soundFromPhone">اصوات من الهاتف</string>
+    <string name="azanSound">اصوات الاذان</string>
+    <string name="chooseFromGallery">اختر من ملفاتك الخاصة</string>
+    <string name="soundFromApp">اصوات من البرنامج</string>
+    <string name="iqamaSound">اصوات الاقامة</string>
+    <string name="ringtone">جرس</string>
+    <string name="apply_for_all_prayers">تطبيق الاعدادات لكل الصلوات</string>
+    <string name="notify_before_prayer">تنبيه قبل الاذان</string>
+    <string name="notify_at_prayer">تنبيه بالاذان</string>
+    <string name="notify_at_iqama">تنبيه وقت الاقامة</string>
+    <string name="alarmTime">وقت التنبية</string>
+    <string name="time_before_prayer">تنبيه قبل الاذن بالدقائق</string>
+    <string name="notify_before_prayer_minutes">تنبيه قبل الاذن بالدقائق</string>
 </resources>

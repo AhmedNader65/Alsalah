@@ -92,6 +92,9 @@
         <action
             android:id="@+id/action_settingFragment_to_azkarSettingFragment"
             app:destination="@id/azkarSettingFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_azanSettingFragment"
+            app:destination="@id/azanSettingFragment" />
     </fragment>
 
     <fragment
@@ -185,5 +188,10 @@
         tools:layout="@layout/fragment_azkar_settings"
         android:name="com.crazyidea.alsalah.ui.azkarSetting.AzkarSettingFragment"
         android:label="AzkarSettingFragment" />
+    <fragment
+        android:id="@+id/azanSettingFragment"
+        tools:layout="@layout/fragment_azan_setting"
+        android:name="com.crazyidea.alsalah.ui.azanSetting.AzanSettingFragment"
+        android:label="AzanSettingFragment" />
 
 </navigation>

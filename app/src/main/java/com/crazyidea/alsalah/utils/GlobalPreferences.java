@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.crazyidea.alsalah.R;
 import com.crazyidea.alsalah.data.model.PoleCalculation;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,7 @@ public class GlobalPreferences {
     private static final String LATITUIDE = "lat";
     private static final String MAZHAB = "mazhab";
     private static final String POLE = "pole";
+    private static final String AZAN = "azan";
     private static final String LONGITUIDE = "lng";
     Context context;
     private SharedPreferences prefs;
@@ -66,6 +68,10 @@ public class GlobalPreferences {
         return prefs.getString(POLE, "NOTHING");
     }
 
+    public String getAzan() {
+        return prefs.getString(AZAN, "الاذان المكي");
+    }
+
     public void storeLatituide(String latitude) {
         prefsEditor.putString(LATITUIDE, latitude);
         prefsEditor.commit();
@@ -80,6 +86,12 @@ public class GlobalPreferences {
 
     public void saveMazhab(@NotNull String mazhab) {
         prefsEditor.putString(MAZHAB, mazhab);
+        prefsEditor.commit();
+
+    }
+
+    public void saveAzan(String azan) {
+        prefsEditor.putString(AZAN, azan);
         prefsEditor.commit();
 
     }
