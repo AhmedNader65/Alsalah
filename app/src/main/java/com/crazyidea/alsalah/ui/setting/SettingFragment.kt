@@ -55,6 +55,9 @@ class SettingFragment : Fragment() {
         binding.getLocaAutomatically.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToLocationFragment())
         }
+        binding.azkar.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToAzkarSettingFragment())
+        }
     }
 
     override fun onDestroyView() {

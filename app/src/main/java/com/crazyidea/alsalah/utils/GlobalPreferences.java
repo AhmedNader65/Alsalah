@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class GlobalPreferences {
 
     private static final String APP_LANGUAGE = "language";
+    private static final String AZKAR_LANGUAGE = "azkar_language";
     private static final String PREFS_NAME = "SalahPref";
     private static final String LATITUIDE = "lat";
     private static final String MAZHAB = "mazhab";
@@ -35,8 +36,18 @@ public class GlobalPreferences {
         prefsEditor.commit();
     }
 
+
+    public void storeAzkarLanguage(String locale) {
+        prefsEditor.putString(AZKAR_LANGUAGE, locale);
+        prefsEditor.commit();
+    }
+
     public String getLocale() {
         return prefs.getString(APP_LANGUAGE, "ar");
+    }
+
+    public String getAzkarLanguage() {
+        return prefs.getString(AZKAR_LANGUAGE, "ar");
     }
 
     public String getLatituide() {

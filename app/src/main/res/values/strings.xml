@@ -135,4 +135,11 @@
     <string name="sucsessfullyGotLocaction">تم تحديد موقعك بنجاح</string>
     <string name="agree">موافق</string>
     <string name="tryAnotherWay">التحديد بطريقة اخرى</string>
+    <string name="counter">العداد</string>
+    <string name="viberateWithClick">اهتزاز مع كل ضغطة</string>
+    <string name="autoMigerate">تفعيل الانتقال التلقائي</string>
+    <string name="morning_azkar">اذكار الصباح</string>
+    <string name="night_azkar">اذكار المساء</string>
+    <string name="sleep_azkar">اذكار النوم</string>
+    <string name="after_prayer_azkar">أذكار بعد الصلاة</string>
 </resources>

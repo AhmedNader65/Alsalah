@@ -89,6 +89,9 @@
         <action
             android:id="@+id/action_settingFragment_to_locationFragment"
             app:destination="@id/locationFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_azkarSettingFragment"
+            app:destination="@id/azkarSettingFragment" />
     </fragment>
 
     <fragment
@@ -177,5 +180,10 @@
         tools:layout="@layout/fragment_location"
         android:name="com.crazyidea.alsalah.ui.location.LocationFragment"
         android:label="LocationFragment" />
+    <fragment
+        android:id="@+id/azkarSettingFragment"
+        tools:layout="@layout/fragment_azkar_settings"
+        android:name="com.crazyidea.alsalah.ui.azkarSetting.AzkarSettingFragment"
+        android:label="AzkarSettingFragment" />
 
 </navigation>
