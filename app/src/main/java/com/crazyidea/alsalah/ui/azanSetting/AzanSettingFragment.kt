@@ -2,6 +2,7 @@ package com.crazyidea.alsalah.ui.azanSetting
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Intent
 import android.media.MediaPlayer
@@ -19,13 +20,14 @@ import com.crazyidea.alsalah.adapter.AzanSoundAdapter
 import com.crazyidea.alsalah.data.model.Azan
 import com.crazyidea.alsalah.databinding.FragmentAzanSettingBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.utils.PermissionHelper
+import com.crazyidea.alsalah.utils.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
-import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner {
+class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, PermissionListener {
 
     private var _binding: FragmentAzanSettingBinding? = null
 
@@ -34,7 +36,8 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner {
     private val binding get() = _binding!!
     private val viewModel by viewModels<AzanSettingViewModel>()
     lateinit var mediaPlayer: MediaPlayer
-    private val STORAGE_PERMISSION = 3214
+    private var whereFrom = 0
+    private lateinit var permissionHelper: PermissionHelper
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
@@ -44,6 +47,7 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner {
         savedInstanceState: Bundle?
     ): View {
 
+        permissionHelper = PermissionHelper(this, this)
         _binding = FragmentAzanSettingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -55,29 +59,25 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.azanRV.adapter = AzanSoundAdapter(createAzans(), this)
-        binding.chooseFromGallery.setOnClickListener { openAudioPicker(1) }
-        binding.chooseFromGallery2.setOnClickListener { openAudioPicker(2) }
+        binding.chooseFromGallery.setOnClickListener {
+            whereFrom = 1
+            openAudioPicker()
+        }
+        binding.chooseFromGallery2.setOnClickListener {
+            whereFrom = 2
+            openAudioPicker()
+        }
 
 
     }
 
 
-    private fun openAudioPicker(whereFrom: Int) {
-        if (!EasyPermissions.hasPermissions(
-                requireContext(),
+    private fun openAudioPicker() {
+        permissionHelper.checkForMultiplePermissions(
+            arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
-        ) {
-            EasyPermissions.requestPermissions(
-                this,
-                getString(R.string.permission_read_external_storage),
-                STORAGE_PERMISSION,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        } else {
-            pickAudio(whereFrom)
-
-        }
+        )
     }
 
     fun pickAudio(whereFrom: Int) {
@@ -158,6 +158,40 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner {
 
     }
 
+    override fun shouldShowRationaleInfo() {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+
+        // set message of alert dialog
+        dialogBuilder.setMessage("External Storage permission is Required")
+            // if the dialog is cancelable
+            .setCancelable(false)
+            // positive button text and action
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.cancel()
+                permissionHelper.launchPermissionDialogForMultiplePermissions(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                    )
+                )
+            }
+            // negative button text and action
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.cancel()
+            }
+
+        // create dialog box
+        val alert = dialogBuilder.create()
+        // set title for alert dialog box
+        alert.setTitle("Storage Permission")
+        // show alert dialog
+        alert.show()
+    }
+
+    override fun isPermissionGranted(isGranted: Boolean) {
+        if (isGranted) {
+            pickAudio(whereFrom)
+        }
+    }
 
 
 }
