@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent">
 
     <TextView
@@ -10,7 +11,7 @@
         style="@style/boldText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/text_green_color"
+        android:background="@color/header_color"
         android:paddingBottom="@dimen/_8sdp"
         android:text="@string/location"
         android:textAlignment="center"
@@ -41,7 +42,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/dinnextregular"
             android:text="@string/getLocationAutomatically"
-            android:textColor="@color/text_green_color"
+            android:textColor="@color/text_main"
             android:textSize="@dimen/_18sdp" />
 
 
@@ -59,7 +60,7 @@
             android:layout_margin="@dimen/_8sdp"
             android:fontFamily="@font/dinnextregular"
             android:text="@string/sucsessfullyGotLocaction"
-            android:textColor="@color/text_green_color"
+            android:textColor="@color/text_main"
             android:textSize="@dimen/_12sdp" />
 
         <ImageView

@@ -10,7 +10,8 @@
     <color name="text_color">#4D4D4D</color>
     <color name="inverted_text_color">#ffffff</color>
     <color name="qibla_color">#888</color>
-    <color name="text_green_color">#184A3F</color>
+    <color name="text_main">#184A3F</color>
+    <color name="text_secondary">#184A3F</color>
     <color name="header_color">#184A3F</color>
     <color name="general_setting_line">#344E41</color>
     <color name="green">#38AD00</color>
@@ -23,9 +24,11 @@
     <!-- LCD -->
     <color name="lcd_front">#FF00FF00</color>
     <color name="lcd_back">#44FFFFFF</color>
+    <color name="color_back_fragment">#FFFFFF</color>
 
     <!-- Display -->
     <color name="display_border">#FF333333</color>
     <color name="display_dark">@android:color/black</color>
     <color name="display_reflect">#FF666666</color>
+    <color name="languages_constraint">#EFEFEF</color>
 </resources>

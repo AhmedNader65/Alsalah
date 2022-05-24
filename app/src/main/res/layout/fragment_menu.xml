@@ -55,7 +55,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_home_big"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -66,7 +66,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/main"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -94,7 +94,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_setting"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -105,7 +105,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/setting"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -133,7 +133,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_azkar_yellow"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -144,7 +144,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/title_azkar"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -172,7 +172,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_sebha_yellow"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -183,7 +183,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/sebha"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -219,7 +219,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_compass"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -230,7 +230,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/compass"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -257,7 +257,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
-                        app:tint="@color/header_color"
+                        app:tint="@color/text_main"
                         android:src="@drawable/ic_quran" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -269,7 +269,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/quran"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -297,7 +297,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_file"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -308,7 +308,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/fwaed"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -336,7 +336,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_alarm_yellow"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -347,7 +347,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/title_alarm"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -384,7 +384,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_mosques"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -395,7 +395,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/mosques"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -424,7 +424,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_calendar_big"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -435,7 +435,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/calendar"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -464,7 +464,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_call_big"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -475,7 +475,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/fajrList"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -504,7 +504,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_it_support"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -515,7 +515,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/it_support"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -552,7 +552,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_faq"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -563,7 +563,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/faq"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -592,7 +592,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_person"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -603,7 +603,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/who_are_we"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -632,7 +632,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_follow_us"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -643,7 +643,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/follow_us"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>
@@ -671,7 +671,7 @@
                         android:layout_gravity="center"
                         android:padding="@dimen/_12sdp"
                         android:src="@drawable/ic_it_support"
-                        app:tint="@color/header_color" />
+                        app:tint="@color/text_main" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -682,7 +682,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:text="@string/rate_app"
-                    android:textColor="@color/green_meduim" />
+                    android:textColor="@color/text_main" />
 
 
             </LinearLayout>

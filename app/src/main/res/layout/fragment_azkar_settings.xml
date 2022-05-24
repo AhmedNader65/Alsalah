@@ -56,7 +56,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="عربي"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintTop_toBottomOf="@+id/language_title" />
 
@@ -80,7 +80,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/vibration_title" />
@@ -96,7 +96,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="اهتزاز"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/vibration_title" />
@@ -121,7 +121,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/notifications_title" />
@@ -137,7 +137,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="أذكار الصباح"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/notifications_title" />
@@ -157,7 +157,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line1" />
@@ -173,7 +173,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="أذكار المساء"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line1" />
@@ -193,7 +193,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line2" />
@@ -209,7 +209,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="أذكار النوم"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/line2" />
@@ -225,7 +225,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="وقت التنبيه"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sleeping_azkar" />
@@ -238,7 +238,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 android:text="23:00"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -270,7 +270,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/after_prayer_title" />
@@ -286,7 +286,7 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="أذكار بعد الصلاة"
                 android:textAlignment="viewStart"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/after_prayer_title" />
