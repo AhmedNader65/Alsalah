@@ -77,6 +77,27 @@
         <action
             android:id="@+id/action_settingFragment_to_prayerTimingFragment"
             app:destination="@id/prayerTimingFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_mazhabFragment"
+            app:destination="@id/mazhabFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_refactorPrayerTimingFragment"
+            app:destination="@id/refactorPrayerTimingFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_poleCalculateWayFragment"
+            app:destination="@id/poleCalculateWayFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_azkarSettingFragment"
+            app:destination="@id/azkarSettingFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_azanSettingFragment"
+            app:destination="@id/azanSettingFragment" />
     </fragment>
 
     <fragment
@@ -144,5 +165,40 @@
         tools:layout="@layout/fragment_choose_language"
         android:name="com.crazyidea.alsalah.ui.prayerTiming.PrayerTimingFragment"
         android:label="PrayerTimingFragment" />
+    <fragment
+        android:id="@+id/mazhabFragment"
+        tools:layout="@layout/fragment_choose_mazhab"
+        android:name="com.crazyidea.alsalah.ui.mazhab.MazhabFragment"
+        android:label="MazhabFragment" />
+    <fragment
+        android:id="@+id/refactorPrayerTimingFragment"
+        tools:layout="@layout/fragment_prayer_time_notification"
+        android:name="com.crazyidea.alsalah.ui.refactorPrayerNotification.RefactorPrayerTimingFragment"
+        android:label="RefactorPrayerTimingFragment" />
+    <fragment
+        android:id="@+id/poleCalculateWayFragment"
+        tools:layout="@layout/fragment_choose_pole_calculate_way"
+        android:name="com.crazyidea.alsalah.ui.poleCalculateWay.PoleCalculateWayFragment"
+        android:label="PoleCalculateWayFragment" />
+    <fragment
+        android:id="@+id/resetFragment"
+        tools:layout="@layout/fragment_reset"
+        android:name="com.crazyidea.alsalah.ui.reset.ResetFragment"
+        android:label="ResetFragment" />
+    <fragment
+        android:id="@+id/locationFragment"
+        tools:layout="@layout/fragment_location"
+        android:name="com.crazyidea.alsalah.ui.location.LocationFragment"
+        android:label="LocationFragment" />
+    <fragment
+        android:id="@+id/azkarSettingFragment"
+        tools:layout="@layout/fragment_azkar_settings"
+        android:name="com.crazyidea.alsalah.ui.azkarSetting.AzkarSettingFragment"
+        android:label="AzkarSettingFragment" />
+    <fragment
+        android:id="@+id/azanSettingFragment"
+        tools:layout="@layout/fragment_azan_setting"
+        android:name="com.crazyidea.alsalah.ui.azanSetting.AzanSettingFragment"
+        android:label="AzanSettingFragment" />
 
 </navigation>

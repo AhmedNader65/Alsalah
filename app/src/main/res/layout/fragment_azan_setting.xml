@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.crazyidea.alsalah.ui.azanSetting.AzanSettingViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/boldText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/header_color"
+                android:paddingBottom="@dimen/_8sdp"
+                android:text="@string/azanIkamaSetting"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                app:layout_constraintBottom_toBottomOf="@+id/title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/title" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/title">
+
+
+                <TextView
+                    android:id="@+id/azan_background_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:background="@color/header_color"
+                    android:fontFamily="@font/din_medium"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/azan_background"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
+
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="viewEnd">
+
+                    <RadioButton
+                        android:id="@+id/mosques"
+                        style="@style/mediumText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/text_brown_color"
+                        android:text="@string/mosques" />
+
+                    <RadioButton
+                        android:id="@+id/naturalViews"
+                        style="@style/mediumText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/text_brown_color"
+                        android:text="@string/naturalViews" />
+
+
+                </RadioGroup>
+
+                <TextView
+
+                    android:id="@+id/azanSoundTXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@color/header_color"
+                    android:fontFamily="@font/din_medium"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/azanSound"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp">
+
+                    <ImageView
+                        android:id="@+id/dot1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_fiber_manual_record_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/soundFromPhoneTXT"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/soundFromPhoneTXT" />
+
+                    <TextView
+                        android:id="@+id/soundFromPhoneTXT"
+                        style="@style/mediumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:text="@string/soundFromPhone"
+                        android:textColor="@color/text_main"
+                        app:layout_constraintStart_toEndOf="@+id/dot1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/chooseFromGallery"
+                        style="@style/lightText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/chooseFromGallery"
+                        app:layout_constraintStart_toStartOf="@+id/soundFromPhoneTXT"
+                        app:layout_constraintTop_toBottomOf="@+id/soundFromPhoneTXT" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/chooseFromGallery"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/chooseFromGallery"
+                        app:tint="@color/light_grey" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:background="@color/general_setting_line"
+                        app:layout_constraintTop_toBottomOf="@+id/chooseFromGallery" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp">
+
+                    <ImageView
+                        android:id="@+id/dot2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_fiber_manual_record_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/soundFromappTXT"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/soundFromappTXT" />
+
+                    <TextView
+                        android:id="@+id/soundFromappTXT"
+                        style="@style/mediumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:text="@string/soundFromApp"
+                        android:textColor="@color/text_main"
+                        app:layout_constraintStart_toEndOf="@+id/dot2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:background="@color/general_setting_line"
+                        app:layout_constraintTop_toBottomOf="@+id/soundFromappTXT" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/azanRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_azan_radio" />
+
+
+                <TextView
+
+                    android:id="@+id/iqamaSoundTXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@color/header_color"
+                    android:fontFamily="@font/din_medium"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/iqamaSound"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp">
+
+                    <ImageView
+                        android:id="@+id/dot3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_fiber_manual_record_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/soundFromPhoneTXT2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/soundFromPhoneTXT2" />
+
+                    <TextView
+                        android:id="@+id/soundFromPhoneTXT2"
+                        style="@style/mediumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:text="@string/soundFromPhone"
+                        android:textColor="@color/text_main"
+                        app:layout_constraintStart_toEndOf="@+id/dot3"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/chooseFromGallery2"
+                        style="@style/lightText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/chooseFromGallery"
+                        app:layout_constraintStart_toStartOf="@+id/soundFromPhoneTXT2"
+                        app:layout_constraintTop_toBottomOf="@+id/soundFromPhoneTXT2" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/chooseFromGallery2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/chooseFromGallery2"
+                        app:tint="@color/light_grey" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:background="@color/general_setting_line"
+                        app:layout_constraintTop_toBottomOf="@+id/chooseFromGallery2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp">
+
+                    <ImageView
+                        android:id="@+id/dot4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_fiber_manual_record_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/soundFromappTXT2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/soundFromappTXT2" />
+
+                    <TextView
+                        android:id="@+id/soundFromappTXT2"
+                        style="@style/mediumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:text="@string/soundFromApp"
+                        android:textColor="@color/text_main"
+                        app:layout_constraintStart_toEndOf="@+id/dot4"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:background="@color/general_setting_line"
+                        app:layout_constraintTop_toBottomOf="@+id/soundFromappTXT2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="viewEnd">
+
+                    <RadioButton
+                        android:id="@+id/iqama"
+                        style="@style/mediumText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/text_brown_color"
+                        android:text="@string/iqamaSound" />
+
+                    <RadioButton
+                        android:id="@+id/ringtone"
+                        style="@style/mediumText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/text_brown_color"
+                        android:text="@string/ringtone" />
+
+
+                </RadioGroup>
+
+
+                <TextView
+                    android:id="@+id/notificationsTXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:background="@color/header_color"
+                    android:fontFamily="@font/din_medium"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/notifications"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/apply_for_all_prayers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp">
+
+                    <com.suke.widget.SwitchButton
+                        android:id="@+id/apply_for_all_prayers_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:sb_checked="true"
+                        app:sb_checked_color="@color/text_orange_color" />
+
+                    <TextView
+                        style="@style/mediumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:paddingBottom="@dimen/_12sdp"
+                        android:text="@string/apply_for_all_prayers"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/general_setting_line"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/notify_before_prayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp">
+
+                    <com.suke.widget.SwitchButton
+                        android:id="@+id/notify_before_prayer_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:sb_checked="true"
+                        app:sb_checked_color="@color/text_orange_color" />
+
+                    <TextView
+                        style="@style/mediumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:paddingBottom="@dimen/_12sdp"
+                        android:text="@string/notify_before_prayer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/general_setting_line"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/notify_before"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp">
+
+
+                    <TextView
+                        style="@style/mediumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:paddingBottom="@dimen/_12sdp"
+                        android:text="@string/notify_before_prayer_minutes"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/prayer_minutes_con"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <View
+                            android:id="@+id/fajrline1"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:background="@color/general_setting_line"
+                            app:layout_constraintBottom_toBottomOf="@+id/cardminusfajr"
+                            app:layout_constraintEnd_toEndOf="@+id/cardminusfajr"
+                            app:layout_constraintStart_toStartOf="@+id/cardaddfajr"
+                            app:layout_constraintTop_toTopOf="@+id/cardminusfajr" />
+
+                        <TextView
+                            android:id="@+id/fajr_minutes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/dinnextregular"
+                            android:text="@{model.prayerMinutes.toString()}"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardminusfajr"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_margin="@dimen/_2sdp"
+
+                            android:background="@drawable/circle_progressbar"
+                            android:backgroundTint="@color/text_orange_color"
+                            android:onClick="@{()->model.controllPrayer((false))}"
+                            app:cardCornerRadius="@dimen/_25sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeColor="@color/white"
+                            app:strokeWidth="1dp">
+
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_baseline_remove_24" />
+
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardaddfajr"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_margin="@dimen/_2sdp"
+                            android:backgroundTint="#588057"
+                            android:elevation="@dimen/_2sdp"
+                            android:onClick="@{()->model.controllPrayer((true))}"
+                            app:cardCornerRadius="@dimen/_25sdp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:strokeColor="@color/white"
+                            app:strokeWidth="1dp">
+
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_baseline_add_24" />
+
+
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/general_setting_line"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/notify_at_prayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp">
+
+                    <com.suke.widget.SwitchButton
+                        android:id="@+id/notify_at_prayer_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:sb_checked="true"
+                        app:sb_checked_color="@color/text_orange_color" />
+
+                    <TextView
+                        style="@style/mediumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:paddingBottom="@dimen/_12sdp"
+                        android:text="@string/notify_at_prayer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/general_setting_line"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/notify_at_iqama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_16sdp">
+
+                    <com.suke.widget.SwitchButton
+                        android:id="@+id/notify_at_iqama_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:sb_checked="true"
+                        app:sb_checked_color="@color/text_orange_color" />
+
+                    <TextView
+                        style="@style/mediumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:paddingBottom="@dimen/_12sdp"
+                        android:text="@string/notify_at_iqama"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

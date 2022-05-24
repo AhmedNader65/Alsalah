@@ -40,6 +40,27 @@ class SettingFragment : Fragment() {
         binding.calculateWay.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToPrayerTimingFragment())
         }
+        binding.almazhab.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToMazhabFragment())
+        }
+        binding.editPrayerTime.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToRefactorPrayerTimingFragment())
+        }
+        binding.poleCalculateWay.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToPoleCalculateWayFragment())
+        }
+        binding.defaultSettingPrayer.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToResetFragment())
+        }
+        binding.getLocaAutomatically.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToLocationFragment())
+        }
+        binding.azkar.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToAzkarSettingFragment())
+        }
+        binding.azanSoundAndImage.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToAzanSettingFragment())
+        }
     }
 
     override fun onDestroyView() {

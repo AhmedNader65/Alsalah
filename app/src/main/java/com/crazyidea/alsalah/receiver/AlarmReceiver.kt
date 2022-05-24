@@ -20,41 +20,57 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.DEFAULT_ALL
 import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.utils.GlobalPreferences
 import java.util.*
 
 
 class AlarmReceiver : BroadcastReceiver() {
     private val CHANNEL_ID: String = "PrayerTimes"
+    lateinit var globalPreferences: GlobalPreferences
+    lateinit var sound: Uri
 
     override fun onReceive(context: Context, intent: Intent?) {
         Log.e("receiver", "received")
 // Create an explicit intent for an Activity in your app
         Toast.makeText(context, "alarm ran", Toast.LENGTH_SHORT).show()
 //        createNotificationChannel(context)
+        globalPreferences = GlobalPreferences(context)
 
         val fullScreenIntent = Intent(context, MainActivity::class.java)
         val fullScreenPendingIntent = PendingIntent.getActivity(
             context, 0,
             fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
-        sendNotification(context,
-            getTitle(context,intent?.getStringExtra("salah")) as String,fullScreenPendingIntent)
+        sendNotification(
+            context,
+            getTitle(context, intent?.getStringExtra("salah")) as String, fullScreenPendingIntent
+        )
 
     }
 
-    private fun sendNotification(context: Context,title:String, pendingIntent: PendingIntent) {
+    private fun sendNotification(context: Context, title: String, pendingIntent: PendingIntent) {
+        var number = globalPreferences.azan.toIntOrNull()
+        if (number != null) {
+            sound =
+                Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + number)
+        } else {
+            sound = Uri.parse(globalPreferences.azan)
+        }
+
+
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_after_prayer)
                 .setContentTitle(title)
                 .setContentText(context.getString(R.string.continue_using))
                 .setAutoCancel(true)
-                .setLights(Color.GRAY,500,500)
+                .setLights(Color.GRAY, 500, 500)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setDefaults(DEFAULT_ALL)
-                .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.azan))
+                .setSound(sound)
                 .setContentIntent(pendingIntent)
-        val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -69,30 +85,30 @@ class AlarmReceiver : BroadcastReceiver() {
     private fun createChannel(context: Context) {
         val soundUri =
             Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.azan)
-            // Create the NotificationChannel, but only on API 26+ because
-            // the NotificationChannel class is new and not in the support library
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val name = context.getString(R.string.channel_name)
-                val descriptionText = context.getString(R.string.channel_description)
-                val importance = NotificationManager.IMPORTANCE_HIGH
-                val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                    description = descriptionText
-                }
-                channel.setShowBadge(true);
-                val audioAttributes = AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                    .build()
-                channel.setSound(soundUri, audioAttributes)
-                channel.lightColor = Color.GRAY;
-                channel.enableLights(true);
-                channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC;
-
-                // Register the channel with the system
-                val notificationManager: NotificationManager =
-                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notificationManager.createNotificationChannel(channel)
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = context.getString(R.string.channel_name)
+            val descriptionText = context.getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
             }
+            channel.setShowBadge(true);
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build()
+            channel.setSound(soundUri, audioAttributes)
+            channel.lightColor = Color.GRAY;
+            channel.enableLights(true);
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC;
+
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     private fun getTitle(context: Context, stringExtra: String?): CharSequence? {

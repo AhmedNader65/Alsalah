@@ -63,7 +63,7 @@
                     android:paddingBottom="@dimen/_16sdp"
                     android:text="@{model.azkar.content}"
                     android:textAlignment="center"
-                    android:textColor="@color/text_green_color"
+                    android:textColor="@color/text_main"
                     android:textSize="@dimen/_13ssp" />
 
             </ScrollView>
@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:text="@{`باقي من الأذكار ◀ `+(model.allAzkar.size()-model.currentIndex)}"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="text_color">#4D4D4D</color>
-    <color name="text_green_color">#FFFFFF</color>
+    <color name="text_color">#C8C8C8</color>
+    <color name="text_main">#FFFFFF</color>
     <color name="header_color">#184A3F</color>
     <color name="inverted_text_color">#000000</color>
     <color name="general_setting_line">#344E41</color>
@@ -19,4 +19,6 @@
     <color name="light_green">#94AA41</color>
     <color name="light_grey">#C9C9C9</color>
     <color name="green_meduim">#3A5A40</color>
+    <color name="color_back_fragment">#000000</color>
+    <color name="languages_constraint">#D37C7C7C</color>
 </resources>

@@ -24,12 +24,12 @@
         android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_60sdp"
         android:layout_marginTop="@dimen/_24sdp"
-        app:cardBackgroundColor="@color/text_green_color"
+        app:cardBackgroundColor="@color/text_main"
         app:cardCornerRadius="@dimen/_30sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
-        app:strokeColor="@color/text_green_color"
+        app:strokeColor="@color/text_main"
         app:strokeWidth="1dp">
 
         <ImageView
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
         android:text="Ahmed Nader"
-        android:textColor="@color/text_green_color"
+        android:textColor="@color/text_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_img_container" />
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ahmed.nader1994@gmail.com"
-        android:textColor="@color/text_green_color"
+        android:textColor="@color/text_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_name" />
@@ -137,7 +137,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
         android:text="الوضع الليلي"
-        android:textColor="@color/text_green_color"
+        android:textColor="@color/text_main"
         app:layout_constraintStart_toEndOf="@id/theme_icon"
         app:layout_constraintTop_toBottomOf="@id/theme_icon" />
 

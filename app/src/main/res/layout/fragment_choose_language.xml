@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    >
 
     <TextView
         android:id="@+id/title"
         style="@style/boldText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/text_green_color"
+        android:background="@color/header_color"
         android:paddingBottom="@dimen/_8sdp"
         android:text="@string/generalSetting"
         android:textAlignment="center"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title"
         android:layout_marginTop="@dimen/_12sdp"
         android:text="@string/language"
-        android:textColor="@color/text_green_color"
+        android:textColor="@color/text_main"
         android:textSize="@dimen/_18sdp"
         android:id="@+id/languagetext"
         android:fontFamily="@font/din_medium"/>

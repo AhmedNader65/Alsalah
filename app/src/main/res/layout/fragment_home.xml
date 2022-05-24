@@ -25,7 +25,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="@{model.nextPrayer}"
                 android:textAlignment="center"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +72,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/date_layout"
                 app:layout_constraintWidth_percent=".15"
-                app:strokeColor="@color/text_green_color"
+                app:strokeColor="@color/text_main"
                 app:strokeWidth=".5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -149,7 +149,7 @@
                 app:layout_constraintStart_toEndOf="@+id/fajr_layout"
                 app:layout_constraintTop_toBottomOf="@id/date_layout"
                 app:layout_constraintWidth_percent=".15"
-                app:strokeColor="@color/text_green_color"
+                app:strokeColor="@color/text_main"
                 app:strokeWidth=".5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -224,7 +224,7 @@
                 app:layout_constraintStart_toEndOf="@+id/shorooq_layout"
                 app:layout_constraintTop_toBottomOf="@id/date_layout"
                 app:layout_constraintWidth_percent=".15"
-                app:strokeColor="@color/text_green_color"
+                app:strokeColor="@color/text_main"
                 app:strokeWidth=".5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -299,7 +299,7 @@
                 app:layout_constraintStart_toEndOf="@+id/zuhr_layout"
                 app:layout_constraintTop_toBottomOf="@id/date_layout"
                 app:layout_constraintWidth_percent=".15"
-                app:strokeColor="@color/text_green_color"
+                app:strokeColor="@color/text_main"
                 app:strokeWidth=".5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -375,7 +375,7 @@
                 app:layout_constraintStart_toEndOf="@+id/asr_layout"
                 app:layout_constraintTop_toBottomOf="@id/date_layout"
                 app:layout_constraintWidth_percent=".15"
-                app:strokeColor="@color/text_green_color"
+                app:strokeColor="@color/text_main"
                 app:strokeWidth=".5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -452,7 +452,7 @@
                 app:layout_constraintStart_toEndOf="@+id/maghrib_layout"
                 app:layout_constraintTop_toBottomOf="@id/date_layout"
                 app:layout_constraintWidth_percent=".15"
-                app:strokeColor="@color/text_green_color"
+                app:strokeColor="@color/text_main"
                 app:strokeWidth=".5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -530,7 +530,7 @@
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fajr_layout"
-                app:strokeColor="@color/text_green_color"
+                app:strokeColor="@color/text_main"
                 app:strokeWidth=".5dp">
 
                 <LinearLayout
@@ -578,7 +578,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/timer"
                 app:layout_constraintTop_toTopOf="@id/midnight_layout"
-                app:strokeColor="@color/text_green_color"
+                app:strokeColor="@color/text_main"
                 app:strokeWidth=".5dp">
 
                 <LinearLayout
@@ -628,7 +628,7 @@
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:text="@{model.azkarAfterPrayer}"
                 android:textAlignment="center"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 app:layout_constraintTop_toBottomOf="@id/after_prayer_azkar_title" />
 
             <Button
@@ -753,7 +753,7 @@
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:text="@{model.azkar}"
                 android:textAlignment="center"
-                android:textColor="@color/text_green_color"
+                android:textColor="@color/text_main"
                 app:layout_constraintTop_toBottomOf="@id/azkar_title" />
 
             <Button
