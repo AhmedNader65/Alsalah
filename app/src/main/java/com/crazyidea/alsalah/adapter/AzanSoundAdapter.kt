@@ -66,9 +66,6 @@ class AzanSoundAdapter(
 
         viewHolder.radioBtn.text = azan.Name
 
-//        if (azan == dataSet.last()) {
-//            viewHolder.line.visibility = View.INVISIBLE
-//        }
         viewHolder.play.setOnClickListener {
             for (azan2 in dataSet) {
                 if (azan2 != azan)
@@ -84,7 +81,7 @@ class AzanSoundAdapter(
             viewHolder.play.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_play_arrow_24))
         viewHolder.radioBtn.isChecked = azan.checked
 
-        viewHolder.itemView.setOnClickListener {
+        viewHolder.radioBtn.setOnClickListener {
             for (azan in dataSet) {
                 azan.checked = false
             }
