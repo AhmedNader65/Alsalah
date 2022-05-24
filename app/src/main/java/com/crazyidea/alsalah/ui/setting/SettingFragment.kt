@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.databinding.FragmentSettingBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,6 +30,16 @@ class SettingFragment : Fragment() {
         val root: View = binding.root
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.languageCon.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToLanguageFragment())
+        }
+        binding.calculateWay.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToPrayerTimingFragment())
+        }
     }
 
     override fun onDestroyView() {

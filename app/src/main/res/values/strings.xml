@@ -104,4 +104,25 @@
     <string name="thursday">الخميس</string>
     <string name="saturday">السبت</string>
     <string name="event_day"><font color="#EEB34B">%1$s</font> <font color="#ffffff">%2$s </font> <font color="#EEB34B">%3$s</font></string>
+    <string name="العربيه">العربية</string>
+    <string name="arabic">العربيه</string>
+    <string name="english">الانجليزية</string>
+    <string name="frecnh">الفرنسية</string>
+    <string name="turkish">التركية</string>
+    <string name="dutch">الدوتشية</string>
+    <string name="spanish">الاسبانية</string>
+    <string name="indonisian">الاندونيسية</string>
+    <string name="urdu">الاوردية</string>
+    <string name="igorish">الايغورية</string>
+    <string name="alll">كل اللغات</string>
+    <string name="fawaedNotifications">تفعيل تنبيهات الفوائد</string>
+    <string name="mecca">أم القرى - مكة</string>
+    <string name="islamicUniversity">جامعة العلوم الإسلامية</string>
+    <string name="islamicUniversitySouthAmerica">الجامعة الإسلامية بشمال امريكا</string>
+    <string name="egyptianMessaha">هيئة المساحة المصرية</string>
+    <string name="worlwideIslamicCommunity">رابطة العالم الاسلامي</string>
+    <string name="turkishResponsibles">تركيا وئاسة الشؤن الدينية</string>
+    <string name="france">فرنسا</string>
+    <string name="russia">روسيا</string>
+    <string name="specific">تخصيص</string>
 </resources>
