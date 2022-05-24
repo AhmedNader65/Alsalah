@@ -17,6 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField 'String', 'PRAYERS_BASE_URL', "\"https://api.aladhan.com/v1/\""
+        buildConfigField 'String', 'WIKI_BASE_URL', "\"https://ar.wikipedia.org/w/api.php?action=parse&format=json&section=1&prop=text\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

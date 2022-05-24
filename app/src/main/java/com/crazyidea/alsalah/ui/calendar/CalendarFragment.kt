@@ -10,8 +10,10 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.model.Status
 import com.crazyidea.alsalah.databinding.CalendarDayBinding
 import com.crazyidea.alsalah.databinding.CalendarHeaderBinding
 import com.crazyidea.alsalah.databinding.FragmentCalendarBinding
@@ -33,7 +35,7 @@ import java.util.*
 class CalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarBinding? = null
-
+    private val viewModel by viewModels<CalendarViewModel>()
     private var selectedDate: MyLocaleDate? = null
     private val pastMonths = 10
     private val futureMonths = 10
@@ -60,7 +62,8 @@ class CalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val daysOfWeek = daysOfWeekFromLocale()
-//HIJRI
+        setupObservers()
+        //HIJRI
         setupCalendar(UmmalquraCalendar(), TYPE.HIJRI)
         binding.group.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (checkedId == R.id.hijri_calendar) {
@@ -69,16 +72,7 @@ class CalendarFragment : Fragment() {
                 setupCalendar(Calendar.getInstance(), TYPE.GREGORIAN)
             }
         }
-        this@CalendarFragment.binding.eventsRv.withSimpleAdapter(
-            listOf(
-                "حدث في مثل هذا اليوم",
-                "حدث في مثل هذا اليوم",
-                "حدث في مثل هذا اليوم",
-                "حدث في مثل هذا اليوم"
-            ), android.R.layout.simple_list_item_1
-        ) {
-            (itemView as TextView).text = it
-        }
+
         class DayViewContainer(view: View) : ViewContainer(view) {
             lateinit var day: CalendarDay // Will be set when this container is bound.
             val binding = CalendarDayBinding.bind(view)
@@ -100,16 +94,7 @@ class CalendarFragment : Fragment() {
 
                             val text =
                                 "<font color=\"#EEB34B\">$dayText</font> <font color=\"#FFFFFF\">$monthText</font> <font color=\"#EEB34B\">$yearText</font>"
-                            this@CalendarFragment.binding.eventsRv.withSimpleAdapter(
-                                listOf(
-                                    "حدث في مثل هذا اليوم",
-                                    "حدث في مثل هذا اليوم",
-                                    "حدث في مثل هذا اليوم",
-                                    "حدث في مثل هذا اليوم"
-                                ), android.R.layout.simple_list_item_1
-                            ) {
-                                (itemView as TextView).text = it
-                            }
+                            viewModel.fetchEventsData("${dayText}_$monthText")
 
                             this@CalendarFragment.binding.eventDate.text =
                                 HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
@@ -141,7 +126,21 @@ class CalendarFragment : Fragment() {
 
                     textView.setTextColorRes(R.color.black)
                     if (DateUtils.isToday(day.date.yearMonth.timeInMillis)) {
+                        val monthText =
+                            day.date.yearMonth.getDisplayName(
+                                Calendar.MONTH,
+                                Calendar.LONG,
+                                Locale("ar")
+                            )
+                        val yearText = "${day.date.yearMonth.get(Calendar.YEAR)}"
+                        val dayText = "${day.date.yearMonth.get(Calendar.DAY_OF_MONTH)}"
+                        viewModel.fetchEventsData("${dayText}_$monthText")
+                        val text =
+                            "<font color=\"#EEB34B\">$dayText</font> <font color=\"#FFFFFF\">$monthText</font> <font color=\"#EEB34B\">$yearText</font>"
+                        this@CalendarFragment.binding.eventDate.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
                         textView.setTextColorRes(R.color.white)
+
                         textView.setBackgroundResource(R.drawable.today_bg)
                     } else {
                         textView.setBackgroundResource(0)
@@ -205,11 +204,6 @@ class CalendarFragment : Fragment() {
             val dayText = "${month.calendar.get(Calendar.DAY_OF_MONTH)}"
             binding.monthText.text = monthText
             binding.yearText.text = yearText
-            val text =
-                "<font color=\"#EEB34B\">$dayText</font> <font color=\"#FFFFFF\">$monthText</font> <font color=\"#EEB34B\">$yearText</font>"
-
-            binding.eventDate.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
-//            binding.eventDate.text= getString(R.string.event_day,dayText,monthText,yearText)
             selectedDate?.let {
                 // Clear selection if we scroll to a new month.
                 selectedDate = null
@@ -227,6 +221,24 @@ class CalendarFragment : Fragment() {
         binding.previousMonthImage.setOnClickListener {
             binding.calendarView.findFirstVisibleMonth()?.let {
                 binding.calendarView.smoothScrollToMonth(it.getPrevMonth())
+            }
+        }
+    }
+
+    private fun setupObservers() {
+        viewModel.eventsData.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let { data ->
+                        this@CalendarFragment.binding.eventsText.text = HtmlCompat.fromHtml(data, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    }
+                }
+                Status.ERROR -> {
+
+                }
+                Status.LOADING -> {
+
+                }
             }
         }
     }

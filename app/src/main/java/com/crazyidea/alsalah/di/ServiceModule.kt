@@ -2,6 +2,7 @@ package com.crazyidea.alsalah.di
 
 import android.content.Context
 import com.crazyidea.alsalah.BuildConfig
+import com.crazyidea.alsalah.data.api.CalendarAPI
 import com.crazyidea.alsalah.data.api.PrayersAPI
 import dagger.Module
 import dagger.Provides
@@ -29,10 +30,19 @@ class ServiceModule {
     fun provideBaseUrl() = BuildConfig.PRAYERS_BASE_URL
 
 
+    @Provides
+    @Named("wiki_url")
+    fun provideWikiUrl() = BuildConfig.WIKI_BASE_URL
+
+
 
     @Provides
     @Singleton
     fun providePrayersApi(retrofit: Retrofit): PrayersAPI = retrofit.create(PrayersAPI::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCalendarApi(retrofit: Retrofit): CalendarAPI = retrofit.create(CalendarAPI::class.java)
 
     @Provides
     @Singleton
