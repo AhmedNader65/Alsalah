@@ -97,6 +97,13 @@
     <string name="sun">الشمس</string>
     <string name="moon">القمر</string>
     <string name="empty"></string>
+    <string name="sunday">الأحد</string>
+    <string name="monday">الإثنين</string>
+    <string name="tuesday">الثلاثاء</string>
+    <string name="wednesday">الأربعاء</string>
+    <string name="thursday">الخميس</string>
+    <string name="saturday">السبت</string>
+    <string name="event_day"><font color="#EEB34B">%1$s</font> <font color="#ffffff">%2$s </font> <font color="#EEB34B">%3$s</font></string>
     <string name="العربيه">العربية</string>
     <string name="arabic">العربيه</string>
     <string name="english">الانجليزية</string>
