@@ -113,6 +113,11 @@ class HomeFragment : Fragment(), PermissionListener {
                 HomeFragmentDirections.actionNavigationHomeToCompassFragment2()
             )
         }
+        binding.dateLayout.calendarIcon.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionNavigationHomeToCalendarFragment()
+            )
+        }
     }
 
     private fun collectData() {
