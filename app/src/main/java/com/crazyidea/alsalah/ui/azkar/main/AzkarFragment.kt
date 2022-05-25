@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentAzkarBinding
+import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.DayOfWeek
+import java.util.*
 
 @AndroidEntryPoint
 class AzkarFragment : Fragment() {

@@ -167,4 +167,5 @@
     <string name="time_before_prayer">تنبيه قبل الاذن بالدقائق</string>
     <string name="notify_before_prayer_minutes">تنبيه قبل الاذن بالدقائق</string>
     <string name="permission_read_external_storage">"اعطاء التصاريح لاختيار ملف "</string>
+    <string name="azkar_date">%s / %s</string>
 </resources>
