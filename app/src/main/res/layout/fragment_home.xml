@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="model"
             type="com.crazyidea.alsalah.ui.home.HomeViewModel" />
     </data>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -78,8 +81,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:background="@{model.nextPrayerId==1? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:gravity="center"
 
                     android:padding="@dimen/_8sdp">
 
@@ -89,8 +92,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
-                        android:textColor="@{model.nextPrayerId==1? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         android:text="@string/fajr"
+                        android:textColor="@{model.nextPrayerId==1? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         app:autoSizeMaxTextSize="@dimen/_18ssp"
                         app:autoSizeMinTextSize="@dimen/_8ssp"
                         app:autoSizeTextType="uniform"
@@ -155,8 +158,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:background="@{model.nextPrayerId==2? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:gravity="center"
                     android:padding="@dimen/_8sdp">
 
                     <TextView
@@ -165,8 +168,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
-                        android:textColor="@{model.nextPrayerId==2? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         android:text="@string/shorooq"
+                        android:textColor="@{model.nextPrayerId==2? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         app:autoSizeMaxTextSize="@dimen/_18ssp"
                         app:autoSizeMinTextSize="@dimen/_8ssp"
                         app:autoSizeTextType="uniform"
@@ -240,8 +243,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
-                        android:textColor="@{model.nextPrayerId==3? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         android:text="@string/zuhr"
+                        android:textColor="@{model.nextPrayerId==3? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         app:autoSizeMaxTextSize="@dimen/_18ssp"
                         app:autoSizeMinTextSize="@dimen/_8ssp"
                         app:autoSizeTextType="uniform"
@@ -305,8 +308,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:background="@{model.nextPrayerId==4? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:gravity="center"
                     android:padding="@dimen/_8sdp">
 
                     <TextView
@@ -315,8 +318,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
-                        android:textColor="@{model.nextPrayerId==4? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         android:text="@string/asr"
+                        android:textColor="@{model.nextPrayerId==4? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         app:autoSizeMaxTextSize="@dimen/_18ssp"
                         app:autoSizeMinTextSize="@dimen/_8ssp"
                         app:autoSizeTextType="uniform"
@@ -381,8 +384,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:background="@{model.nextPrayerId==5? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:gravity="center"
                     android:padding="@dimen/_8sdp">
 
                     <TextView
@@ -458,8 +461,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:background="@{model.nextPrayerId==6? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:gravity="center"
                     android:padding="@dimen/_8sdp">
 
                     <TextView
@@ -730,6 +733,198 @@
                     app:layout_constraintTop_toBottomOf="@id/khatma" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/latest_khatma_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                app:layout_constraintTop_toBottomOf="@id/khatma_layout">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/khatma_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:cardBackgroundColor="@color/header_color"
+                    app:cardCornerRadius="@dimen/_24sdp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toTopOf="@id/guideline">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_50sdp"
+                        android:paddingBottom="@dimen/_16sdp">
+
+                        <TextView
+                            android:id="@+id/khatma_name"
+                            style="@style/boldText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ختمة : أحمد"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/purpose"
+                            style="@style/mediumText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="المقصد: تدبر"
+                            android:textColor="?attr/colorPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/khatma_name" />
+
+                        <TextView
+                            android:id="@+id/finish_in"
+                            style="@style/lightText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:background="@drawable/tab_layout_bg"
+                            android:paddingStart="@dimen/_8sdp"
+                            android:paddingEnd="@dimen/_8sdp"
+                            android:text="الانتهاء: بعد 15 يوم"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toStartOf="@id/amount"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/purpose" />
+
+                        <TextView
+                            android:id="@+id/amount"
+                            style="@style/lightText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_16sdp"
+                            android:background="@drawable/tab_layout_bg"
+                            android:paddingStart="@dimen/_8sdp"
+                            android:paddingEnd="@dimen/_8sdp"
+                            android:text="القدر : 20 صفحة يومياً"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/finish_in"
+                            app:layout_constraintTop_toBottomOf="@id/purpose" />
+
+                        <TextView
+                            android:id="@+id/surah"
+                            style="@style/mediumText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="سورة البقرة : اية 100"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/amount" />
+
+                        <TextView
+                            android:id="@+id/ayah"
+                            style="@style/quran"
+                            android:layout_width="0dp"
+                            android:textSize="@dimen/_20ssp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_16sdp"
+                            android:text="أَوَكُلَّمَا عَاهَدُوا عَهْدًا نَبَذَهُ فَرِيقٌ مِنْهُمْ ۚ بَلْ أَكْثَرُهُمْ لَا يُؤْمِنُونَ ﴿23﴾"
+                            android:textAlignment="center"
+                            android:textColor="@color/inverted_text_color"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/surah" />
+
+                        <Button
+                            android:id="@+id/continueReading"
+                            style="@style/mediumText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:background="@drawable/tab_layout_bg"
+                            android:insetTop="0dp"
+                            android:stateListAnimator="@null"
+                            android:insetBottom="0dp"
+                            android:minHeight="0dp"
+                            android:text="أكمل وردك"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toStartOf="@id/khatma_details"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/ayah" />
+
+                        <Button
+                            android:id="@+id/khatma_details"
+                            style="@style/mediumText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_16sdp"
+                            android:background="@drawable/tab_layout_bg"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:minHeight="0dp"
+                            android:stateListAnimator="@null"
+                            android:text="تفاصيل الختمة"
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/continueReading"
+                            app:layout_constraintTop_toBottomOf="@id/ayah" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:background="@drawable/circle"
+                    app:layout_constraintBottom_toBottomOf="@id/khatma_progress"
+                    app:layout_constraintEnd_toEndOf="@id/khatma_progress"
+                    app:layout_constraintStart_toStartOf="@id/khatma_progress"
+                    app:layout_constraintTop_toTopOf="@id/khatma_progress" />
+
+                <ImageView
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:src="@drawable/img_khatma"
+                    app:layout_constraintBottom_toBottomOf="@id/khatma_progress"
+                    app:layout_constraintEnd_toEndOf="@id/khatma_progress"
+                    app:layout_constraintStart_toStartOf="@id/khatma_progress"
+                    app:layout_constraintTop_toTopOf="@id/khatma_progress" />
+
+                <ProgressBar
+                    android:id="@+id/khatma_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:background="@drawable/circle_shape"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/gradiant_progress"
+                    android:secondaryProgress="30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/khatma_progress"
+                    app:layout_constraintGuide_begin="@dimen/_50sdp"
+                    app:layout_constraintTop_toTopOf="@id/khatma_progress" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:id="@+id/azkar_title"
                 style="@style/boldText"
@@ -741,7 +936,7 @@
                 android:text="الأذكـــار"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/khatma_layout" />
+                app:layout_constraintTop_toBottomOf="@id/latest_khatma_layout" />
 
             <TextView
                 android:id="@+id/azkar"
