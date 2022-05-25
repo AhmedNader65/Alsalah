@@ -73,6 +73,15 @@
         <action
             android:id="@+id/action_navigation_menu_to_compassFragment2"
             app:destination="@id/compassFragment2" />
+        <action
+            android:id="@+id/action_navigation_menu_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_sebhaFragment"
+            app:destination="@id/sebhaFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_azkarFragment"
+            app:destination="@id/navigation_azkar" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"

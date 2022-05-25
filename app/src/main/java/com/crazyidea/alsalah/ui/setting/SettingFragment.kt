@@ -34,6 +34,9 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
+
         binding.languageCon.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToLanguageFragment())
         }
