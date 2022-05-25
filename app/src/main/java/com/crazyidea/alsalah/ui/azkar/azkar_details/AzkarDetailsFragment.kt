@@ -47,7 +47,7 @@ class AzkarDetailsFragment : Fragment() {
 
         _binding = FragmentAzkarDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.bottomTools.settings.setOnClickListener {
+        binding.bottomTools.settings .setOnClickListener {
             findNavController().navigate(AzkarDetailsFragmentDirections.actionNavigationAzkarDetailsToAzkarMenuFragment(args.category))
         }
         binding.model = viewModel

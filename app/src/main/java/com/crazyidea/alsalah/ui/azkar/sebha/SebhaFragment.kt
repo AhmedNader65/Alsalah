@@ -74,7 +74,7 @@ class SebhaFragment : Fragment() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
         binding.bottomTools.settings.setOnClickListener {
-            findNavController().navigate(SebhaFragmentDirections.actionSebhaFragmentToAzkarList("تسابيح"))
+            findNavController().navigate(SebhaFragmentDirections.actionSebhaFragmentToAzkarMenuFragment("تسابيح"))
         }
         binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {

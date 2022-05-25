@@ -95,69 +95,71 @@ class HomeViewModel @Inject constructor(
         currentDate:Date,
         timings: Timing,
     ) {
-        val sdf = SimpleDateFormat("H:mm", Locale("ar"))
-        val fajrDate = sdf.parse(timings.Fajr)
-        val shorokDate = sdf.parse(timings.Sunrise)
-        val zuhrDate = sdf.parse(timings.Dhuhr)
-        val asrDate = sdf.parse(timings.Asr)
-        val maghribDate = sdf.parse(timings.Maghrib)
-        val ishaDate = sdf.parse(timings.Isha)
-        nextPrayer.value = "صلاة الفجر بعد"
-        nextPrayerId.value = 1
-        var diff = 30000L
-        var basePrayerForNext = fajrDate
-        if (currentDate.after(fajrDate)) {
-            nextPrayerId.value = 2
-            nextPrayer.value = "صلاة الشروق بعد"
-            diff = (shorokDate.time - currentDate.time)
-            basePrayerForNext = shorokDate
-        }
-        if (currentDate.after(shorokDate)) {
-            nextPrayerId.value = 3
-            nextPrayer.value = "صلاة الظهر بعد"
-            diff = (zuhrDate.time - currentDate.time)
-            basePrayerForNext = zuhrDate
-        }
-        if (currentDate.after(zuhrDate)) {
-            nextPrayerId.value = 4
-            nextPrayer.value = "صلاة العصر بعد"
-            diff = (asrDate.time - currentDate.time)
-            basePrayerForNext = asrDate
-        }
-        if (currentDate.after(asrDate)) {
-            nextPrayerId.value = 5
-            nextPrayer.value = "صلاة المغرب بعد"
-            diff = (maghribDate.time - currentDate.time)
-            basePrayerForNext = maghribDate
-        }
-        if (currentDate.after(maghribDate)) {
-            nextPrayer.value = "صلاة العشاء بعد"
-            nextPrayerId.value = 6
-            diff = (ishaDate.time - currentDate.time)
-            basePrayerForNext = ishaDate
-        }
-        if (currentDate.after(ishaDate)) {
+        if (remainingTime.value =="00:00") {
+            val sdf = SimpleDateFormat("H:mm", Locale("ar"))
+            val fajrDate = sdf.parse(timings.Fajr)
+            val shorokDate = sdf.parse(timings.Sunrise)
+            val zuhrDate = sdf.parse(timings.Dhuhr)
+            val asrDate = sdf.parse(timings.Asr)
+            val maghribDate = sdf.parse(timings.Maghrib)
+            val ishaDate = sdf.parse(timings.Isha)
+            nextPrayer.value = "صلاة الفجر بعد"
             nextPrayerId.value = 1
-            nextPrayer.value = " صلاة الفجر بعد"
-            diff = (zuhrDate.time - fajrDate.time)
-            basePrayerForNext = fajrDate
-        }
-        object : CountDownTimer(diff, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val d = Date(millisUntilFinished)
-                val df = SimpleDateFormat("HH:mm:ss", Locale.getDefault()) // HH for 0-23
-                df.timeZone = TimeZone.getTimeZone("GMT");
-                val time = df.format(d)
-                remainingTime.value = time
-                //here you can have your logic to set text to edittext
+            var diff = 30000L
+            var basePrayerForNext = fajrDate
+            if (currentDate.after(fajrDate)) {
+                nextPrayerId.value = 2
+                nextPrayer.value = "صلاة الشروق بعد"
+                diff = (shorokDate.time - currentDate.time)
+                basePrayerForNext = shorokDate
             }
+            if (currentDate.after(shorokDate)) {
+                nextPrayerId.value = 3
+                nextPrayer.value = "صلاة الظهر بعد"
+                diff = (zuhrDate.time - currentDate.time)
+                basePrayerForNext = zuhrDate
+            }
+            if (currentDate.after(zuhrDate)) {
+                nextPrayerId.value = 4
+                nextPrayer.value = "صلاة العصر بعد"
+                diff = (asrDate.time - currentDate.time)
+                basePrayerForNext = asrDate
+            }
+            if (currentDate.after(asrDate)) {
+                nextPrayerId.value = 5
+                nextPrayer.value = "صلاة المغرب بعد"
+                diff = (maghribDate.time - currentDate.time)
+                basePrayerForNext = maghribDate
+            }
+            if (currentDate.after(maghribDate)) {
+                nextPrayer.value = "صلاة العشاء بعد"
+                nextPrayerId.value = 6
+                diff = (ishaDate.time - currentDate.time)
+                basePrayerForNext = ishaDate
+            }
+            if (currentDate.after(ishaDate)) {
+                nextPrayerId.value = 1
+                nextPrayer.value = " صلاة الفجر بعد"
+                diff = (zuhrDate.time - fajrDate.time)
+                basePrayerForNext = fajrDate
+            }
+            object : CountDownTimer(diff, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    val d = Date(millisUntilFinished)
+                    val df = SimpleDateFormat("HH:mm:ss", Locale.getDefault()) // HH for 0-23
+                    df.timeZone = TimeZone.getTimeZone("GMT");
+                    val time = df.format(d)
+                    remainingTime.value = time
+                    //here you can have your logic to set text to edittext
+                }
 
-            override fun onFinish() {
-                val timeInSecs: Long = basePrayerForNext.time
-                val afterAdding1Min = Date(timeInSecs + 1 * 60 * 1000)
-                getNextPrayer(afterAdding1Min,timings)
-            }
-        }.start()
+                override fun onFinish() {
+                    val timeInSecs: Long = basePrayerForNext.time
+                    val afterAdding1Min = Date(timeInSecs + 1 * 60 * 1000)
+                    getNextPrayer(afterAdding1Min, timings)
+                }
+            }.start()
+        }
     }
 
     private fun twentyFourConverter(time: String, am: Boolean = false): String {
