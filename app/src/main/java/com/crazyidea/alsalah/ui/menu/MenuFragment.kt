@@ -71,6 +71,9 @@ class MenuFragment : Fragment() {
         binding.azkar.setOnClickListener {
             findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToAzkarFragment())
         }
+        binding.khatma.setOnClickListener {
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToKhatmaFragment())
+        }
 
 
     }

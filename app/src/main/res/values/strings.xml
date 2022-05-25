@@ -167,5 +167,22 @@
     <string name="time_before_prayer">تنبيه قبل الاذن بالدقائق</string>
     <string name="notify_before_prayer_minutes">تنبيه قبل الاذن بالدقائق</string>
     <string name="permission_read_external_storage">"اعطاء التصاريح لاختيار ملف "</string>
+    <string name="khatma">الختمة</string>
+    <string name="addKhatma">إضافة ختمة جديدة</string>
+    <string name="expectedTime">المدة المتوقعه</string>
+    <string name="fromDaysCalculation">عن طريق تحديد عدد الايام المتوقعه لانهاء الختمه</string>
+    <string name="expectedwerd">معدل الورد اليومي</string>
+    <string name="fromWerdAmount">عن طريق الكم الذي تريد قراءته كل يوم</string>
+    <string name="requiredTime">ما هي المدة التي تنوي انهاء ختمتك  خلالها؟</string>
+    <string name="days">يوم</string>
+    <string name="whereTostartKhetma">من اي مكان تريد بدء ختمتك؟</string>
+    <string name="part">الجزء</string>
+    <string name="khatmaName">اسم الختمة</string>
+    <string name="khatmaType">نوع الختمة</string>
+    <string name="next">التالي</string>
+    <string name="notify_me">تفعيل التنبيه</string>
+    <string name="notification_description">حدد هل تريد تفعيل تنبيهك بوقت يومي لقراءة وردك</string>
+    <string name="notification_time">وقت التنبيه</string>
+    <string name="done">تم</string>
     <string name="azkar_date">%s / %s</string>
 </resources>
