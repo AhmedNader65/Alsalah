@@ -258,14 +258,14 @@
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/addKhatma"
+                    android:id="@+id/next"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:backgroundTint="@color/next_prayer_bg"
                     android:fontFamily="@font/din_medium"
                     android:padding="@dimen/_8sdp"
-                    android:text="@string/addKhatma"
+                    android:text="@string/next"
                     android:textColor="@color/white"
                     app:cornerRadius="@dimen/_16sdp" />
 

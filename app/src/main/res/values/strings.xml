@@ -177,4 +177,11 @@
     <string name="days">يوم</string>
     <string name="whereTostartKhetma">من اي مكان تريد بدء ختمتك؟</string>
     <string name="part">الجزء</string>
+    <string name="khatmaName">اسم الختمة</string>
+    <string name="khatmaType">نوع الختمة</string>
+    <string name="next">التالي</string>
+    <string name="notify_me">تفعيل التنبيه</string>
+    <string name="notification_description">حدد هل تريد تفعيل تنبيهك بوقت يومي لقراءة وردك</string>
+    <string name="notification_time">وقت التنبيه</string>
+    <string name="done">تم</string>
 </resources>
