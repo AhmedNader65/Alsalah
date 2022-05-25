@@ -63,7 +63,8 @@ class AzanSoundAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val azan = dataSet.get(position)
 
-
+        if (!azan.hasline)
+            viewHolder.line.visibility = View.GONE
         viewHolder.radioBtn.text = azan.Name
 
         viewHolder.play.setOnClickListener {

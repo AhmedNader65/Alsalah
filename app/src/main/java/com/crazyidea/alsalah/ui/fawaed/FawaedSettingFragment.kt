@@ -9,19 +9,18 @@ import androidx.fragment.app.viewModels
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.LanguagesAdapter
 import com.crazyidea.alsalah.data.model.SupportedLanguage
-import com.crazyidea.alsalah.databinding.FragmentChooseLanguageBinding
 import com.crazyidea.alsalah.databinding.FragmentFawaedBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FawaedFragment : Fragment(), LanguagesAdapter.LanguagListner {
+class FawaedSettingFragment : Fragment(), LanguagesAdapter.LanguagListner {
 
     private var _binding: FragmentFawaedBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val viewModel by viewModels<FawaedViewModel>()
+    private val viewModel by viewModels<FawaedSettingViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +37,7 @@ class FawaedFragment : Fragment(), LanguagesAdapter.LanguagListner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.languagesRV.adapter = LanguagesAdapter(createLanguages(), this)
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun createLanguages(): ArrayList<SupportedLanguage> {

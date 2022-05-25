@@ -58,6 +58,9 @@ class SettingFragment : Fragment() {
         binding.azkar.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToAzkarSettingFragment())
         }
+        binding.fwaed.setOnClickListener {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToFawaedFragment())
+        }
         binding.azanSoundAndImage.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToAzanSettingFragment())
         }

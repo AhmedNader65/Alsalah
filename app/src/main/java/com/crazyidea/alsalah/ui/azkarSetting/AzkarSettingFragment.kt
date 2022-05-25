@@ -46,6 +46,7 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
             status = !status
             checkRecyclerView()
         }
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
 
 
     }
