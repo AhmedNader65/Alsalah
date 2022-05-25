@@ -71,9 +71,7 @@
         android:name="com.crazyidea.alsalah.ui.setting.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" >
-        <action
-            android:id="@+id/action_settingFragment_to_languageFragment"
-            app:destination="@id/languageFragment" />
+
         <action
             android:id="@+id/action_settingFragment_to_prayerTimingFragment"
             app:destination="@id/prayerTimingFragment" />
@@ -98,6 +96,9 @@
         <action
             android:id="@+id/action_settingFragment_to_azanSettingFragment"
             app:destination="@id/azanSettingFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_languageFragment"
+            app:destination="@id/languageFragment" />
     </fragment>
 
     <fragment
@@ -151,10 +152,6 @@
         android:id="@+id/calendarFragment"
         android:name="com.crazyidea.alsalah.ui.calendar.CalendarFragment"
         android:label="CalendarFragment" />
-        android:id="@+id/languageFragment"
-        tools:layout="@layout/fragment_choose_language"
-        android:name="com.crazyidea.alsalah.ui.language.LanguageFragment"
-        android:label="LanguageFragment" />
     <fragment
         android:id="@+id/fawaedFragment"
         tools:layout="@layout/fragment_fawaed"
@@ -192,9 +189,14 @@
         android:label="LocationFragment" />
     <fragment
         android:id="@+id/azkarSettingFragment"
-        tools:layout="@layout/fragment_azkar_settings"
+        tools:layout="@layout/fragment_azkar_setting"
         android:name="com.crazyidea.alsalah.ui.azkarSetting.AzkarSettingFragment"
         android:label="AzkarSettingFragment" />
+    <fragment
+        android:id="@+id/languageFragment"
+        tools:layout="@layout/fragment_choose_language"
+        android:name="com.crazyidea.alsalah.ui.language.LanguageFragment"
+        android:label="LanguageFragment" />
     <fragment
         android:id="@+id/azanSettingFragment"
         tools:layout="@layout/fragment_azan_setting"

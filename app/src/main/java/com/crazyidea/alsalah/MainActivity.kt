@@ -9,14 +9,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.crazyidea.alsalah.data.model.PrimaryColor
 import com.crazyidea.alsalah.databinding.ActivityMainBinding
 import com.crazyidea.alsalah.receiver.AlarmReceiver
 import com.crazyidea.alsalah.utils.CommonUtils.Companion.setLocale
+import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RelativeCornerSize
 import com.google.android.material.shape.RoundedCornerTreatment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -24,9 +27,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    @Inject
+    lateinit var globalPreferences: GlobalPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLocale(this, "ar")
+        setTheme(globalPreferences.primaryColor)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -46,6 +53,14 @@ class MainActivity : AppCompatActivity() {
             .setTopRightCornerSize(RelativeCornerSize(.8f))
             .build()
 //        setAlarm("asr", System.currentTimeMillis())
+    }
+
+    private fun setTheme(primaryColor: PrimaryColor) {
+        when (primaryColor) {
+            PrimaryColor.ORANGE -> setTheme(R.style.OverlayPrimaryColorOrange)
+            PrimaryColor.BLUE -> setTheme(R.style.OverlayPrimaryColorBlue)
+            PrimaryColor.PINK -> setTheme(R.style.OverlayPrimaryColorPink)
+        }
     }
 
     private fun setAlarm(title: String, timeInMillis: Long) {
@@ -79,5 +94,11 @@ class MainActivity : AppCompatActivity() {
             )
         } else {
         }
+    }
+
+    fun restartActivity(){
+        val intent = intent
+        finish()
+        startActivity(intent)
     }
 }

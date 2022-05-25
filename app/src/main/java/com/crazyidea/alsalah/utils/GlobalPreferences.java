@@ -2,10 +2,9 @@ package com.crazyidea.alsalah.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import com.crazyidea.alsalah.R;
 import com.crazyidea.alsalah.data.model.PoleCalculation;
+import com.crazyidea.alsalah.data.model.PrimaryColor;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -19,6 +18,7 @@ public class GlobalPreferences {
     private static final String MAZHAB = "mazhab";
     private static final String POLE = "pole";
     private static final String AZAN = "azan";
+    private static final String COLOR = "color";
     private static final String LONGITUIDE = "lng";
     Context context;
     private SharedPreferences prefs;
@@ -70,6 +70,35 @@ public class GlobalPreferences {
 
     public String getAzan() {
         return prefs.getString(AZAN, "الاذان المكي");
+    }
+
+    public PrimaryColor getPrimaryColor() {
+        int value = prefs.getInt(COLOR, 0);
+        switch (value) {
+            case 0:
+                return PrimaryColor.ORANGE;
+            case 1:
+                return PrimaryColor.PINK;
+            default:
+                return PrimaryColor.BLUE;
+        }
+    }
+
+    public void storePrimaryColor(PrimaryColor primColor) {
+        int value = 0;
+        switch (primColor) {
+            case ORANGE:
+                value = 0;
+                break;
+            case PINK:
+                value = 1;
+                break;
+            default:
+                value = 2;
+        }
+        prefsEditor.putInt(COLOR, value);
+        prefsEditor.commit();
+
     }
 
     public void storeLatituide(String latitude) {
