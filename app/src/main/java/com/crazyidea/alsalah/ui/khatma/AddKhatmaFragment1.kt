@@ -5,20 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.databinding.FragmentKhatmaBinding
+import com.crazyidea.alsalah.databinding.FragmentAddKhatma1Binding
+import com.crazyidea.alsalah.databinding.FragmentAddKhatma2Binding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class KhatmaFragment : Fragment() {
+class AddKhatmaFragment1 : Fragment() {
 
-    private var _binding: FragmentKhatmaBinding? = null
+    private var _binding: FragmentAddKhatma1Binding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -31,7 +30,7 @@ class KhatmaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentKhatmaBinding.inflate(inflater, container, false)
+        _binding = FragmentAddKhatma1Binding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
@@ -40,12 +39,26 @@ class KhatmaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addKhatma.setOnClickListener {
-            findNavController().navigate(KhatmaFragmentDirections.actionKhatmaFragmentToAddKhatmaFragment1())
-        }
-
+        setKhatmaTypes()
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
+        binding.next.setOnClickListener { findNavController().navigate(AddKhatmaFragment1Directions.actionAddKhatmaFragment1ToAddKhatmaFragment2()) }
     }
+
+
+    private fun setKhatmaTypes() {
+        val stringList = listOf<String>("مراجعة", "حفظ", "تدبر", "قراءة")
+
+        val fieldsAdapter = ArrayAdapter(
+            requireContext(),
+            R.layout.item_in_array,
+            stringList
+        )
+        binding.typesAutoComplete.setAdapter<ArrayAdapter<String>>(fieldsAdapter)
+        binding.typesAutoComplete.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView: AdapterView<*>?, view1: View, i: Int, l: Long ->
+
+        })
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

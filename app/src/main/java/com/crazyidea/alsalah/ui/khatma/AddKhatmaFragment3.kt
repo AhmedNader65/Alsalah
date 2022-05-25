@@ -4,21 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.databinding.FragmentKhatmaBinding
+import com.crazyidea.alsalah.databinding.FragmentAddKhatma1Binding
+import com.crazyidea.alsalah.databinding.FragmentAddKhatma2Binding
+import com.crazyidea.alsalah.databinding.FragmentAddKhatma3Binding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class KhatmaFragment : Fragment() {
+class AddKhatmaFragment3 : Fragment() {
 
-    private var _binding: FragmentKhatmaBinding? = null
+    private var _binding: FragmentAddKhatma3Binding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -31,7 +28,7 @@ class KhatmaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentKhatmaBinding.inflate(inflater, container, false)
+        _binding = FragmentAddKhatma3Binding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
@@ -40,11 +37,8 @@ class KhatmaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addKhatma.setOnClickListener {
-            findNavController().navigate(KhatmaFragmentDirections.actionKhatmaFragmentToAddKhatmaFragment1())
-        }
-
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
+        binding.done.setOnClickListener { findNavController().navigate(AddKhatmaFragment3Directions.actionAddKhatmaFragment3ToKhatmaFragment()) }
     }
 
     override fun onDestroyView() {

@@ -71,6 +71,10 @@ class HomeFragment : Fragment(), PermissionListener {
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
 
+        binding.khatmaLayout.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToKhatmaFragment())
+        }
+
         permissionHelper.checkForMultiplePermissions(
             arrayOf(
                 Manifest.permission.SYSTEM_ALERT_WINDOW,

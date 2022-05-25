@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="model"
+            type="com.crazyidea.alsalah.ui.khatma.KhatmaViewModel" />
+
     </data>
 
     <ScrollView
@@ -177,6 +181,7 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:scaleType="fitCenter"
+                        android:onClick="@{()->model.controllDays((true))}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         android:background="@drawable/ic_add_img"
@@ -190,7 +195,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/increase"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:paddingEnd="@dimen/_8sdp"
-                        android:text="30"
+                        android:text="@{model.days.toString()}"
                         android:id="@+id/amount"
                         style="@style/boldText"
                         android:textSize="@dimen/_18sdp"/>
@@ -208,6 +213,7 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:scaleType="fitCenter"
+                        android:onClick="@{()->model.controllDays((false))}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/amount"
                         android:background="@drawable/ic_minus_img"
@@ -230,7 +236,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/nameIT"
+                    android:id="@+id/partsIT"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -247,6 +253,7 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <AutoCompleteTextView
+                        android:id="@+id/partsAutoComplete"
                         android:layout_width="match_parent"
                         android:text="@string/part"
                         android:layout_height="wrap_content"

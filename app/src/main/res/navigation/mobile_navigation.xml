@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_navigation_home_to_calendarFragment"
             app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_khatmaFragment"
+            app:destination="@id/khatmaFragment" />
     </fragment>
 
     <fragment
@@ -38,7 +41,7 @@
         android:id="@+id/navigation_profile"
         android:name="com.crazyidea.alsalah.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
 
         <action
             android:id="@+id/action_navigation_profile_to_whoAreWeFragment"
@@ -85,12 +88,15 @@
         <action
             android:id="@+id/action_navigation_menu_to_azkarFragment"
             app:destination="@id/navigation_azkar" />
+        <action
+            android:id="@+id/action_navigation_menu_to_khatmaFragment"
+            app:destination="@id/khatmaFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.crazyidea.alsalah.ui.setting.SettingFragment"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" >
+        tools:layout="@layout/fragment_setting">
 
         <action
             android:id="@+id/action_settingFragment_to_prayerTimingFragment"
@@ -144,15 +150,16 @@
         <action
             android:id="@+id/action_navigation_azkar_details_to_azkarMenuFragment"
             app:destination="@id/azkarMenuFragment" />
-    </fragment><fragment
+    </fragment>
+    <fragment
         android:id="@+id/sebhaFragment"
         android:name="com.crazyidea.alsalah.ui.azkar.sebha.SebhaFragment"
         android:label="SebhaFragment"
-        tools:layout="@layout/fragment_sebha" >
-    <action
-        android:id="@+id/action_sebhaFragment_to_azkarMenuFragment"
-        app:destination="@id/azkarMenuFragment" />
-</fragment>
+        tools:layout="@layout/fragment_sebha">
+        <action
+            android:id="@+id/action_sebhaFragment_to_azkarMenuFragment"
+            app:destination="@id/azkarMenuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/followUsFragment"
         android:name="com.crazyidea.alsalah.ui.followUs.FollowUsFragment"
@@ -169,68 +176,100 @@
         android:label="WhoAreWeFragment"
         tools:layout="@layout/fragment_who_are_we" />
     <fragment
-        tools:layout="@layout/fragment_calendar"
         android:id="@+id/calendarFragment"
         android:name="com.crazyidea.alsalah.ui.calendar.CalendarFragment"
-        android:label="CalendarFragment" />
+        android:label="CalendarFragment"
+        tools:layout="@layout/fragment_calendar" />
     <fragment
         android:id="@+id/fawaedFragment"
-        tools:layout="@layout/fragment_fawaed"
         android:name="com.crazyidea.alsalah.ui.fawaed.FawaedSettingFragment"
-        android:label="FawaedFragment" />
+        android:label="FawaedFragment"
+        tools:layout="@layout/fragment_fawaed" />
     <fragment
         android:id="@+id/prayerTimingFragment"
-        tools:layout="@layout/fragment_choose_language"
         android:name="com.crazyidea.alsalah.ui.prayerTiming.PrayerTimingFragment"
-        android:label="PrayerTimingFragment" />
+        android:label="PrayerTimingFragment"
+        tools:layout="@layout/fragment_choose_language" />
     <fragment
         android:id="@+id/mazhabFragment"
-        tools:layout="@layout/fragment_choose_mazhab"
         android:name="com.crazyidea.alsalah.ui.mazhab.MazhabFragment"
-        android:label="MazhabFragment" />
+        android:label="MazhabFragment"
+        tools:layout="@layout/fragment_choose_mazhab" />
     <fragment
         android:id="@+id/refactorPrayerTimingFragment"
-        tools:layout="@layout/fragment_prayer_time_notification"
         android:name="com.crazyidea.alsalah.ui.refactorPrayerNotification.RefactorPrayerTimingFragment"
-        android:label="RefactorPrayerTimingFragment" />
+        android:label="RefactorPrayerTimingFragment"
+        tools:layout="@layout/fragment_prayer_time_notification" />
     <fragment
         android:id="@+id/poleCalculateWayFragment"
-        tools:layout="@layout/fragment_choose_pole_calculate_way"
         android:name="com.crazyidea.alsalah.ui.poleCalculateWay.PoleCalculateWayFragment"
-        android:label="PoleCalculateWayFragment" />
+        android:label="PoleCalculateWayFragment"
+        tools:layout="@layout/fragment_choose_pole_calculate_way" />
     <fragment
         android:id="@+id/resetFragment"
-        tools:layout="@layout/fragment_reset"
         android:name="com.crazyidea.alsalah.ui.reset.ResetFragment"
-        android:label="ResetFragment" />
+        android:label="ResetFragment"
+        tools:layout="@layout/fragment_reset" />
     <fragment
         android:id="@+id/locationFragment"
-        tools:layout="@layout/fragment_location"
         android:name="com.crazyidea.alsalah.ui.location.LocationFragment"
-        android:label="LocationFragment" />
+        android:label="LocationFragment"
+        tools:layout="@layout/fragment_location" />
     <fragment
         android:id="@+id/azkarSettingFragment"
-        tools:layout="@layout/fragment_azkar_setting"
         android:name="com.crazyidea.alsalah.ui.azkarSetting.AzkarSettingFragment"
-        android:label="AzkarSettingFragment" />
+        android:label="AzkarSettingFragment"
+        tools:layout="@layout/fragment_azkar_setting" />
     <fragment
         android:id="@+id/languageFragment"
-        tools:layout="@layout/fragment_choose_language"
         android:name="com.crazyidea.alsalah.ui.language.LanguageFragment"
-        android:label="LanguageFragment" />
+        android:label="LanguageFragment"
+        tools:layout="@layout/fragment_choose_language" />
     <fragment
         android:id="@+id/azanSettingFragment"
-        tools:layout="@layout/fragment_azan_setting"
         android:name="com.crazyidea.alsalah.ui.azanSetting.AzanSettingFragment"
-        android:label="AzanSettingFragment" />
+        android:label="AzanSettingFragment"
+        tools:layout="@layout/fragment_azan_setting" />
     <fragment
-        tools:layout="@layout/fragment_azkar_list"
         android:id="@+id/azkarMenuFragment"
         android:name="com.crazyidea.alsalah.ui.azkar.azkar_menu.AzkarMenuFragment"
-        android:label="AzkarMenuFragment" >
+        android:label="AzkarMenuFragment"
+        tools:layout="@layout/fragment_azkar_list">
         <argument
             android:name="category"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/khatmaFragment"
+        android:name="com.crazyidea.alsalah.ui.khatma.KhatmaFragment"
+        android:label="KhatmaFragment">
+        <action
+            android:id="@+id/action_khatmaFragment_to_addKhatmaFragment1"
+            app:destination="@id/addKhatmaFragment1" />
+    </fragment>
+    <fragment
+        android:id="@+id/addKhatmaFragment1"
+        android:name="com.crazyidea.alsalah.ui.khatma.AddKhatmaFragment1"
+        android:label="AddKhatmaFragment1">
+        <action
+            android:id="@+id/action_addKhatmaFragment1_to_addKhatmaFragment2"
+            app:destination="@id/addKhatmaFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/addKhatmaFragment2"
+        android:name="com.crazyidea.alsalah.ui.khatma.AddKhatmaFragment2"
+        android:label="AddKhatmaFragment2">
+        <action
+            android:id="@+id/action_addKhatmaFragment2_to_addKhatmaFragment3"
+            app:destination="@id/addKhatmaFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/addKhatmaFragment3"
+        android:name="com.crazyidea.alsalah.ui.khatma.AddKhatmaFragment3"
+        android:label="AddKhatmaFragment3" >
+        <action
+            android:id="@+id/action_addKhatmaFragment3_to_khatmaFragment"
+            app:destination="@id/khatmaFragment" />
     </fragment>
 
 </navigation>

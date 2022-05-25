@@ -105,6 +105,7 @@
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/typesAutoComplete"
                     android:fontFamily="@font/dinnextregular"
                     android:inputType="textAutoComplete" />
             </com.google.android.material.textfield.TextInputLayout>
