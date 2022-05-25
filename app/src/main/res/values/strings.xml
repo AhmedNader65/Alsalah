@@ -169,4 +169,12 @@
     <string name="permission_read_external_storage">"اعطاء التصاريح لاختيار ملف "</string>
     <string name="khatma">الختمة</string>
     <string name="addKhatma">إضافة ختمة جديدة</string>
+    <string name="expectedTime">المدة المتوقعه</string>
+    <string name="fromDaysCalculation">عن طريق تحديد عدد الايام المتوقعه لانهاء الختمه</string>
+    <string name="expectedwerd">معدل الورد اليومي</string>
+    <string name="fromWerdAmount">عن طريق الكم الذي تريد قراءته كل يوم</string>
+    <string name="requiredTime">ما هي المدة التي تنوي انهاء ختمتك  خلالها؟</string>
+    <string name="days">يوم</string>
+    <string name="whereTostartKhetma">من اي مكان تريد بدء ختمتك؟</string>
+    <string name="part">الجزء</string>
 </resources>

@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.crazyidea.alsalah.databinding.FragmentFollowUsBinding
-import com.crazyidea.alsalah.databinding.FragmentKhatmaBinding
+import com.crazyidea.alsalah.databinding.FragmentAddKhatma2Binding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class KhatmaFragment : Fragment() {
+class AddKhatmaFragment2 : Fragment() {
 
-    private var _binding: FragmentKhatmaBinding? = null
+    private var _binding: FragmentAddKhatma2Binding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -26,7 +25,7 @@ class KhatmaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentKhatmaBinding.inflate(inflater, container, false)
+        _binding = FragmentAddKhatma2Binding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
