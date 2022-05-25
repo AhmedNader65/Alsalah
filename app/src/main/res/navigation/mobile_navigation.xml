@@ -48,6 +48,7 @@
             android:id="@+id/action_navigation_profile_to_technicalSupportFragment"
             app:destination="@id/technicalSupportFragment" />
 
+
     </fragment>
     <fragment
         android:id="@+id/navigation_menu"
@@ -75,6 +76,15 @@
         <action
             android:id="@+id/action_navigation_menu_to_fawaedFragment"
             app:destination="@id/fawaedFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_sebhaFragment"
+            app:destination="@id/sebhaFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_azkarFragment"
+            app:destination="@id/navigation_azkar" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -109,6 +119,9 @@
         <action
             android:id="@+id/action_settingFragment_to_languageFragment"
             app:destination="@id/languageFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_fawaedFragment"
+            app:destination="@id/fawaedFragment" />
     </fragment>
 
     <fragment
@@ -165,7 +178,7 @@
     <fragment
         android:id="@+id/fawaedFragment"
         tools:layout="@layout/fragment_fawaed"
-        android:name="com.crazyidea.alsalah.ui.fawaed.FawaedFragment"
+        android:name="com.crazyidea.alsalah.ui.fawaed.FawaedSettingFragment"
         android:label="FawaedFragment" />
     <fragment
         android:id="@+id/prayerTimingFragment"

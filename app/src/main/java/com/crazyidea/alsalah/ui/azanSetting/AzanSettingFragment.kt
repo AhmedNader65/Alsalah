@@ -70,6 +70,7 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
             whereFrom = 2
             openAudioPicker()
         }
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
 
 
     }
