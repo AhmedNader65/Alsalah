@@ -184,4 +184,5 @@
     <string name="notification_description">حدد هل تريد تفعيل تنبيهك بوقت يومي لقراءة وردك</string>
     <string name="notification_time">وقت التنبيه</string>
     <string name="done">تم</string>
+    <string name="azkar_date">%s / %s</string>
 </resources>

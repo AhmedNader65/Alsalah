@@ -35,6 +35,11 @@
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textColor">@color/text_color</item>
     </style>
+    <style name="quran">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:fontFamily">@font/quran</item>
+        <item name="fontFamily">@font/quran</item>
+    </style>
     <style name="regularText">
         <item name="android:fontFamily">@font/dinnextregular</item>
         <item name="fontFamily">@font/dinnextregular</item>
