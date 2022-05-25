@@ -37,6 +37,7 @@ class LanguageFragment : Fragment(), LanguagesAdapter.LanguagListner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.languagesRV.adapter = LanguagesAdapter(createLanguages(), this)
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun createLanguages(): ArrayList<SupportedLanguage> {

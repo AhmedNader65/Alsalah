@@ -36,6 +36,7 @@ class FajrListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.addContacts.setOnClickListener {
         }
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     override fun onDestroyView() {

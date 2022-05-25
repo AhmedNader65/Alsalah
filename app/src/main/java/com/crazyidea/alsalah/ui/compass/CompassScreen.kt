@@ -121,6 +121,7 @@ class CompassScreen : Fragment(R.layout.fragment_compass) {
             binding.compassView.showSunMoon(true)
             checkButtons(binding.bySunAndMoon)
         }
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
         binding.byCompassBtn.setOnClickListener {
             binding.compassView.showSunMoon(false)
             checkButtons(binding.byCompassBtn)
