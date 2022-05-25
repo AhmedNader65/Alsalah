@@ -56,7 +56,7 @@
         android:layout_marginTop="@dimen/_12sdp"
         android:fontFamily="@font/din_medium"
         android:text="صلاتك فؤادك"
-        android:textColor="@color/text_orange_color"
+        android:textColor="?attr/colorPrimary"
         android:textSize="@dimen/_18sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

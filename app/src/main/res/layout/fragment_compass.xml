@@ -50,7 +50,7 @@
             android:text="@string/usingCompass"
             android:textColor="@color/button_text_state_colors"
             app:cornerRadius="@dimen/_16sdp"
-            app:strokeColor="@color/text_orange_color" />
+            app:strokeColor="?attr/colorPrimary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/by_sun_and_moon"
@@ -64,7 +64,7 @@
             android:text="@string/by_sun_and_moon"
             android:textColor="@color/button_text_state_colors"
             app:cornerRadius="@dimen/_16sdp"
-            app:strokeColor="@color/text_orange_color" />
+            app:strokeColor="?attr/colorPrimary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/by_vision"
@@ -78,7 +78,7 @@
             android:text="@string/by_vision"
             android:textColor="@color/button_text_state_colors"
             app:cornerRadius="@dimen/_16sdp"
-            app:strokeColor="@color/text_orange_color" />
+            app:strokeColor="?attr/colorPrimary" />
 
 
     </LinearLayout>

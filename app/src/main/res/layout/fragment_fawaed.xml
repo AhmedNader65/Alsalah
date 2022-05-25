@@ -96,7 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:sb_checked="true"
-            app:sb_checked_color="@color/text_orange_color" />
+            app:sb_checked_color="?attr/colorPrimary" />
 
         <TextView
             style="@style/mediumText"

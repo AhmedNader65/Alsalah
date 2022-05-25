@@ -105,7 +105,7 @@
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_gravity="center"
-                    app:cardBackgroundColor="@color/text_orange_color"
+                    app:cardBackgroundColor="?attr/colorPrimary"
                     app:cardCornerRadius="@dimen/_60sdp"
                     app:strokeColor="@color/green"
                     app:strokeWidth="0dp">

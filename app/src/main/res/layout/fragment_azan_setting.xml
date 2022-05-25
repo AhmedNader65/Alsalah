@@ -387,7 +387,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:sb_checked="true"
-                        app:sb_checked_color="@color/text_orange_color" />
+                        app:sb_checked_color="?attr/colorPrimary" />
 
                     <TextView
                         style="@style/mediumText"
@@ -426,7 +426,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:sb_checked="true"
-                        app:sb_checked_color="@color/text_orange_color" />
+                        app:sb_checked_color="?attr/colorPrimary" />
 
                     <TextView
                         style="@style/mediumText"
@@ -510,7 +510,7 @@
                             android:layout_margin="@dimen/_2sdp"
 
                             android:background="@drawable/circle_progressbar"
-                            android:backgroundTint="@color/text_orange_color"
+                            android:backgroundTint="?attr/colorPrimary"
                             android:onClick="@{()->model.controllPrayer((false))}"
                             app:cardCornerRadius="@dimen/_25sdp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -579,7 +579,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:sb_checked="true"
-                        app:sb_checked_color="@color/text_orange_color" />
+                        app:sb_checked_color="?attr/colorPrimary" />
 
                     <TextView
                         style="@style/mediumText"
@@ -618,7 +618,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:sb_checked="true"
-                        app:sb_checked_color="@color/text_orange_color" />
+                        app:sb_checked_color="?attr/colorPrimary" />
 
                     <TextView
                         style="@style/mediumText"
