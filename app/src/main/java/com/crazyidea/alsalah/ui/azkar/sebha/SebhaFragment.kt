@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentAzkarDetailsBinding
 import com.crazyidea.alsalah.databinding.FragmentSebhaBinding
+import com.crazyidea.alsalah.ui.azkar.azkar_details.AzkarDetailsFragmentDirections
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -71,6 +72,9 @@ class SebhaFragment : Fragment() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             else
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+        binding.bottomTools.settings.setOnClickListener {
+            findNavController().navigate(SebhaFragmentDirections.actionSebhaFragmentToAzkarList("تسابيح"))
         }
         binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {

@@ -69,10 +69,16 @@
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/dsad.xml" value="0.67" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fasf.xml" value="0.33" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_azkar.xml" value="0.18" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_azkar_details.xml" value="0.25" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_azkar_list.xml" value="0.13595553655408293" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_azkar_settings.xml" value="0.14578879863189398" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_compass.xml" value="0.14578879863189398" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_notifications.xml" value="0.165625" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/item_azkar.xml" value="0.13595553655408293" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/item_blog.xml" value="0.22" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/layout_bottom_reading_toolbar.xml" value="0.18" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/menu/bottom_nav_menu.xml" value="0.165625" />
       </map>
     </option>

@@ -54,11 +54,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="الإعدادات"
+            android:text="القائمة"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="@dimen/_6ssp"
-            app:drawableTopCompat="@drawable/ic_baseline_settings_24"
+            app:drawableTopCompat="@drawable/ic_baseline_menu_24"
             app:drawableTint="@color/white" />
 
     </LinearLayout>
