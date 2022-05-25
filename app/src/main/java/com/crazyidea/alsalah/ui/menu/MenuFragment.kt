@@ -59,6 +59,20 @@ class MenuFragment : Fragment() {
         }
 
 
+        binding.calendar.setOnClickListener {
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToCalendarFragment())
+        }
+
+
+        binding.sebha.setOnClickListener {
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToSebhaFragment())
+        }
+
+        binding.azkar.setOnClickListener {
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToAzkarFragment())
+        }
+
+
     }
 
     override fun onDestroyView() {
