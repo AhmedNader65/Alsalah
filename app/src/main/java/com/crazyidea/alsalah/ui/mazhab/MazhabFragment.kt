@@ -41,6 +41,7 @@ class MazhabFragment : Fragment() {
         checkMazhab(globalPreferences.mazhab)
         binding.hanafiCon.setOnClickListener { checkMazhab("hanafi") }
         binding.hanbaliCon.setOnClickListener { checkMazhab("others") }
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
 
 

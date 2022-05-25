@@ -44,6 +44,7 @@ class PoleCalculateWayFragment : Fragment() {
         binding.angelarCon.setOnClickListener { checkMazhab(PoleCalculation.ANGLE) }
         binding.midnightCon.setOnClickListener { checkMazhab(PoleCalculation.MIDNIGHT) }
         binding.oneOfSevenCon.setOnClickListener { checkMazhab(PoleCalculation.ONEONSEVEN) }
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
 
 

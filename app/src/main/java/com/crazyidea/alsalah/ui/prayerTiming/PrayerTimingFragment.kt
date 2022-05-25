@@ -41,6 +41,7 @@ class PrayerTimingFragment : Fragment(), PrayerTimeAdapter.PrayerTimeListner {
         binding.title.text=resources.getString(R.string.editPrayerTime)
         binding.languagetext.text=resources.getString(R.string.calculateWay)
         binding.languagesRV.adapter = PrayerTimeAdapter(createPrayerRefrences(), this)
+        binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun createPrayerRefrences(): ArrayList<PrayerTimeRefrence> {

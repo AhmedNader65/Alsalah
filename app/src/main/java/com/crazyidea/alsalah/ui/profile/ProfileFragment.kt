@@ -9,11 +9,13 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.PrimaryColor
 import com.crazyidea.alsalah.databinding.FragmentProfileBinding
 import com.crazyidea.alsalah.ui.home.HomeViewModel
+import com.crazyidea.alsalah.ui.menu.MenuFragmentDirections
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -73,7 +75,12 @@ class ProfileFragment : Fragment() {
 
         }
 
-
+        binding.aboutTv.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToWhoAreWeFragment())
+        }
+        binding.helpTv.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToTechnicalSupportFragment())
+        }
     }
 
     override fun onDestroyView() {

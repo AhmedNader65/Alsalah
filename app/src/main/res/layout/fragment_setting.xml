@@ -164,7 +164,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/azanSoundType"
+                android:id="@+id/fwaed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -184,7 +184,7 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:paddingBottom="@dimen/_12sdp"
-                    android:text="@string/azanSoundType"
+                    android:text="@string/fwaed"
                     android:textColor="@color/text_main"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

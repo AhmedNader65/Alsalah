@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.databinding.FragmentMenuBinding
+import com.crazyidea.alsalah.ui.setting.SettingViewModel
 import com.crazyidea.alsalah.utils.updateStoredPreference
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,6 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MenuFragment : Fragment() {
 
     private var _binding: FragmentMenuBinding? = null
+
+    private val viewModel by viewModels<MenuViewModel>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,8 +29,6 @@ class MenuFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val menuViewModel =
-            ViewModelProvider(this).get(MenuViewModel::class.java)
 
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -56,9 +58,6 @@ class MenuFragment : Fragment() {
             findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToTechnicalSupportFragment())
         }
 
-        binding.fwaed.setOnClickListener {
-            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToFawaedFragment())
-        }
 
     }
 
