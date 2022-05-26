@@ -49,6 +49,9 @@ class HomeFragment : Fragment(), PermissionListener {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    var city = ""
+    var lat = ""
+    var lng = ""
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
@@ -61,6 +64,7 @@ class HomeFragment : Fragment(), PermissionListener {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.model = viewModel
+        binding.dateLayout.model = viewModel
         binding.lifecycleOwner = this
         permissionHelper = PermissionHelper(this, this)
         return binding.root
@@ -88,11 +92,11 @@ class HomeFragment : Fragment(), PermissionListener {
 
 // name of month
 // full date
-        val df2 = SimpleDateFormat("MMMM yyyy", locale)
-        val df1 = SimpleDateFormat("EEEE", locale)
-        binding.dateLayout.dayNum.text = iCalendar.get(IslamicCalendar.DAY_OF_MONTH).toString()
-        binding.dateLayout.monthYear.text = df2.format(iCalendar.time)
-        binding.dateLayout.today.text = df1.format(iCalendar.time)
+//        val df2 = SimpleDateFormat("MMMM yyyy", locale)
+//        val df1 = SimpleDateFormat("EEEE", locale)
+//        binding.dateLayout.dayNum.text = iCalendar.get(IslamicCalendar.DAY_OF_MONTH).toString()
+//        binding.dateLayout.monthYear.text = df2.format(iCalendar.time)
+//        binding.dateLayout.today.text = df1.format(iCalendar.time)
         setupNavigation()
         collectData()
     }
@@ -191,6 +195,7 @@ class HomeFragment : Fragment(), PermissionListener {
                             it.longitude,
                             1
                         )
+
                         globalPreferences.storeLatituide(it.latitude.toString())
                         globalPreferences.storeLongituide(it.longitude.toString())
                         val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
@@ -203,6 +208,33 @@ class HomeFragment : Fragment(), PermissionListener {
                             5,
                             null
                         )
+
+
+                        binding.dateLayout.leftArrowIcon.setOnClickListener { ttt ->
+                            viewModel.nextDay()
+                            viewModel.fetchPrayerData(
+                                cityName,
+                                viewModel.gor,
+                                it.latitude.toString(),
+                                it.longitude.toString(),
+                                5,
+                                null
+                            )
+
+                        }
+
+                        binding.dateLayout.rightArrowIcon.setOnClickListener {
+                            viewModel.prevDay()
+                            viewModel.fetchPrayerData(
+                                city,
+                                viewModel.gor,
+                                lat,
+                                lng,
+                                5,
+                                null
+                            )
+
+                        }
                     }
                 } else {
                     Log.d(TAG, "Current location is null. Using defaults.")

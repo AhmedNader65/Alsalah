@@ -44,14 +44,14 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
 
         navView.setupWithNavController(navController)
-        val bottomBarBackground = binding.navView.background as MaterialShapeDrawable
-        bottomBarBackground.shapeAppearanceModel = bottomBarBackground.shapeAppearanceModel
-            .toBuilder()
-            .setTopLeftCorner(RoundedCornerTreatment())
-            .setTopLeftCornerSize(RelativeCornerSize(.8f))
-            .setTopRightCorner(RoundedCornerTreatment())
-            .setTopRightCornerSize(RelativeCornerSize(.8f))
-            .build()
+//        val bottomBarBackground = binding.navView.background as MaterialShapeDrawable
+//        bottomBarBackground.shapeAppearanceModel = bottomBarBackground.shapeAppearanceModel
+//            .toBuilder()
+//            .setTopLeftCorner(RoundedCornerTreatment())
+//            .setTopLeftCornerSize(RelativeCornerSize(.8f))
+//            .setTopRightCorner(RoundedCornerTreatment())
+//            .setTopRightCornerSize(RelativeCornerSize(.8f))
+//            .build()
 //        setAlarm("asr", System.currentTimeMillis())
     }
 

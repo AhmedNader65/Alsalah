@@ -1,6 +1,7 @@
 package com.crazyidea.alsalah.ui.home
 
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -42,11 +44,25 @@ class HomeViewModel @Inject constructor(
     val azkarAfterPrayer = MutableLiveData("")
     val azkar = MutableLiveData("")
 
+    var hijri = UmmalquraCalendar()
+    var gor = Calendar.getInstance()
+
+
+    var day = MutableLiveData("Saturday")
+    var previousDayName = MutableLiveData("Saturday")
+    var nextDayName = MutableLiveData("Saturday")
+    var dateMonthYear = MutableLiveData("13 ramadan")
+    var dateDay = MutableLiveData("15")
+
 
     private var prayerDataJob: Job? = null
 
     private val _prayerData = MutableLiveData<Timing>()
     val prayerData: LiveData<Timing> = _prayerData
+
+    init {
+        setupDate()
+    }
 
     fun fetchPrayerData(
         cityName: String,
@@ -92,10 +108,10 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getNextPrayer(
-        currentDate:Date,
+        currentDate: Date,
         timings: Timing,
     ) {
-        if (remainingTime.value =="00:00") {
+        if (remainingTime.value == "00:00") {
             val sdf = SimpleDateFormat("H:mm", Locale("ar"))
             val fajrDate = sdf.parse(timings.Fajr)
             val shorokDate = sdf.parse(timings.Sunrise)
@@ -194,5 +210,53 @@ class HomeViewModel @Inject constructor(
             azkar.value = prayerRepository.getFirstAzkar().content
         }
     }
+
+
+    fun nextDay() {
+        gor.add(Calendar.DAY_OF_MONTH, 1)
+        hijri.time = gor.time
+        setupDate()
+    }
+
+    fun prevDay() {
+        gor.add(Calendar.DAY_OF_MONTH, -1)
+        hijri.time = gor.time
+        setupDate()
+
+    }
+
+
+    private fun setupDate() {
+        day.value =
+            gor.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+        val hijriDate = "${
+            hijri.get(Calendar.DAY_OF_MONTH)
+        } "
+
+        val hijriMonthYear = "${
+            hijri.getDisplayName(
+                UmmalquraCalendar.MONTH,
+                UmmalquraCalendar.SHORT,
+                Locale.getDefault()
+            )
+        }  ${
+            hijri.get(
+                UmmalquraCalendar.YEAR,
+            )
+        }"
+
+
+        dateDay.value = "$hijriDate"
+        dateMonthYear.value = "$hijriMonthYear"
+        gor.add(Calendar.DAY_OF_MONTH, 1)
+        nextDayName.value =
+            gor.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+        gor.add(Calendar.DAY_OF_MONTH, -2)
+        previousDayName.value =
+            gor.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+        gor.add(Calendar.DAY_OF_MONTH, 1)
+
+    }
+
 
 }
