@@ -1,433 +1,452 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_styled_page"
-    tools:context=".ui.azkar.main.AzkarFragment">
+<layout>
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/boldText"
+    <data>
+
+        <variable
+            name="model"
+            type="com.crazyidea.alsalah.ui.azkar.main.AzkarViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/header_color"
-        android:paddingBottom="@dimen/_8sdp"
-        android:text="قائمة الأذكار"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_18ssp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_styled_page"
+        tools:context=".ui.azkar.main.AzkarFragment">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/top_card"
-        style="@style/bottomRadiusCardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/title">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/title"
+            style="@style/boldText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/header_color"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="قائمة الأذكار"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_azkar_next"
-                app:layout_constraintBottom_toTopOf="@+id/next_day_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/progress" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/top_card"
+            style="@style/bottomRadiusCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title">
 
-            <TextView
-                android:id="@+id/next_day_name"
-                style="@style/mediumText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="الأحد"
-                android:textColor="?attr/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@id/progress"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/progress"
-                app:layout_constraintTop_toTopOf="@id/progress" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_azkar_prev"
-                app:layout_constraintBottom_toTopOf="@+id/prev_day_name"
-                app:layout_constraintEnd_toStartOf="@id/progress"
-                app:layout_constraintStart_toStartOf="parent" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->model.nextDay()}"
+                    android:src="@drawable/ic_azkar_next"
+                    app:layout_constraintBottom_toTopOf="@+id/next_day_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/progress" />
 
-            <TextView
-                android:id="@+id/prev_day_name"
-                style="@style/mediumText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="الجمعة"
-                android:textColor="?attr/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@id/progress"
-                app:layout_constraintEnd_toStartOf="@id/progress"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/progress" />
+                <TextView
+                    android:id="@+id/next_day_name"
+                    style="@style/mediumText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{model.nextDayName}"
+                    android:textColor="?attr/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@id/progress"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/progress"
+                    app:layout_constraintTop_toTopOf="@id/progress" />
 
-            <TextView
-                android:id="@+id/day_name"
-                style="@style/mediumText"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/_24sdp"
-                android:layout_marginEnd="@dimen/_24sdp"
-                android:gravity="bottom"
-                android:lines="1"
-                android:text="السبت"
-                android:textColor="?attr/colorPrimary"
-                app:autoSizeMinTextSize="@dimen/_4ssp"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@id/date"
-                app:layout_constraintEnd_toEndOf="@id/progress"
-                app:layout_constraintStart_toStartOf="@id/progress"
-                app:layout_constraintTop_toTopOf="@id/progress" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_azkar_prev"
+                    android:onClick="@{()->model.prevDay()}"
+                    app:layout_constraintBottom_toTopOf="@+id/prev_day_name"
+                    app:layout_constraintEnd_toStartOf="@id/progress"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/date"
-                style="@style/lightText"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/_24sdp"
-                android:layout_marginEnd="@dimen/_24sdp"
-                android:lines="1"
-                android:text="12 رجب / 15 سبتمبر"
-                app:autoSizeMinTextSize="@dimen/_4ssp"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/progress"
-                app:layout_constraintStart_toStartOf="@id/progress"
-                app:layout_constraintTop_toBottomOf="@id/day_name" />
+                <TextView
+                    android:id="@+id/prev_day_name"
+                    style="@style/mediumText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{model.previousDayName}"
+                    android:textColor="?attr/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@id/progress"
+                    app:layout_constraintEnd_toStartOf="@id/progress"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/progress" />
 
-            <ProgressBar
-                android:id="@+id/progress"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:background="@drawable/circle_shape"
-                android:indeterminate="false"
-                android:progressDrawable="@drawable/gradiant_progress"
-                android:secondaryProgress="40"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:id="@+id/day_name"
+                    style="@style/mediumText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_24sdp"
+                    android:gravity="bottom"
+                    android:lines="1"
+                    android:text="@{model.day}"
+                    android:textColor="?attr/colorPrimary"
+                    app:autoSizeMinTextSize="@dimen/_4ssp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toTopOf="@id/date"
+                    app:layout_constraintEnd_toEndOf="@id/progress"
+                    app:layout_constraintStart_toStartOf="@id/progress"
+                    app:layout_constraintTop_toTopOf="@id/progress" />
 
-    <ImageView
-        android:id="@+id/sun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:src="@drawable/ic_sun"
-        app:layout_constraintBottom_toBottomOf="@+id/morning_azkar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/morning_azkar" />
+                <TextView
+                    android:id="@+id/date"
+                    style="@style/lightText"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_24sdp"
+                    android:lines="1"
+                    android:text="@{model.date}"
+                    app:autoSizeMinTextSize="@dimen/_4ssp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/progress"
+                    app:layout_constraintStart_toStartOf="@id/progress"
+                    app:layout_constraintTop_toBottomOf="@id/day_name" />
 
-    <TextView
-        android:id="@+id/morning_azkar"
-        style="@style/mediumText"
-        android:layout_width="0dp"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toStartOf="@+id/next1"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:text="أذكار الصباح"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
-        app:layout_constraintStart_toEndOf="@+id/sun"
-        app:layout_constraintTop_toBottomOf="@+id/top_card" />
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/morning_azkar"
-        app:layout_constraintBottom_toBottomOf="@id/line1"
-        android:id="@+id/morning_azkar_button"/>
+                <ProgressBar
+                    android:id="@+id/progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:background="@drawable/circle_shape"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/gradiant_progress"
+                    android:secondaryProgress="@{model.progress}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <ImageView
-        android:id="@+id/next1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:src="@drawable/ic_home_next"
-        app:layout_constraintBottom_toBottomOf="@id/morning_azkar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/morning_azkar"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/sun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:src="@drawable/ic_sun"
+            app:layout_constraintBottom_toBottomOf="@+id/morning_azkar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/morning_azkar" />
 
-    <View
-        android:id="@+id/line1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/morning_azkar" />
+        <TextView
+            android:id="@+id/morning_azkar"
+            style="@style/mediumText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="أذكار الصباح"
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/next1"
+            app:layout_constraintStart_toEndOf="@+id/sun"
+            app:layout_constraintTop_toBottomOf="@+id/top_card" />
 
-    <ImageView
-        android:id="@+id/night"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:src="@drawable/ic_night"
-        app:layout_constraintBottom_toBottomOf="@+id/evening_azkar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/evening_azkar" />
+        <View
+            android:id="@+id/morning_azkar_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/line1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/morning_azkar" />
 
-    <TextView
-        android:id="@+id/evening_azkar"
-        style="@style/mediumText"
-        android:layout_width="0dp"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toStartOf="@+id/next2"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:text="أذكار المساء"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
-        app:layout_constraintStart_toEndOf="@+id/night"
-        app:layout_constraintTop_toBottomOf="@+id/line1" />
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/line1"
-        app:layout_constraintBottom_toBottomOf="@id/line2"
-        android:id="@+id/evening_azkar_button"/>
-    <ImageView
-        android:id="@+id/next2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:src="@drawable/ic_home_next"
-        app:layout_constraintBottom_toBottomOf="@id/evening_azkar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/evening_azkar"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/next1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:src="@drawable/ic_home_next"
+            app:layout_constraintBottom_toBottomOf="@id/morning_azkar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/morning_azkar"
+            app:tint="@color/white" />
 
-    <View
-        android:id="@+id/line2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/evening_azkar" />
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/morning_azkar" />
 
-    <ImageView
-        android:id="@+id/sleeping"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:src="@drawable/ic_bed"
-        app:layout_constraintBottom_toBottomOf="@+id/sleeping_azkar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sleeping_azkar" />
+        <ImageView
+            android:id="@+id/night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:src="@drawable/ic_night"
+            app:layout_constraintBottom_toBottomOf="@+id/evening_azkar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/evening_azkar" />
 
-    <TextView
-        android:id="@+id/sleeping_azkar"
-        style="@style/mediumText"
-        android:layout_width="0dp"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toStartOf="@+id/next3"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:text="أذكار النوم"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
-        app:layout_constraintStart_toEndOf="@+id/sleeping"
-        app:layout_constraintTop_toBottomOf="@+id/line2" />
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/line2"
-        app:layout_constraintBottom_toBottomOf="@id/line3"
-        android:id="@+id/sleeping_azkar_button"/>
+        <TextView
+            android:id="@+id/evening_azkar"
+            style="@style/mediumText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="أذكار المساء"
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/next2"
+            app:layout_constraintStart_toEndOf="@+id/night"
+            app:layout_constraintTop_toBottomOf="@+id/line1" />
 
-    <ImageView
-        android:id="@+id/next3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:src="@drawable/ic_home_next"
-        app:layout_constraintBottom_toBottomOf="@id/sleeping_azkar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/sleeping_azkar"
-        app:tint="@color/white" />
+        <View
+            android:id="@+id/evening_azkar_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/line2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/line1" />
 
-    <View
-        android:id="@+id/line3"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/sleeping_azkar" />
+        <ImageView
+            android:id="@+id/next2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:src="@drawable/ic_home_next"
+            app:layout_constraintBottom_toBottomOf="@id/evening_azkar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/evening_azkar"
+            app:tint="@color/white" />
 
-    <ImageView
-        android:id="@+id/after_prayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:src="@drawable/ic_after_prayer"
-        app:layout_constraintBottom_toBottomOf="@+id/after_prayer_azkar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/after_prayer_azkar" />
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/evening_azkar" />
 
-    <TextView
-        android:id="@+id/after_prayer_azkar"
-        style="@style/mediumText"
-        android:layout_width="0dp"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toStartOf="@+id/next1"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:text="أذكار بعد الصلاة"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
-        app:layout_constraintStart_toEndOf="@+id/after_prayer"
-        app:layout_constraintTop_toBottomOf="@+id/line3" />
+        <ImageView
+            android:id="@+id/sleeping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:src="@drawable/ic_bed"
+            app:layout_constraintBottom_toBottomOf="@+id/sleeping_azkar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sleeping_azkar" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/line3"
-        app:layout_constraintBottom_toBottomOf="@id/line4"
-        android:id="@+id/after_prayer_azkar_button"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:src="@drawable/ic_home_next"
-        app:layout_constraintBottom_toBottomOf="@id/after_prayer_azkar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/after_prayer_azkar"
-        app:tint="@color/white" />
+        <TextView
+            android:id="@+id/sleeping_azkar"
+            style="@style/mediumText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="أذكار النوم"
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/next3"
+            app:layout_constraintStart_toEndOf="@+id/sleeping"
+            app:layout_constraintTop_toBottomOf="@+id/line2" />
 
-    <View
-        android:id="@+id/line4"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/after_prayer_azkar" />
+        <View
+            android:id="@+id/sleeping_azkar_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/line3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/line2" />
 
-    <ImageView
-        android:id="@+id/sebha_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:src="@drawable/ic_sebha"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/sebha"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sebha" />
+        <ImageView
+            android:id="@+id/next3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:src="@drawable/ic_home_next"
+            app:layout_constraintBottom_toBottomOf="@id/sleeping_azkar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/sleeping_azkar"
+            app:tint="@color/white" />
 
-    <TextView
-        android:id="@+id/sebha"
-        style="@style/mediumText"
-        android:layout_width="0dp"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toStartOf="@+id/next1"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:text="السبحة"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
-        app:layout_constraintStart_toEndOf="@+id/sebha_img"
-        app:layout_constraintTop_toBottomOf="@+id/line4" />
+        <View
+            android:id="@+id/line3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/sleeping_azkar" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/line4"
-        app:layout_constraintBottom_toBottomOf="@id/line5"
-        android:id="@+id/sebha_button"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:src="@drawable/ic_home_next"
-        app:layout_constraintBottom_toBottomOf="@id/sebha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/sebha"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/after_prayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:src="@drawable/ic_after_prayer"
+            app:layout_constraintBottom_toBottomOf="@+id/after_prayer_azkar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/after_prayer_azkar" />
 
-    <View
-        android:id="@+id/line5"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/sebha" />
+        <TextView
+            android:id="@+id/after_prayer_azkar"
+            style="@style/mediumText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="أذكار بعد الصلاة"
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/next1"
+            app:layout_constraintStart_toEndOf="@+id/after_prayer"
+            app:layout_constraintTop_toBottomOf="@+id/line3" />
 
-    <ImageView
-        android:id="@+id/more_azkar_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:src="@drawable/ic_more_azkar"
-        app:layout_constraintBottom_toBottomOf="@+id/more_azkar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/more_azkar" />
+        <View
+            android:id="@+id/after_prayer_azkar_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/line4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/line3" />
 
-    <TextView
-        android:id="@+id/more_azkar"
-        style="@style/mediumText"
-        android:layout_width="0dp"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toStartOf="@+id/next1"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:text="المزيد من الأذكار"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
-        app:layout_constraintStart_toEndOf="@+id/more_azkar_img"
-        app:layout_constraintTop_toBottomOf="@+id/line5" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:src="@drawable/ic_home_next"
+            app:layout_constraintBottom_toBottomOf="@id/after_prayer_azkar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/after_prayer_azkar"
+            app:tint="@color/white" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/line5"
-        app:layout_constraintBottom_toBottomOf="@id/more_azkar"
-        android:id="@+id/more_azkar_button"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:src="@drawable/ic_home_next"
-        app:layout_constraintBottom_toBottomOf="@id/more_azkar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/more_azkar"
-        app:tint="@color/white" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/line4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/after_prayer_azkar" />
+
+        <ImageView
+            android:id="@+id/sebha_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:src="@drawable/ic_sebha"
+            app:layout_constraintBottom_toBottomOf="@+id/sebha"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sebha"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/sebha"
+            style="@style/mediumText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="السبحة"
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/next1"
+            app:layout_constraintStart_toEndOf="@+id/sebha_img"
+            app:layout_constraintTop_toBottomOf="@+id/line4" />
+
+        <View
+            android:id="@+id/sebha_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/line5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/line4" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:src="@drawable/ic_home_next"
+            app:layout_constraintBottom_toBottomOf="@id/sebha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/sebha"
+            app:tint="@color/white" />
+
+        <View
+            android:id="@+id/line5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/sebha" />
+
+        <ImageView
+            android:id="@+id/more_azkar_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:src="@drawable/ic_more_azkar"
+            app:layout_constraintBottom_toBottomOf="@+id/more_azkar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/more_azkar" />
+
+        <TextView
+            android:id="@+id/more_azkar"
+            style="@style/mediumText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="المزيد من الأذكار"
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/next1"
+            app:layout_constraintStart_toEndOf="@+id/more_azkar_img"
+            app:layout_constraintTop_toBottomOf="@+id/line5" />
+
+        <View
+            android:id="@+id/more_azkar_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/more_azkar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/line5" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:src="@drawable/ic_home_next"
+            app:layout_constraintBottom_toBottomOf="@id/more_azkar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/more_azkar"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

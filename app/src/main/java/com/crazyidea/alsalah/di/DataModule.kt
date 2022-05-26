@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import com.crazyidea.alsalah.data.api.CalendarAPI
 import com.crazyidea.alsalah.data.api.PrayersAPI
+import com.crazyidea.alsalah.data.dataSource.AzkarLocalDataSource
 import com.crazyidea.alsalah.data.dataSource.EventsRemoteDataSource
 import com.crazyidea.alsalah.data.dataSource.PrayersLocalDataSource
 import com.crazyidea.alsalah.data.dataSource.PrayersRemoteDataSource
+import com.crazyidea.alsalah.data.repository.AzkarRepository
 import com.crazyidea.alsalah.data.repository.CalendarRepository
 import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.data.room.AppDatabase
@@ -61,6 +63,11 @@ class DataModule {
 
     @Provides
     @Singleton
+    fun provideAzkarLocalDataSource(coroutineScope: CoroutineScope,appDatabase: AppDatabase) =
+        AzkarLocalDataSource(appDatabase,coroutineScope)
+
+    @Provides
+    @Singleton
     fun provideExternalScope() =
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -72,6 +79,15 @@ class DataModule {
         localDataSource: PrayersLocalDataSource
     ) =
         PrayersRepository(remoteDataSource, localDataSource, coroutineScope)
+
+    @Provides
+    @Singleton
+    fun provideAzkarRepository(
+        coroutineScope: CoroutineScope,
+        remoteDataSource: PrayersRemoteDataSource,
+        localDataSource: AzkarLocalDataSource
+    ) =
+        AzkarRepository(remoteDataSource, localDataSource, coroutineScope)
 
     @Provides
     @Singleton
