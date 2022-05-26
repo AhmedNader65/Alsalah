@@ -223,13 +223,13 @@ class HomeFragment : Fragment(), PermissionListener {
 
                         }
 
-                        binding.dateLayout.rightArrowIcon.setOnClickListener {
+                        binding.dateLayout.rightArrowIcon.setOnClickListener { ttt ->
                             viewModel.prevDay()
                             viewModel.fetchPrayerData(
-                                city,
+                                cityName,
                                 viewModel.gor,
-                                lat,
-                                lng,
+                                it.latitude.toString(),
+                                it.longitude.toString(),
                                 5,
                                 null
                             )
