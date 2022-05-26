@@ -68,7 +68,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
+        <ImageView
+            android:id="@+id/nothing_img_selected"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:elevation="@dimen/_4sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_done_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/nothing_img"
+            app:layout_constraintEnd_toEndOf="@+id/nothing_img"
+            app:layout_constraintStart_toStartOf="@+id/nothing_img"
+            app:layout_constraintTop_toTopOf="@+id/nothing_img"
+            app:tint="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -106,6 +118,20 @@
             android:src="@drawable/ic_lang_unchecked"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/midnight_img_selected"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:elevation="@dimen/_4sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_done_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/midnight_img"
+            app:layout_constraintEnd_toEndOf="@+id/midnight_img"
+            app:layout_constraintStart_toStartOf="@+id/midnight_img"
+            app:layout_constraintTop_toTopOf="@+id/midnight_img"
+            app:tint="@color/white" />
 
 
 
@@ -147,6 +173,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+        <ImageView
+            android:id="@+id/one_of_seven_selected"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:elevation="@dimen/_4sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_done_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/one_of_seven_img"
+            app:layout_constraintEnd_toEndOf="@+id/one_of_seven_img"
+            app:layout_constraintStart_toStartOf="@+id/one_of_seven_img"
+            app:layout_constraintTop_toTopOf="@+id/one_of_seven_img"
+            app:tint="@color/white" />
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -184,6 +225,20 @@
             android:src="@drawable/ic_lang_unchecked"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/angelar_selected"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:elevation="@dimen/_4sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_done_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/angelar_img"
+            app:layout_constraintEnd_toEndOf="@+id/angelar_img"
+            app:layout_constraintStart_toStartOf="@+id/angelar_img"
+            app:layout_constraintTop_toTopOf="@+id/angelar_img"
+            app:tint="@color/white" />
 
 
 

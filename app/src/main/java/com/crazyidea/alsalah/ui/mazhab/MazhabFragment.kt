@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentChooseMazhabBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.utils.themeColor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,13 +48,29 @@ class MazhabFragment : Fragment() {
 
 
     fun checkMazhab(mazhab: String) {
-        binding.hanafiImg.setImageDrawable(resources.getDrawable(R.drawable.ic_lang_unchecked))
-        binding.hanbaliImg.setImageDrawable(resources.getDrawable(R.drawable.ic_lang_unchecked))
+        binding.hanafiImg.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.light_grey
+            )
+        )
+        binding.hanbaliImg.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.light_grey
+            )
+        )
+        binding.hanbaliImgChecked.visibility = View.GONE
+        binding.hanafiImgSelect.visibility = View.GONE
         globalPreferences.saveMazhab(mazhab)
-        if (mazhab == "others")
-            binding.hanbaliImg.setImageDrawable(resources.getDrawable(R.drawable.ic_checked_lang))
-        else if (mazhab == "hanafi")
-            binding.hanafiImg.setImageDrawable(resources.getDrawable(R.drawable.ic_checked_lang))
+        if (mazhab == "others") {
+            binding.hanbaliImg.setColorFilter(requireContext().themeColor(android.R.attr.colorPrimary))
+            binding.hanbaliImgChecked.visibility = View.VISIBLE
+
+        } else if (mazhab == "hanafi") {
+            binding.hanafiImg.setColorFilter(requireContext().themeColor(android.R.attr.colorPrimary))
+            binding.hanafiImgSelect.visibility = View.VISIBLE
+        }
 
     }
 

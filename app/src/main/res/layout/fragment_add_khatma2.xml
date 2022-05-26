@@ -61,7 +61,7 @@
                         android:id="@+id/expected_time_radio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/text_brown_color"
+                        android:buttonTint="?colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@+id/expected_time_card"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/expected_time_card" />
@@ -113,7 +113,7 @@
                         android:id="@+id/expected_werd_radio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/text_brown_color"
+                        android:buttonTint="?colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@+id/expected_werd_card"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/expected_werd_card" />
@@ -175,17 +175,29 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
+                    android:layoutDirection="rtl"
                     android:layout_height="wrap_content">
 
                     <ImageButton
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:scaleType="fitCenter"
+                        android:backgroundTint="?colorPrimary"
                         android:onClick="@{()->model.controllDays((true))}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         android:background="@drawable/ic_add_img"
                         android:id="@+id/increase"/>
+
+                    <ImageView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/increase"
+                        app:layout_constraintEnd_toEndOf="@+id/increase"
+                        app:layout_constraintTop_toTopOf="@+id/increase"
+                        app:layout_constraintBottom_toBottomOf="@+id/increase"
+                        android:src="@drawable/ic_baseline_add_24"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -215,9 +227,20 @@
                         android:scaleType="fitCenter"
                         android:onClick="@{()->model.controllDays((false))}"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:backgroundTint="?colorPrimary"
                         app:layout_constraintStart_toEndOf="@+id/amount"
                         android:background="@drawable/ic_minus_img"
                         android:id="@+id/decrease"/>
+
+                    <ImageView
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@+id/decrease"
+                        app:layout_constraintEnd_toEndOf="@+id/decrease"
+                        app:layout_constraintTop_toTopOf="@+id/decrease"
+                        app:layout_constraintBottom_toBottomOf="@+id/decrease"
+                        android:src="@drawable/ic_baseline_remove_24"/>
 
 
 
@@ -242,8 +265,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_16sdp"
-                    app:endIconTint="@color/text_brown_color"
-                    app:boxStrokeColor="@color/text_brown_color"
+                    app:endIconTint="?colorPrimary"
                     android:layout_marginEnd="@dimen/_20sdp"
                     app:boxCornerRadiusBottomEnd="@dimen/_16sdp"
                     app:boxCornerRadiusBottomStart="@dimen/_16sdp"

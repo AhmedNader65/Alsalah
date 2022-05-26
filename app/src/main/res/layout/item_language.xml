@@ -18,7 +18,24 @@
             android:src="@drawable/ic_lang_unchecked"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/light_grey" />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/language_status_checked"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_done_24"
+            android:elevation="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/language_status"
+            app:layout_constraintEnd_toEndOf="@+id/language_status"
+            app:layout_constraintTop_toTopOf="@+id/language_status"
+            app:layout_constraintStart_toStartOf="@+id/language_status"
+            app:tint="@color/white" />
+
+
+
 
 
 

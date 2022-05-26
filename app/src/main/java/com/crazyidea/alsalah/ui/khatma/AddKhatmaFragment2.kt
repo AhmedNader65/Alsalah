@@ -55,9 +55,10 @@ class AddKhatmaFragment2 : Fragment() {
             stringList
         )
         binding.partsAutoComplete.setAdapter<ArrayAdapter<String>>(fieldsAdapter)
-        binding.partsAutoComplete.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView: AdapterView<*>?, view1: View, i: Int, l: Long ->
+        binding.partsAutoComplete.onItemClickListener =
+            AdapterView.OnItemClickListener { adapterView: AdapterView<*>?, view1: View, i: Int, l: Long ->
 
-        })
+            }
     }
 
     override fun onDestroyView() {

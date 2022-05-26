@@ -13,6 +13,7 @@ import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentCompassBinding
+import com.crazyidea.alsalah.utils.themeColor
 import com.google.android.material.button.MaterialButton
 import kotlin.math.abs
 
@@ -22,6 +23,7 @@ import kotlin.math.abs
 
 const val STATE_NOT_QEBLA = 0
 const val STATE_QEBLA = 1
+
 class CompassScreen : Fragment(R.layout.fragment_compass) {
 
     private var lastState: Int = STATE_NOT_QEBLA
@@ -140,7 +142,7 @@ class CompassScreen : Fragment(R.layout.fragment_compass) {
         binding.byVision.setTextColor(resources.getColor(R.color.black))
         binding.bySunAndMoon.setTextColor(resources.getColor(R.color.black))
         binding.byCompassBtn.setTextColor(resources.getColor(R.color.black))
-        materialButton.setBackgroundColor(resources.getColor(R.color.text_orange_color))
+        materialButton.setBackgroundColor(requireContext().themeColor(android.R.attr.colorPrimary))
         materialButton.setTextColor(resources.getColor(R.color.white))
     }
 

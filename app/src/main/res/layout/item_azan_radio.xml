@@ -21,7 +21,7 @@
             android:id="@+id/radioBtn"
             android:text="العربية"
             android:padding="@dimen/_4sdp"
-            android:buttonTint="@color/text_brown_color"
+            android:buttonTint="?colorPrimary"
             android:checked="false"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="@dimen/_4sdp"
@@ -40,7 +40,8 @@
             android:rotation="180"
             android:src="@drawable/ic_baseline_play_arrow_24"
             app:layout_constraintBottom_toBottomOf="@+id/radioBtn"
-            android:id="@+id/play"/>
+            android:id="@+id/play"
+            app:tint="?colorPrimary" />
         <View
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/_4sdp"

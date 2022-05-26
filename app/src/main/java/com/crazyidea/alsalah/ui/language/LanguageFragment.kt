@@ -42,15 +42,15 @@ class LanguageFragment : Fragment(), LanguagesAdapter.LanguagListner {
 
     private fun createLanguages(): ArrayList<SupportedLanguage> {
         var languages = ArrayList<SupportedLanguage>()
-        languages.add(SupportedLanguage(resources.getString(R.string.arabic), "ar", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.english), "en", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.frecnh), "fr", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.turkish), "tr", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.dutch), "du", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.spanish), "sp", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.indonisian), "in", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.urdu), "ur", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.igorish), "ig", false))
+        languages.add(SupportedLanguage(resources.getString(R.string.arabic), "ar"))
+        languages.add(SupportedLanguage(resources.getString(R.string.english), "en"))
+        languages.add(SupportedLanguage(resources.getString(R.string.frecnh), "fr"))
+        languages.add(SupportedLanguage(resources.getString(R.string.turkish), "tr"))
+        languages.add(SupportedLanguage(resources.getString(R.string.dutch), "du"))
+        languages.add(SupportedLanguage(resources.getString(R.string.spanish), "sp"))
+        languages.add(SupportedLanguage(resources.getString(R.string.indonisian), "in"))
+        languages.add(SupportedLanguage(resources.getString(R.string.urdu), "ur"))
+        languages.add(SupportedLanguage(resources.getString(R.string.igorish), "ig"))
         return languages
     }
 

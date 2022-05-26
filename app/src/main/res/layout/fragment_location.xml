@@ -66,8 +66,9 @@
         <ImageView
             android:layout_width="40sp"
             android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_location"
-            android:layout_gravity="center"/>
+            app:tint="?colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -76,18 +77,16 @@
             android:layout_margin="@dimen/_8sdp"
             android:fontFamily="@font/dinnextregular"
             android:text="مصر"
-            android:textColor="@color/text_brown_color"
+            android:textColor="?colorPrimary"
             android:textSize="@dimen/_18sdp" />
-
-
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/accept"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:backgroundTint="@color/next_prayer_bg"
             android:fontFamily="@font/din_medium"
@@ -99,17 +98,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_img_container" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/tryAnotherWay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:backgroundTint="#FDA14D"
+            android:backgroundTint="?colorPrimary"
             android:fontFamily="@font/din_medium"
-            android:text="@string/tryAnotherWay"
             android:padding="@dimen/_4sdp"
+            android:text="@string/tryAnotherWay"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp"
             app:cornerRadius="@dimen/_20sdp"

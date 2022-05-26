@@ -5,7 +5,7 @@
     android:fontFamily="@font/dinnextregular"
     android:id="@+id/radioBtn"
     android:text="العربية"
-    android:buttonTint="@color/text_brown_color"
+    android:buttonTint="?colorPrimary"
     android:checked="false"
     android:textAlignment="viewEnd"
     android:layoutDirection="ltr"

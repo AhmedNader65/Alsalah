@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/title"
@@ -31,28 +30,26 @@
 
 
     <TextView
+        android:id="@+id/mazhabtext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
         android:layout_marginTop="@dimen/_12sdp"
+        android:fontFamily="@font/din_medium"
         android:text="@string/almazhab"
         android:textColor="@color/text_main"
         android:textSize="@dimen/_18sdp"
-        android:id="@+id/mazhabtext"
-        android:fontFamily="@font/din_medium"/>
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hanbali_con"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/hanbali_con"
-        app:layout_constraintTop_toBottomOf="@+id/mazhabtext"
         android:layout_margin="@dimen/_16sdp"
-        android:padding="@dimen/_8sdp">
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@+id/mazhabtext">
 
         <ImageView
             android:id="@+id/hanbali_img"
@@ -61,38 +58,52 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_lang_unchecked"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/light_grey" />
 
+        <ImageView
+            android:id="@+id/hanbali_img_checked"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:elevation="@dimen/_4sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_done_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/hanbali_img"
+            app:layout_constraintEnd_toEndOf="@+id/hanbali_img"
+            app:layout_constraintStart_toStartOf="@+id/hanbali_img"
+            app:layout_constraintTop_toTopOf="@+id/hanbali_img"
+            app:tint="@color/white" />
 
 
         <TextView
+            android:id="@+id/language_title"
+            style="@style/boldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/hanbali_img"
-            app:layout_constraintBottom_toBottomOf="@+id/hanbali_img"
             android:text="@string/three_mazhabs"
-            android:id="@+id/language_title"
-            style="@style/boldText"/>
+            app:layout_constraintBottom_toBottomOf="@+id/hanbali_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/hanbali_img" />
 
 
         <View
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/light_grey"
-            app:layout_constraintTop_toBottomOf="@+id/hanbali_img"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/hanbali_img" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hanafi_con"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/hanafi_con"
-        app:layout_constraintTop_toBottomOf="@+id/hanbali_con"
         android:layout_margin="@dimen/_16sdp"
-        android:padding="@dimen/_8sdp">
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@+id/hanbali_con">
 
         <ImageView
             android:id="@+id/hanafi_img"
@@ -104,28 +115,40 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+        <ImageView
+            android:id="@+id/hanafi_img_select"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:elevation="@dimen/_4sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_done_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/hanafi_img"
+            app:layout_constraintEnd_toEndOf="@+id/hanafi_img"
+            app:layout_constraintStart_toStartOf="@+id/hanafi_img"
+            app:layout_constraintTop_toTopOf="@+id/hanafi_img"
+            app:tint="@color/white" />
+
 
         <TextView
+            style="@style/boldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/hanafi_img"
-            app:layout_constraintBottom_toBottomOf="@+id/hanafi_img"
             android:text="@string/hanafi"
-            style="@style/boldText"/>
+            app:layout_constraintBottom_toBottomOf="@+id/hanafi_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/hanafi_img" />
 
 
         <View
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/light_grey"
-            app:layout_constraintTop_toBottomOf="@+id/hanafi_img"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/hanafi_img" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

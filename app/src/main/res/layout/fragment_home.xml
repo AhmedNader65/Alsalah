@@ -123,15 +123,15 @@
                         app:layout_constraintStart_toEndOf="@+id/fajr_time"
                         app:layout_constraintTop_toBottomOf="@id/fajr_tv" />
 
-
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_32sdp"
                         android:layout_marginTop="@dimen/_9sdp"
-                        android:src="@{model.nextPrayerId==1? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_fajr_selected): context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_fajr)}"
+                        android:src="@{model.nextPrayerId==1? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_shorooq_selected): context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_shorooq)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/fajr_time" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
