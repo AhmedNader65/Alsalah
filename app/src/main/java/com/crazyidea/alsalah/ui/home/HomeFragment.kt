@@ -2,18 +2,14 @@ package com.crazyidea.alsalah.ui.home
 
 import android.Manifest
 import android.app.AlertDialog
-import android.icu.text.DateFormat
-import android.icu.text.SimpleDateFormat
-import android.icu.util.IslamicCalendar
-import android.icu.util.ULocale
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,7 +21,6 @@ import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
-import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,9 +44,6 @@ class HomeFragment : Fragment(), PermissionListener {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    var city = ""
-    var lat = ""
-    var lng = ""
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
@@ -78,6 +70,16 @@ class HomeFragment : Fragment(), PermissionListener {
         binding.khatmaLayout.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToKhatmaFragment())
         }
+        viewModel.nextPrayerId.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window: Window = requireActivity().window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.setStatusBarColor(viewModel.getStatusBarColor(it, requireContext()))
+                Log.e(TAG, "onViewCreated: " + viewModel.getStatusBarColor(it, requireContext()))
+            }
+        })
+
+
 
         permissionHelper.checkForMultiplePermissions(
             arrayOf(
@@ -86,9 +88,9 @@ class HomeFragment : Fragment(), PermissionListener {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         )
-        val iCalendar = UmmalquraCalendar()
-// name of month
-        val locale = ULocale("ar@calendar=islamic")
+//        val iCalendar = UmmalquraCalendar()
+//        name of month
+//        val locale = ULocale("ar@calendar=islamic")
 
 // name of month
 // full date
@@ -178,7 +180,12 @@ class HomeFragment : Fragment(), PermissionListener {
     }
 
     override fun isPermissionGranted(isGranted: Boolean) {
-        getDeviceLocation()
+        try {
+
+            getDeviceLocation()
+        } catch (e: Exception) {
+            Log.e(TAG, "isPermissionGranted: " + e.localizedMessage)
+        }
     }
 
     private fun getDeviceLocation() {

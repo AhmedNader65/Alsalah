@@ -164,6 +164,7 @@
                     android:background="@color/header_color" />
 
                 <TextView
+                    android:id="@+id/expected_time_text"
                     style="@style/boldText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -212,6 +213,7 @@
                         style="@style/boldText"
                         android:textSize="@dimen/_18sdp"/>
                     <TextView
+                        android:id="@+id/days_hezb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="@+id/amount"

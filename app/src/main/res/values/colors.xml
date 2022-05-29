@@ -13,6 +13,11 @@
     <color name="text_main">#184A3F</color>
     <color name="text_secondary">#184A3F</color>
     <color name="header_color">#184A3F</color>
+    <color name="fajr_header">#3E7A50</color>
+    <color name="shrooq_header">#87C4CF</color>
+    <color name="zuhr_header">#9DD8E6</color>
+    <color name="maghrib_header">#6C98A0</color>
+    <color name="isha_header">#446363</color>
     <color name="general_setting_line">#344E41</color>
     <color name="green">#38AD00</color>
     <color name="next_prayer_bg">#4E7850</color>

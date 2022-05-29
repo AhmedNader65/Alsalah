@@ -1,14 +1,17 @@
 package com.crazyidea.alsalah.ui.home
 
+import android.content.Context
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.utils.themeColor
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -256,6 +259,31 @@ class HomeViewModel @Inject constructor(
             gor.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
         gor.add(Calendar.DAY_OF_MONTH, 1)
 
+    }
+
+    fun setTextColor(prayer: Int, context: Context): Int {
+        var color = context.resources.getColor(R.color.white)
+        if (prayer == 4 || prayer == 3)
+            color = context.resources.getColor(R.color.header_color)
+        else
+            color = context.resources.getColor(R.color.white)
+
+        return color
+
+    }
+
+    fun getStatusBarColor(number :Int,context: Context): Int {
+        var color =  context.resources.getColor(R.color.header_color)
+        Log.e("TAG", "getStatusBarColor: "+nextPrayerId.value )
+        when(number){
+            1->color =  context.resources.getColor(R.color.fajr_header)
+            2->color =  context.resources.getColor(R.color.shrooq_header)
+            3->color =  context.resources.getColor(R.color.zuhr_header)
+            4->color =  context.resources.getColor(R.color.zuhr_header)
+            5->color =  context.resources.getColor(R.color.maghrib_header)
+            6->color =  context.resources.getColor(R.color.isha_header)
+        }
+        return color
     }
 
 
