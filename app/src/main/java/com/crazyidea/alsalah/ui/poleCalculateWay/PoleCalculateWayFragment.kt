@@ -41,7 +41,7 @@ class PoleCalculateWayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         globalPreferences = GlobalPreferences(requireContext())
-        PoleCalculation.values().find { it.name == globalPreferences.pole }
+        PoleCalculation.values().find { it.name == globalPreferences.getPole() }
             ?.let { checkMazhab(it) }
         binding.nothingCon.setOnClickListener { checkMazhab(PoleCalculation.NOTHING) }
         binding.angelarCon.setOnClickListener { checkMazhab(PoleCalculation.ANGLE) }

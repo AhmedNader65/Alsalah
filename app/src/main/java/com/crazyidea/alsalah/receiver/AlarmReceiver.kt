@@ -49,12 +49,12 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun sendNotification(context: Context, title: String, pendingIntent: PendingIntent) {
-        var number = globalPreferences.azan.toIntOrNull()
+        var number = globalPreferences.getAzan().toIntOrNull()
         if (number != null) {
             sound =
                 Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + number)
         } else {
-            sound = Uri.parse(globalPreferences.azan)
+            sound = Uri.parse(globalPreferences.getAzan())
         }
 
 

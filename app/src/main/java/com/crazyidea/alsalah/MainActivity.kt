@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLocale(this, "ar")
-        setTheme(globalPreferences.primaryColor)
+        setTheme(globalPreferences.getPrimaryColor())
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

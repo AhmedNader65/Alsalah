@@ -64,10 +64,9 @@ class PrayersRepository @Inject constructor(
         method: Int,
         tune: String?
     ) {
-        withContext(externalScope.coroutineContext) {
             val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
             localDataSource.insertData(cityName, result.data!!)
-        }
+
     }
 
     suspend fun getAzkar() {

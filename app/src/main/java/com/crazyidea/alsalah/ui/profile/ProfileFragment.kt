@@ -48,7 +48,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setSelectedSecondaryColor(globalPreferences.primaryColor)
+        setSelectedSecondaryColor(globalPreferences.getPrimaryColor())
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             binding.nightModeSwitch.isChecked = true else false
         binding.blueColor.setOnClickListener {

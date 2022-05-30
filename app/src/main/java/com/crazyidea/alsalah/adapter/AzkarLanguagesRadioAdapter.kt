@@ -49,7 +49,7 @@ class AzkarLanguagesRadioAdapter(
     }
 
     private fun findMyLanguage() {
-        dataSet.find { it.shortcut == globalPreferences.azkarLanguage }?.checked = true
+        dataSet.find { it.shortcut == globalPreferences.getAzkarLanguage() }?.checked = true
 
     }
 

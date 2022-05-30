@@ -1,5 +1,6 @@
 package com.crazyidea.alsalah.ui.azkar.sebha
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -11,20 +12,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.databinding.FragmentAzkarDetailsBinding
 import com.crazyidea.alsalah.databinding.FragmentSebhaBinding
-import com.crazyidea.alsalah.ui.azkar.azkar_details.AzkarDetailsFragmentDirections
+import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class SebhaFragment : Fragment() {
 
+    @Inject
+    lateinit var globalPreferences: GlobalPreferences
+    private var muted: Boolean = false
     private var _binding: FragmentSebhaBinding? = null
     private val viewModel by viewModels<SebhaViewModel>()
+    lateinit var mp: MediaPlayer
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -39,18 +45,31 @@ class SebhaFragment : Fragment() {
             com.intuit.ssp.R.dimen._23ssp,
         )
 
-    var currentFontIndex = 0
+    private var currentFontIndex = 0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        mp = MediaPlayer.create(requireContext(), R.raw.click)
 
         _binding = FragmentSebhaBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.model = viewModel
         binding.lifecycleOwner = this
+        observerLiveData()
         return root
+    }
+
+    private fun observerLiveData() {
+        viewModel.playSound.observe(viewLifecycleOwner) {
+            if (it) {
+                if (!muted) {
+                    mp.seekTo(0)
+                    mp.start()
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,6 +77,11 @@ class SebhaFragment : Fragment() {
         GlobalScope.launch(Dispatchers.Main) {
             viewModel.getSebha()
 
+        }
+        binding.mute.setOnClickListener {
+            muted = !muted
+            viewModel.muted.value = muted
+            globalPreferences.azkarMuted(muted)
         }
         binding.bottomTools.fontSize.setOnClickListener {
             currentFontIndex++
@@ -74,9 +98,13 @@ class SebhaFragment : Fragment() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
         binding.bottomTools.settings.setOnClickListener {
-            findNavController().navigate(SebhaFragmentDirections.actionSebhaFragmentToAzkarMenuFragment("تسابيح"))
+            findNavController().navigate(
+                SebhaFragmentDirections.actionSebhaFragmentToAzkarMenuFragment(
+                    "تسابيح"
+                )
+            )
         }
-        binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 binding.sebhaImg.isVisible = tab.position == 0
                 binding.counterContainer.isVisible = tab.position == 1

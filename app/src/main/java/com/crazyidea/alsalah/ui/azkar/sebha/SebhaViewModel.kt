@@ -15,6 +15,8 @@ class SebhaViewModel @Inject constructor(
 ) : ViewModel() {
 
     val azkar = MutableLiveData<Azkar>()
+    val playSound = MutableLiveData(false)
+    val muted = MutableLiveData(false)
     var currentIndex = MutableLiveData(0)
     val azkarCounter = MutableLiveData(0)
     val allAzkar = MutableLiveData<List<Azkar>>(listOf(Azkar(1, "", 2, "", "", "")))
@@ -26,6 +28,7 @@ class SebhaViewModel @Inject constructor(
     }
 
     fun increaseCounter() {
+        playSound.value = true
         var currentValue = azkarCounter.value
         if (currentValue != null) {
             if (currentValue < azkar.value!!.count)

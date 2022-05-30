@@ -2,7 +2,6 @@ package com.crazyidea.alsalah.ui.home
 
 import android.Manifest
 import android.app.AlertDialog
-import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -203,8 +202,8 @@ class HomeFragment : Fragment(), PermissionListener {
                             1
                         )
 
-                        globalPreferences.storeLatituide(it.latitude.toString())
-                        globalPreferences.storeLongituide(it.longitude.toString())
+                        globalPreferences.storeLatitude(it.latitude.toString())
+                        globalPreferences.storeLongitude(it.longitude.toString())
                         val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
                         val cityName: String = addresses[0].locality
                         viewModel.fetchPrayerData(

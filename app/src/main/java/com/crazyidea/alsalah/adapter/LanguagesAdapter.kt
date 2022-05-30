@@ -60,7 +60,7 @@ class LanguagesAdapter(
     }
 
     private fun findMyLanguage() {
-        dataSet.find { it.shortcut == globalPreferences.locale }?.checked = true
+        dataSet.find { it.shortcut == globalPreferences.getLocale() }?.checked = true
 
     }
 

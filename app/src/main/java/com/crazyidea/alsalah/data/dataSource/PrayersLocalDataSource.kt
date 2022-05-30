@@ -20,7 +20,6 @@ class PrayersLocalDataSource @Inject constructor(
         appDatabase.prayersDao().deleteDates()
         appDatabase.prayersDao().deleteMeta()
         appDatabase.prayersDao().deleteTimings()
-        withContext(externalScope.coroutineContext) {
             remoteResponse.forEach {
                 val metaId = appDatabase.prayersDao().insertMeta(
                     Meta(null, it.meta.method.id, cityName, it.date.gregorian.month.number)
@@ -61,7 +60,7 @@ class PrayersLocalDataSource @Inject constructor(
                         it.date.hijri.year
                     )
                 )
-            }
+
         }
     }
 

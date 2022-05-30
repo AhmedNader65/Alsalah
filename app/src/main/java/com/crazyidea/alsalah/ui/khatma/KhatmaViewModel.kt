@@ -31,27 +31,13 @@ class KhatmaViewModel @Inject constructor(
 
 
     fun twentyFourConverter(hour: Int, minutes: Int): String {
-        var amPm = ""
-        var hours = hour
-        var minutess = minutes
-        if (hour > 12) {
-            hours = hour - 12
-            if (globalPreferences.locale.equals("ar"))
-                amPm = "ص"
-            else
-                amPm = "AM"
-        } else {
-
-            if (globalPreferences.locale.equals("ar"))
-                amPm = "م"
-            else
-                amPm = "PM"
+        return try {
+            val sdf = SimpleDateFormat("H:mm a", Locale("ar"))
+            val dateObj: Date? = sdf.parse("$hour:$minutes")
+            dateObj.toString()
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            return "am"
         }
-        var myString = ""
-        if (globalPreferences.locale.equals("ar"))
-            myString = " $minutess : $hours  $amPm "
-        else
-            myString = " $hours : $minutess  $amPm "
-        return myString
     }
 }

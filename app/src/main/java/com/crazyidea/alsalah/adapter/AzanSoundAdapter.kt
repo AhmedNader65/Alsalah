@@ -55,7 +55,7 @@ class AzanSoundAdapter(
     }
 
     private fun findMyAzan() {
-        dataSet.find { it.Name == globalPreferences.azan }?.checked = true
+        dataSet.find { it.Name == globalPreferences.getAzan() }?.checked = true
 
     }
 

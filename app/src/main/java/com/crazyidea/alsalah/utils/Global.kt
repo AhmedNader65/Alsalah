@@ -55,7 +55,7 @@ fun <T : Any> RecyclerView.withSimpleAdapter(
 
 fun updateStoredPreference(context: Context) {
     val prefs = GlobalPreferences(context)
-    coordinates = Coordinates(prefs.latituide.toDouble(), prefs.longituide.toDouble(), 0.0)
+    coordinates = Coordinates(prefs.getLatitude().toDouble(), prefs.getLongitude().toDouble(), 0.0)
 }
 fun daysOfWeekFromLocale(): Array<DayOfWeek> {
     val firstDayOfWeek = WeekFields.of(Locale("ar")).firstDayOfWeek

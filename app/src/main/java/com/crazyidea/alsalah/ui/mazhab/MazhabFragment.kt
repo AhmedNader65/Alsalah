@@ -40,7 +40,7 @@ class MazhabFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         globalPreferences = GlobalPreferences(requireContext())
-        checkMazhab(globalPreferences.mazhab)
+        checkMazhab(globalPreferences.getMazhab())
         binding.hanafiCon.setOnClickListener { checkMazhab("hanafi") }
         binding.hanbaliCon.setOnClickListener { checkMazhab("others") }
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
