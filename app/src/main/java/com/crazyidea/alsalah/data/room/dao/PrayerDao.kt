@@ -10,7 +10,7 @@ import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 interface PrayerDao {
     @Transaction
     @Query("SELECT * FROM Date where g_day = :day AND g_month = :month")
-    fun getTodayTimings(day: String,month: String): DateWithTiming
+    fun getTodayTimings(day: String,month: String): DateWithTiming?
 
 
     @Insert

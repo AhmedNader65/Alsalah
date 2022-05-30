@@ -62,7 +62,7 @@ public class DailyAzanWorker @AssistedInject constructor(
             (calendar.get(Calendar.MONTH) + 1).toString()
         )
 
-        val fajrTime = timings.timing.Fajr.split(":")
+        val fajrTime = timings!!.timing.Fajr.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, fajrTime[0].toInt())
         calendar.set(Calendar.MINUTE, fajrTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
