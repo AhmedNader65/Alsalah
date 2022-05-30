@@ -187,17 +187,7 @@ class HomeViewModel @Inject constructor(
             val dateObj: Date? = sdf.parse(time)
             if (!am) SimpleDateFormat("K:mm").format(dateObj)
             else {
-                val amPm = SimpleDateFormat("a").format(dateObj)
-                if (amPm == "am")
-                    if (globalPreferences.locale.equals("ar"))
-                        "ص"
-                    else
-                        "AM"
-                else
-                    if (globalPreferences.locale.equals("ar"))
-                        "م"
-                    else
-                        "PM"
+                 SimpleDateFormat("a").format(dateObj)
             }
 
         } catch (e: ParseException) {
