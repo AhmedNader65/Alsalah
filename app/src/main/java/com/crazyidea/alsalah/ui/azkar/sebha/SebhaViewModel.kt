@@ -17,6 +17,7 @@ class SebhaViewModel @Inject constructor(
     val azkar = MutableLiveData<Azkar>()
     val playSound = MutableLiveData(false)
     val muted = MutableLiveData(false)
+    val vibrate = MutableLiveData(false)
     var currentIndex = MutableLiveData(0)
     val azkarCounter = MutableLiveData(0)
     val allAzkar = MutableLiveData<List<Azkar>>(listOf(Azkar(1, "", 2, "", "", "")))

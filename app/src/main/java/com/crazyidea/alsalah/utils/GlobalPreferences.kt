@@ -17,6 +17,7 @@ private const val LONGITUDE = "lng"
 
 
 private const val AZKAR_MUTED = "azkar-muted"
+private const val AZKAR_VIBRATE = "azkar-vibrate"
 
 class GlobalPreferences(context: Context) {
     var context: Context? = null
@@ -72,9 +73,17 @@ class GlobalPreferences(context: Context) {
     fun isAzkarMuted(): Boolean {
         return prefs.getBoolean(AZKAR_MUTED, false)
     }
+    fun isAzkarVibrating(): Boolean {
+        return prefs.getBoolean(AZKAR_VIBRATE, false)
+    }
 
     fun azkarMuted(muted: Boolean) {
         prefsEditor.putBoolean(AZKAR_MUTED, muted)
+        prefsEditor.commit()
+    }
+
+    fun azkarVibrate(vibrate: Boolean) {
+        prefsEditor.putBoolean(AZKAR_MUTED, vibrate)
         prefsEditor.commit()
     }
 

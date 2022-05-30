@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:src="@drawable/ic_vib_sebha"
+            android:src="@{model.vibrate == false? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_vib_sebha):context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_no_vib_sebha)}"
             app:layout_constraintEnd_toStartOf="@+id/mute"
             app:layout_constraintStart_toEndOf="@+id/count"
             app:layout_constraintTop_toBottomOf="@id/tabLayout" />
