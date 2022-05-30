@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,9 +10,7 @@
             type="com.crazyidea.alsalah.ui.azkar.sebha.SebhaViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_bg_light_night"
@@ -66,10 +66,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
-            android:src="@{model.muted == false? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_mute_sebha):context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_muted_sebha)}"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@{model.muted == false? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_mute_sebha):context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_muted_sebha)}"            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/vibration"
             app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+
 
         <ImageView
             android:id="@+id/vibration"
@@ -79,6 +79,7 @@
             android:layout_marginEnd="@dimen/_16sdp"
             android:src="@{model.vibrate == false? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_vib_sebha):context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_no_vib_sebha)}"
             app:layout_constraintEnd_toStartOf="@+id/mute"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/count"
             app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
@@ -90,31 +91,21 @@
             android:layout_marginEnd="@dimen/_16sdp"
             android:src="@drawable/ic_count_sebha"
             app:layout_constraintEnd_toStartOf="@+id/vibration"
-            app:layout_constraintStart_toEndOf="@+id/menu"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
         <TextView
             android:id="@+id/count_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="0"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/count"
             app:layout_constraintEnd_toEndOf="@+id/count"
             app:layout_constraintStart_toStartOf="@+id/count"
             app:layout_constraintTop_toTopOf="@+id/count" />
 
-        <ImageView
-            android:id="@+id/menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:src="@drawable/ic_menu_sebha"
-            app:layout_constraintEnd_toStartOf="@+id/count"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
         <TextView
             android:id="@+id/azkar_tv"
@@ -125,7 +116,7 @@
             android:text="@{model.azkar.content}"
             android:textAlignment="center"
             android:textColor="@color/text_main"
-            app:layout_constraintTop_toBottomOf="@id/menu" />
+            app:layout_constraintTop_toBottomOf="@id/count" />
 
         <ImageView
             android:id="@+id/sebha_img"

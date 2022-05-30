@@ -103,6 +103,9 @@ class SebhaFragment : Fragment() {
             viewModel.vibrate.value = vibrate
             globalPreferences.azkarMuted(vibrate)
         }
+        binding.count.setOnClickListener {
+            viewModel.azkarCounter.value = 0
+        }
         binding.bottomTools.fontSize.setOnClickListener {
             currentFontIndex++
             binding.azkarTv.setTextSize(
