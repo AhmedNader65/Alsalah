@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.PrayerTimeRefrence
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.utils.themeColor
 
 class PrayerTimeAdapter(
     private val dataSet: ArrayList<PrayerTimeRefrence>,
@@ -26,11 +28,13 @@ class PrayerTimeAdapter(
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val language_status: ImageView
+        val language_status_checked: ImageView
         val language_title: TextView
 
         init {
             // Define click listener for the ViewHolder's View.
             language_status = view.findViewById(R.id.language_status)
+            language_status_checked = view.findViewById(R.id.language_status_checked)
             language_title = view.findViewById(R.id.language_title)
 
         }
@@ -55,10 +59,19 @@ class PrayerTimeAdapter(
 
 
         viewHolder.language_title.text = prayerTimeRefrence.Name
-        if (prayerTimeRefrence.checked) {
-            viewHolder.language_status.setImageDrawable(context.resources.getDrawable(R.drawable.ic_checked_lang))
+        if (!prayerTimeRefrence.checked) {
+            viewHolder.language_status_checked.visibility = View.GONE
+            viewHolder.language_status.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    R.color.light_grey
+                )
+            )
         } else {
-            viewHolder.language_status.setImageDrawable(context.resources.getDrawable(R.drawable.ic_lang_unchecked))
+            viewHolder.language_status_checked.visibility = View.VISIBLE
+            viewHolder.language_status.setColorFilter(
+                context.themeColor(android.R.attr.colorPrimary)
+            )
         }
 
 

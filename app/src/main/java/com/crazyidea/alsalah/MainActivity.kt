@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -15,9 +17,6 @@ import com.crazyidea.alsalah.receiver.AlarmReceiver
 import com.crazyidea.alsalah.utils.CommonUtils.Companion.setLocale
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.shape.RelativeCornerSize
-import com.google.android.material.shape.RoundedCornerTreatment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -40,18 +39,25 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if (destination.id != R.id.navigation_home) {
+                val window: Window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.setStatusBarColor(resources.getColor(R.color.header_color))
+            }
+        }
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
         navView.setupWithNavController(navController)
-        val bottomBarBackground = binding.navView.background as MaterialShapeDrawable
-        bottomBarBackground.shapeAppearanceModel = bottomBarBackground.shapeAppearanceModel
-            .toBuilder()
-            .setTopLeftCorner(RoundedCornerTreatment())
-            .setTopLeftCornerSize(RelativeCornerSize(.8f))
-            .setTopRightCorner(RoundedCornerTreatment())
-            .setTopRightCornerSize(RelativeCornerSize(.8f))
-            .build()
+//        val bottomBarBackground = binding.navView.background as MaterialShapeDrawable
+//        bottomBarBackground.shapeAppearanceModel = bottomBarBackground.shapeAppearanceModel
+//            .toBuilder()
+//            .setTopLeftCorner(RoundedCornerTreatment())
+//            .setTopLeftCornerSize(RelativeCornerSize(.8f))
+//            .setTopRightCorner(RoundedCornerTreatment())
+//            .setTopRightCornerSize(RelativeCornerSize(.8f))
+//            .build()
 //        setAlarm("asr", System.currentTimeMillis())
     }
 
@@ -96,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun restartActivity(){
+    fun restartActivity() {
         val intent = intent
         finish()
         startActivity(intent)

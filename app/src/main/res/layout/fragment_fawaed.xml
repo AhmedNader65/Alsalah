@@ -106,7 +106,7 @@
             android:layout_marginTop="@dimen/_12sdp"
             android:paddingBottom="@dimen/_12sdp"
             android:text="@string/fawaedNotifications"
-            android:textColor="@color/black"
+            android:textColor="@color/text_main"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

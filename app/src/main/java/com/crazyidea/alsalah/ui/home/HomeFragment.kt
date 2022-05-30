@@ -2,18 +2,14 @@ package com.crazyidea.alsalah.ui.home
 
 import android.Manifest
 import android.app.AlertDialog
-import android.icu.text.DateFormat
-import android.icu.text.SimpleDateFormat
-import android.icu.util.IslamicCalendar
-import android.icu.util.ULocale
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,7 +21,6 @@ import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
-import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +56,7 @@ class HomeFragment : Fragment(), PermissionListener {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.model = viewModel
+        binding.dateLayout.model = viewModel
         binding.lifecycleOwner = this
         permissionHelper = PermissionHelper(this, this)
         return binding.root
@@ -74,6 +70,16 @@ class HomeFragment : Fragment(), PermissionListener {
         binding.khatmaLayout.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToKhatmaFragment())
         }
+        viewModel.nextPrayerId.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val window: Window = requireActivity().window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.setStatusBarColor(viewModel.getStatusBarColor(it, requireContext()))
+                Log.e(TAG, "onViewCreated: " + viewModel.getStatusBarColor(it, requireContext()))
+            }
+        })
+
+
 
         permissionHelper.checkForMultiplePermissions(
             arrayOf(
@@ -82,17 +88,17 @@ class HomeFragment : Fragment(), PermissionListener {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         )
-        val iCalendar = UmmalquraCalendar()
-// name of month
-        val locale = ULocale("ar@calendar=islamic")
+//        val iCalendar = UmmalquraCalendar()
+//        name of month
+//        val locale = ULocale("ar@calendar=islamic")
 
 // name of month
 // full date
-        val df2 = SimpleDateFormat("MMMM yyyy", locale)
-        val df1 = SimpleDateFormat("EEEE", locale)
-        binding.dateLayout.dayNum.text = iCalendar.get(IslamicCalendar.DAY_OF_MONTH).toString()
-        binding.dateLayout.monthYear.text = df2.format(iCalendar.time)
-        binding.dateLayout.today.text = df1.format(iCalendar.time)
+//        val df2 = SimpleDateFormat("MMMM yyyy", locale)
+//        val df1 = SimpleDateFormat("EEEE", locale)
+//        binding.dateLayout.dayNum.text = iCalendar.get(IslamicCalendar.DAY_OF_MONTH).toString()
+//        binding.dateLayout.monthYear.text = df2.format(iCalendar.time)
+//        binding.dateLayout.today.text = df1.format(iCalendar.time)
         setupNavigation()
         collectData()
     }
@@ -174,7 +180,12 @@ class HomeFragment : Fragment(), PermissionListener {
     }
 
     override fun isPermissionGranted(isGranted: Boolean) {
-        getDeviceLocation()
+        try {
+
+            getDeviceLocation()
+        } catch (e: Exception) {
+            Log.e(TAG, "isPermissionGranted: " + e.localizedMessage)
+        }
     }
 
     private fun getDeviceLocation() {
@@ -191,6 +202,7 @@ class HomeFragment : Fragment(), PermissionListener {
                             it.longitude,
                             1
                         )
+
                         globalPreferences.storeLatituide(it.latitude.toString())
                         globalPreferences.storeLongituide(it.longitude.toString())
                         val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
@@ -203,6 +215,33 @@ class HomeFragment : Fragment(), PermissionListener {
                             5,
                             null
                         )
+
+
+                        binding.dateLayout.leftArrowIcon.setOnClickListener { ttt ->
+                            viewModel.nextDay()
+                            viewModel.fetchPrayerData(
+                                cityName,
+                                viewModel.gor,
+                                it.latitude.toString(),
+                                it.longitude.toString(),
+                                5,
+                                null
+                            )
+
+                        }
+
+                        binding.dateLayout.rightArrowIcon.setOnClickListener { ttt ->
+                            viewModel.prevDay()
+                            viewModel.fetchPrayerData(
+                                cityName,
+                                viewModel.gor,
+                                it.latitude.toString(),
+                                it.longitude.toString(),
+                                5,
+                                null
+                            )
+
+                        }
                     }
                 } else {
                     Log.d(TAG, "Current location is null. Using defaults.")

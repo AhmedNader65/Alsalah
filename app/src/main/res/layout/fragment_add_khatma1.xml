@@ -66,8 +66,7 @@
                 app:boxCornerRadiusBottomStart="@dimen/_16sdp"
                 app:boxCornerRadiusTopEnd="@dimen/_16sdp"
                 app:boxCornerRadiusTopStart="@dimen/_16sdp"
-                app:boxStrokeColor="@color/text_brown_color"
-                app:endIconTint="@color/text_brown_color"
+                app:boxStrokeColor="?colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -97,8 +96,8 @@
                 app:boxCornerRadiusBottomStart="@dimen/_16sdp"
                 app:boxCornerRadiusTopEnd="@dimen/_16sdp"
                 app:boxCornerRadiusTopStart="@dimen/_16sdp"
-                app:boxStrokeColor="@color/text_brown_color"
-                app:endIconTint="@color/text_brown_color"
+                app:boxStrokeColor="?colorPrimary"
+                app:endIconTint="?colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 

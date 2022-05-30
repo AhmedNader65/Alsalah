@@ -1,7 +1,11 @@
 package com.crazyidea.alsalah.utils
 
+import android.content.Context
 import android.content.res.Resources
+import android.util.TypedValue
 import android.view.View
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import com.crazyidea.alsalah.data.model.Language
 
 
@@ -22,3 +26,11 @@ fun formatNumber(number: String, digits: CharArray = preferredDigits): String {
 }
 
 val isArabicDigitSelected: Boolean get() = preferredDigits === Language.ARABIC_DIGITS
+
+
+@ColorInt
+fun Context.themeColor(@AttrRes attrRes: Int): Int = TypedValue()
+    .apply { theme.resolveAttribute(attrRes, this, true) }
+    .data
+
+

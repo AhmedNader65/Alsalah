@@ -54,9 +54,10 @@ class AddKhatmaFragment1 : Fragment() {
             stringList
         )
         binding.typesAutoComplete.setAdapter<ArrayAdapter<String>>(fieldsAdapter)
-        binding.typesAutoComplete.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView: AdapterView<*>?, view1: View, i: Int, l: Long ->
+        binding.typesAutoComplete.onItemClickListener =
+            AdapterView.OnItemClickListener { adapterView: AdapterView<*>?, view1: View, i: Int, l: Long ->
 
-        })
+            }
     }
 
 

@@ -82,7 +82,7 @@
                         style="@style/mediumText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/text_brown_color"
+                        android:buttonTint="?colorPrimary"
                         android:text="@string/mosques" />
 
                     <RadioButton
@@ -90,7 +90,7 @@
                         style="@style/mediumText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/text_brown_color"
+                        android:buttonTint="?colorPrimary"
                         android:text="@string/naturalViews" />
 
 
@@ -340,7 +340,7 @@
                         style="@style/mediumText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/text_brown_color"
+                        android:buttonTint="?colorPrimary"
                         android:text="@string/iqamaSound" />
 
                     <RadioButton
@@ -348,7 +348,7 @@
                         style="@style/mediumText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/text_brown_color"
+                        android:buttonTint="?colorPrimary"
                         android:text="@string/ringtone" />
 
 

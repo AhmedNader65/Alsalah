@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.PoleCalculation
 import com.crazyidea.alsalah.databinding.FragmentChoosePoleCalculateWayBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.utils.themeColor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,21 +52,56 @@ class PoleCalculateWayFragment : Fragment() {
 
 
     fun checkMazhab(poleCalculation: PoleCalculation) {
-        binding.angelarImg.setImageDrawable(resources.getDrawable(R.drawable.ic_lang_unchecked))
-        binding.midnightImg.setImageDrawable(resources.getDrawable(R.drawable.ic_lang_unchecked))
-        binding.nothingImg.setImageDrawable(resources.getDrawable(R.drawable.ic_lang_unchecked))
-        binding.oneOfSevenImg.setImageDrawable(resources.getDrawable(R.drawable.ic_lang_unchecked))
+        clearPoles()
         when (poleCalculation) {
-            PoleCalculation.ANGLE -> binding.angelarImg.setImageDrawable(resources.getDrawable(R.drawable.ic_checked_lang))
-            PoleCalculation.ONEONSEVEN -> binding.oneOfSevenImg.setImageDrawable(
-                resources.getDrawable(
-                    R.drawable.ic_checked_lang
-                )
+            PoleCalculation.ANGLE -> setColor(binding.angelarImg, binding.angelarSelected)
+            PoleCalculation.ONEONSEVEN -> setColor(
+                binding.oneOfSevenImg,
+                binding.oneOfSevenSelected
             )
-            PoleCalculation.NOTHING -> binding.nothingImg.setImageDrawable(resources.getDrawable(R.drawable.ic_checked_lang))
-            PoleCalculation.MIDNIGHT -> binding.midnightImg.setImageDrawable(resources.getDrawable(R.drawable.ic_checked_lang))
+            PoleCalculation.NOTHING -> setColor(binding.nothingImg, binding.nothingImgSelected)
+            PoleCalculation.MIDNIGHT -> setColor(binding.midnightImg, binding.midnightImgSelected)
         }
         globalPreferences.savePole(poleCalculation)
+
+    }
+
+    fun setColor(imageView: ImageView, selectedIMG: ImageView) {
+        imageView.setColorFilter(requireContext().themeColor(android.R.attr.colorPrimary))
+        selectedIMG.visibility = View.VISIBLE
+    }
+
+    private fun clearPoles() {
+        binding.angelarImg.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.light_grey
+            )
+        )
+        binding.midnightImg.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.light_grey
+            )
+        )
+        binding.nothingImg.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.light_grey
+            )
+        )
+        binding.oneOfSevenImg.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.light_grey
+            )
+        )
+
+        binding.angelarSelected.visibility = View.GONE
+        binding.midnightImgSelected.visibility = View.GONE
+        binding.nothingImgSelected.visibility = View.GONE
+        binding.oneOfSevenSelected.visibility = View.GONE
+
 
     }
 

@@ -242,7 +242,9 @@
     <fragment
         android:id="@+id/khatmaFragment"
         android:name="com.crazyidea.alsalah.ui.khatma.KhatmaFragment"
-        android:label="KhatmaFragment">
+        android:label="KhatmaFragment"
+        tools:layout="@layout/fragment_khatma"
+        >
         <action
             android:id="@+id/action_khatmaFragment_to_addKhatmaFragment1"
             app:destination="@id/addKhatmaFragment1" />
@@ -269,7 +271,9 @@
         android:label="AddKhatmaFragment3" >
         <action
             android:id="@+id/action_addKhatmaFragment3_to_khatmaFragment"
-            app:destination="@id/khatmaFragment" />
+            app:destination="@id/khatmaFragment"
+            app:popUpTo="@id/khatmaFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>
