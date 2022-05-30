@@ -14,8 +14,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.crazyidea.alsalah.data.model.PrimaryColor
 import com.crazyidea.alsalah.databinding.ActivityMainBinding
 import com.crazyidea.alsalah.receiver.AlarmReceiver
-import com.crazyidea.alsalah.utils.CommonUtils.Companion.setLocale
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.utils.setLocale
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

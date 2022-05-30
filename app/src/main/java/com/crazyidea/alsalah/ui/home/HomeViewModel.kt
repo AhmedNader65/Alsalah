@@ -86,7 +86,7 @@ class HomeViewModel @Inject constructor(
                 prayerRepository.getPrayersData(cityName, day, month, year, lat, lng, method, tune)
             prayerRepository.getAzkar()
             getFirstAzkar()
-            val timings = pair.first
+            val timings = pair!!.first
             fajrTime.value = twentyFourConverter(timings.Fajr)
             zuhrTime.value = twentyFourConverter(timings.Dhuhr)
             shorokTime.value = twentyFourConverter(timings.Sunrise)

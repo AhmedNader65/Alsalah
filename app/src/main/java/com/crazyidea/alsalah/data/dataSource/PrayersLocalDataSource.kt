@@ -2,7 +2,6 @@ package com.crazyidea.alsalah.data.dataSource
 
 import com.crazyidea.alsalah.data.model.AzkarResponseApiModel
 import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
-import com.crazyidea.alsalah.data.model.Resource
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import com.crazyidea.alsalah.data.room.entity.prayers.Date
@@ -10,6 +9,7 @@ import com.crazyidea.alsalah.data.room.entity.prayers.Meta
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
 class PrayersLocalDataSource @Inject constructor(
@@ -70,31 +70,39 @@ class PrayersLocalDataSource @Inject constructor(
             appDatabase.prayersDao().shouldFetchData(city, month) == 0
         }
     }
+
     suspend fun shouldFetchAzkar(): Boolean {
         return withContext(externalScope.coroutineContext) {
             appDatabase.azkarDao().shouldFetchData() == 0
         }
     }
 
-    suspend fun getDayTimings(day: Int, month: String): Timing {
-        return withContext(externalScope.coroutineContext) {
-            val dateWithTiming = appDatabase.prayersDao().getTodayTimings(String.format("%02d", day) ,month)
-            dateWithTiming.timing
-        }
+    fun getDayTimings(day: Int, month: String): Timing? {
+        val dayy = String.format( Locale.ENGLISH,"%02d", day)
+        return appDatabase.prayersDao().getTodayTimings(dayy, month)?.timing
     }
 
-    suspend fun getFirstAzkarByCategory(category:String): Azkar {
+    suspend fun getFirstAzkarByCategory(category: String): Azkar {
         return withContext(externalScope.coroutineContext) {
             val azkar = appDatabase.azkarDao().getFirstAzkarByCategory(category)
             azkar
         }
     }
-    suspend fun getAzkarByCategory(category:String): List<Azkar> {
+
+    suspend fun getAzkarByCategory(category: String): List<Azkar> {
         return withContext(externalScope.coroutineContext) {
-            if (category=="اخرى")
-            appDatabase.azkarDao().getOtherAzkar(listOf("أذكار الصباح","أذكار النوم","تسابيح","أذكار بعد السلام من الصلاة المفروضة","أذكار المساء"))
+            if (category == "اخرى")
+                appDatabase.azkarDao().getOtherAzkar(
+                    listOf(
+                        "أذكار الصباح",
+                        "أذكار النوم",
+                        "تسابيح",
+                        "أذكار بعد السلام من الصلاة المفروضة",
+                        "أذكار المساء"
+                    )
+                )
             else
-             appDatabase.azkarDao().getAzkarByCategory(category)
+                appDatabase.azkarDao().getAzkarByCategory(category)
         }
     }
 
