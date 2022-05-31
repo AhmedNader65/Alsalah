@@ -48,6 +48,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkAvailablity(globalPreferences.getLogged())
+
         setSelectedSecondaryColor(globalPreferences.getPrimaryColor())
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             binding.nightModeSwitch.isChecked = true else false
@@ -80,6 +82,25 @@ class ProfileFragment : Fragment() {
         }
         binding.helpTv.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToTechnicalSupportFragment())
+        }
+        binding.register.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToRegisterFragment())
+
+        }
+    }
+
+    private fun checkAvailablity(logged: Boolean) {
+        if (logged) {
+            binding.register.visibility = View.GONE
+            binding.profileImgContainer.visibility = View.VISIBLE
+            binding.profileName.visibility = View.VISIBLE
+            binding.profileEmail.visibility = View.VISIBLE
+        } else {
+            binding.register.visibility = View.VISIBLE
+            binding.profileImgContainer.visibility = View.INVISIBLE
+            binding.profileName.visibility = View.INVISIBLE
+            binding.profileEmail.visibility = View.INVISIBLE
+
         }
     }
 

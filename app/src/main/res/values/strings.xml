@@ -187,4 +187,12 @@
     <string name="done">تم</string>
     <string name="azkar_date">%s / %s</string>
     <string name="hezb">حزب</string>
+    <string name="signupBy">قم بتسجيل الدخول عن طريق احد الطرق التاليه</string>
+    <string name="agreeToPrivacy">اوافق علي الشروط و الاحكام و معالجه البيانات علي النحو المبين في سياسه الخصوصيه</string>
+    <string name="googleLogin">تسجيل الدخول باستخدام GOOGLE</string>
+    <string name="twitterLogin">تسجيل الدخول باستخدام TWITTER</string>
+    <string name="facebookLogin">تسجيل الدخول باستخدام FACEBOOK</string>
+    <string name="register">تسجيل الدخول</string>
+    <string name="privacyPolicy">الشروط و الاحكام</string>
+    <string name="terms">سياسه الخصوصيه</string>
 </resources>

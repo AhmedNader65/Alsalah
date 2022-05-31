@@ -20,27 +20,34 @@
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable-night/ic_bg_light_night.xml" value="0.159" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_asr.xml" value="0.1095" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_asr_selected.xml" value="0.1095" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_azkar_next.xml" value="0.1095" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_azkar_prev.xml" value="0.1095" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_baseline_done_24.xml" value="0.1" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.1115" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_facebook.xml" value="0.133" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_facebook_grey.xml" value="0.1" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_fajr.xml" value="0.1095" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_fajr_selected.xml" value="0.1095" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_google_grey.xml" value="0.1" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_ishaa.xml" value="0.1095" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_ishaa_selected.xml" value="0.1095" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_maghrib.xml" value="0.1095" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_maghrib_selected.xml" value="0.1095" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_shorooq.xml" value="0.18" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_shorooq_selected.xml" value="0.1095" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_twitter_grey.xml" value="0.1" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_zuhr.xml" value="0.18" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/drawable/ic_zuhr_selected.xml" value="0.1095" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout-v28/date_layout.xml" value="0.2" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/activity_main.xml" value="0.1675213675213675" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/calendar_day.xml" value="0.1675213675213675" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/calendar_day_layout.xml" value="0.1675213675213675" />
-        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/date_layout.xml" value="0.17592592592592593" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/date_layout.xml" value="0.5" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_add_khatma1.xml" value="0.2" />
-        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_add_khatma2.xml" value="0.2" />
-        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_add_khatma3.xml" value="0.16" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_add_khatma2.xml" value="0.25" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_add_khatma3.xml" value="0.33" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_azan_setting.xml" value="0.18" />
-        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_azkar.xml" value="0.1675213675213675" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_azkar.xml" value="0.23895027624309392" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_azkar_details.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_azkar_setting.xml" value="0.14" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_azkar_settings.xml" value="0.2" />
@@ -59,6 +66,7 @@
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_prayer_time_notification.xml" value="0.25" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_qibla.xml" value="0.22" />
+        <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_register.xml" value="0.18" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_reset.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_sebha.xml" value="0.1675213675213675" />
         <entry key="..\:/AndroidProj/Alsalah/app/src/main/res/layout/fragment_setting.xml" value="0.25" />
@@ -77,10 +85,6 @@
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/card_view_shadow.xml" value="0.153" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/circle_shape.xml" value="0.153" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/gradiant_progress.xml" value="0.153" />
-        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/ic_mute_sebha.xml" value="0.137" />
-        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/ic_muted_sebha.xml" value="0.137" />
-        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/ic_no_vib_sebha.xml" value="0.137" />
-        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/ic_vib_sebha.xml" value="0.137" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/round_green_background.xml" value="0.153" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout-v28/date_layout.xml" value="0.28888888888888886" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout-v28/fragment_home.xml" value="0.16" />
@@ -92,7 +96,6 @@
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_notifications.xml" value="0.165625" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
-        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_sebha.xml" value="0.18" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/item_blog.xml" value="0.22" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/menu/bottom_nav_menu.xml" value="0.165625" />
       </map>

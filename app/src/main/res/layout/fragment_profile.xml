@@ -51,6 +51,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_img_container" />
 
+    <Button
+        android:id="@+id/register"
+        android:visibility="gone"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/din_medium"
+        android:text="@string/register"
+        android:textColor="@color/text_main"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_img_container" />
+
     <TextView
         android:id="@+id/profile_email"
         style="@style/lightText"
@@ -70,7 +85,7 @@
         android:background="@color/header_color"
         app:layout_constraintEnd_toEndOf="@+id/notifications_switch"
         app:layout_constraintStart_toStartOf="@id/notifications_switch_tv"
-        app:layout_constraintTop_toBottomOf="@id/profile_email"/>
+        app:layout_constraintTop_toBottomOf="@id/profile_email" />
 
     <ImageView
         android:id="@+id/notifications_icon"
@@ -96,10 +111,11 @@
         android:id="@+id/notifications_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/notifications_icon"
         app:sb_checked="true" />
+
     <View
         android:id="@+id/line2"
         android:layout_width="0dp"
@@ -108,7 +124,7 @@
         android:background="@color/header_color"
         app:layout_constraintEnd_toEndOf="@+id/notifications_switch"
         app:layout_constraintStart_toStartOf="@id/notifications_switch_tv"
-        app:layout_constraintTop_toBottomOf="@id/notifications_switch"/>
+        app:layout_constraintTop_toBottomOf="@id/notifications_switch" />
 
     <ImageView
         android:id="@+id/theme_icon"
@@ -145,10 +161,11 @@
         android:id="@+id/night_mode_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/night_mode_tv"
         app:sb_checked="false" />
+
     <View
         android:id="@+id/line3"
         android:layout_width="0dp"
@@ -185,8 +202,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16sdp"
         android:src="@drawable/ic_orange_ball_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/color_tv" />
+        app:layout_constraintBottom_toBottomOf="@+id/color_tv"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/selected_orange"
@@ -204,8 +221,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_4sdp"
         android:src="@drawable/ic_pink_circle_24"
-        app:layout_constraintEnd_toStartOf="@+id/orange_color"
-        app:layout_constraintBottom_toBottomOf="@+id/color_tv" />
+        app:layout_constraintBottom_toBottomOf="@+id/color_tv"
+        app:layout_constraintEnd_toStartOf="@+id/orange_color" />
 
     <ImageView
         android:id="@+id/selected_pink"
@@ -224,8 +241,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_4sdp"
         android:src="@drawable/ic_blue_circle_24"
-        app:layout_constraintEnd_toStartOf="@+id/pink_color"
-        app:layout_constraintBottom_toBottomOf="@+id/color_tv" />
+        app:layout_constraintBottom_toBottomOf="@+id/color_tv"
+        app:layout_constraintEnd_toStartOf="@+id/pink_color" />
 
     <ImageView
         android:id="@+id/selected_blue"
@@ -246,7 +263,7 @@
         android:background="@color/header_color"
         app:layout_constraintEnd_toEndOf="@+id/orange_color"
         app:layout_constraintStart_toStartOf="@id/color_tv"
-        app:layout_constraintTop_toBottomOf="@id/blue_color"/>
+        app:layout_constraintTop_toBottomOf="@id/blue_color" />
 
     <ImageView
         android:id="@+id/help_icon"
@@ -276,7 +293,7 @@
         android:background="@color/header_color"
         app:layout_constraintEnd_toEndOf="@+id/orange_color"
         app:layout_constraintStart_toStartOf="@id/color_tv"
-        app:layout_constraintTop_toBottomOf="@id/help_tv"/>
+        app:layout_constraintTop_toBottomOf="@id/help_tv" />
 
     <ImageView
         android:id="@+id/about_icon"
