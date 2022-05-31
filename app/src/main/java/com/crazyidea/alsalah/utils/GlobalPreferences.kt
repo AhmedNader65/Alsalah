@@ -14,6 +14,7 @@ private const val POLE = "pole"
 private const val AZAN = "azan"
 private const val COLOR = "color"
 private const val LONGITUDE = "lng"
+private const val LOGGED = "logged"
 
 
 private const val AZKAR_MUTED = "azkar-muted"
@@ -39,6 +40,15 @@ class GlobalPreferences(context: Context) {
     fun storeAzkarLanguage(locale: String) {
         prefsEditor.putString(AZKAR_LANGUAGE, locale)
         prefsEditor.commit()
+    }
+
+    fun storeLogged(logged: Boolean) {
+        prefsEditor.putBoolean(LOGGED, logged)
+        prefsEditor.commit()
+    }
+
+    fun getLogged(): Boolean {
+        return prefs.getBoolean(LOGGED, false)
     }
 
     fun getLocale(): String {
@@ -73,6 +83,7 @@ class GlobalPreferences(context: Context) {
     fun isAzkarMuted(): Boolean {
         return prefs.getBoolean(AZKAR_MUTED, false)
     }
+
     fun isAzkarVibrating(): Boolean {
         return prefs.getBoolean(AZKAR_VIBRATE, false)
     }

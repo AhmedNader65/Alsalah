@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_technicalSupportFragment"
             app:destination="@id/technicalSupportFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_registerFragment"
+            app:destination="@id/registerFragment" />
 
 
     </fragment>
@@ -275,5 +278,9 @@
             app:popUpTo="@id/khatmaFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.crazyidea.alsalah.ui.auth.register.RegisterFragment"
+        android:label="RegisterFragment" />
 
 </navigation>
