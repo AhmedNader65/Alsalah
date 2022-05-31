@@ -16,7 +16,7 @@ class PrayersLocalDataSource @Inject constructor(
     private val appDatabase: AppDatabase,
     private val externalScope: CoroutineScope
 ) {
-    suspend fun insertData(cityName: String, remoteResponse: List<PrayerResponseApiModel>) {
+    fun insertData(cityName: String, remoteResponse: List<PrayerResponseApiModel>) {
         appDatabase.prayersDao().deleteDates()
         appDatabase.prayersDao().deleteMeta()
         appDatabase.prayersDao().deleteTimings()

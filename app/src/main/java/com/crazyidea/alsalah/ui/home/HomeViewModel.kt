@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.model.PrayerTimingApiModel
 import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import com.crazyidea.alsalah.utils.GlobalPreferences
@@ -46,6 +47,7 @@ class HomeViewModel @Inject constructor(
     val eshaTimeAPM = MutableLiveData("AM")
     val azkarAfterPrayer = MutableLiveData("")
     val azkar = MutableLiveData("")
+    val otherTimings = mutableMapOf<String, PrayerTimingApiModel>()
 
     var hijri = UmmalquraCalendar()
     var gor = Calendar.getInstance()
@@ -73,7 +75,8 @@ class HomeViewModel @Inject constructor(
         lat: String,
         lng: String,
         method: Int,
-        tune: String?
+        tune: String?,
+        save: Boolean = true
     ) {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         val month = (calendar.get(Calendar.MONTH) + 1).toString()
@@ -83,7 +86,17 @@ class HomeViewModel @Inject constructor(
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
             var pair =
-                prayerRepository.getPrayersData(cityName, day, month, year, lat, lng, method, tune)
+                prayerRepository.getPrayersData(
+                    cityName,
+                    day,
+                    month,
+                    year,
+                    lat,
+                    lng,
+                    method,
+                    tune,
+                    save
+                )
             prayerRepository.getAzkar()
             getFirstAzkar()
             val timings = pair!!.first
@@ -107,6 +120,61 @@ class HomeViewModel @Inject constructor(
             getNextPrayer(currentDate, timings)
             if (pair.second)
                 _prayerData.value = timings
+        }
+    }
+
+    fun getAnotherDayPrayerData(
+        cityName: String,
+        calendar: Calendar,
+        lat: String,
+        lng: String,
+        method: Int,
+        tune: String?,
+        save: Boolean = true
+    ) {
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = (calendar.get(Calendar.MONTH) + 1).toString()
+        val year = calendar.get(Calendar.YEAR).toString()
+        val date = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(calendar.time)
+
+        prayerDataJob?.cancel()
+        prayerDataJob = viewModelScope.launch {
+            var timings = otherTimings[date]
+            if (timings == null) {
+                val prayersList =
+                    prayerRepository.getPrayersDataNoSaving(
+                        cityName,
+                        day,
+                        month,
+                        year,
+                        lat,
+                        lng,
+                        method,
+                        tune,
+                        save
+                    )
+                prayersList?.forEach {
+                    otherTimings[it.date.gregorian.date] = it.timings
+                }
+                timings = otherTimings[date]
+            }
+            timings?.run {
+                fajrTime.value = twentyFourConverter(timings.Fajr)
+                zuhrTime.value = twentyFourConverter(timings.Dhuhr)
+                shorokTime.value = twentyFourConverter(timings.Sunrise)
+                asrTime.value = twentyFourConverter(timings.Asr)
+                maghribTime.value = twentyFourConverter(timings.Maghrib)
+                eshaTime.value = twentyFourConverter(timings.Isha)
+                fajrTimeAPM.value = twentyFourConverter(timings.Fajr, true)
+                zuhrTimeAPM.value = twentyFourConverter(timings.Dhuhr, true)
+                shorokTimeAPM.value = twentyFourConverter(timings.Sunrise, true)
+                asrTimeAPM.value = twentyFourConverter(timings.Asr, true)
+                maghribTimeAPM.value = twentyFourConverter(timings.Maghrib, true)
+                eshaTimeAPM.value = twentyFourConverter(timings.Isha, true)
+                midnightTime.value = twentyFourConverter(timings.Midnight)
+                lastQuarterTime.value = timings.Imsak
+            }
+
         }
     }
 
@@ -187,7 +255,7 @@ class HomeViewModel @Inject constructor(
             val dateObj: Date? = sdf.parse(time)
             if (!am) SimpleDateFormat("K:mm").format(dateObj)
             else {
-                 SimpleDateFormat("a").format(dateObj)
+                SimpleDateFormat("a").format(dateObj)
             }
 
         } catch (e: ParseException) {
@@ -262,19 +330,23 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    fun getStatusBarColor(number :Int,context: Context): Int {
-        var color =  context.resources.getColor(R.color.header_color)
-        Log.e("TAG", "getStatusBarColor: "+nextPrayerId.value )
-        when(number){
-            1->color =  context.resources.getColor(R.color.fajr_header)
-            2->color =  context.resources.getColor(R.color.shrooq_header)
-            3->color =  context.resources.getColor(R.color.zuhr_header)
-            4->color =  context.resources.getColor(R.color.zuhr_header)
-            5->color =  context.resources.getColor(R.color.maghrib_header)
-            6->color =  context.resources.getColor(R.color.isha_header)
+    fun getStatusBarColor(number: Int, context: Context): Int {
+        var color = context.resources.getColor(R.color.header_color)
+        Log.e("TAG", "getStatusBarColor: " + nextPrayerId.value)
+        when (number) {
+            1 -> color = context.resources.getColor(R.color.fajr_header)
+            2 -> color = context.resources.getColor(R.color.shrooq_header)
+            3 -> color = context.resources.getColor(R.color.zuhr_header)
+            4 -> color = context.resources.getColor(R.color.zuhr_header)
+            5 -> color = context.resources.getColor(R.color.maghrib_header)
+            6 -> color = context.resources.getColor(R.color.isha_header)
         }
         return color
     }
 
+    override fun onCleared() {
+        prayerDataJob?.cancel()
+        super.onCleared()
+    }
 
 }

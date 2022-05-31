@@ -13,13 +13,13 @@ interface PrayerDao {
     fun getTodayTimings(day: String,month: String): DateWithTiming?
 
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDate(date: Date): Long
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMeta(meta: Meta): Long
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTiming(timing: Timing): Long
 
     @Query("DELETE FROM Date")

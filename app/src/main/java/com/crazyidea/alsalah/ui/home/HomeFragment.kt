@@ -136,11 +136,10 @@ class HomeFragment : Fragment(), PermissionListener {
                 .addTag(TAG_OUTPUT).build()
             WorkManager.getInstance(requireContext()).enqueueUniqueWork(
                 TAG_OUTPUT,
-                ExistingWorkPolicy.KEEP, dailyWorkRequest
+                ExistingWorkPolicy.REPLACE, dailyWorkRequest
             )
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -218,26 +217,28 @@ class HomeFragment : Fragment(), PermissionListener {
 
                         binding.dateLayout.leftArrowIcon.setOnClickListener { ttt ->
                             viewModel.nextDay()
-                            viewModel.fetchPrayerData(
+                            viewModel.getAnotherDayPrayerData(
                                 cityName,
                                 viewModel.gor,
                                 it.latitude.toString(),
                                 it.longitude.toString(),
                                 5,
-                                null
+                                null,
+                                false
                             )
 
                         }
 
                         binding.dateLayout.rightArrowIcon.setOnClickListener { ttt ->
                             viewModel.prevDay()
-                            viewModel.fetchPrayerData(
+                            viewModel.getAnotherDayPrayerData(
                                 cityName,
                                 viewModel.gor,
                                 it.latitude.toString(),
                                 it.longitude.toString(),
                                 5,
-                                null
+                                null,
+                                false
                             )
 
                         }
