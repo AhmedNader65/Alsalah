@@ -24,8 +24,9 @@
     <color name="text_orange_color">#EEB34B</color>
     <color name="text_brown_color">#C49C2D</color>
     <color name="light_green">#94AA41</color>
-    <color name="light_grey">#C9C9C9</color>
+    <color name="light_grey">#EAEAEA</color>
     <color name="green_meduim">#3A5A40</color>
+    <color name="bw">#000000</color>
     <!-- LCD -->
     <color name="lcd_front">#FF00FF00</color>
     <color name="lcd_back">#44FFFFFF</color>
