@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.LanguagesAdapter
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentChooseLanguageBinding
+import com.crazyidea.alsalah.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,6 +62,7 @@ class LanguageFragment : Fragment(), LanguagesAdapter.LanguagListner {
     }
 
     override fun onlangPicked(language: SupportedLanguage) {
-
+        setLocale(requireContext(), language.shortcut)
+        (activity as MainActivity).restartActivity()
     }
 }

@@ -34,6 +34,7 @@ public class DailyAzanWorker @AssistedInject constructor(
     private var prayerDao: PrayerDao = appDatabase.prayersDao()
 
     override fun doWork(): Result {
+        Log.e("Work manager","do work")
         val currentDate = Calendar.getInstance()
         val dueDate = Calendar.getInstance()
         // Set Execution around 05:00:00 AM
@@ -55,11 +56,16 @@ public class DailyAzanWorker @AssistedInject constructor(
     }
 
     private fun setupAlarms() {
-        val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault());
-        val currentDate: Calendar = Calendar.getInstance(TimeZone.getDefault());
-        val timings = prayerDao.getTodayTimings(
-            calendar.get(Calendar.DAY_OF_MONTH).toString(),
-            (calendar.get(Calendar.MONTH) + 1).toString()
+        Log.e("settings alarm","yeah")
+        val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
+        val currentDate: Calendar = Calendar.getInstance(TimeZone.getDefault())
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH) + 1
+        val daySt = String.format( Locale.ENGLISH,"%02d", day)
+        (calendar.get(Calendar.MONTH) + 1).toString()
+         val timings = prayerDao.getTodayTimings(
+             daySt,
+             month.toString()
         )
 
         val fajrTime = timings!!.timing.Fajr.split(":")
