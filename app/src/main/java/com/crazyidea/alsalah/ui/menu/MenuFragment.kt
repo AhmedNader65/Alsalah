@@ -1,5 +1,7 @@
 package com.crazyidea.alsalah.ui.menu
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -74,8 +76,25 @@ class MenuFragment : Fragment() {
         binding.khatma.setOnClickListener {
             findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToKhatmaFragment())
         }
+        binding.mosques.setOnClickListener {
+            openMasajdOnMap()
+        }
 
 
+    }
+
+    private fun openMasajdOnMap() {
+
+        // Create a Uri from an intent string. Use the result to create an Intent.
+        val gmmIntentUri = Uri.parse("geo:0,0?q=mosques")
+
+        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        // Make the Intent explicit by setting the Google Maps package
+        mapIntent.setPackage("com.google.android.apps.maps")
+
+        // Attempt to start an activity that can handle the Intent
+        startActivity(mapIntent)
     }
 
     override fun onDestroyView() {
