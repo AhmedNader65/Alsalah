@@ -74,7 +74,6 @@ class HomeFragment : Fragment(), PermissionListener {
                 val window: Window = requireActivity().window
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                 window.setStatusBarColor(viewModel.getStatusBarColor(it, requireContext()))
-                Log.e(TAG, "onViewCreated: " + viewModel.getStatusBarColor(it, requireContext()))
             }
         })
 
@@ -131,13 +130,16 @@ class HomeFragment : Fragment(), PermissionListener {
 
     private fun collectData() {
         viewModel.prayerData.observe(viewLifecycleOwner) {
+            Log.e("Work manager","started")
             val dailyWorkRequest = OneTimeWorkRequestBuilder<DailyAzanWorker>()
 //            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
                 .addTag(TAG_OUTPUT).build()
-            WorkManager.getInstance(requireContext()).enqueueUniqueWork(
-                TAG_OUTPUT,
-                ExistingWorkPolicy.REPLACE, dailyWorkRequest
-            )
+            WorkManager.getInstance(requireContext()).enqueue(dailyWorkRequest)
+
+//            WorkManager.getInstance(requireContext()).enqueueUniqueWork(
+//                TAG_OUTPUT,
+//                ExistingWorkPolicy.REPLACE, dailyWorkRequest
+//            )
         }
     }
 

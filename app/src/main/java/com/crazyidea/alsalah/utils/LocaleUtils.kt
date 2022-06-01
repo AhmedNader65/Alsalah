@@ -17,7 +17,7 @@ val Resources.isRtl get() = configuration.layoutDirection == View.LAYOUT_DIRECTI
 
 fun setLocale(context: Context, lang: String) {
     val globalPreferences = GlobalPreferences(context)
-    globalPreferences.storeLocale("ar")
+    globalPreferences.storeLocale(lang)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         val overrideConfiguration: Configuration = context.resources.configuration
         overrideConfiguration.setLocales(LocaleList(Locale(lang)))
@@ -34,6 +34,7 @@ fun setLocale(context: Context, lang: String) {
     }
     Locale.setDefault(Locale(lang))
 }
+
 fun formatNumber(number: Double): String {
     if (isArabicDigitSelected) return number.toString()
     return formatNumber(number.toString()).replace(".", "٫") // U+066B, Arabic Decimal Separator

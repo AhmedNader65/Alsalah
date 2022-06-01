@@ -118,8 +118,7 @@ class HomeViewModel @Inject constructor(
             val sdf = SimpleDateFormat("H:mm", Locale("ar"))
             val currentDate = sdf.parse("$hour:$minute")
             getNextPrayer(currentDate, timings)
-            if (pair.second)
-                _prayerData.value = timings
+            _prayerData.value = timings
         }
     }
 
@@ -332,7 +331,6 @@ class HomeViewModel @Inject constructor(
 
     fun getStatusBarColor(number: Int, context: Context): Int {
         var color = context.resources.getColor(R.color.header_color)
-        Log.e("TAG", "getStatusBarColor: " + nextPrayerId.value)
         when (number) {
             1 -> color = context.resources.getColor(R.color.fajr_header)
             2 -> color = context.resources.getColor(R.color.shrooq_header)
