@@ -19,9 +19,6 @@ import com.crazyidea.alsalah.data.room.entity.fajr.Fajr
 import com.crazyidea.alsalah.databinding.FragmentFajrListBinding
 import com.crazyidea.alsalah.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -71,6 +68,10 @@ class FajrListFragment : Fragment(), PermissionListener {
             )
 
         }
+        permissionHelper.checkForPermissions(
+            Manifest.permission.CALL_PHONE
+
+        )
         binding.addContacts2.setOnClickListener {
             permissionHelper.checkForPermissions(
                 Manifest.permission.READ_CONTACTS
@@ -79,6 +80,7 @@ class FajrListFragment : Fragment(), PermissionListener {
         }
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -98,6 +100,8 @@ class FajrListFragment : Fragment(), PermissionListener {
                 permissionHelper.launchPermissionDialogForMultiplePermissions(
                     arrayOf(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.CALL_PHONE,
                     )
                 )
             }
@@ -115,14 +119,20 @@ class FajrListFragment : Fragment(), PermissionListener {
     }
 
     override fun isPermissionGranted(isGranted: Boolean) {
+        val list = mutableListOf<String>()
+        for (item in fajrList) {
+            list.add(item.number)
+        }
+
         val contacts: List<ContactData> = requireContext().retrieveAllContacts()
         binding.fajrListLayout.visibility = GONE
         binding.emptyList.visibility = GONE
         binding.addContactsLayout.visibility = VISIBLE
+
         binding.contactsList.withSimpleAdapter(contacts, R.layout.item_checkbox) {
             (itemView as CheckBox).text = it.name
             val index = fajrList.indexOfFirst { fajr -> fajr.number == it.phoneNumber.first() }
-            Log.e("check is ${it.name}" , " index $index")
+            Log.e("check is ${it.name}", " index $index")
             (itemView as CheckBox).isChecked = index != -1
             (itemView as CheckBox).setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked)
@@ -142,4 +152,6 @@ class FajrListFragment : Fragment(), PermissionListener {
             adapter.setData(fajrList)
         }
     }
+
+
 }
