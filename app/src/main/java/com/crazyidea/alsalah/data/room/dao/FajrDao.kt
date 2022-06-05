@@ -14,5 +14,8 @@ interface FajrDao {
     fun getList(): List<Fajr>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(fajr: List<Fajr>): Long
+    fun insert(fajr: Fajr)
+
+    @Query("DELETE FROM Fajr")
+    fun empty()
 }

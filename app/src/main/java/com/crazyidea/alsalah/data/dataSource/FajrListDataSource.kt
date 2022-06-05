@@ -13,7 +13,10 @@ class FajrListDataSource @Inject constructor(
 ) {
     suspend fun insertContacts(fajrList: List<Fajr>) {
         withContext(externalScope.coroutineContext) {
-            appDatabase.fajrDao().insert(fajrList)
+            appDatabase.fajrDao().empty()
+            fajrList.forEach {
+                appDatabase.fajrDao().insert(it)
+            }
         }
     }
 

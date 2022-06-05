@@ -200,4 +200,5 @@
     <string name="موافق">OK</string>
     <string name="cancel">الغاء</string>
     <string name="read_contacts_permission">اذن قراءة جهات الاتصال</string>
+    <string name="addEditContacts">اضافة وتعديل</string>
 </resources>
