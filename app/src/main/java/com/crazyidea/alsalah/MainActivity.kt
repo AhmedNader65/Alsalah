@@ -6,11 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.telephony.TelephonyCallback
+import android.telephony.TelephonyManager
+import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -67,7 +69,6 @@ class MainActivity : AppCompatActivity() {
                 navController.popBackStack(destinationId = it.itemId, inclusive = false)
             }
         }
-
 //        navController.addOnDestinationChangedListener { item ->
 //            // Pop everything up to the reselected item
 //            val reselectedDestinationId = item.itemId

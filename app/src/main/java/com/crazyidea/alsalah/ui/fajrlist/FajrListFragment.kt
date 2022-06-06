@@ -1,8 +1,13 @@
 package com.crazyidea.alsalah.ui.fajrlist
 
-import android.Manifest
+import android.Manifest.permission.*
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +15,11 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.CheckBox
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.adapter.FajrAdapter
 import com.crazyidea.alsalah.data.room.entity.fajr.Fajr
@@ -62,25 +69,39 @@ class FajrListFragment : Fragment(), PermissionListener {
         viewModel.getList()
         binding.fajrList.adapter = adapter
         binding.addContacts.setOnClickListener {
+            permissionHelper.checkForMultiplePermissions(
+                arrayOf(READ_CONTACTS,CALL_PHONE )
+            )
+        }
+        binding.addContacts2.setOnClickListener {
             permissionHelper.checkForPermissions(
-                Manifest.permission.READ_CONTACTS
-
+                READ_CONTACTS
             )
 
         }
-        permissionHelper.checkForPermissions(
-            Manifest.permission.CALL_PHONE
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val overlayEnabled = Settings.canDrawOverlays(requireContext())
+            Log.e("showTaskDetailPopup==", "overlayEnabled$overlayEnabled")
 
-        )
-        binding.addContacts2.setOnClickListener {
-            permissionHelper.checkForPermissions(
-                Manifest.permission.READ_CONTACTS
-            )
-
+            if (!overlayEnabled) {
+                showDOARationaleInfo()
+            }
         }
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
 
+    private fun requestOverlayPermission() {
+        val intent = Intent(
+            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+            Uri.parse("package:" + requireActivity().packageName)
+        )
+        resultLauncher.launch(intent)
+    }
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//        if (result.resultCode == Activity.RESULT_OK) {
+//        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -99,11 +120,35 @@ class FajrListFragment : Fragment(), PermissionListener {
                 dialog.cancel()
                 permissionHelper.launchPermissionDialogForMultiplePermissions(
                     arrayOf(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_CONTACTS,
-                        Manifest.permission.CALL_PHONE,
+                        READ_EXTERNAL_STORAGE,
+                        READ_CONTACTS,
+                        CALL_PHONE,
                     )
                 )
+            }
+            // negative button text and action
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                dialog.cancel()
+            }
+
+        // create dialog box
+        val alert = dialogBuilder.create()
+        // set title for alert dialog box
+        alert.setTitle(getString(R.string.read_contacts_permission))
+        // show alert dialog
+        alert.show()
+    }
+     fun showDOARationaleInfo() {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+
+        // set message of alert dialog
+        dialogBuilder.setMessage(getString(R.string.display_over_apps))
+            // if the dialog is cancelable
+            .setCancelable(false)
+            // positive button text and action
+            .setPositiveButton(getString(R.string.موافق)) { dialog, _ ->
+                dialog.cancel()
+                requestOverlayPermission()
             }
             // negative button text and action
             .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->

@@ -197,6 +197,7 @@
     <string name="terms">سياسه الخصوصيه</string>
     <string name="choose_contacts">اختر قائمة الفجر</string>
     <string name="read_contacts">اذن قراءة جهات الاتصال ملطوب حتى تتمكن من اضافة قائمة الفجر</string>
+    <string name="display_over_apps">فعل اذن الظهور فوق التطبيقات لنتمكن من الاتصال بقائمة الفجر وقت الفجر</string>
     <string name="موافق">OK</string>
     <string name="cancel">الغاء</string>
     <string name="read_contacts_permission">اذن قراءة جهات الاتصال</string>
