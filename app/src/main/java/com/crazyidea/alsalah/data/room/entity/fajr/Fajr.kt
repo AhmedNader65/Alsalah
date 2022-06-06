@@ -11,4 +11,5 @@ data class Fajr(
     val id: Long?=0,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "number") val number: String,
+    var checked:Boolean = false
     )

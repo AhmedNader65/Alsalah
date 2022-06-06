@@ -1,4 +1,4 @@
-package com.crazyidea.alsalah.data.adapter
+package com.crazyidea.alsalah.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

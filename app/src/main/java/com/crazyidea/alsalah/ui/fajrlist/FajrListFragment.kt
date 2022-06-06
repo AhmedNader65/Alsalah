@@ -20,7 +20,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.data.adapter.FajrAdapter
+import com.crazyidea.alsalah.adapter.ContactsAdapter
+import com.crazyidea.alsalah.adapter.FajrAdapter
 import com.crazyidea.alsalah.data.room.entity.fajr.Fajr
 import com.crazyidea.alsalah.databinding.FragmentFajrListBinding
 import com.crazyidea.alsalah.utils.*
@@ -41,6 +42,7 @@ class FajrListFragment : Fragment(), PermissionListener {
     private val binding get() = _binding!!
     private val viewModel by viewModels<FajrListViewModel>()
     lateinit var adapter: FajrAdapter
+    lateinit var contactsAdapter: ContactsAdapter
     lateinit var fajrList: MutableList<Fajr>
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -175,7 +177,7 @@ class FajrListFragment : Fragment(), PermissionListener {
         (requireActivity() as MainActivity).showLoading(true)
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                val contacts: List<ContactData> = requireContext().retrieveAllContacts()
+                val contacts: List<Fajr> = requireContext().retrieveAllContacts()
                 withContext(Dispatchers.Main) {
                     (requireActivity() as MainActivity).showLoading(false)
                     displayContacts(contacts)
@@ -191,27 +193,26 @@ class FajrListFragment : Fragment(), PermissionListener {
         binding.done.setOnClickListener {
             viewModel.saveList(fajrList)
             binding.addContactsLayout.visibility = GONE
-            binding.fajrListLayout.visibility = VISIBLE
-            binding.emptyList.visibility = GONE
+            binding.fajrListLayout.isVisible = fajrList.isNotEmpty()
+            binding.emptyList.isVisible = fajrList.isEmpty()
             adapter.setData(fajrList)
+        }
+        binding.cancel.setOnClickListener {
+            binding.addContactsLayout.visibility = GONE
+            binding.fajrListLayout.isVisible = fajrList.isNotEmpty()
+            binding.emptyList.isVisible = fajrList.isEmpty()
         }
     }
 
-    private fun displayContacts(contacts: List<ContactData>) {
-        binding.contactsList.withSimpleAdapter(contacts, R.layout.item_checkbox) {
-            (itemView as CheckBox).text = it.name
-            val index = fajrList.indexOfFirst { fajr -> fajr.number == it.phoneNumber.first() }
-            Log.e("check is ${it.name}", " index $index")
-            (itemView as CheckBox).isChecked = index != -1
-            (itemView as CheckBox).setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked)
-                    fajrList.add(Fajr(id = null, name = it.name, number = it.phoneNumber.first()))
-                else {
-                    if (index != -1)
-                        fajrList.removeAt(index)
-                }
-            }
-        }
+    private fun displayContacts(contacts: List<Fajr>) {
+        contactsAdapter = ContactsAdapter(contacts, fajrList, {
+            fajrList.remove(it)
+        }, {
+            fajrList.add(
+                it
+            )
+        })
+        binding.contactsList.adapter = contactsAdapter
     }
 
 

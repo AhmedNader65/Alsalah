@@ -31,24 +31,25 @@
         app:layout_constraintTop_toTopOf="@+id/title" />
 
 
-    <TextView
-        android:id="@+id/welcomeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:fontFamily="@font/din_medium"
-        android:text="@string/welcome_to_fajrlist"
-        android:textColor="@color/general_setting_line"
-        android:textSize="@dimen/_14sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/empty_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTxt">
+        android:layout_marginTop="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <TextView
+            android:id="@+id/welcomeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/din_medium"
+            android:text="@string/welcome_to_fajrlist"
+            android:textColor="@color/general_setting_line"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/contacts_img"
@@ -59,16 +60,20 @@
             android:src="@drawable/img_contacts"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/welcomeTxt" />
 
         <TextView
             android:id="@+id/secondaryText"
             style="@style/regularText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
             android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
             android:fontFamily="@font/din_medium"
-            android:text="@string/welcome_to_fajrlist"
+            android:text="@string/fajr_list_description"
+            android:textAlignment="center"
+
             android:textColor="@color/general_setting_line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,15 +82,16 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addContacts"
+            style="@style/mediumText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_30sdp"
             android:backgroundTint="#4E7850"
-            android:fontFamily="@font/din_medium"
             android:padding="@dimen/_8sdp"
             android:text="@string/addContacts"
+            android:textColor="@color/white"
             app:cornerRadius="@dimen/_12sdp"
             app:layout_constraintTop_toBottomOf="@+id/secondaryText" />
 
@@ -96,8 +102,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
+        android:layout_marginTop="@dimen/_16sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTxt">
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fajr_list"
@@ -128,7 +135,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTxt">
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
         <ImageButton
             android:id="@+id/done"

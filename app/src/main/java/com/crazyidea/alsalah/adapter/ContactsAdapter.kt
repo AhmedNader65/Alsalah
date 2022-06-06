@@ -1,19 +1,23 @@
-package com.crazyidea.alsalah.data.adapter
+package com.crazyidea.alsalah.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
+import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.room.entity.fajr.Fajr
 
-class FajrAdapter(
+class ContactsAdapter(
     private var contacts: List<Fajr>,
+    private var list: List<Fajr>,
+    private var removeContact: (contact: Fajr) -> Unit,
+    private var addContact: (contact: Fajr) -> Unit,
 //    private val listener: OnProductInteract,
-    var layout: Int = android.R.layout.simple_list_item_1
+    var layout: Int = R.layout.item_checkbox
 ) :
-    RecyclerView.Adapter<FajrAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
 
     private lateinit var context: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +29,18 @@ class FajrAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val contact = contacts[position]
+        contact.checked = list.contains(contact)
         holder.bind(contact)
+        holder.name.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked != contact.checked) {
+                if (isChecked) {
+                    addContact(contact)
+                    contact.checked = true
+                } else {
+                    removeContact(contact)
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -41,9 +56,10 @@ class FajrAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(contact: Fajr) {
             name.text = contact.name
+            name.isChecked = contact.checked
         }
 
-        val name: TextView = itemView.findViewById(android.R.id.text1)
+        val name: CheckBox = itemView.findViewById(R.id.checkbox)
     }
 
 //    interface OnProductInteract {

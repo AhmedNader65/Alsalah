@@ -12,8 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.data.model.Coordinates
 import com.crazyidea.alsalah.data.model.Language
-import com.crazyidea.alsalah.data.adapter.BaseViewHolder
-import com.crazyidea.apparch.adapter.SimpleRecyclerAdapter
+import com.crazyidea.alsalah.adapter.BaseViewHolder
+import com.crazyidea.alsalah.adapter.SimpleRecyclerAdapter
 import io.github.cosinekitty.astronomy.Observer
 import java.time.DayOfWeek
 import java.time.temporal.WeekFields

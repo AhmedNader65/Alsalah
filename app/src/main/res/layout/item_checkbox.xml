@@ -6,5 +6,5 @@
     android:layout_height="wrap_content"
     android:buttonTint="?attr/colorPrimary"
     android:paddingStart="@dimen/_16sdp"
-    android:paddingTop="@dimen/_8sdp"
-    android:paddingEnd="@dimen/_16sdp"/>
+    android:paddingEnd="@dimen/_16sdp"
+    android:textAlignment="viewEnd" />
