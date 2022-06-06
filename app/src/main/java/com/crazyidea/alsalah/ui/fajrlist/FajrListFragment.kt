@@ -1,7 +1,6 @@
 package com.crazyidea.alsalah.ui.fajrlist
 
 import android.Manifest.permission.*
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
@@ -26,10 +25,13 @@ import com.crazyidea.alsalah.data.room.entity.fajr.Fajr
 import com.crazyidea.alsalah.databinding.FragmentFajrListBinding
 import com.crazyidea.alsalah.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 
 
 @AndroidEntryPoint
 class FajrListFragment : Fragment(), PermissionListener {
+    private var contactsJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + contactsJob)
 
     private var _binding: FragmentFajrListBinding? = null
     private lateinit var permissionHelper: PermissionHelper
@@ -70,7 +72,7 @@ class FajrListFragment : Fragment(), PermissionListener {
         binding.fajrList.adapter = adapter
         binding.addContacts.setOnClickListener {
             permissionHelper.checkForMultiplePermissions(
-                arrayOf(READ_CONTACTS,CALL_PHONE )
+                arrayOf(READ_CONTACTS, CALL_PHONE)
             )
         }
         binding.addContacts2.setOnClickListener {
@@ -98,10 +100,11 @@ class FajrListFragment : Fragment(), PermissionListener {
         resultLauncher.launch(intent)
     }
 
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 //        if (result.resultCode == Activity.RESULT_OK) {
 //        }
-    }
+        }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -138,7 +141,8 @@ class FajrListFragment : Fragment(), PermissionListener {
         // show alert dialog
         alert.show()
     }
-     fun showDOARationaleInfo() {
+
+    fun showDOARationaleInfo() {
         val dialogBuilder = AlertDialog.Builder(requireContext())
 
         // set message of alert dialog
@@ -168,12 +172,32 @@ class FajrListFragment : Fragment(), PermissionListener {
         for (item in fajrList) {
             list.add(item.number)
         }
-
-        val contacts: List<ContactData> = requireContext().retrieveAllContacts()
+        (requireActivity() as MainActivity).showLoading(true)
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                val contacts: List<ContactData> = requireContext().retrieveAllContacts()
+                withContext(Dispatchers.Main) {
+                    (requireActivity() as MainActivity).showLoading(false)
+                    displayContacts(contacts)
+                }
+            }
+        }
         binding.fajrListLayout.visibility = GONE
         binding.emptyList.visibility = GONE
         binding.addContactsLayout.visibility = VISIBLE
 
+
+
+        binding.done.setOnClickListener {
+            viewModel.saveList(fajrList)
+            binding.addContactsLayout.visibility = GONE
+            binding.fajrListLayout.visibility = VISIBLE
+            binding.emptyList.visibility = GONE
+            adapter.setData(fajrList)
+        }
+    }
+
+    private fun displayContacts(contacts: List<ContactData>) {
         binding.contactsList.withSimpleAdapter(contacts, R.layout.item_checkbox) {
             (itemView as CheckBox).text = it.name
             val index = fajrList.indexOfFirst { fajr -> fajr.number == it.phoneNumber.first() }
@@ -188,15 +212,12 @@ class FajrListFragment : Fragment(), PermissionListener {
                 }
             }
         }
-
-        binding.done.setOnClickListener {
-            viewModel.saveList(fajrList)
-            binding.addContactsLayout.visibility = GONE
-            binding.fajrListLayout.visibility = VISIBLE
-            binding.emptyList.visibility = GONE
-            adapter.setData(fajrList)
-        }
     }
 
 
+    override fun onDestroy() {
+        (requireActivity() as MainActivity).showLoading(false)
+        contactsJob.cancel()
+        super.onDestroy()
+    }
 }
