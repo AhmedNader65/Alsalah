@@ -29,7 +29,7 @@ class ContactsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val contact = contacts[position]
-        contact.checked = list.contains(contact)
+        contact.checked = list.any { it.number == contact.number }
         holder.bind(contact)
         holder.name.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked != contact.checked) {

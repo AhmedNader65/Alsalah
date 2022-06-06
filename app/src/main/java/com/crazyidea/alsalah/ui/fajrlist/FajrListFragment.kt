@@ -31,6 +31,7 @@ import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class FajrListFragment : Fragment(), PermissionListener {
+    private var contacts: List<Fajr>? = null
     private var contactsJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + contactsJob)
 
@@ -174,13 +175,16 @@ class FajrListFragment : Fragment(), PermissionListener {
         for (item in fajrList) {
             list.add(item.number)
         }
-        (requireActivity() as MainActivity).showLoading(true)
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
-                val contacts: List<Fajr> = requireContext().retrieveAllContacts()
-                withContext(Dispatchers.Main) {
-                    (requireActivity() as MainActivity).showLoading(false)
-                    displayContacts(contacts)
+        if (contacts.isNullOrEmpty()) {
+            (requireActivity() as MainActivity).showLoading(true)
+
+            uiScope.launch {
+                withContext(Dispatchers.IO) {
+                    contacts = requireContext().retrieveAllContacts()
+                    withContext(Dispatchers.Main) {
+                        (requireActivity() as MainActivity).showLoading(false)
+                        displayContacts(contacts!!)
+                    }
                 }
             }
         }
@@ -205,8 +209,10 @@ class FajrListFragment : Fragment(), PermissionListener {
     }
 
     private fun displayContacts(contacts: List<Fajr>) {
-        contactsAdapter = ContactsAdapter(contacts, fajrList, {
-            fajrList.remove(it)
+        contactsAdapter = ContactsAdapter(contacts, fajrList, { contact ->
+            fajrList.filter { it.number == contact.number }.forEach {
+                fajrList.remove(it)
+            }
         }, {
             fajrList.add(
                 it
