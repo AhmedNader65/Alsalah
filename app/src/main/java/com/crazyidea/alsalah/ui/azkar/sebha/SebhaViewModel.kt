@@ -35,16 +35,22 @@ class SebhaViewModel @Inject constructor(
             if (currentValue < azkar.value!!.count)
                 currentValue = currentValue.plus(1)
             azkarCounter.value = currentValue
-            if (currentValue == azkar.value!!.count) {
-                var currentIndexVal = currentIndex.value!!
-                if (currentIndexVal < allAzkar.value!!.size - 1) {
-                    currentIndexVal = currentIndexVal.plus(1)
-                    currentIndex.value = currentIndexVal
-                    azkar.value = allAzkar.value!![currentIndexVal]
-                    azkarCounter.value = 0
-                } else if (currentIndexVal == allAzkar.value!!.size - 1) {
-                    currentIndex.value = allAzkar.value!!.size
-                }
+        }
+    }
+    fun getNextAzkar(){
+
+        // if counter is at max
+        if (azkarCounter.value == azkar.value!!.count) {
+
+            var currentIndexVal = currentIndex.value!!
+            // get next azkar
+            if (currentIndexVal < allAzkar.value!!.size - 1) {
+                currentIndexVal = currentIndexVal.plus(1)
+                currentIndex.value = currentIndexVal
+                azkar.value = allAzkar.value!![currentIndexVal]
+                azkarCounter.value = 0
+            } else if (currentIndexVal == allAzkar.value!!.size - 1) {
+                currentIndex.value = allAzkar.value!!.size
             }
         }
     }

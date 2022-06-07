@@ -1,9 +1,12 @@
 package com.crazyidea.alsalah.ui.azkar.sebha
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Context.VIBRATOR_SERVICE
 import android.media.MediaPlayer
 import android.os.*
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -23,15 +26,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 
 @AndroidEntryPoint
-class SebhaFragment : Fragment() {
+class SebhaFragment : Fragment(), Animator.AnimatorListener {
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
     private var muted: Boolean = false
     private var vibrate: Boolean = false
+    private var animator: ObjectAnimator? = null
     private var _binding: FragmentSebhaBinding? = null
     private val viewModel by viewModels<SebhaViewModel>()
     lateinit var mp: MediaPlayer
@@ -83,6 +88,19 @@ class SebhaFragment : Fragment() {
                 if (!vibrate) {
                     vp.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
                 }
+            }
+        }
+        viewModel.azkarCounter.observe(viewLifecycleOwner) {
+            viewModel.azkar.value?.let { azkar ->
+                val progress = ((it.toDouble() / azkar.count) * 100.toDouble()).roundToInt()
+                animator = ObjectAnimator.ofInt(
+                    binding.progress,
+                    "progress",
+                    progress
+                )
+                animator!!.duration = 300
+                animator!!.addListener(this@SebhaFragment)
+                animator!!.start()
             }
         }
     }
@@ -146,5 +164,27 @@ class SebhaFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onAnimationStart(animation: Animator?) {
+
+        Log.i("Animation", "onAnimationStart")
+    }
+
+    override fun onAnimationEnd(animation: Animator?) {
+        Log.i("Animation", "onAnimationEnd")
+        viewModel.getNextAzkar()
+    }
+
+    override fun onAnimationCancel(animation: Animator?) {
+    }
+
+    override fun onAnimationRepeat(animation: Animator?) {
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        animator?.addListener(null)
     }
 }
