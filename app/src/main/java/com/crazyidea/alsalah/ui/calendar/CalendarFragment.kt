@@ -137,32 +137,16 @@ class CalendarFragment : Fragment() {
                         viewModel.fetchEventsData("${dayText}_$monthText")
                         val text =
                             "<font color=\"#EEB34B\">$dayText</font> <font color=\"#FFFFFF\">$monthText</font> <font color=\"#EEB34B\">$yearText</font>"
-                        this@CalendarFragment.binding.eventDate.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                        this@CalendarFragment.binding.eventDate.text =
+                            HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
                         textView.setTextColorRes(R.color.white)
 
                         textView.setBackgroundResource(R.drawable.today_bg)
                     } else {
-                        textView.setBackgroundResource(0)
+                        textView.setBackgroundResource(if (selectedDate == day.date) R.drawable.round_green_background else 0)
 
                     }
-//                    layout.setBackgroundResource(if (selectedDate == day.date) R.drawable.example_5_selected_bg else 0)
-//                    val localDate =
-//                        LocalDateTime.ofInstant(
-//                            day.date.yearMonth.toInstant(),
-//                            day.date.yearMonth.timeZone.toZoneId()
-//                        )
-//                            .toLocalDate()
-
-//                    val flights = flights[localDate]
-//                    if (flights != null) {
-//                        if (flights.count() == 1) {
-//                            flightBottomView.setBackgroundColor(view.context.getColorCompat(flights[0].color))
-//                        } else {
-//                            flightTopView.setBackgroundColor(view.context.getColorCompat(flights[0].color))
-//                            flightBottomView.setBackgroundColor(view.context.getColorCompat(flights[1].color))
-//                        }
-//                    }
                 } else {
                     textView.setTextColor(0xffffff)
                     layout.background = null
@@ -230,7 +214,8 @@ class CalendarFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { data ->
-                        this@CalendarFragment.binding.eventsText.text = HtmlCompat.fromHtml(data, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                        this@CalendarFragment.binding.eventsText.text =
+                            HtmlCompat.fromHtml(data, HtmlCompat.FROM_HTML_MODE_LEGACY)
                     }
                 }
                 Status.ERROR -> {
