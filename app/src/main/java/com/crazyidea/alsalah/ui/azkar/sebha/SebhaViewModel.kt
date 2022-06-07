@@ -14,6 +14,7 @@ class SebhaViewModel @Inject constructor(
     private val prayerRepository: PrayersRepository,
 ) : ViewModel() {
 
+    private var gettingNextAzkar: Boolean = false
     val azkar = MutableLiveData<Azkar>()
     val playSound = MutableLiveData(false)
     val muted = MutableLiveData(false)
@@ -29,15 +30,19 @@ class SebhaViewModel @Inject constructor(
     }
 
     fun increaseCounter() {
-        playSound.value = true
-        var currentValue = azkarCounter.value
-        if (currentValue != null) {
-            if (currentValue < azkar.value!!.count)
-                currentValue = currentValue.plus(1)
-            azkarCounter.value = currentValue
+        if (!gettingNextAzkar) {
+            playSound.value = true
+            var currentValue = azkarCounter.value
+            if (currentValue != null) {
+                if (currentValue < azkar.value!!.count)
+                    currentValue = currentValue.plus(1)
+                azkarCounter.value = currentValue
+            }
         }
+        gettingNextAzkar = true
     }
-    fun getNextAzkar(){
+
+    fun getNextAzkar() {
 
         // if counter is at max
         if (azkarCounter.value == azkar.value!!.count) {
@@ -53,5 +58,6 @@ class SebhaViewModel @Inject constructor(
                 currentIndex.value = allAzkar.value!!.size
             }
         }
+        gettingNextAzkar = false
     }
 }

@@ -23,6 +23,7 @@ class AzkarDetailsViewModel @Inject constructor(
     private val prayerRepository: PrayersRepository,
     private val azkarRepository: AzkarRepository,
 ) : ViewModel() {
+    private var gettingNextAzkar: Boolean = false
     private lateinit var category: String
     val azkar = MutableLiveData<Azkar>()
     var currentIndex = MutableLiveData(0)
@@ -47,22 +48,26 @@ class AzkarDetailsViewModel @Inject constructor(
     }
 
     fun increaseCounter() {
-        var currentValue = azkarCounter.value
-        if (currentValue != null) {
-            // if there's room to increase
-            if (currentValue < azkar.value!!.count)
-                currentValue = currentValue.plus(1)
-            else {
-                // done this azkar and update total progress
-                val date =
-                    java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                increaseProgress(date, category = category)
+        if (!gettingNextAzkar) {
+            var currentValue = azkarCounter.value
+            if (currentValue != null) {
+                // if there's room to increase
+                if (currentValue < azkar.value!!.count)
+                    currentValue = currentValue.plus(1)
+                else {
+                    // done this azkar and update total progress
+                    val date =
+                        java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                    increaseProgress(date, category = category)
+                }
+                // update the counter value with current value
+                azkarCounter.value = currentValue
             }
-            // update the counter value with current value
-            azkarCounter.value = currentValue
         }
+        gettingNextAzkar = true
     }
-    fun getNextAzkar(){
+
+    fun getNextAzkar() {
 
         // if counter is at max
         if (azkarCounter.value == azkar.value!!.count) {
@@ -78,6 +83,7 @@ class AzkarDetailsViewModel @Inject constructor(
                 currentIndex.value = allAzkar.value!!.size
             }
         }
+        gettingNextAzkar = false
     }
 
 

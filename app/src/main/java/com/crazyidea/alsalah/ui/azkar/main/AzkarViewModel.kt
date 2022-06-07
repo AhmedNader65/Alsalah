@@ -27,16 +27,19 @@ class AzkarViewModel @Inject constructor(
         hijri = UmmalquraCalendar()
         gor = Calendar.getInstance()
         progress = MutableLiveData(0)
-        viewModelScope.launch {
-            getProgress()
-        }
+        getTotalProgress()
         setupDate()
     }
 
-    private suspend fun getProgress() {
-        val date = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(gor.time)
-        withContext(viewModelScope.coroutineContext) {
-            progress.value = azkarRepository.getTotalProgress(date)
+
+    fun getTotalProgress() {
+
+        viewModelScope.launch {
+            val date =
+                java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(gor.time)
+            withContext(viewModelScope.coroutineContext) {
+                progress.value = azkarRepository.getTotalProgress(date)
+            }
         }
     }
 
@@ -77,7 +80,7 @@ class AzkarViewModel @Inject constructor(
         hijri.time = gor.time
         setupDate()
         viewModelScope.launch {
-            getProgress()
+            getTotalProgress()
         }
     }
 
@@ -86,7 +89,7 @@ class AzkarViewModel @Inject constructor(
         hijri.time = gor.time
         setupDate()
         viewModelScope.launch {
-            getProgress()
+            getTotalProgress()
         }
     }
 
