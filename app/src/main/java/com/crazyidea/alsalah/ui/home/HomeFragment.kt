@@ -9,16 +9,19 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener
+import com.crazyidea.alsalah.utils.withSimpleAdapter
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -77,7 +80,7 @@ class HomeFragment : Fragment(), PermissionListener {
             }
         })
 
-
+setupArticles()
 
         permissionHelper.checkForMultiplePermissions(
             arrayOf(
@@ -101,6 +104,14 @@ class HomeFragment : Fragment(), PermissionListener {
         collectData()
     }
 
+    private fun setupArticles() {
+        viewModel.articleData.observe(viewLifecycleOwner) {
+            binding.blogItem.withSimpleAdapter(it, R.layout.item_blog) {
+                val title = itemView.findViewById<TextView>(R.id.blog_title)
+                title.text = it.text
+            }
+        }
+    }
     private fun setupNavigation() {
         binding.readAfterPrayersNowBtn.setOnClickListener {
             findNavController().navigate(

@@ -2,6 +2,7 @@ package com.crazyidea.alsalah.di
 
 import android.content.Context
 import com.crazyidea.alsalah.BuildConfig
+import com.crazyidea.alsalah.data.api.ArticlesAPI
 import com.crazyidea.alsalah.data.api.CalendarAPI
 import com.crazyidea.alsalah.data.api.PrayersAPI
 import dagger.Module
@@ -29,6 +30,10 @@ class ServiceModule {
     @Named("prayers_url")
     fun provideBaseUrl() = BuildConfig.PRAYERS_BASE_URL
 
+    @Provides
+    @Named("base_url")
+    fun provideAppBaseUrl() = BuildConfig.BASE_URL
+
 
     @Provides
     @Named("wiki_url")
@@ -39,6 +44,11 @@ class ServiceModule {
     @Provides
     @Singleton
     fun providePrayersApi(retrofit: Retrofit): PrayersAPI = retrofit.create(PrayersAPI::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideArticlesApi(retrofit: Retrofit): ArticlesAPI = retrofit.create(ArticlesAPI::class.java)
 
     @Provides
     @Singleton
@@ -79,5 +89,16 @@ class ServiceModule {
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build()
+
+//
+//    @Provides
+//    @Singleton
+//    fun provideAppRetrofit(okHttpClient: OkHttpClient, @Named("base_url") BASE_URL: String): Retrofit =
+//        Retrofit.Builder()
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .baseUrl(BASE_URL)
+//            .client(okHttpClient)
+//            .build()
+
 
 }

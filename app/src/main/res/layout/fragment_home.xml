@@ -27,9 +27,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24sdp"
+                android:elevation="@dimen/_4sdp"
                 android:text="@{model.nextPrayer}"
                 android:textAlignment="center"
-                android:elevation="@dimen/_4sdp"
                 android:textColor="@{model.setTextColor(2,context)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,10 +38,10 @@
             <TextView
                 android:id="@+id/next_prayer_time"
                 style="@style/regularText"
-                android:elevation="@dimen/_4sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_minus9sdp"
+                android:elevation="@dimen/_4sdp"
                 android:text="@{model.remainingTime}"
                 android:textAlignment="center"
 
@@ -54,8 +54,8 @@
             <ImageView
                 android:id="@+id/prayer_pic"
                 android:layout_width="match_parent"
-                android:scaleType="fitXY"
                 android:layout_height="@dimen/_330sdp"
+                android:scaleType="fitXY"
                 android:src="@{model.nextPrayerId==1? context.getDrawable(com.crazyidea.alsalah.R.drawable.fajr_pic): model.nextPrayerId==2? context.getDrawable(com.crazyidea.alsalah.R.drawable.shorok_pic):model.nextPrayerId==3? context.getDrawable(com.crazyidea.alsalah.R.drawable.zuhr_pic):model.nextPrayerId==4? context.getDrawable(com.crazyidea.alsalah.R.drawable.asr_pic):model.nextPrayerId==5? context.getDrawable(com.crazyidea.alsalah.R.drawable.maghrib_pic):model.nextPrayerId==6? context.getDrawable(com.crazyidea.alsalah.R.drawable.isha_pic):context.getDrawable(com.crazyidea.alsalah.R.drawable.isha_pic)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -823,9 +823,9 @@
                             style="@style/mediumText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:text="سورة البقرة : اية 100"
                             android:textColor="?attr/colorPrimary"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:textSize="@dimen/_14ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -835,14 +835,14 @@
                             android:id="@+id/ayah"
                             style="@style/quran"
                             android:layout_width="0dp"
-                            android:textSize="@dimen/_20ssp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:layout_marginEnd="@dimen/_16sdp"
                             android:text="أَوَكُلَّمَا عَاهَدُوا عَهْدًا نَبَذَهُ فَرِيقٌ مِنْهُمْ ۚ بَلْ أَكْثَرُهُمْ لَا يُؤْمِنُونَ ﴿23﴾"
                             android:textAlignment="center"
                             android:textColor="@color/inverted_text_color"
+                            android:textSize="@dimen/_20ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/surah" />
@@ -857,9 +857,9 @@
                             android:layout_marginEnd="@dimen/_8sdp"
                             android:background="@drawable/tab_layout_bg"
                             android:insetTop="0dp"
-                            android:stateListAnimator="@null"
                             android:insetBottom="0dp"
                             android:minHeight="0dp"
+                            android:stateListAnimator="@null"
                             android:text="أكمل وردك"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toStartOf="@id/khatma_details"
@@ -973,13 +973,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/azkar" />
 
-            <include
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/blog_item"
-                layout="@layout/item_blog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
-                app:layout_constraintTop_toBottomOf="@id/read_azkar_btn" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/read_azkar_btn"
+                tools:listitem="@layout/item_blog" />
+
 
             <Space
                 android:layout_width="match_parent"

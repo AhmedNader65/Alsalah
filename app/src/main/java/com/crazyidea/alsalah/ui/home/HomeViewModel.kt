@@ -8,7 +8,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.model.PrayerTimingApiModel
+import com.crazyidea.alsalah.data.repository.ArticlesRepository
 import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import com.crazyidea.alsalah.utils.GlobalPreferences
@@ -16,16 +18,19 @@ import com.crazyidea.alsalah.utils.themeColor
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val prayerRepository: PrayersRepository,
+    private val articlesRepository: ArticlesRepository,
     private val globalPreferences: GlobalPreferences
 ) : ViewModel() {
     val fajrTime = MutableLiveData("00:00")
@@ -61,12 +66,18 @@ class HomeViewModel @Inject constructor(
 
 
     private var prayerDataJob: Job? = null
+    private var articleDataJob: Job? = null
 
     private val _prayerData = MutableLiveData<Timing>()
     val prayerData: LiveData<Timing> = _prayerData
 
+
+    private val _articleData = MutableLiveData<ArrayList<Articles>>()
+    val articleData: LiveData<ArrayList<Articles>> = _articleData
+
     init {
         setupDate()
+        getArticles()
     }
 
     fun fetchPrayerData(
@@ -120,6 +131,19 @@ class HomeViewModel @Inject constructor(
             getNextPrayer(currentDate, timings)
             _prayerData.value = timings
         }
+    }
+
+
+    fun getArticles() {
+        articleDataJob?.cancel()
+        articleDataJob = viewModelScope.launch {
+            articlesRepository.fetcharticle()
+                .collect {
+                    if (it?.data != null)
+                        _articleData.value = it.data!!
+                }
+        }
+
     }
 
     fun getAnotherDayPrayerData(
