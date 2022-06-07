@@ -3,11 +3,30 @@ package com.crazyidea.alsalah.ui.fajrlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.crazyidea.alsalah.data.repository.FajrListRepository
+import com.crazyidea.alsalah.data.room.entity.fajr.Fajr
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class FajrListViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+@HiltViewModel
+class FajrListViewModel @Inject constructor(
+    private val repository: FajrListRepository
+) : ViewModel() {
+    private val _fajrList = MutableLiveData<List<Fajr>>()
+    val fajrList: LiveData<List<Fajr>> = _fajrList
+    fun saveList(fajrList: MutableList<Fajr>) {
+        viewModelScope.launch {
+            repository.insert(fajrList)
+        }
     }
-    val text: LiveData<String> = _text
+
+    fun getList() {
+        viewModelScope.launch {
+            _fajrList.value = repository.getFajrList()
+        }
+    }
+
 }

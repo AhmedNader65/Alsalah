@@ -14,17 +14,31 @@ import android.graphics.Color
 import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
+import android.telephony.PhoneStateListener
+import android.telephony.TelephonyCallback
+import android.telephony.TelephonyManager
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.DEFAULT_ALL
+import androidx.core.content.ContextCompat.startActivity
 import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.repository.FajrListRepository
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import java.util.*
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class AlarmReceiver : BroadcastReceiver() {
+    private var listOfNumbers: List<String>? = null
+
+    @Inject
+    lateinit var fajrRepository: FajrListRepository
     private val CHANNEL_ID: String = "PrayerTimes"
     lateinit var globalPreferences: GlobalPreferences
     lateinit var sound: Uri
@@ -45,16 +59,77 @@ class AlarmReceiver : BroadcastReceiver() {
             context,
             getTitle(context, intent?.getStringExtra("salah")) as String, fullScreenPendingIntent
         )
+        if (intent?.getStringExtra("salah") == "fajr") {
+            GlobalScope.async {
 
+                val listOfContacts = fajrRepository.getFajrList()
+                listOfNumbers = listOfContacts?.map { it.number }
+//                nextCalling(context, listOfNumbers!![0])
+//                count++
+
+            }
+            val telephonyManager: TelephonyManager =
+                context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                Log.e("sdk is", "here")
+                telephonyManager.registerTelephonyCallback(
+                    context.mainExecutor,
+                    object : TelephonyCallback(), TelephonyCallback.CallStateListener {
+                        override fun onCallStateChanged(state: Int) {
+                            listOfNumbers?.let {
+                                Log.e("listOfNumbers ", "${it.size}")
+                                checkState(context, state, listOfNumbers)
+                            }
+                        }
+                    })
+            } else {
+                Log.e("sdk is", "here2")
+                phoneListener = PhoneListener { checkState(context, it, listOfNumbers) }
+                telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE)
+            }
+        }
+
+    }
+
+    class PhoneListener(val checkState: (state: Int) -> Unit) : PhoneStateListener() {
+        override fun onCallStateChanged(state: Int, phoneNumber: String?) {
+            Log.e("sate changed", "here2")
+            checkState(state)
+        }
+    }
+
+    private var phoneListener: PhoneListener? = null
+    var count = 0
+    private fun checkState(context: Context, state: Int, listOfNumbers: List<String>?) {
+        when (state) {
+            TelephonyManager.CALL_STATE_RINGING -> Log.v(
+                this.javaClass.simpleName,
+                "Inside Ringing State::"
+            )
+            TelephonyManager.CALL_STATE_IDLE -> {
+                var phone_number: String? = null
+                Log.v(this.javaClass.simpleName, "Inside Idle State::")
+                if (listOfNumbers?.size!! > count) {
+                    phone_number = listOfNumbers[count]
+                    count++
+                }
+                phone_number?.let { nextCalling(context, it) }
+            }
+            TelephonyManager.CALL_STATE_OFFHOOK -> Log.v(
+                this.javaClass.simpleName,
+                "Inside OFFHOOK State::"
+            )
+            else -> {}
+        }
     }
 
     private fun sendNotification(context: Context, title: String, pendingIntent: PendingIntent) {
         var number = globalPreferences.getAzan().toIntOrNull()
-        if (number != null) {
-            sound =
-                Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + number)
+        sound = if (number != null) {
+            Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + number)
         } else {
-            sound = Uri.parse(globalPreferences.getAzan())
+            Uri.parse(globalPreferences.getAzan())
         }
 
 
@@ -131,6 +206,13 @@ class AlarmReceiver : BroadcastReceiver() {
                     .getString(R.string.prayer_notification)
         }
 
+
     }
 
+    private fun nextCalling(context: Context, phone_number: String) {
+
+        val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$phone_number"))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent)
+    }
 }

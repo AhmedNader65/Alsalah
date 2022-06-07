@@ -8,6 +8,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
 import androidx.annotation.RequiresPermission
+import com.crazyidea.alsalah.data.room.entity.fajr.Fajr
 
 /**
  * @author aminography
@@ -38,8 +39,8 @@ fun Context.retrieveAllContacts(
     retrieveAvatar: Boolean = true,
     limit: Int = -1,
     offset: Int = -1
-): List<ContactData> {
-    val result: MutableList<ContactData> = mutableListOf()
+): List<Fajr> {
+    val result: MutableList<Fajr> = mutableListOf()
     contentResolver.query(
         ContactsContract.Contacts.CONTENT_URI,
         CONTACT_PROJECTION,
@@ -58,7 +59,7 @@ fun Context.retrieveAllContacts(
                 } else mutableListOf()
 
                 val avatar = if (retrieveAvatar) retrieveAvatar(contactId) else null
-                result.add(ContactData(contactId, name, phoneNumber, avatar))
+                result.add(Fajr(null, name, phoneNumber.first()))
             } while (it.moveToNext())
         }
     }
@@ -109,11 +110,4 @@ private val CONTACT_PROJECTION = arrayOf(
     ContactsContract.Contacts.LOOKUP_KEY,
     ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
     ContactsContract.Contacts.HAS_PHONE_NUMBER
-)
-
-data class ContactData(
-    val contactId: Long,
-    val name: String,
-    val phoneNumber: List<String>,
-    val avatar: Uri?
 )

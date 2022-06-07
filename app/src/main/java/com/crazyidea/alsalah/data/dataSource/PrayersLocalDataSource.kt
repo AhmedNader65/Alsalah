@@ -21,46 +21,47 @@ class PrayersLocalDataSource @Inject constructor(
         appDatabase.prayersDao().deleteMeta()
         appDatabase.prayersDao().deleteTimings()
             remoteResponse.forEach {
-                val metaId = appDatabase.prayersDao().insertMeta(
-                    Meta(null, it.meta.method.id, cityName, it.date.gregorian.month.number)
-                )
-                val timingId = appDatabase.prayersDao().insertTiming(
-                    Timing(
-                        null,
-                        it.timings.Fajr.substring(0, 5),
-                        it.timings.Sunrise.substring(0, 5),
-                        it.timings.Dhuhr.substring(0, 5),
-                        it.timings.Asr.substring(0, 5),
-                        it.timings.Sunset.substring(0, 5),
-                        it.timings.Maghrib.substring(0, 5),
-                        it.timings.Isha.substring(0, 5),
-                        it.timings.Imsak.substring(0, 5),
-                        it.timings.Midnight.substring(0, 5)
-                    )
-                )
-                appDatabase.prayersDao().insertDate(
-                    Date(
-                        null,
-                        timingId,
-                        metaId,
-                        it.date.readable,
-                        it.date.timestamp,
-                        it.date.gregorian.date,
-                        it.date.gregorian.day,
-                        it.date.gregorian.month.number,
-                        it.date.gregorian.month.en,
-                        it.date.gregorian.year,
-                        it.date.hijri.date,
-                        it.date.hijri.day,
-                        it.date.hijri.weekday.en,
-                        it.date.hijri.weekday.ar,
-                        it.date.hijri.month.number,
-                        it.date.hijri.month.en,
-                        it.date.hijri.month.ar,
-                        it.date.hijri.year
-                    )
-                )
-
+               try {
+                   val metaId = appDatabase.prayersDao().insertMeta(
+                       Meta(null, it.meta.method.id, cityName, it.date.gregorian.month.number)
+                   )
+                   val timingId = appDatabase.prayersDao().insertTiming(
+                       Timing(
+                           null,
+                           it.timings.Fajr.substring(0, 5),
+                           it.timings.Sunrise.substring(0, 5),
+                           it.timings.Dhuhr.substring(0, 5),
+                           it.timings.Asr.substring(0, 5),
+                           it.timings.Sunset.substring(0, 5),
+                           it.timings.Maghrib.substring(0, 5),
+                           it.timings.Isha.substring(0, 5),
+                           it.timings.Imsak.substring(0, 5),
+                           it.timings.Midnight.substring(0, 5)
+                       )
+                   )
+                   appDatabase.prayersDao().insertDate(
+                       Date(
+                           null,
+                           timingId,
+                           metaId,
+                           it.date.readable,
+                           it.date.timestamp,
+                           it.date.gregorian.date,
+                           it.date.gregorian.day,
+                           it.date.gregorian.month.number,
+                           it.date.gregorian.month.en,
+                           it.date.gregorian.year,
+                           it.date.hijri.date,
+                           it.date.hijri.day,
+                           it.date.hijri.weekday.en,
+                           it.date.hijri.weekday.ar,
+                           it.date.hijri.month.number,
+                           it.date.hijri.month.en,
+                           it.date.hijri.month.ar,
+                           it.date.hijri.year
+                       )
+                   )
+               }catch (e:Exception){}
         }
     }
 

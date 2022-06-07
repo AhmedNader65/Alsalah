@@ -1,8 +1,6 @@
-package com.crazyidea.apparch.adapter
+package com.crazyidea.alsalah.adapter
 
 import androidx.annotation.LayoutRes
-import com.crazyidea.alsalah.data.adapter.BaseRecyclerAdapter
-import com.crazyidea.alsalah.data.adapter.BaseViewHolder
 
 class SimpleRecyclerAdapter<RecyclerData : Any>(
     data: List<RecyclerData>, @LayoutRes layoutID: Int,

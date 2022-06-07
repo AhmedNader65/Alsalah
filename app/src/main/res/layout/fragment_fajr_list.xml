@@ -31,62 +31,142 @@
         app:layout_constraintTop_toTopOf="@+id/title" />
 
 
-
-
-        <TextView
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:id="@+id/welcomeTxt"
-            android:layout_width="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_14sdp"
-            android:textColor="@color/general_setting_line"
-            android:text="@string/welcome_to_fajrlist"
-            android:fontFamily="@font/din_medium"/>
-
-
-
-
-    <ImageView
-        android:layout_marginTop="@dimen/_16sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/contacts_img"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/img_contacts" />
-    <TextView
-        android:layout_marginTop="@dimen/_16sdp"
-        style="@style/regularText"
-        android:id="@+id/secondaryText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/general_setting_line"
-        android:text="@string/welcome_to_fajrlist"
-        android:fontFamily="@font/din_medium"
-        app:layout_constraintTop_toBottomOf="@+id/contacts_img" />
-
-
-
-
-    <com.google.android.material.button.MaterialButton
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/empty_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/secondaryText"
-        android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_12sdp"
-        app:cornerRadius="@dimen/_12sdp"
-        android:padding="@dimen/_8sdp"
-        android:backgroundTint="#4E7850"
-        android:text="@string/addContacts"
-        android:fontFamily="@font/din_medium"
-        android:id="@+id/addContacts"/>
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
+        <TextView
+            android:id="@+id/welcomeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/din_medium"
+            android:text="@string/welcome_to_fajrlist"
+            android:textColor="@color/general_setting_line"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/contacts_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/img_contacts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeTxt" />
+
+        <TextView
+            android:id="@+id/secondaryText"
+            style="@style/regularText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:fontFamily="@font/din_medium"
+            android:text="@string/fajr_list_description"
+            android:textAlignment="center"
+
+            android:textColor="@color/general_setting_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contacts_img" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addContacts"
+            style="@style/mediumText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:backgroundTint="#4E7850"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/addContacts"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@+id/secondaryText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fajr_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fajr_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/addContacts2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addContacts2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:backgroundTint="#4E7850"
+            android:fontFamily="@font/din_medium"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/addEditContacts"
+            app:cornerRadius="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_contacts_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <ImageButton
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:src="@drawable/ic_baseline_check_24"
+            app:backgroundTint="@color/green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:src="@drawable/ic_baseline_close_24"
+            app:backgroundTint="#f00"
+            app:layout_constraintStart_toEndOf="@+id/done"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contacts_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/done" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
