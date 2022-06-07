@@ -1,8 +1,5 @@
 package com.crazyidea.alsalah.ui.azkar.azkar_menu
 
-import android.util.TypedValue
-import android.widget.TextView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,7 +16,7 @@ class AzkarMenuModel @Inject constructor(
     private val prayerRepository: PrayersRepository,
 ) : ViewModel() {
     private val _allAzkar = MutableLiveData<List<Azkar>>()
-    val allAzkar : LiveData<List<Azkar>> = _allAzkar
+    val allAzkar: LiveData<List<Azkar>> = _allAzkar
     suspend fun getAzkar(category: String) {
         withContext(viewModelScope.coroutineContext) {
             _allAzkar.value = prayerRepository.getAzkarByCategory(category)

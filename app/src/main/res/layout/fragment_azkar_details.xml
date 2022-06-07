@@ -127,7 +127,8 @@
                     android:layout_gravity="center"
                     android:layoutDirection="ltr"
                     android:max="100"
-                    android:progress="@{model.azkar.count==0?0:(int)((double)model.azkarCounter/(double)model.azkar.count * 100)}"
+                    android:id="@+id/progress"
+                    android:animateLayoutChanges="true"
                     android:progressDrawable="@drawable/circle_progressbar"
                     android:progressTint="@color/green"
                     android:secondaryProgressTint="@color/black" />

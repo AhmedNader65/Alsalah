@@ -1,11 +1,16 @@
 package com.crazyidea.alsalah.ui.azkar.azkar_details
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.animation.addListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,10 +20,12 @@ import com.crazyidea.alsalah.databinding.FragmentAzkarDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlin.coroutines.coroutineContext
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class AzkarDetailsFragment : Fragment() {
+class AzkarDetailsFragment : Fragment(), Animator.AnimatorListener {
 
+    private var animator: ObjectAnimator? = null
     private var _binding: FragmentAzkarDetailsBinding? = null
     private val args by navArgs<AzkarDetailsFragmentArgs>()
 
@@ -47,12 +54,34 @@ class AzkarDetailsFragment : Fragment() {
 
         _binding = FragmentAzkarDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.bottomTools.settings .setOnClickListener {
-            findNavController().navigate(AzkarDetailsFragmentDirections.actionNavigationAzkarDetailsToAzkarMenuFragment(args.category))
+        binding.bottomTools.settings.setOnClickListener {
+            findNavController().navigate(
+                AzkarDetailsFragmentDirections.actionNavigationAzkarDetailsToAzkarMenuFragment(
+                    args.category
+                )
+            )
         }
+
         binding.model = viewModel
         binding.lifecycleOwner = this
+        setupObserver()
         return root
+    }
+
+    private fun setupObserver() {
+        viewModel.azkarCounter.observe(viewLifecycleOwner) {
+            viewModel.azkar.value?.let { azkar ->
+                val progress = ((it.toDouble() / azkar.count) * 100.toDouble()).roundToInt()
+                animator = ObjectAnimator.ofInt(
+                    binding.progress,
+                    "progress",
+                    progress
+                )
+                animator!!.duration = 300
+                animator!!.addListener(this@AzkarDetailsFragment)
+                animator!!.start()
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,5 +109,27 @@ class AzkarDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onAnimationStart(animation: Animator?) {
+
+        Log.i("Animation", "onAnimationStart")
+    }
+
+    override fun onAnimationEnd(animation: Animator?) {
+        Log.i("Animation", "onAnimationEnd")
+        viewModel.getNextAzkar()
+    }
+
+    override fun onAnimationCancel(animation: Animator?) {
+    }
+
+    override fun onAnimationRepeat(animation: Animator?) {
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        animator?.addListener(null)
     }
 }
