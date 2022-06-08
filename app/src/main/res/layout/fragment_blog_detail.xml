@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,10 +11,14 @@
 
     </data>
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CCF4F4F4">
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-
-        android:background="#CCF4F4F4"
         android:layout_height="match_parent">
 
         <TextView
@@ -142,8 +147,79 @@
                 android:layout_height="2dp"
                 app:layout_constraintTop_toBottomOf="@+id/share_img"
                 android:background="#CACACA"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/repliesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/line2"
+                tools:itemCount="2"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_reply" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="@dimen/_20sdp"
+                android:id="@+id/storeImgContainer"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                android:backgroundTint="@android:color/transparent"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/replyArea"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/replyArea">
+
+                <ImageView
+                    android:id="@+id/postcomment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:rotation="180"
+                    android:src="@drawable/ic_baseline_send_24" />
+            </androidx.cardview.widget.CardView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/replyArea"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:hint="أضافة رد"
+                android:textColorHint="@color/light_grey"
+                app:boxCornerRadiusBottomEnd="@dimen/_12sdp"
+                app:boxCornerRadiusBottomStart="@dimen/_12sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_12sdp"
+                app:boxCornerRadiusTopStart="@dimen/_12sdp"
+                app:boxStrokeColor="@color/light_grey"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeWidthFocused="1dp"
+                app:endIconMode="custom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/storeImgContainer"
+                app:layout_constraintTop_toBottomOf="@+id/repliesList">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="1"
+                    android:id="@+id/myText"
+                    android:minLines="1"
+                    android:padding="@dimen/_10sdp"
+                    android:textSize="@dimen/_10ssp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

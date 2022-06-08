@@ -2,9 +2,6 @@ package com.crazyidea.alsalah.adapter
 
 import android.content.Context
 import android.text.Html
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.Articles
-import com.crazyidea.alsalah.utils.TruncatingTextView
 
 
 class ArticlesAdapter(
@@ -88,12 +84,20 @@ class ArticlesAdapter(
             viewHolder.blog_desc.text = desc
         }
         viewHolder.blog_desc.setOnClickListener { listner.onArticlePicked(article) }
+        if (article.liked)
+            viewHolder.likes_img.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_favorite_24))
+        else
+            viewHolder.likes_img.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_favorite_border_24))
+
+        viewHolder.likes_img.setOnClickListener {listner.onLikedClicked(article)}
+
+
     }
 
 
     public interface ArticleListner {
         fun onArticlePicked(article: Articles)
-        fun onPlayClicked(article: Articles)
+        fun onLikedClicked(article: Articles)
     }
 
     // Return the size of your dataset (invoked by the layout manager)

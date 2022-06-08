@@ -10,8 +10,10 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.adapter.ArticlesAdapter
+import com.crazyidea.alsalah.adapter.RepliesAdapter
 import com.crazyidea.alsalah.databinding.FragmentBlogDetailBinding
-import com.crazyidea.alsalah.ui.azkar.azkar_details.AzkarDetailsFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +26,8 @@ class BlogDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<BlogDetailViewModel>()
     private val args by navArgs<BlogDetailFragmentArgs>()
+    var bool:Boolean=false
+    lateinit var repliesAdapter: RepliesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +40,10 @@ class BlogDetailFragment : Fragment() {
         viewModel.article.postValue(args.article)
         binding.model = viewModel
         binding.lifecycleOwner = this
+        if (args.type == 1)
+            viewModel.getComments(args.article.id)
+        else
+            viewModel.getFwaedComments(args.article.id)
         return root
     }
 
@@ -43,16 +51,56 @@ class BlogDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
-
-        binding.blogDesc.text=
+        bool=args.article.liked
+        setupComments()
+        binding.blogDesc.text =
             (Html.fromHtml("<br><p>${args.article.text}</p>", Html.FROM_HTML_MODE_COMPACT))
+        binding.storeImgContainer.setOnClickListener {
+            if (args.type == 1)
+                viewModel.postArticleComment(args.article.id, binding.myText.text.toString())
+            else
+                viewModel.postFwaedComment(args.article.id, binding.myText.text.toString())
+
+        }
+        checkImageStatus(bool)
+
+        binding.likesImg.setOnClickListener {
+            if (args.type == 1)
+                viewModel.postArticleLike(args.article.id)
+            else
+                viewModel.postFwaedLike(args.article.id)
+
+        }
+
 
     }
 
+    private fun setupComments() {
+        viewModel.commentData.observe(viewLifecycleOwner) {
+            repliesAdapter = RepliesAdapter(it)
+            binding.repliesList.adapter = repliesAdapter
+        }
+        viewModel.comments.observe(viewLifecycleOwner) {
+            repliesAdapter.addComment(it)
+            binding.myText.setText("")
+        }
+        viewModel.likedComment.observe(viewLifecycleOwner) {
+            bool=!bool
+            checkImageStatus(bool)
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun checkImageStatus(liked: Boolean) {
+        if (liked)
+            binding.likesImg.setImageDrawable(requireContext().getDrawable(R.drawable.ic_baseline_favorite_24))
+        else
+            binding.likesImg.setImageDrawable(requireContext().getDrawable(R.drawable.ic_baseline_favorite_border_24))
+
     }
 
 

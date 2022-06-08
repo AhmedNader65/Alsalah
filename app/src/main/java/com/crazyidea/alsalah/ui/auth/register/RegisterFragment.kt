@@ -1,8 +1,7 @@
 package com.crazyidea.alsalah.ui.auth.register
 
+import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
@@ -21,7 +20,14 @@ import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentRegisterBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.themeColor
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -35,7 +41,9 @@ class RegisterFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel by viewModels<RegisterViewModel>()
-
+//    private lateinit var auth: FirebaseAuth
+//    private lateinit var oneTapClient: SignInClient
+//    private lateinit var signInRequest: BeginSignInRequest
     @Inject
     lateinit var globalPreferences: GlobalPreferences
     override fun onCreateView(
@@ -46,9 +54,13 @@ class RegisterFragment : Fragment() {
 
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
+//        auth = Firebase.auth
+//        oneTapClient = Identity.getSignInClient(requireActivity())
         return root
     }
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,6 +69,9 @@ class RegisterFragment : Fragment() {
         val word1 = resources.getString(R.string.privacyPolicy)
         val word2 = resources.getString(R.string.terms)
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
+
+//        setUpBuilder()
+
 
         val ss = SpannableString(text)
 
@@ -142,6 +157,55 @@ class RegisterFragment : Fragment() {
         }
     }
 
+//    private fun setUpBuilder() {
+//
+//        signInRequest = BeginSignInRequest.builder()
+//            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+//                .setSupported(true)
+//                .build())
+//            .setGoogleIdTokenRequestOptions(
+//                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+//                    .setSupported(true)
+//                    // Your server's client ID, not your Android client ID.
+//                    .setServerClientId(getString(R.string.your_web_client_id))
+//                    // Only show accounts previously used to sign in.
+//                    .setFilterByAuthorizedAccounts(true)
+//                    .build())
+//            // Automatically sign in when exactly one credential is retrieved.
+//            .setAutoSelectEnabled(true)
+//            .build()
+//
+//
+//
+//        val googleCredential = oneTapClient.getSignInCredentialFromIntent(data)
+//        val idToken = googleCredential.googleIdToken
+//        when {
+//            idToken != null -> {
+//                // Got an ID token from Google. Use it to authenticate
+//                // with Firebase.
+//                val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+//                auth.signInWithCredential(firebaseCredential)
+//                    .addOnCompleteListener(requireActivity()) { task ->
+//                        if (task.isSuccessful) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            Log.d(TAG, "signInWithCredential:success")
+//                            val user = auth.currentUser
+//                            updateUI(user)
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "signInWithCredential:failure", task.exception)
+//                            updateUI(null)
+//                        }
+//                    }
+//            }
+//            else -> {
+//                // Shouldn't happen.
+//                Log.d(TAG, "No ID token!")
+//            }
+//        }
+//
+//    }
+
     private fun disableButtons() {
         greyOut(binding.facebookCon, false)
         greyOut(binding.googleCon, false)
@@ -197,6 +261,5 @@ class RegisterFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }

@@ -62,12 +62,12 @@ class FawaedFragment : Fragment(), ArticlesAdapter.ArticleListner {
     override fun onArticlePicked(article: Articles) {
         findNavController().navigate(
             FawaedFragmentDirections.actionFawaedFragment2ToBlogDetailFragment(
-                article
+                article,2
             )
         )
     }
 
-    override fun onPlayClicked(article: Articles) {
+    override fun onLikedClicked(article: Articles) {
 
     }
 

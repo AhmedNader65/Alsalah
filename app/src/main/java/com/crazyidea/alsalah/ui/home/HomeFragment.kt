@@ -271,13 +271,13 @@ class HomeFragment : Fragment(), PermissionListener, ArticlesAdapter.ArticleList
     override fun onArticlePicked(article: Articles) {
         findNavController().navigate(
             HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(
-                article
+                article, 1
             )
         )
 
     }
 
-    override fun onPlayClicked(article: Articles) {
+    override fun onLikedClicked(article: Articles) {
 
     }
 }

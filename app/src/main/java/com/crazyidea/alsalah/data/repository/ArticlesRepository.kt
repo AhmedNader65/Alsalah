@@ -2,6 +2,7 @@ package com.crazyidea.alsalah.data.repository
 
 import com.crazyidea.alsalah.data.dataSource.ArticlesRemoteDataSource
 import com.crazyidea.alsalah.data.model.Articles
+import com.crazyidea.alsalah.data.model.Comment
 import com.crazyidea.alsalah.data.model.Resource
 import com.crazyidea.alsalah.data.model.Status
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,8 @@ class ArticlesRepository @Inject constructor(
     private val infoDataMutex = Mutex()
 
     private var articleData: Resource<ArrayList<Articles>>? = null
+    private var articleComments: Resource<ArrayList<Comment>>? = null
+    private var commentData: Resource<Comment>? = null
 
     suspend fun fetcharticle(): Flow<Resource<ArrayList<Articles>>?> {
         return flow {
@@ -35,6 +38,7 @@ class ArticlesRepository @Inject constructor(
             emit(result)
         }.flowOn(Dispatchers.IO)
     }
+
     suspend fun fetchFwaed(): Flow<Resource<ArrayList<Articles>>?> {
         return flow {
             emit(Resource.loading())
@@ -43,6 +47,97 @@ class ArticlesRepository @Inject constructor(
                 result.let {
                     infoDataMutex.withLock {
                         articleData = it
+                    }
+                }
+            }
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun fetchComments(id: Int): Flow<Resource<ArrayList<Comment>>?> {
+        return flow {
+            emit(Resource.loading())
+            val result = dataSource.getArticleComment(id)
+            if (result.status == Status.SUCCESS) {
+                result.let {
+                    infoDataMutex.withLock {
+                        articleComments = it
+                    }
+                }
+            }
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun fetchFwaedComments(id: Int): Flow<Resource<ArrayList<Comment>>?> {
+        return flow {
+            emit(Resource.loading())
+            val result = dataSource.getFawaedComment(id)
+            if (result.status == Status.SUCCESS) {
+                result.let {
+                    infoDataMutex.withLock {
+                        articleComments = it
+                    }
+                }
+            }
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun postFwaedComments(id: Int, comment: String): Flow<Resource<Comment>?> {
+        return flow {
+            emit(Resource.loading())
+            val result = dataSource.postFwaedComment(id, comment)
+            if (result.status == Status.SUCCESS) {
+                result.let {
+                    infoDataMutex.withLock {
+                        commentData = it
+                    }
+                }
+            }
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun posArticleComments(id: Int, comment: String): Flow<Resource<Comment>?> {
+        return flow {
+            emit(Resource.loading())
+            val result = dataSource.postArticleComment(id, comment)
+            if (result.status == Status.SUCCESS) {
+                result.let {
+                    infoDataMutex.withLock {
+                        commentData = it
+                    }
+                }
+            }
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+
+    suspend fun postFwaedLike(id: Int): Flow<Resource<Comment>?> {
+        return flow {
+            emit(Resource.loading())
+            val result = dataSource.postFwaedLike(id)
+            if (result.status == Status.SUCCESS) {
+                result.let {
+                    infoDataMutex.withLock {
+                        commentData = it
+                    }
+                }
+            }
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun postArticleLike(id: Int): Flow<Resource<Comment>?> {
+        return flow {
+            emit(Resource.loading())
+            val result = dataSource.postArticleLike(id)
+            if (result.status == Status.SUCCESS) {
+                result.let {
+                    infoDataMutex.withLock {
+                        commentData = it
                     }
                 }
             }
