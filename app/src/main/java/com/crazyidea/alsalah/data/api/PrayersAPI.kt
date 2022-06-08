@@ -14,6 +14,7 @@ interface PrayersAPI {
         @Query("month") month:String,
         @Query("year") year:String,
         @Query("method") method:Int,
+        @Query("school") school:Int,
         @Query("tune") tune:String?
     ): Response<ServerResponse<List<PrayerResponseApiModel>>>
 

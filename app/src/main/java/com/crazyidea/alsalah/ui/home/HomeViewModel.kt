@@ -75,6 +75,7 @@ class HomeViewModel @Inject constructor(
         lat: String,
         lng: String,
         method: Int,
+        school: Int,
         tune: String?,
         save: Boolean = true
     ) {
@@ -85,7 +86,7 @@ class HomeViewModel @Inject constructor(
         val minute = calendar.get(Calendar.MINUTE).toString()
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
-            var pair =
+            val pair =
                 prayerRepository.getPrayersData(
                     cityName,
                     day,
@@ -94,6 +95,7 @@ class HomeViewModel @Inject constructor(
                     lat,
                     lng,
                     method,
+                    school,
                     tune,
                     save
                 )
@@ -117,7 +119,9 @@ class HomeViewModel @Inject constructor(
 
             val sdf = SimpleDateFormat("H:mm", Locale("ar"))
             val currentDate = sdf.parse("$hour:$minute")
-            getNextPrayer(currentDate, timings)
+            if (currentDate != null) {
+                getNextPrayer(currentDate, timings)
+            }
             _prayerData.value = timings
         }
     }
@@ -128,6 +132,7 @@ class HomeViewModel @Inject constructor(
         lat: String,
         lng: String,
         method: Int,
+        school: Int,
         tune: String?,
         save: Boolean = true
     ) {
@@ -149,6 +154,7 @@ class HomeViewModel @Inject constructor(
                         lat,
                         lng,
                         method,
+                        school,
                         tune,
                         save
                     )

@@ -11,4 +11,5 @@ data class Meta(
     @ColumnInfo(name = "method") val method: Int,
     @ColumnInfo(name = "city") val city: String,
     @ColumnInfo(name = "month") val month: String,
+    @ColumnInfo(name = "school") val school: Int,
 )

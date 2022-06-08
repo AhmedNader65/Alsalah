@@ -40,14 +40,14 @@ class MazhabFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         globalPreferences = GlobalPreferences(requireContext())
-        checkMazhab(globalPreferences.getMazhab())
-        binding.hanafiCon.setOnClickListener { checkMazhab("hanafi") }
-        binding.hanbaliCon.setOnClickListener { checkMazhab("others") }
+        checkMazhab(globalPreferences.getSchool())
+        binding.hanafiCon.setOnClickListener { checkMazhab(1) }
+        binding.hanbaliCon.setOnClickListener { checkMazhab(0) }
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
 
 
-    fun checkMazhab(mazhab: String) {
+    fun checkMazhab(mazhab: Int) {
         binding.hanafiImg.setColorFilter(
             ContextCompat.getColor(
                 requireContext(),
@@ -62,12 +62,12 @@ class MazhabFragment : Fragment() {
         )
         binding.hanbaliImgChecked.visibility = View.GONE
         binding.hanafiImgSelect.visibility = View.GONE
-        globalPreferences.saveMazhab(mazhab)
-        if (mazhab == "others") {
+        globalPreferences.storeSchoolMethod(mazhab)
+        if (mazhab == 0) {
             binding.hanbaliImg.setColorFilter(requireContext().themeColor(android.R.attr.colorPrimary))
             binding.hanbaliImgChecked.visibility = View.VISIBLE
 
-        } else if (mazhab == "hanafi") {
+        } else if (mazhab == 1) {
             binding.hanafiImg.setColorFilter(requireContext().themeColor(android.R.attr.colorPrimary))
             binding.hanafiImgSelect.visibility = View.VISIBLE
         }

@@ -15,7 +15,7 @@ import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 
 @Database(
     entities = [Date::class, Meta::class, Timing::class, Fajr::class, Azkar::class, AzkarProgress::class],
-    version = 7
+    version = 8
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun prayersDao(): PrayerDao

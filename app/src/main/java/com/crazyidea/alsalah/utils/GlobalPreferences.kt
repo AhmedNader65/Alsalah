@@ -9,7 +9,8 @@ private const val APP_LANGUAGE = "language"
 private const val AZKAR_LANGUAGE = "azkar_language"
 private const val PREFS_NAME = "SalahPref"
 private const val LATITUDE = "lat"
-private const val MAZHAB = "mazhab"
+private const val CALCULATION_METHOD = "calc_method"
+private const val SCHOOL_METHOD = "school_method"
 private const val POLE = "pole"
 private const val AZAN = "azan"
 private const val COLOR = "color"
@@ -36,6 +37,16 @@ class GlobalPreferences(context: Context) {
         prefsEditor.commit()
     }
 
+    fun storeCalculationMethod(method: Int) {
+        prefsEditor.putInt(CALCULATION_METHOD, method)
+        prefsEditor.commit()
+    }
+
+    fun storeSchoolMethod(school: Int) {
+        prefsEditor.putInt(SCHOOL_METHOD, school)
+        prefsEditor.commit()
+    }
+
 
     fun storeAzkarLanguage(locale: String) {
         prefsEditor.putString(AZKAR_LANGUAGE, locale)
@@ -55,6 +66,14 @@ class GlobalPreferences(context: Context) {
         return prefs.getString(APP_LANGUAGE, "ar")!!
     }
 
+    fun getCalculationMethod(): Int {
+        return prefs.getInt(CALCULATION_METHOD, 5)
+    }
+
+    fun getSchool(): Int {
+        return prefs.getInt(SCHOOL_METHOD, 0)
+    }
+
     fun getAzkarLanguage(): String {
         return prefs.getString(AZKAR_LANGUAGE, "ar")!!
     }
@@ -65,10 +84,6 @@ class GlobalPreferences(context: Context) {
 
     fun getLongitude(): String {
         return prefs.getString(LONGITUDE, "")!!
-    }
-
-    fun getMazhab(): String {
-        return prefs.getString(MAZHAB, "others")!!
     }
 
     fun getPole(): String {
@@ -124,11 +139,6 @@ class GlobalPreferences(context: Context) {
 
     fun storeLongitude(longitude: String?) {
         prefsEditor.putString(LONGITUDE, longitude)
-        prefsEditor.commit()
-    }
-
-    fun saveMazhab(mazhab: String) {
-        prefsEditor.putString(MAZHAB, mazhab)
         prefsEditor.commit()
     }
 

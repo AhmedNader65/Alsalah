@@ -25,15 +25,18 @@ class PrayersRepository @Inject constructor(
         lat: String,
         lng: String,
         method: Int,
+        school: Int,
         tune: String?,
         save: Boolean = true
     ): Pair<Timing, Boolean>? {
         val job = withContext(externalScope.coroutineContext) {
-            var data = getFromLocale(day, month, false)
+            var data: Pair<Timing, Boolean>? = null
+            if (method == getLocaleMethod() && school == getSchool())
+                data = getFromLocale(day, month, false)
             if (data != null) {
                 return@withContext data
             }
-            fetchPrayers(cityName, day, month, year, lat, lng, method, tune, save)
+            fetchPrayers(cityName, day, month, year, lat, lng, method, school,tune, save)
             data = getFromLocale(day, month, true)
             if (data != null) {
                 return@withContext data
@@ -44,6 +47,7 @@ class PrayersRepository @Inject constructor(
         }
         return job
     }
+
     suspend fun getPrayersDataNoSaving(
         cityName: String,
         day: Int,
@@ -52,11 +56,23 @@ class PrayersRepository @Inject constructor(
         lat: String,
         lng: String,
         method: Int,
+        school: Int,
         tune: String?,
         save: Boolean = false
     ): List<PrayerResponseApiModel>? {
         val job = withContext(externalScope.coroutineContext) {
-            return@withContext fetchAndReturnPrayers(cityName, day, month, year, lat, lng, method, tune, save)
+            return@withContext fetchAndReturnPrayers(
+                cityName,
+                day,
+                month,
+                year,
+                lat,
+                lng,
+                method,
+                school,
+                tune,
+                save
+            )
 
         }
         return job
@@ -73,6 +89,14 @@ class PrayersRepository @Inject constructor(
         return null
     }
 
+    private fun getLocaleMethod(): Int {
+        return localDataSource.getMethod()
+    }
+
+    private fun getSchool(): Int {
+        return localDataSource.getSchool()
+    }
+
     private suspend fun fetchPrayers(
         cityName: String,
         day: Int,
@@ -81,14 +105,16 @@ class PrayersRepository @Inject constructor(
         lat: String,
         lng: String,
         method: Int,
+        school: Int,
         tune: String?,
         save: Boolean = true
     ) {
-        val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
+        val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, school, tune)
         if (save)
             localDataSource.insertData(cityName, result.data!!)
 
     }
+
     private suspend fun fetchAndReturnPrayers(
         cityName: String,
         day: Int,
@@ -97,10 +123,11 @@ class PrayersRepository @Inject constructor(
         lat: String,
         lng: String,
         method: Int,
+        school: Int,
         tune: String?,
         save: Boolean = false
     ): List<PrayerResponseApiModel>? {
-        val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
+        val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, school, tune)
         return result.data
 
     }

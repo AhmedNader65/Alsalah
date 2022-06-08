@@ -212,7 +212,8 @@ class HomeFragment : Fragment(), PermissionListener {
                             calendar,
                             it.latitude.toString(),
                             it.longitude.toString(),
-                            5,
+                            globalPreferences.getCalculationMethod(),
+                            globalPreferences.getSchool(),
                             null
                         )
 
@@ -224,7 +225,8 @@ class HomeFragment : Fragment(), PermissionListener {
                                 viewModel.gor,
                                 it.latitude.toString(),
                                 it.longitude.toString(),
-                                5,
+                                globalPreferences.getCalculationMethod(),
+                                globalPreferences.getSchool(),
                                 null,
                                 false
                             )
@@ -238,7 +240,8 @@ class HomeFragment : Fragment(), PermissionListener {
                                 viewModel.gor,
                                 it.latitude.toString(),
                                 it.longitude.toString(),
-                                5,
+                                globalPreferences.getCalculationMethod(),
+                                globalPreferences.getSchool(),
                                 null,
                                 false
                             )
