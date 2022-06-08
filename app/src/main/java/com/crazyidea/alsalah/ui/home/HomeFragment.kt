@@ -17,6 +17,8 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.adapter.ArticlesAdapter
+import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.PermissionHelper
@@ -34,7 +36,7 @@ private const val TAG_OUTPUT: String = "DailyAzanWorker"
 private const val TAG: String = "HOME FRAGMENT"
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), PermissionListener {
+class HomeFragment : Fragment(), PermissionListener, ArticlesAdapter.ArticleListner {
 
     private lateinit var permissionHelper: PermissionHelper
     private var _binding: FragmentHomeBinding? = null
@@ -80,7 +82,7 @@ class HomeFragment : Fragment(), PermissionListener {
             }
         })
 
-setupArticles()
+        setupArticles()
 
         permissionHelper.checkForMultiplePermissions(
             arrayOf(
@@ -106,12 +108,10 @@ setupArticles()
 
     private fun setupArticles() {
         viewModel.articleData.observe(viewLifecycleOwner) {
-            binding.blogItem.withSimpleAdapter(it, R.layout.item_blog) {
-                val title = itemView.findViewById<TextView>(R.id.blog_title)
-                title.text = it.text
-            }
+            binding.blogItem.adapter = ArticlesAdapter(it, this)
         }
     }
+
     private fun setupNavigation() {
         binding.readAfterPrayersNowBtn.setOnClickListener {
             findNavController().navigate(
@@ -141,7 +141,7 @@ setupArticles()
 
     private fun collectData() {
         viewModel.prayerData.observe(viewLifecycleOwner) {
-            Log.e("Work manager","started")
+            Log.e("Work manager", "started")
             val dailyWorkRequest = OneTimeWorkRequestBuilder<DailyAzanWorker>()
 //            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
                 .addTag(TAG_OUTPUT).build()
@@ -266,5 +266,18 @@ setupArticles()
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
         }
+    }
+
+    override fun onArticlePicked(article: Articles) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(
+                article
+            )
+        )
+
+    }
+
+    override fun onPlayClicked(article: Articles) {
+
     }
 }

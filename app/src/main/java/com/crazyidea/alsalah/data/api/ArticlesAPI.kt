@@ -14,4 +14,10 @@ interface ArticlesAPI {
         @Url url:String
     ): Response<ServerResponse<ArrayList<Articles>>>
 
+    @GET
+    suspend fun getFawaed(
+        @Header("Accept-Language") language: String,
+        @Url url:String
+    ): Response<ServerResponse<ArrayList<Articles>>>
+
 }

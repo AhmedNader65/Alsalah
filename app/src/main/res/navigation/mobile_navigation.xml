@@ -22,6 +22,12 @@
         <action
             android:id="@+id/action_navigation_home_to_khatmaFragment"
             app:destination="@id/khatmaFragment" />
+        <action
+            android:id="@+id/action_navigation_home_self"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_home_to_blogDetailFragment"
+            app:destination="@id/blogDetailFragment" />
     </fragment>
 
     <fragment
@@ -94,6 +100,9 @@
         <action
             android:id="@+id/action_navigation_menu_to_khatmaFragment"
             app:destination="@id/khatmaFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_fawaedFragment2"
+            app:destination="@id/fawaedFragment2" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -282,5 +291,21 @@
         android:id="@+id/registerFragment"
         android:name="com.crazyidea.alsalah.ui.auth.register.RegisterFragment"
         android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/fawaedFragment2"
+        android:name="com.crazyidea.alsalah.ui.fawaed.FawaedFragment"
+        android:label="FawaedFragment" >
+        <action
+            android:id="@+id/action_fawaedFragment2_to_blogDetailFragment"
+            app:destination="@id/blogDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/blogDetailFragment"
+        android:name="com.crazyidea.alsalah.ui.blogDetail.BlogDetailFragment"
+        android:label="BlogDetailFragment" >
+        <argument
+            android:name="article"
+            app:argType="com.crazyidea.alsalah.data.model.Articles" />
+    </fragment>
 
 </navigation>

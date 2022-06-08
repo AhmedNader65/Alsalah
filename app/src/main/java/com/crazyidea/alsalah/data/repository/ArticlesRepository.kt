@@ -35,6 +35,20 @@ class ArticlesRepository @Inject constructor(
             emit(result)
         }.flowOn(Dispatchers.IO)
     }
+    suspend fun fetchFwaed(): Flow<Resource<ArrayList<Articles>>?> {
+        return flow {
+            emit(Resource.loading())
+            val result = dataSource.getFawaed()
+            if (result.status == Status.SUCCESS) {
+                result.let {
+                    infoDataMutex.withLock {
+                        articleData = it
+                    }
+                }
+            }
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
 
 
 }

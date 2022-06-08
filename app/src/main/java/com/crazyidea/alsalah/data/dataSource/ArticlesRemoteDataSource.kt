@@ -20,4 +20,10 @@ class ArticlesRemoteDataSource @Inject constructor(
             defaultErrorMessage = "Error fetching articles"
         )
     }
+    suspend fun getFawaed(): Resource<ArrayList<Articles>> {
+        return getResponse(
+            request = { articlesAPI.getFawaed(globalPreferences.getLocale(),"${baseURL}fawaed") },
+            defaultErrorMessage = "Error fetching articles"
+        )
+    }
 }

@@ -368,6 +368,7 @@ class HomeViewModel @Inject constructor(
 
     override fun onCleared() {
         prayerDataJob?.cancel()
+        articleDataJob?.cancel()
         super.onCleared()
     }
 

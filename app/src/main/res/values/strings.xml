@@ -203,4 +203,7 @@
     <string name="read_contacts_permission">اذن قراءة جهات الاتصال</string>
     <string name="addEditContacts">اضافة وتعديل</string>
     <string name="fajr_list_description">وظيفة القائمة هي تنبيه الأصدقاء الى موعد صلاة الفجر عن طريق الاتصال بهم توالياً</string>
+    <string name="more">Read more</string>
+    <string name="ellipsis">...</string>
+    <string name="articleDetail">تفاصيل المقال</string>
 </resources>

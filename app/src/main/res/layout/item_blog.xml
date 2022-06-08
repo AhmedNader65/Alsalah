@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/_4sdp"
-    android:layout_marginTop="@dimen/_8sdp"
+    android:layout_margin="@dimen/_4sdp"
     app:cardCornerRadius="@dimen/_16sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +45,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/blog_title" />
 
+
+
         <TextView
             android:id="@+id/blog_desc"
             style="@style/lightText"
@@ -59,6 +60,7 @@
             android:text="@string/blog_exp"
             app:layout_constraintTop_toBottomOf="@id/views_counter" />
 
+
         <ImageView
             android:id="@+id/likes_img"
             android:layout_width="wrap_content"
@@ -69,6 +71,7 @@
             app:layout_constraintTop_toBottomOf="@id/blog_desc" />
 
         <TextView
+            android:id="@+id/likes_count"
             style="@style/boldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,6 +93,7 @@
             app:layout_constraintTop_toBottomOf="@id/blog_desc" />
 
         <TextView
+            android:id="@+id/comments_count"
             style="@style/boldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

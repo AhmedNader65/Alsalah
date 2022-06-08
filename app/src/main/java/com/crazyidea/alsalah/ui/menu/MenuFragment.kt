@@ -82,6 +82,9 @@ class MenuFragment : Fragment() {
         binding.khatma.setOnClickListener {
             findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToKhatmaFragment())
         }
+        binding.fwaed.setOnClickListener {
+            findNavController().navigate(MenuFragmentDirections.actionNavigationMenuToFawaedFragment2())
+        }
         binding.mosques.setOnClickListener {
             openMasajdOnMap()
         }
