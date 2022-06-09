@@ -96,6 +96,7 @@ class BlogDetailFragment : Fragment() {
     private fun setupComments() {
         viewModel.commentData.observe(viewLifecycleOwner) {
             repliesAdapter = RepliesAdapter(it)
+
             binding.repliesList.adapter = repliesAdapter
         }
         viewModel.comments.observe(viewLifecycleOwner) {
