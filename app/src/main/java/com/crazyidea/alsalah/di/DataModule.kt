@@ -3,6 +3,7 @@ package com.crazyidea.alsalah.di
 import android.content.Context
 import androidx.room.Room
 import com.crazyidea.alsalah.data.api.ArticlesAPI
+import com.crazyidea.alsalah.data.api.AuthAPI
 import com.crazyidea.alsalah.data.api.CalendarAPI
 import com.crazyidea.alsalah.data.api.PrayersAPI
 import com.crazyidea.alsalah.data.dataSource.*
@@ -56,6 +57,14 @@ class DataModule {
 
     @Provides
     @Singleton
+    fun provideUserRemoteDataSource(
+        authAPI: AuthAPI,
+        @Named("base_url") BASE_URL: String
+    ) =
+        UserRemoteDataSource(authAPI,BASE_URL)
+
+    @Provides
+    @Singleton
     fun provideArticlesRepository(
         remoteDataSource: ArticlesRemoteDataSource,
     ) =
@@ -105,6 +114,14 @@ class DataModule {
         localDataSource: AzkarLocalDataSource
     ) =
         AzkarRepository(remoteDataSource, localDataSource, coroutineScope)
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(
+        coroutineScope: CoroutineScope,
+        userRemoteDataSource: UserRemoteDataSource,
+    ) =
+        UserRepository(userRemoteDataSource, coroutineScope)
 
     @Provides
     @Singleton

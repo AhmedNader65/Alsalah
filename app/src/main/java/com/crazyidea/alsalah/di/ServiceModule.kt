@@ -3,6 +3,7 @@ package com.crazyidea.alsalah.di
 import android.content.Context
 import com.crazyidea.alsalah.BuildConfig
 import com.crazyidea.alsalah.data.api.ArticlesAPI
+import com.crazyidea.alsalah.data.api.AuthAPI
 import com.crazyidea.alsalah.data.api.CalendarAPI
 import com.crazyidea.alsalah.data.api.PrayersAPI
 import dagger.Module
@@ -44,6 +45,11 @@ class ServiceModule {
     @Provides
     @Singleton
     fun providePrayersApi(retrofit: Retrofit): PrayersAPI = retrofit.create(PrayersAPI::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideAuthAPI(retrofit: Retrofit): AuthAPI = retrofit.create(AuthAPI::class.java)
 
 
     @Provides
