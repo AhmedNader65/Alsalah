@@ -207,4 +207,5 @@
     <string name="ellipsis">...</string>
     <string name="articleDetail">تفاصيل المقال</string>
     <string name="views_count">عدد المشاهدات %d</string>
+    <string name="share_text">"اقرأ عن %s على تطبيق الصلاة من خلال الرابط التالي %s"</string>
 </resources>

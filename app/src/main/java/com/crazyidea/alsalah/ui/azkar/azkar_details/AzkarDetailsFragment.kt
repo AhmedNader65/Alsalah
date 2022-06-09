@@ -51,7 +51,7 @@ class AzkarDetailsFragment : Fragment() {
             findNavController().navigate(AzkarDetailsFragmentDirections.actionNavigationAzkarDetailsToAzkarMenuFragment(args.category))
         }
         binding.model = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return root
     }
 

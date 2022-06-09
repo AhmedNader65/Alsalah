@@ -23,6 +23,7 @@ class ArticlesRepository @Inject constructor(
     private var articleData: Resource<ArrayList<Articles>>? = null
     private var articleComments: Resource<ArrayList<Comment>>? = null
     private var commentData: Resource<Comment>? = null
+    private var likeData: Resource<String>? = null
 
     suspend fun fetcharticle(): Flow<Resource<ArrayList<Articles>>?> {
         return flow {
@@ -115,14 +116,14 @@ class ArticlesRepository @Inject constructor(
     }
 
 
-    suspend fun postFwaedLike(id: Int): Flow<Resource<Comment>?> {
+    suspend fun postFwaedLike(id: Int): Flow<Resource<String>?> {
         return flow {
             emit(Resource.loading())
             val result = dataSource.postFwaedLike(id)
             if (result.status == Status.SUCCESS) {
                 result.let {
                     infoDataMutex.withLock {
-                        commentData = it
+                        likeData = it
                     }
                 }
             }
@@ -130,14 +131,14 @@ class ArticlesRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun postArticleLike(id: Int): Flow<Resource<Comment>?> {
+    suspend fun postArticleLike(id: Int): Flow<Resource<String>?> {
         return flow {
             emit(Resource.loading())
             val result = dataSource.postArticleLike(id)
             if (result.status == Status.SUCCESS) {
                 result.let {
                     infoDataMutex.withLock {
-                        commentData = it
+                        likeData = it
                     }
                 }
             }

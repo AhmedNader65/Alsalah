@@ -68,7 +68,7 @@ class SebhaFragment : Fragment() {
         _binding = FragmentSebhaBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.model = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         observerLiveData()
         return root
     }

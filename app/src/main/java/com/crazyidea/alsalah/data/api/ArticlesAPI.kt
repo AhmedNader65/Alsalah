@@ -5,16 +5,19 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ArticlesAPI {
+
     @GET
     suspend fun getArticles(
         @Header("Accept-Language") language: String,
-        @Url url: String
+        @Url url: String,
+        @Query("id") id: Int =1,
     ): Response<ServerResponse<ArrayList<Articles>>>
 
     @GET
     suspend fun getFawaed(
         @Header("Accept-Language") language: String,
-        @Url url: String
+        @Url url: String,
+        @Query("id") id: Int =1,
     ): Response<ServerResponse<ArrayList<Articles>>>
 
     @GET
@@ -56,7 +59,7 @@ interface ArticlesAPI {
         @Url url: String,
         @Field("customer_id") userID: Int,
         @Field("article_id") article_id: Int,
-    ): Response<ServerResponse<Comment>>
+    ): Response<ServerResponse<String>>
 
     @POST
     @FormUrlEncoded
@@ -65,6 +68,6 @@ interface ArticlesAPI {
         @Url url: String,
         @Field("customer_id") userID: Int,
         @Field("fawaed_id") article_id: Int,
-    ): Response<ServerResponse<Comment>>
+    ): Response<ServerResponse<String>>
 
 }

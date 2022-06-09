@@ -26,26 +26,27 @@ class ArticlesAdapter(
      * (custom ViewHolder).
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val blog_image: ImageView
-        val likes_img: ImageView
-        val blog_title: TextView
-        val views_counter: TextView
-        val blog_desc: TextView
-        val likes_count: TextView
-        val comments_count: TextView
-        val share_count: TextView
+        val blogImage: ImageView
+        val likesImg: ImageView
+        val blogTitle: TextView
+        val viewsCounter: TextView
+        val blogDesc: TextView
+        val likesCount: TextView
+        val commentsCount: TextView
+        val shareCount: TextView
+        val shareImg: ImageView
 
         init {
             // Define click listener for the ViewHolder's View.
-            blog_title = view.findViewById(R.id.blog_title)
-            blog_image = view.findViewById(R.id.blog_image)
-            likes_img = view.findViewById(R.id.likes_img)
-            blog_desc = view.findViewById(R.id.blog_desc)
-            views_counter = view.findViewById(R.id.views_counter)
-            likes_count = view.findViewById(R.id.likes_count)
-            comments_count = view.findViewById(R.id.comments_count)
-            share_count = view.findViewById(R.id.share_count)
-
+            blogTitle = view.findViewById(R.id.blog_title)
+            blogImage = view.findViewById(R.id.blog_image)
+            likesImg = view.findViewById(R.id.likes_img)
+            shareImg = view.findViewById(R.id.share_img)
+            blogDesc = view.findViewById(R.id.blog_desc)
+            viewsCounter = view.findViewById(R.id.views_counter)
+            likesCount = view.findViewById(R.id.likes_count)
+            commentsCount = view.findViewById(R.id.comments_count)
+            shareCount = view.findViewById(R.id.share_count)
         }
     }
 
@@ -56,11 +57,7 @@ class ArticlesAdapter(
         context = viewGroup.context
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.item_blog, viewGroup, false)
-
-
         return ViewHolder(view)
-
-
     }
 
 
@@ -69,21 +66,33 @@ class ArticlesAdapter(
         val article = dataSet[position]
         val desc =
             (Html.fromHtml("<br><p>${article.text}</p>", Html.FROM_HTML_MODE_COMPACT))
-        viewHolder.blog_desc.text = desc
-        viewHolder.blog_title.text = article.title
-        viewHolder.likes_count.text = article.likes.toString()
-        viewHolder.comments_count.text = article.comments.toString()
-        viewHolder.share_count.text = article.share.toString()
-        viewHolder.blog_desc.text = desc
-        viewHolder.views_counter.text = context.getString(R.string.views_count, article.views)
-        Picasso.get().load(article.image).into(viewHolder.blog_image)
+        viewHolder.blogDesc.text = desc
+        viewHolder.blogTitle.text = article.title
+        viewHolder.likesCount.text = article.likes.toString()
+        viewHolder.commentsCount.text = article.comments.toString()
+        viewHolder.shareCount.text = article.share.toString()
+        viewHolder.blogDesc.text = desc
+        viewHolder.viewsCounter.text = context.getString(R.string.views_count, article.views)
+        Picasso.get().load(article.image).into(viewHolder.blogImage)
         viewHolder.itemView.setOnClickListener { onReadMore(article) }
         if (article.liked)
-            viewHolder.likes_img.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_favorite_24))
+            viewHolder.likesImg.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_favorite_24))
         else
-            viewHolder.likes_img.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_favorite_border_24))
+            viewHolder.likesImg.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_favorite_border_24))
 
-        viewHolder.likes_img.setOnClickListener { onFavourite }
+        viewHolder.shareImg.setOnClickListener {
+            onShare(article)
+        }
+        viewHolder.likesImg.setOnClickListener {
+            article.liked = !article.liked
+            if (article.liked) {
+                article.likes = article.likes.plus(1)
+            } else {
+                article.likes = article.likes.minus(1)
+            }
+            onFavourite(article)
+            notifyItemChanged(position)
+        }
 
 
     }
@@ -96,6 +105,11 @@ class ArticlesAdapter(
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+    fun submitList(it: java.util.ArrayList<Articles>?) {
+        dataSet.clear()
+        dataSet.addAll(it!!)
+        notifyDataSetChanged()
+    }
 
 
 }

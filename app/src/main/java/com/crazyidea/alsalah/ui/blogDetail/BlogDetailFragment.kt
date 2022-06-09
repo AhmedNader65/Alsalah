@@ -17,6 +17,7 @@ import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.RepliesAdapter
 import com.crazyidea.alsalah.databinding.FragmentBlogDetailBinding
 import com.crazyidea.alsalah.utils.ImageGetter
+import com.crazyidea.alsalah.utils.share
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -43,7 +44,7 @@ class BlogDetailFragment : Fragment() {
         val root: View = binding.root
         viewModel.article.postValue(args.article)
         binding.model = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         if (args.type == 1)
             viewModel.getComments(args.article.id)
         else
@@ -78,7 +79,6 @@ class BlogDetailFragment : Fragment() {
                 viewModel.postArticleComment(args.article.id, binding.myText.text.toString())
             else
                 viewModel.postFwaedComment(args.article.id, binding.myText.text.toString())
-
         }
         checkImageStatus(bool)
 
@@ -88,6 +88,9 @@ class BlogDetailFragment : Fragment() {
             else
                 viewModel.postFwaedLike(args.article.id)
 
+        }
+        binding.shareImg.setOnClickListener {
+            args.article.share(requireContext())
         }
 
 
@@ -105,10 +108,10 @@ class BlogDetailFragment : Fragment() {
             binding.myText.setText("")
         }
         viewModel.likedComment.observe(viewLifecycleOwner) {
-            if (!bool){
+            if (!bool) {
                 args.article.likes = args.article.likes.plus(1)
                 binding.likesCount.text = args.article.likes.toString()
-            }else{
+            } else {
                 args.article.likes = args.article.likes.minus(1)
                 binding.likesCount.text = args.article.likes.toString()
             }

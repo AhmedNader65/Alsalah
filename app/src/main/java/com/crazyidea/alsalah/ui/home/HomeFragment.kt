@@ -20,10 +20,8 @@ import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.ArticlesAdapter
 import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
-import com.crazyidea.alsalah.utils.GlobalPreferences
-import com.crazyidea.alsalah.utils.PermissionHelper
-import com.crazyidea.alsalah.utils.PermissionListener
-import com.crazyidea.alsalah.utils.withSimpleAdapter
+import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
+import com.crazyidea.alsalah.utils.*
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -38,10 +36,12 @@ private const val TAG: String = "HOME FRAGMENT"
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PermissionListener {
 
+    private lateinit var adapter: ArticlesAdapter
     private lateinit var permissionHelper: PermissionHelper
     private var _binding: FragmentHomeBinding? = null
 
     private val viewModel by viewModels<HomeViewModel>()
+    private val blogViewModel by viewModels<BlogDetailViewModel>()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var lastKnownLocation: Location? = null
 
@@ -61,7 +61,7 @@ class HomeFragment : Fragment(), PermissionListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.model = viewModel
         binding.dateLayout.model = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         permissionHelper = PermissionHelper(this, this)
         return binding.root
     }
@@ -70,7 +70,19 @@ class HomeFragment : Fragment(), PermissionListener {
         super.onViewCreated(view, savedInstanceState)
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
-
+        adapter = ArticlesAdapter(arrayListOf(), onReadMore = {
+            findNavController().navigate(
+                HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(
+                    it,
+                    1
+                )
+            )
+        }, onFavourite = {
+            blogViewModel.postArticleLike(it.id)
+        }, onShare = {
+            it.share(requireContext())
+        })
+        binding.blogItem.adapter = adapter
         binding.khatmaLayout.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToKhatmaFragment())
         }
@@ -97,13 +109,7 @@ class HomeFragment : Fragment(), PermissionListener {
 
     private fun setupArticles() {
         viewModel.articleData.observe(viewLifecycleOwner) {
-            binding.blogItem.adapter = ArticlesAdapter(it, onReadMore = {
-                findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(it,1))
-            }, onFavourite = {
-
-            }, onShare = {
-
-            })
+            adapter.submitList(it)
         }
     }
 
@@ -142,6 +148,9 @@ class HomeFragment : Fragment(), PermissionListener {
                 .addTag(TAG_OUTPUT).build()
             WorkManager.getInstance(requireContext()).enqueue(dailyWorkRequest)
 
+            blogViewModel.likedComment.observe(viewLifecycleOwner) {
+                adapter
+            }
 //            WorkManager.getInstance(requireContext()).enqueueUniqueWork(
 //                TAG_OUTPUT,
 //                ExistingWorkPolicy.REPLACE, dailyWorkRequest

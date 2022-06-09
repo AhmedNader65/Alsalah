@@ -15,7 +15,9 @@ import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentFawaedBinding
 import com.crazyidea.alsalah.databinding.FragmentFawaedBolgsBinding
+import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
 import com.crazyidea.alsalah.ui.home.HomeFragmentDirections
+import com.crazyidea.alsalah.utils.share
 import com.crazyidea.alsalah.utils.withSimpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +30,7 @@ class FawaedFragment : Fragment(), ArticlesAdapter.ArticleListner {
     // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel by viewModels<FawaedSettingViewModel>()
+    private val blogViewModel by viewModels<BlogDetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,11 +53,11 @@ class FawaedFragment : Fragment(), ArticlesAdapter.ArticleListner {
     private fun setupFwaed() {
         viewModel.fawaedData.observe(viewLifecycleOwner) {
             binding.blogsRV.adapter = ArticlesAdapter(it, onReadMore = {
-                findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(it))
+                findNavController().navigate(FawaedFragmentDirections.actionFawaedFragment2ToBlogDetailFragment(it))
             }, onFavourite = {
-
+                blogViewModel.postFwaedLike(it.id)
             }, onShare = {
-
+                it.share(requireContext())
             })
         }
     }

@@ -25,9 +25,9 @@ class BlogDetailViewModel @Inject constructor(
     private val _commentData = MutableLiveData<ArrayList<Comment>>()
     val commentData: LiveData<ArrayList<Comment>> = _commentData
     private val _comments = MutableLiveData<Comment>()
-    private val _likedComments = MutableLiveData<Comment>()
+    private val _likedComments = MutableLiveData<String>()
     val comments: LiveData<Comment> = _comments
-    val likedComment: LiveData<Comment> = _likedComments
+    val likedComment: LiveData<String> = _likedComments
     private var commentDataJob: Job? = null
     private var fawaedcommentDataJob: Job? = null
     private var postArticleCommentJob: Job? = null

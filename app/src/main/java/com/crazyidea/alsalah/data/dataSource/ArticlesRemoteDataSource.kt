@@ -81,7 +81,7 @@ class ArticlesRemoteDataSource @Inject constructor(
         )
     }
 
-    suspend fun postArticleLike(articleID: Int): Resource<Comment> {
+    suspend fun postArticleLike(articleID: Int): Resource<String> {
         return getResponse(
             request = {
                 articlesAPI.postArticleLike(
@@ -93,7 +93,7 @@ class ArticlesRemoteDataSource @Inject constructor(
         )
     }
 
-    suspend fun postFwaedLike(articleID: Int): Resource<Comment> {
+    suspend fun postFwaedLike(articleID: Int): Resource<String> {
         return getResponse(
             request = {
                 articlesAPI.postFwaedLike(
