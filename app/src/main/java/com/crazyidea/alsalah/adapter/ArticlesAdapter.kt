@@ -10,11 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.Articles
+import com.squareup.picasso.Picasso
 
 
 class ArticlesAdapter(
-    private val dataSet: ArrayList<Articles>,
-    private val listner: ArticleListner
+    private val dataSet: ArrayList<Articles>, val onReadMore: (Articles) -> Unit,
+    val onShare: (Articles) -> Unit, val onFavourite: (Articles) -> Unit
 ) :
     RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
     private lateinit var context: Context
@@ -65,31 +66,24 @@ class ArticlesAdapter(
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val article = dataSet.get(position)
+        val article = dataSet[position]
         val desc =
             (Html.fromHtml("<br><p>${article.text}</p>", Html.FROM_HTML_MODE_COMPACT))
-        viewHolder.blog_desc.setText(desc)
-        viewHolder.blog_title.setText(article.title)
-        viewHolder.likes_count.setText(article.likes.toString())
-        viewHolder.comments_count.setText(article.comments.toString())
-        viewHolder.share_count.setText(article.share.toString())
-        if (desc.length > 150) {
-            viewHolder.blog_desc.text = Html.fromHtml(
-                desc.substring(
-                    0,
-                    150
-                ) + "..." + "<font color='blue'> <u>Read More...</u></font>"
-            )
-        } else {
-            viewHolder.blog_desc.text = desc
-        }
-        viewHolder.blog_desc.setOnClickListener { listner.onArticlePicked(article) }
+        viewHolder.blog_desc.text = desc
+        viewHolder.blog_title.text = article.title
+        viewHolder.likes_count.text = article.likes.toString()
+        viewHolder.comments_count.text = article.comments.toString()
+        viewHolder.share_count.text = article.share.toString()
+        viewHolder.blog_desc.text = desc
+        viewHolder.views_counter.text = context.getString(R.string.views_count, article.views)
+        Picasso.get().load(article.image).into(viewHolder.blog_image)
+        viewHolder.itemView.setOnClickListener { onReadMore(article) }
         if (article.liked)
             viewHolder.likes_img.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_favorite_24))
         else
             viewHolder.likes_img.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_favorite_border_24))
 
-        viewHolder.likes_img.setOnClickListener {listner.onLikedClicked(article)}
+        viewHolder.likes_img.setOnClickListener { onFavourite }
 
 
     }

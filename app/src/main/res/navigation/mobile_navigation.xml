@@ -263,6 +263,7 @@
     </fragment>
     <fragment
         android:id="@+id/addKhatmaFragment1"
+        tools:layout="@layout/fragment_add_khatma1"
         android:name="com.crazyidea.alsalah.ui.khatma.AddKhatmaFragment1"
         android:label="AddKhatmaFragment1">
         <action
@@ -293,6 +294,7 @@
         android:label="RegisterFragment" />
     <fragment
         android:id="@+id/fawaedFragment2"
+        tools:layout="@layout/fragment_fawaed_bolgs"
         android:name="com.crazyidea.alsalah.ui.fawaed.FawaedFragment"
         android:label="FawaedFragment" >
         <action
@@ -301,6 +303,7 @@
     </fragment>
     <fragment
         android:id="@+id/blogDetailFragment"
+        tools:layout="@layout/fragment_blog_detail"
         android:name="com.crazyidea.alsalah.ui.blogDetail.BlogDetailFragment"
         android:label="BlogDetailFragment" >
         <argument

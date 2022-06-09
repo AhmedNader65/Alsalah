@@ -10,7 +10,7 @@ data class Articles(
     val views: Int,
     val share: Int,
     val comments: Int,
-    val likes: Int,
+    var likes: Int,
     val liked: Boolean,
 ):Serializable
 

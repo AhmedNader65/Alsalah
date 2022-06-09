@@ -49,7 +49,13 @@ class FawaedFragment : Fragment(), ArticlesAdapter.ArticleListner {
 
     private fun setupFwaed() {
         viewModel.fawaedData.observe(viewLifecycleOwner) {
-            binding.blogsRV.adapter = ArticlesAdapter(it, this)
+            binding.blogsRV.adapter = ArticlesAdapter(it, onReadMore = {
+                findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(it))
+            }, onFavourite = {
+
+            }, onShare = {
+
+            })
         }
     }
 

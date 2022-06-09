@@ -1,20 +1,24 @@
 package com.crazyidea.alsalah.ui.blogDetail
 
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.adapter.ArticlesAdapter
 import com.crazyidea.alsalah.adapter.RepliesAdapter
 import com.crazyidea.alsalah.databinding.FragmentBlogDetailBinding
+import com.crazyidea.alsalah.utils.ImageGetter
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class BlogDetailFragment : Fragment() {
@@ -26,7 +30,7 @@ class BlogDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<BlogDetailViewModel>()
     private val args by navArgs<BlogDetailFragmentArgs>()
-    var bool:Boolean=false
+    var bool: Boolean = false
     lateinit var repliesAdapter: RepliesAdapter
 
     override fun onCreateView(
@@ -51,10 +55,24 @@ class BlogDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
-        bool=args.article.liked
+        bool = args.article.liked
         setupComments()
-        binding.blogDesc.text =
-            (Html.fromHtml("<br><p>${args.article.text}</p>", Html.FROM_HTML_MODE_COMPACT))
+
+        // Creating object of ImageGetter class you just created
+        val imageGetter = ImageGetter(requireActivity().resources, binding.blogDesc)
+
+        // Using Html framework to parse html
+        val styledText = HtmlCompat.fromHtml(
+            args.article.text,
+            HtmlCompat.FROM_HTML_MODE_LEGACY,
+            imageGetter, null
+        )
+
+        // to enable image/link clicking
+        binding.blogDesc.movementMethod = LinkMovementMethod.getInstance()
+
+        // setting the text after formatting html and downloading and setting images
+        binding.blogDesc.text = styledText
         binding.storeImgContainer.setOnClickListener {
             if (args.type == 1)
                 viewModel.postArticleComment(args.article.id, binding.myText.text.toString())
@@ -81,11 +99,19 @@ class BlogDetailFragment : Fragment() {
             binding.repliesList.adapter = repliesAdapter
         }
         viewModel.comments.observe(viewLifecycleOwner) {
+            binding.commentsCount.text = args.article.comments.plus(1).toString()
             repliesAdapter.addComment(it)
             binding.myText.setText("")
         }
         viewModel.likedComment.observe(viewLifecycleOwner) {
-            bool=!bool
+            if (!bool){
+                args.article.likes = args.article.likes.plus(1)
+                binding.likesCount.text = args.article.likes.toString()
+            }else{
+                args.article.likes = args.article.likes.minus(1)
+                binding.likesCount.text = args.article.likes.toString()
+            }
+            bool = !bool
             checkImageStatus(bool)
         }
     }

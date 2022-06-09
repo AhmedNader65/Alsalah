@@ -36,7 +36,7 @@ private const val TAG_OUTPUT: String = "DailyAzanWorker"
 private const val TAG: String = "HOME FRAGMENT"
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), PermissionListener, ArticlesAdapter.ArticleListner {
+class HomeFragment : Fragment(), PermissionListener {
 
     private lateinit var permissionHelper: PermissionHelper
     private var _binding: FragmentHomeBinding? = null
@@ -91,24 +91,19 @@ class HomeFragment : Fragment(), PermissionListener, ArticlesAdapter.ArticleList
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         )
-//        val iCalendar = UmmalquraCalendar()
-//        name of month
-//        val locale = ULocale("ar@calendar=islamic")
-
-// name of month
-// full date
-//        val df2 = SimpleDateFormat("MMMM yyyy", locale)
-//        val df1 = SimpleDateFormat("EEEE", locale)
-//        binding.dateLayout.dayNum.text = iCalendar.get(IslamicCalendar.DAY_OF_MONTH).toString()
-//        binding.dateLayout.monthYear.text = df2.format(iCalendar.time)
-//        binding.dateLayout.today.text = df1.format(iCalendar.time)
         setupNavigation()
         collectData()
     }
 
     private fun setupArticles() {
         viewModel.articleData.observe(viewLifecycleOwner) {
-            binding.blogItem.adapter = ArticlesAdapter(it, this)
+            binding.blogItem.adapter = ArticlesAdapter(it, onReadMore = {
+                findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(it,1))
+            }, onFavourite = {
+
+            }, onShare = {
+
+            })
         }
     }
 
@@ -268,16 +263,4 @@ class HomeFragment : Fragment(), PermissionListener, ArticlesAdapter.ArticleList
         }
     }
 
-    override fun onArticlePicked(article: Articles) {
-        findNavController().navigate(
-            HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(
-                article, 1
-            )
-        )
-
-    }
-
-    override fun onLikedClicked(article: Articles) {
-
-    }
 }

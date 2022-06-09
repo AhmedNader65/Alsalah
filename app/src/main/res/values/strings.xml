@@ -206,4 +206,5 @@
     <string name="more">Read more</string>
     <string name="ellipsis">...</string>
     <string name="articleDetail">تفاصيل المقال</string>
+    <string name="views_count">عدد المشاهدات %d</string>
 </resources>
