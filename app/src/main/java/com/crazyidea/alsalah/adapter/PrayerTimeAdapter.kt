@@ -9,14 +9,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.data.model.PrayerTimeRefrence
-import com.crazyidea.alsalah.data.model.SupportedLanguage
-import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.data.model.PrayersCalculationMethods
 import com.crazyidea.alsalah.utils.themeColor
 
 class PrayerTimeAdapter(
-    private val dataSet: ArrayList<PrayerTimeRefrence>,
-    private val listner: PrayerTimeListner
+    private val dataSet: ArrayList<PrayersCalculationMethods>,
+    private val onMethodsSelected: (id: Int) -> Unit
 ) :
     RecyclerView.Adapter<PrayerTimeAdapter.ViewHolder>() {
     private lateinit var context: Context
@@ -83,14 +81,9 @@ class PrayerTimeAdapter(
             }
             prayerTimeRefrence.checked = true
             notifyDataSetChanged()
-            listner.onPrayerTimePicked(prayerTimeRefrence)
+            onMethodsSelected(prayerTimeRefrence.id)
         }
 
-    }
-
-
-    public interface PrayerTimeListner {
-        fun onPrayerTimePicked(prayerTimeRefrence: PrayerTimeRefrence)
     }
 
     // Return the size of your dataset (invoked by the layout manager)

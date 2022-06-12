@@ -6,14 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.adapter.LanguagesAdapter
-import com.crazyidea.alsalah.adapter.PrayerTimeAdapter
-import com.crazyidea.alsalah.data.model.PrayerTimeRefrence
-import com.crazyidea.alsalah.data.model.SupportedLanguage
-import com.crazyidea.alsalah.databinding.FragmentChooseLanguageBinding
 import com.crazyidea.alsalah.databinding.FragmentLocationBinding
-import com.crazyidea.alsalah.databinding.FragmentPrayerTimeNotificationBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

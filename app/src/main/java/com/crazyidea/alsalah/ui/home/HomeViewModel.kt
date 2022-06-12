@@ -118,6 +118,7 @@ class HomeViewModel @Inject constructor(
         lat: String,
         lng: String,
         method: Int,
+        school: Int,
         tune: String?,
         save: Boolean = true
     ) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -66,7 +66,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
-            android:src="@{model.muted == false? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_mute_sebha):context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_muted_sebha)}"            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@{model.muted == false? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_mute_sebha):context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_muted_sebha)}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/vibration"
             app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
@@ -158,13 +159,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <ProgressBar
+                android:id="@+id/progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="@dimen/_170sdp"
                 android:layout_height="@dimen/_170sdp"
                 android:layout_gravity="center"
                 android:layoutDirection="ltr"
                 android:max="100"
-                android:progress="@{model.azkar.count==0?0:(int)((double)model.azkarCounter/(double)model.azkar.count * 100)}"
                 android:progressDrawable="@drawable/circle_progressbar"
                 android:progressTint="@color/green"
                 android:secondaryProgressTint="@color/black" />

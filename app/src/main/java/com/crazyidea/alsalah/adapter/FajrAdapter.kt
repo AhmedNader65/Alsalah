@@ -47,7 +47,4 @@ class FajrAdapter(
         val name: TextView = itemView.findViewById(R.id.text1)
     }
 
-//    interface OnProductInteract {
-//        fun onAddToCart(productId: Int)
-//    }
 }

@@ -34,4 +34,10 @@ interface PrayerDao {
 
     @Query("Select COUNT(*) FROM META WHERE city = :city AND month = :month")
     fun shouldFetchData(city: String, month: Int): Int
+
+    @Query("Select method FROM META")
+    fun getMethod(): Int
+
+    @Query("Select school FROM META")
+    fun getSchool(): Int
 }

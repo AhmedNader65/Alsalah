@@ -26,7 +26,7 @@ class PrayersLocalDataSource @Inject constructor(
             remoteResponse.forEach {
                try {
                    val metaId = appDatabase.prayersDao().insertMeta(
-                       Meta(null, it.meta.method.id, cityName, it.date.gregorian.month.number)
+                       Meta(null, it.meta.method.id, cityName, it.date.gregorian.month.number,if(it.meta.school=="STANDARD") 0 else 1)
                    )
                    val timingId = appDatabase.prayersDao().insertTiming(
                        Timing(
@@ -85,6 +85,13 @@ class PrayersLocalDataSource @Inject constructor(
             val dayy = String.format(Locale.ENGLISH, "%02d", day)
             return MutableLiveData(appDatabase.prayersDao().getTodayTimings(dayy, month))
 
+    }
+    fun getMethod(): Int {
+        return appDatabase.prayersDao().getMethod()
+    }
+
+    fun getSchool(): Int {
+        return appDatabase.prayersDao().getSchool()
     }
 
     suspend fun getFirstAzkarByCategory(category: String): Azkar {

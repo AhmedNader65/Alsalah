@@ -226,7 +226,8 @@ class HomeFragment : Fragment(), PermissionListener {
                             cityName,
                             it.latitude.toString(),
                             it.longitude.toString(),
-                            5,
+                            globalPreferences.getCalculationMethod(),
+                            globalPreferences.getSchool(),
                             null
                         )
 

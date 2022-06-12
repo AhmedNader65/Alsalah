@@ -14,6 +14,7 @@ class SebhaViewModel @Inject constructor(
     private val prayerRepository: PrayersRepository,
 ) : ViewModel() {
 
+    private var gettingNextAzkar: Boolean = false
     val azkar = MutableLiveData<Azkar>()
     val playSound = MutableLiveData(false)
     val muted = MutableLiveData(false)
@@ -29,23 +30,34 @@ class SebhaViewModel @Inject constructor(
     }
 
     fun increaseCounter() {
-        playSound.value = true
-        var currentValue = azkarCounter.value
-        if (currentValue != null) {
-            if (currentValue < azkar.value!!.count)
-                currentValue = currentValue.plus(1)
-            azkarCounter.value = currentValue
-            if (currentValue == azkar.value!!.count) {
-                var currentIndexVal = currentIndex.value!!
-                if (currentIndexVal < allAzkar.value!!.size - 1) {
-                    currentIndexVal = currentIndexVal.plus(1)
-                    currentIndex.value = currentIndexVal
-                    azkar.value = allAzkar.value!![currentIndexVal]
-                    azkarCounter.value = 0
-                } else if (currentIndexVal == allAzkar.value!!.size - 1) {
-                    currentIndex.value = allAzkar.value!!.size
-                }
+        if (!gettingNextAzkar) {
+            playSound.value = true
+            var currentValue = azkarCounter.value
+            if (currentValue != null) {
+                if (currentValue < azkar.value!!.count)
+                    currentValue = currentValue.plus(1)
+                azkarCounter.value = currentValue
             }
         }
+        gettingNextAzkar = true
+    }
+
+    fun getNextAzkar() {
+
+        // if counter is at max
+        if (azkarCounter.value == azkar.value!!.count) {
+
+            var currentIndexVal = currentIndex.value!!
+            // get next azkar
+            if (currentIndexVal < allAzkar.value!!.size - 1) {
+                currentIndexVal = currentIndexVal.plus(1)
+                currentIndex.value = currentIndexVal
+                azkar.value = allAzkar.value!![currentIndexVal]
+                azkarCounter.value = 0
+            } else if (currentIndexVal == allAzkar.value!!.size - 1) {
+                currentIndex.value = allAzkar.value!!.size
+            }
+        }
+        gettingNextAzkar = false
     }
 }

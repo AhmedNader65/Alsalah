@@ -19,11 +19,12 @@ class PrayersRemoteDataSource @Inject constructor(
         lat: String,
         lng: String,
         method: Int,
+        school: Int,
         tune: String?
     ): Resource<List<PrayerResponseApiModel>> {
         return getResponse(
             request = {
-                prayersAPI.getPrayersTimingByAddress(lat, lng, month, year, method, tune)
+                prayersAPI.getPrayersTimingByAddress(lat, lng, month, year, method,school, tune)
             },
             defaultErrorMessage = "Error getting prayers try again"
         )

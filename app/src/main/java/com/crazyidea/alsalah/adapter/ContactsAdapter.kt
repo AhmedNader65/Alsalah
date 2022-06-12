@@ -14,7 +14,6 @@ class ContactsAdapter(
     private var list: List<Fajr>,
     private var removeContact: (contact: Fajr) -> Unit,
     private var addContact: (contact: Fajr) -> Unit,
-//    private val listener: OnProductInteract,
     var layout: Int = R.layout.item_checkbox
 ) :
     RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
@@ -61,8 +60,4 @@ class ContactsAdapter(
 
         val name: CheckBox = itemView.findViewById(R.id.checkbox)
     }
-
-//    interface OnProductInteract {
-//        fun onAddToCart(productId: Int)
-//    }
 }
