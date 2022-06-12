@@ -29,7 +29,7 @@ class AzkarFragment : Fragment() {
         _binding = FragmentAzkarBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.model = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.morningAzkarButton.setOnClickListener {
             findNavController().navigate(
                 AzkarFragmentDirections.actionNavigationAzkarToNavigationAzkarDetails(

@@ -63,8 +63,7 @@ class AzkarDetailsFragment : Fragment(), Animator.AnimatorListener {
         }
 
         binding.model = viewModel
-        binding.lifecycleOwner = this
-        setupObserver()
+        binding.lifecycleOwner = viewLifecycleOwner
         return root
     }
 

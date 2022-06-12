@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_navigation_home_to_khatmaFragment"
             app:destination="@id/khatmaFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_blogDetailFragment"
+            app:destination="@id/blogDetailFragment" />
     </fragment>
 
     <fragment
@@ -80,9 +83,6 @@
             android:id="@+id/action_navigation_menu_to_compassFragment2"
             app:destination="@id/compassFragment2" />
         <action
-            android:id="@+id/action_navigation_menu_to_fawaedFragment"
-            app:destination="@id/fawaedFragment" />
-        <action
             android:id="@+id/action_navigation_menu_to_calendarFragment"
             app:destination="@id/calendarFragment" />
         <action
@@ -94,6 +94,9 @@
         <action
             android:id="@+id/action_navigation_menu_to_khatmaFragment"
             app:destination="@id/khatmaFragment" />
+        <action
+            android:id="@+id/action_navigation_menu_to_fawaedFragment2"
+            app:destination="@id/fawaedFragment2" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -254,6 +257,7 @@
     </fragment>
     <fragment
         android:id="@+id/addKhatmaFragment1"
+        tools:layout="@layout/fragment_add_khatma1"
         android:name="com.crazyidea.alsalah.ui.khatma.AddKhatmaFragment1"
         android:label="AddKhatmaFragment1">
         <action
@@ -262,6 +266,7 @@
     </fragment>
     <fragment
         android:id="@+id/addKhatmaFragment2"
+        tools:layout="@layout/fragment_add_khatma2"
         android:name="com.crazyidea.alsalah.ui.khatma.AddKhatmaFragment2"
         android:label="AddKhatmaFragment2">
         <action
@@ -270,6 +275,7 @@
     </fragment>
     <fragment
         android:id="@+id/addKhatmaFragment3"
+        tools:layout="@layout/fragment_add_khatma3"
         android:name="com.crazyidea.alsalah.ui.khatma.AddKhatmaFragment3"
         android:label="AddKhatmaFragment3" >
         <action
@@ -279,8 +285,31 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_register"
         android:id="@+id/registerFragment"
         android:name="com.crazyidea.alsalah.ui.auth.register.RegisterFragment"
         android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/fawaedFragment2"
+        tools:layout="@layout/fragment_fawaed_bolgs"
+        android:name="com.crazyidea.alsalah.ui.fawaed.FawaedFragment"
+        android:label="FawaedFragment" >
+        <action
+            android:id="@+id/action_fawaedFragment2_to_blogDetailFragment"
+            app:destination="@id/blogDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/blogDetailFragment"
+        tools:layout="@layout/fragment_blog_detail"
+        android:name="com.crazyidea.alsalah.ui.blogDetail.BlogDetailFragment"
+        android:label="BlogDetailFragment" >
+        <argument
+            android:name="article"
+            app:argType="com.crazyidea.alsalah.data.model.Articles" />
+        <argument
+            android:name="type"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 
 </navigation>

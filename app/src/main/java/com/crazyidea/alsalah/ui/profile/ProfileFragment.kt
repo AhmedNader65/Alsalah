@@ -17,6 +17,10 @@ import com.crazyidea.alsalah.databinding.FragmentProfileBinding
 import com.crazyidea.alsalah.ui.home.HomeViewModel
 import com.crazyidea.alsalah.ui.menu.MenuFragmentDirections
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -25,6 +29,7 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val viewModel by viewModels<ProfileViewModel>()
+    private lateinit var auth: FirebaseAuth
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
@@ -41,8 +46,27 @@ class ProfileFragment : Fragment() {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        auth = Firebase.auth
 
         return root
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        currentUser?.let {
+            binding.register.visibility = View.GONE
+            binding.profileName.visibility = View.VISIBLE
+            binding.profileName.text = it.displayName
+            binding.profileEmail.text = it.email
+            binding.profileEmail.visibility = View.VISIBLE
+            binding.profileImgContainer.visibility = View.VISIBLE
+            Picasso.get().load(it.photoUrl).into(binding.profileImg)
+        } ?: run {
+            binding.register.visibility = View.VISIBLE
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

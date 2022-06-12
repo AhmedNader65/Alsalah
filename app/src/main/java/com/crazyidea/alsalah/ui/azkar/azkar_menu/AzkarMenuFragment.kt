@@ -41,7 +41,7 @@ class AzkarMenuFragment : Fragment() {
 
         _binding = FragmentAzkarListBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return root
     }
 
