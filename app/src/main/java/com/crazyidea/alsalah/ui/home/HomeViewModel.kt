@@ -2,6 +2,7 @@ package com.crazyidea.alsalah.ui.home
 
 import android.content.Context
 import android.os.CountDownTimer
+import android.os.Handler
 import android.text.format.DateUtils
 import android.util.Log
 import android.widget.ImageView
@@ -80,10 +81,15 @@ class HomeViewModel @Inject constructor(
     }
 
     val nextPrayer = MutableLiveData(" صلاة الظهر بعد")
+    val clickedPrayer = MutableLiveData(" صلاة الظهر بعد")
     val nextPrayerId = MutableLiveData(1)
+    val clickedPrayerId = MutableLiveData(0)
     val remainingTime = MutableLiveData("00:00")
+    val clickedremainingTime = MutableLiveData("00:00")
     val azkarAfterPrayer = MutableLiveData("")
     val azkar = MutableLiveData("")
+    lateinit var timer: CountDownTimer
+    lateinit var timer2: CountDownTimer
 
     private var hijri = UmmalquraCalendar()
     var gor: Calendar = Calendar.getInstance()
@@ -181,8 +187,126 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun clickPrayer(int: Int) {
+        if (this::timer.isInitialized) {
+            timer.cancel()
+        }
+        if (this::timer2.isInitialized) {
+            timer2.cancel()
+            delayTime()
+        } else {
+            delayTime()
+        }
+
+        val hour = gor.get(Calendar.HOUR_OF_DAY).toString()
+        val minute = gor.get(Calendar.MINUTE).toString()
+        val seconds = gor.get(Calendar.SECOND).toString()
+        val sdf1 = SimpleDateFormat("H:mm:ss", Locale("ar"))
+        val sdf = SimpleDateFormat("H:mm", Locale("ar"))
+        val currentDate = sdf1.parse("$hour:$minute:$seconds") as Date
+        val timings = prayers.value?.timing
+
+        timings?.let {
+            val fajrDate = sdf.parse(timings.Fajr) as Date
+            val shorokDate = sdf.parse(timings.Sunrise) as Date
+            val zuhrDate = sdf.parse(timings.Dhuhr) as Date
+            val asrDate = sdf.parse(timings.Asr) as Date
+            val maghribDate = sdf.parse(timings.Maghrib) as Date
+            val ishaDate = sdf.parse(timings.Isha) as Date
+            var basePrayerForNext = fajrDate
+            var diff = 30000L
+            clickedPrayerId.value = int
+            when (int) {
+                1 -> {
+                    if (currentDate.after(fajrDate)) {
+                        clickedPrayer.value = "صلاة الفجر منذ"
+                        diff = (currentDate.time - fajrDate.time)
+                    } else {
+                        clickedPrayer.value = "صلاة الفجر بعد"
+                        diff = (fajrDate.time - currentDate.time)
+
+                    }
+                }
+                2 -> {
+                    if (currentDate.after(shorokDate)) {
+                        clickedPrayer.value = "صلاة الشروق منذ"
+                        diff = (currentDate.time - shorokDate.time)
+                    } else {
+                        clickedPrayer.value = "صلاة الشروق بعد"
+                        diff = (shorokDate.time - currentDate.time)
+
+                    }
+                }
+                3 -> {
+                    if (currentDate.after(zuhrDate)) {
+                        clickedPrayer.value = "صلاة الظهر منذ"
+                        diff = (currentDate.time - zuhrDate.time)
+                    } else {
+                        clickedPrayer.value = "صلاة الظهر بعد"
+                        diff = (zuhrDate.time - currentDate.time)
+
+                    }
+                }
+                4 -> {
+                    if (currentDate.after(asrDate)) {
+                        clickedPrayer.value = "صلاة العصر منذ"
+                        diff = (currentDate.time - asrDate.time)
+                    } else {
+                        clickedPrayer.value = "صلاة العصر بعد"
+                        diff = (asrDate.time - currentDate.time)
+
+                    }
+                }
+                5 -> {
+                    if (currentDate.after(maghribDate)) {
+                        clickedPrayer.value = "صلاة المغرب منذ"
+                        diff = (currentDate.time - maghribDate.time)
+                    } else {
+                        clickedPrayer.value = "صلاة المغرب بعد"
+                        diff = (maghribDate.time - currentDate.time)
+
+                    }
+                }
+                6 -> {
+                    if (currentDate.after(ishaDate)) {
+                        clickedPrayer.value = "صلاة العشاء منذ"
+                        diff = (currentDate.time - ishaDate.time)
+                    } else {
+                        clickedPrayer.value = "صلاة العشاء بعد"
+                        diff = (ishaDate.time - currentDate.time)
+
+                    }
+                }
+
+
+            }
+
+
+            timer = object : CountDownTimer(diff, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    val d = Date(millisUntilFinished)
+                    val df = SimpleDateFormat("HH:mm:ss", Locale.getDefault()) // HH for 0-23
+                    df.timeZone = TimeZone.getTimeZone("GMT");
+                    val time = df.format(d)
+                    clickedremainingTime.value = time
+                    //here you can have your logic to set text to edittext
+                }
+
+                override fun onFinish() {
+
+                }
+            }
+            timer.start()
+        }
+        Log.e("TAG", "clickPrayer: " + clickedPrayer.value)
+        Log.e("TAG", "clickPrayer: " + clickedremainingTime.value)
+
+
+    }
+
 
     private fun getNextPrayer(newDate: Date? = null) {
+
         val hour = gor.get(Calendar.HOUR_OF_DAY).toString()
         val minute = gor.get(Calendar.MINUTE).toString()
         val seconds = gor.get(Calendar.SECOND).toString()
@@ -259,6 +383,7 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
 
     fun nextDay() {
         gor.add(Calendar.DAY_OF_MONTH, 1)
@@ -340,11 +465,34 @@ class HomeViewModel @Inject constructor(
         return color
     }
 
+    fun delayTime() {
+
+        timer2 = object : CountDownTimer(6000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                //here you can have your logic to set text to edittext
+
+            }
+
+            override fun onFinish() {
+                clickedPrayerId.value = 0
+                clickedremainingTime.value = ""
+            }
+        }
+        timer2.start()
+
+    }
+
 }
 
-@BindingAdapter("setupImage")
-fun bindPrayerHeaderImage(imageView: ImageView, prayerId: Int) {
-    when (prayerId) {
+
+@BindingAdapter("setupImage", "clickedID", requireAll = false)
+fun bindPrayerHeaderImage(imageView: ImageView, prayerId: Int, clickedID: Int) {
+    var myMethod = prayerId
+    if (clickedID == 0)
+        myMethod = prayerId
+    else
+        myMethod = clickedID
+    when (myMethod) {
         1 -> imageView.setImageResource(R.drawable.fajr_pic)
         2 -> imageView.setImageResource(R.drawable.shorok_pic)
         3 -> imageView.setImageResource(R.drawable.zuhr_pic)
