@@ -221,44 +221,21 @@ class HomeFragment : Fragment(), PermissionListener {
 
                         globalPreferences.storeLatitude(it.latitude.toString())
                         globalPreferences.storeLongitude(it.longitude.toString())
-                        val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
                         val cityName: String = addresses[0].locality
                         viewModel.fetchPrayerData(
                             cityName,
-                            calendar,
                             it.latitude.toString(),
                             it.longitude.toString(),
                             5,
                             null
                         )
 
-
                         binding.dateLayout.leftArrowIcon.setOnClickListener { ttt ->
                             viewModel.nextDay()
-//                            viewModel.getAnotherDayPrayerData(
-//                                cityName,
-//                                viewModel.gor,
-//                                it.latitude.toString(),
-//                                it.longitude.toString(),
-//                                5,
-//                                null,
-//                                false
-//                            )
-
                         }
 
                         binding.dateLayout.rightArrowIcon.setOnClickListener { ttt ->
                             viewModel.prevDay()
-//                            viewModel.getAnotherDayPrayerData(
-//                                cityName,
-//                                viewModel.gor,
-//                                it.latitude.toString(),
-//                                it.longitude.toString(),
-//                                5,
-//                                null,
-//                                false
-//                            )
-
                         }
                     }
                 } else {

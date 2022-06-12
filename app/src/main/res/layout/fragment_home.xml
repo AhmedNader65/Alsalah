@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_330sdp"
                 android:scaleType="fitXY"
-                android:src="@{model.nextPrayerId==1? context.getDrawable(com.crazyidea.alsalah.R.drawable.fajr_pic): model.nextPrayerId==2? context.getDrawable(com.crazyidea.alsalah.R.drawable.shorok_pic):model.nextPrayerId==3? context.getDrawable(com.crazyidea.alsalah.R.drawable.zuhr_pic):model.nextPrayerId==4? context.getDrawable(com.crazyidea.alsalah.R.drawable.asr_pic):model.nextPrayerId==5? context.getDrawable(com.crazyidea.alsalah.R.drawable.maghrib_pic):model.nextPrayerId==6? context.getDrawable(com.crazyidea.alsalah.R.drawable.isha_pic):context.getDrawable(com.crazyidea.alsalah.R.drawable.isha_pic)}"
+                app:setupImage="@{model.nextPrayerId}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
