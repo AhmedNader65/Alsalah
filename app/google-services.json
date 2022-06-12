@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "827997406585",
+    "project_id": "alsalah-7edd1",
+    "storage_bucket": "alsalah-7edd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827997406585:android:4f8655e1bdd1aea6351ba8",
+        "android_client_info": {
+          "package_name": "com.crazyidea.alsalah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "827997406585-b88lvths3a7a3hjeu7ss0dv0umr71i5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeGRvjTFKCyM-x1rHJBzuUslGU1Kf2eKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "827997406585-b88lvths3a7a3hjeu7ss0dv0umr71i5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,10 +1,13 @@
 package com.crazyidea.alsalah.data.dataSource
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.crazyidea.alsalah.data.model.AzkarResponseApiModel
 import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import com.crazyidea.alsalah.data.room.entity.prayers.Date
+import com.crazyidea.alsalah.data.room.entity.prayers.DateWithTiming
 import com.crazyidea.alsalah.data.room.entity.prayers.Meta
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import kotlinx.coroutines.CoroutineScope
@@ -77,9 +80,11 @@ class PrayersLocalDataSource @Inject constructor(
         }
     }
 
-    fun getDayTimings(day: Int, month: String): Timing? {
-        val dayy = String.format( Locale.ENGLISH,"%02d", day)
-        return appDatabase.prayersDao().getTodayTimings(dayy, month)?.timing
+    fun getDayTimings(day: Int, month: String): LiveData<DateWithTiming> {
+
+            val dayy = String.format(Locale.ENGLISH, "%02d", day)
+            return MutableLiveData(appDatabase.prayersDao().getTodayTimings(dayy, month))
+
     }
 
     suspend fun getFirstAzkarByCategory(category: String): Azkar {

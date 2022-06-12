@@ -9,16 +9,20 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.adapter.ArticlesAdapter
+import com.crazyidea.alsalah.data.model.Articles
+import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
-import com.crazyidea.alsalah.utils.GlobalPreferences
-import com.crazyidea.alsalah.utils.PermissionHelper
-import com.crazyidea.alsalah.utils.PermissionListener
+import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
+import com.crazyidea.alsalah.utils.*
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -33,10 +37,12 @@ private const val TAG: String = "HOME FRAGMENT"
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PermissionListener {
 
+    private lateinit var adapter: ArticlesAdapter
     private lateinit var permissionHelper: PermissionHelper
     private var _binding: FragmentHomeBinding? = null
 
     private val viewModel by viewModels<HomeViewModel>()
+    private val blogViewModel by viewModels<BlogDetailViewModel>()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var lastKnownLocation: Location? = null
 
@@ -56,7 +62,7 @@ class HomeFragment : Fragment(), PermissionListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.model = viewModel
         binding.dateLayout.model = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         permissionHelper = PermissionHelper(this, this)
         return binding.root
     }
@@ -65,7 +71,19 @@ class HomeFragment : Fragment(), PermissionListener {
         super.onViewCreated(view, savedInstanceState)
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
-
+        adapter = ArticlesAdapter(arrayListOf(), onReadMore = {
+            findNavController().navigate(
+                HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(
+                    it,
+                    1
+                )
+            )
+        }, onFavourite = {
+            blogViewModel.postArticleLike(it.id)
+        }, onShare = {
+            it.share(requireContext())
+        })
+        binding.blogItem.adapter = adapter
         binding.khatmaLayout.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToKhatmaFragment())
         }
@@ -77,7 +95,7 @@ class HomeFragment : Fragment(), PermissionListener {
             }
         })
 
-
+        setupArticles()
 
         permissionHelper.checkForMultiplePermissions(
             arrayOf(
@@ -86,19 +104,14 @@ class HomeFragment : Fragment(), PermissionListener {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         )
-//        val iCalendar = UmmalquraCalendar()
-//        name of month
-//        val locale = ULocale("ar@calendar=islamic")
-
-// name of month
-// full date
-//        val df2 = SimpleDateFormat("MMMM yyyy", locale)
-//        val df1 = SimpleDateFormat("EEEE", locale)
-//        binding.dateLayout.dayNum.text = iCalendar.get(IslamicCalendar.DAY_OF_MONTH).toString()
-//        binding.dateLayout.monthYear.text = df2.format(iCalendar.time)
-//        binding.dateLayout.today.text = df1.format(iCalendar.time)
         setupNavigation()
         collectData()
+    }
+
+    private fun setupArticles() {
+        viewModel.articleData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
     }
 
     private fun setupNavigation() {
@@ -129,13 +142,16 @@ class HomeFragment : Fragment(), PermissionListener {
     }
 
     private fun collectData() {
-        viewModel.prayerData.observe(viewLifecycleOwner) {
-            Log.e("Work manager","started")
+        viewModel.prayers.observe(viewLifecycleOwner) {
+            Log.e("Work manager", "started")
             val dailyWorkRequest = OneTimeWorkRequestBuilder<DailyAzanWorker>()
 //            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
                 .addTag(TAG_OUTPUT).build()
             WorkManager.getInstance(requireContext()).enqueue(dailyWorkRequest)
 
+            blogViewModel.likedComment.observe(viewLifecycleOwner) {
+                adapter
+            }
 //            WorkManager.getInstance(requireContext()).enqueueUniqueWork(
 //                TAG_OUTPUT,
 //                ExistingWorkPolicy.REPLACE, dailyWorkRequest
@@ -205,44 +221,21 @@ class HomeFragment : Fragment(), PermissionListener {
 
                         globalPreferences.storeLatitude(it.latitude.toString())
                         globalPreferences.storeLongitude(it.longitude.toString())
-                        val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
                         val cityName: String = addresses[0].locality
                         viewModel.fetchPrayerData(
                             cityName,
-                            calendar,
                             it.latitude.toString(),
                             it.longitude.toString(),
                             5,
                             null
                         )
 
-
                         binding.dateLayout.leftArrowIcon.setOnClickListener { ttt ->
                             viewModel.nextDay()
-                            viewModel.getAnotherDayPrayerData(
-                                cityName,
-                                viewModel.gor,
-                                it.latitude.toString(),
-                                it.longitude.toString(),
-                                5,
-                                null,
-                                false
-                            )
-
                         }
 
                         binding.dateLayout.rightArrowIcon.setOnClickListener { ttt ->
                             viewModel.prevDay()
-                            viewModel.getAnotherDayPrayerData(
-                                cityName,
-                                viewModel.gor,
-                                it.latitude.toString(),
-                                it.longitude.toString(),
-                                5,
-                                null,
-                                false
-                            )
-
                         }
                     }
                 } else {
@@ -256,4 +249,5 @@ class HomeFragment : Fragment(), PermissionListener {
             Log.e("Exception: %s", e.message, e)
         }
     }
+
 }

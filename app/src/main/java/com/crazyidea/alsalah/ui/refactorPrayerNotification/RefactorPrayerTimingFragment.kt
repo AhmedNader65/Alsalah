@@ -35,7 +35,7 @@ class RefactorPrayerTimingFragment : Fragment(){
         val root: View = binding.root
 
         binding.model = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return root
     }
 

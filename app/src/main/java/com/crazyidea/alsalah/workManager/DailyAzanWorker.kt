@@ -63,48 +63,51 @@ public class DailyAzanWorker @AssistedInject constructor(
         val month = calendar.get(Calendar.MONTH) + 1
         val daySt = String.format( Locale.ENGLISH,"%02d", day)
         (calendar.get(Calendar.MONTH) + 1).toString()
-         val timings = prayerDao.getTodayTimings(
-             daySt,
-             month.toString()
-        )
+//         val prayers = prayerDao.getTodayTimings(
+//             daySt,
+//             month.toString()
+//        )
+//        val timings = prayers.value?.timing
+//        timings?.let { timings ->
+//            val fajrTime = timings.Fajr.split(":")
+//            calendar.set(Calendar.HOUR_OF_DAY, fajrTime[0].toInt())
+//            calendar.set(Calendar.MINUTE, fajrTime[1].toInt())
+//            calendar.set(Calendar.SECOND, 0)
+//
+//            if (calendar.after(currentDate)) {
+//                setAlarm("fajr", calendar.timeInMillis)
+//            }
+//            val ZuhrTime = timings.Dhuhr.split(":")
+//            calendar.set(Calendar.HOUR_OF_DAY, ZuhrTime[0].toInt())
+//            calendar.set(Calendar.MINUTE, ZuhrTime[1].toInt())
+//            calendar.set(Calendar.SECOND, 0)
+//
+//            if (calendar.after(currentDate)) {
+//                setAlarm("zuhr", calendar.timeInMillis)
+//            }
+//            val AsrTime = timings.Asr.split(":")
+//            calendar.set(Calendar.HOUR_OF_DAY, AsrTime[0].toInt())
+//            calendar.set(Calendar.MINUTE, AsrTime[1].toInt())
+//            calendar.set(Calendar.SECOND, 0)
+//            if (calendar.after(currentDate)) {
+//                setAlarm("asr", calendar.timeInMillis)
+//            }
+//            val MaghribTime = timings.Maghrib.split(":")
+//            calendar.set(Calendar.HOUR_OF_DAY, MaghribTime[0].toInt())
+//            calendar.set(Calendar.MINUTE, MaghribTime[1].toInt())
+//            calendar.set(Calendar.SECOND, 0)
+//            if (calendar.after(currentDate)) {
+//                setAlarm("maghrib", calendar.timeInMillis)
+//            }
+//            val IshaTime = timings.Isha.split(":")
+//            calendar.set(Calendar.HOUR_OF_DAY, IshaTime[0].toInt())
+//            calendar.set(Calendar.MINUTE, IshaTime[1].toInt())
+//            calendar.set(Calendar.SECOND, 0)
+//            if (calendar.after(currentDate)) {
+//                setAlarm("isha", calendar.timeInMillis)
+//            }
+//        }
 
-        val fajrTime = timings!!.timing.Fajr.split(":")
-        calendar.set(Calendar.HOUR_OF_DAY, fajrTime[0].toInt())
-        calendar.set(Calendar.MINUTE, fajrTime[1].toInt())
-        calendar.set(Calendar.SECOND, 0)
-
-        if (calendar.after(currentDate)) {
-            setAlarm("fajr", calendar.timeInMillis)
-        }
-        val ZuhrTime = timings.timing.Dhuhr.split(":")
-        calendar.set(Calendar.HOUR_OF_DAY, ZuhrTime[0].toInt())
-        calendar.set(Calendar.MINUTE, ZuhrTime[1].toInt())
-        calendar.set(Calendar.SECOND, 0)
-
-        if (calendar.after(currentDate)) {
-            setAlarm("zuhr", calendar.timeInMillis)
-        }
-        val AsrTime = timings.timing.Asr.split(":")
-        calendar.set(Calendar.HOUR_OF_DAY, AsrTime[0].toInt())
-        calendar.set(Calendar.MINUTE, AsrTime[1].toInt())
-        calendar.set(Calendar.SECOND, 0)
-        if (calendar.after(currentDate)) {
-            setAlarm("asr", calendar.timeInMillis)
-        }
-        val MaghribTime = timings.timing.Maghrib.split(":")
-        calendar.set(Calendar.HOUR_OF_DAY, MaghribTime[0].toInt())
-        calendar.set(Calendar.MINUTE, MaghribTime[1].toInt())
-        calendar.set(Calendar.SECOND, 0)
-        if (calendar.after(currentDate)) {
-            setAlarm("maghrib", calendar.timeInMillis)
-        }
-        val IshaTime = timings.timing.Isha.split(":")
-        calendar.set(Calendar.HOUR_OF_DAY, IshaTime[0].toInt())
-        calendar.set(Calendar.MINUTE, IshaTime[1].toInt())
-        calendar.set(Calendar.SECOND, 0)
-        if (calendar.after(currentDate)) {
-            setAlarm("isha", calendar.timeInMillis)
-        }
     }
 
     private fun setAlarm(title: String, timeInMillis: Long) {

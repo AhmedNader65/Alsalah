@@ -2,13 +2,16 @@ package com.crazyidea.alsalah.ui.home
 
 import android.content.Context
 import android.os.CountDownTimer
+import android.text.format.DateUtils
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import androidx.lifecycle.*
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.model.PrayerTimingApiModel
+import com.crazyidea.alsalah.data.repository.ArticlesRepository
 import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import com.crazyidea.alsalah.utils.GlobalPreferences
@@ -16,41 +19,74 @@ import com.crazyidea.alsalah.utils.themeColor
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val prayerRepository: PrayersRepository,
+    private val articlesRepository: ArticlesRepository,
     private val globalPreferences: GlobalPreferences
 ) : ViewModel() {
-    val fajrTime = MutableLiveData("00:00")
-    val shorokTime = MutableLiveData("00:00")
-    val zuhrTime = MutableLiveData("00:00")
-    val asrTime = MutableLiveData("00:00")
+    val prayers = prayerRepository.prayers
+
+    val fajrTimeFormatter = Transformations.map(prayers) { time ->
+        Pair(twentyFourConverter(time.timing.Fajr), twentyFourConverter(time.timing.Fajr, true))
+
+    }
+    val shorokTimeFormatter = Transformations.map(prayers) { time ->
+        Pair(
+            twentyFourConverter(time.timing.Sunrise),
+            twentyFourConverter(time.timing.Sunrise, true)
+        )
+    }
+    val zuhrTimeTimeFormatter = Transformations.map(prayers) { time ->
+        Pair(
+            twentyFourConverter(time.timing.Dhuhr),
+            twentyFourConverter(time.timing.Dhuhr, true)
+        )
+    }
+    val asrTimeFormatter = Transformations.map(prayers) { time ->
+        Pair(twentyFourConverter(time.timing.Asr), twentyFourConverter(time.timing.Asr, true))
+
+    }
+    val maghribTimeFormatter = Transformations.map(prayers) { time ->
+        Pair(
+            twentyFourConverter(time.timing.Maghrib),
+            twentyFourConverter(time.timing.Maghrib, true)
+        )
+    }
+    val ishaTimeFormatter = Transformations.map(prayers) { time ->
+        Pair(twentyFourConverter(time.timing.Isha), twentyFourConverter(time.timing.Isha, true))
+
+    }
+    val midnightTimeFormatter = Transformations.map(prayers) { time ->
+        Pair(
+            twentyFourConverter(time.timing.Midnight),
+            twentyFourConverter(time.timing.Midnight, true)
+        )
+    }
+    val lastQuarterTimeFormatter = Transformations.map(prayers) { time ->
+        Pair(
+            twentyFourConverter(time.timing.Imsak),
+            twentyFourConverter(time.timing.Imsak, true)
+        )
+    }
+
     val nextPrayer = MutableLiveData(" صلاة الظهر بعد")
     val nextPrayerId = MutableLiveData(1)
     val remainingTime = MutableLiveData("00:00")
-    val maghribTime = MutableLiveData("00:00")
-    val eshaTime = MutableLiveData("00:00")
-    val midnightTime = MutableLiveData("00:00")
-    val lastQuarterTime = MutableLiveData("00:00")
-    val fajrTimeAPM = MutableLiveData("AM")
-    val shorokTimeAPM = MutableLiveData("AM")
-    val zuhrTimeAPM = MutableLiveData("AM")
-    val asrTimeAPM = MutableLiveData("AM")
-    val maghribTimeAPM = MutableLiveData("AM")
-    val eshaTimeAPM = MutableLiveData("AM")
     val azkarAfterPrayer = MutableLiveData("")
     val azkar = MutableLiveData("")
-    val otherTimings = mutableMapOf<String, PrayerTimingApiModel>()
 
-    var hijri = UmmalquraCalendar()
-    var gor = Calendar.getInstance()
+    private var hijri = UmmalquraCalendar()
+    var gor: Calendar = Calendar.getInstance()
 
 
     var day = MutableLiveData("Saturday")
@@ -61,200 +97,74 @@ class HomeViewModel @Inject constructor(
 
 
     private var prayerDataJob: Job? = null
+    private var articleDataJob: Job? = null
 
-    private val _prayerData = MutableLiveData<Timing>()
-    val prayerData: LiveData<Timing> = _prayerData
+
+    private val _articleData = MutableLiveData<ArrayList<Articles>>()
+    val articleData: LiveData<ArrayList<Articles>> = _articleData
 
     init {
+        val day = gor.get(Calendar.DAY_OF_MONTH)
+        val month = gor.get(Calendar.MONTH) + 1
+        viewModelScope.launch {
+            prayerRepository.getPrayers(day, month.toString())
+        }
         setupDate()
+        getArticles()
     }
 
     fun fetchPrayerData(
         cityName: String,
-        calendar: Calendar,
         lat: String,
         lng: String,
         method: Int,
         tune: String?,
         save: Boolean = true
     ) {
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = (calendar.get(Calendar.MONTH) + 1).toString()
-        val year = calendar.get(Calendar.YEAR).toString()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY).toString()
-        val minute = calendar.get(Calendar.MINUTE).toString()
+        val day = gor.get(Calendar.DAY_OF_MONTH)
+        val month = (gor.get(Calendar.MONTH) + 1).toString()
+        val year = gor.get(Calendar.YEAR).toString()
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
-            var pair =
-                prayerRepository.getPrayersData(
-                    cityName,
-                    day,
-                    month,
-                    year,
-                    lat,
-                    lng,
-                    method,
-                    tune,
-                    save
-                )
+
+            prayerRepository.refreshPrayers(
+                cityName,
+                day,
+                month,
+                year,
+                lat,
+                lng,
+                method,
+                tune,
+                save
+            )
+            prayerRepository.getPrayers(day, month)
             prayerRepository.getAzkar()
             getFirstAzkar()
-            val timings = pair!!.first
-            fajrTime.value = twentyFourConverter(timings.Fajr)
-            zuhrTime.value = twentyFourConverter(timings.Dhuhr)
-            shorokTime.value = twentyFourConverter(timings.Sunrise)
-            asrTime.value = twentyFourConverter(timings.Asr)
-            maghribTime.value = twentyFourConverter(timings.Maghrib)
-            eshaTime.value = twentyFourConverter(timings.Isha)
-            fajrTimeAPM.value = twentyFourConverter(timings.Fajr, true)
-            zuhrTimeAPM.value = twentyFourConverter(timings.Dhuhr, true)
-            shorokTimeAPM.value = twentyFourConverter(timings.Sunrise, true)
-            asrTimeAPM.value = twentyFourConverter(timings.Asr, true)
-            maghribTimeAPM.value = twentyFourConverter(timings.Maghrib, true)
-            eshaTimeAPM.value = twentyFourConverter(timings.Isha, true)
-            midnightTime.value = twentyFourConverter(timings.Midnight)
-            lastQuarterTime.value = timings.Imsak
-
-            val sdf = SimpleDateFormat("H:mm", Locale("ar"))
-            val currentDate = sdf.parse("$hour:$minute")
-            getNextPrayer(currentDate, timings)
-            _prayerData.value = timings
+            getNextPrayer()
         }
     }
 
-    fun getAnotherDayPrayerData(
-        cityName: String,
-        calendar: Calendar,
-        lat: String,
-        lng: String,
-        method: Int,
-        tune: String?,
-        save: Boolean = true
-    ) {
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = (calendar.get(Calendar.MONTH) + 1).toString()
-        val year = calendar.get(Calendar.YEAR).toString()
-        val date = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(calendar.time)
 
-        prayerDataJob?.cancel()
-        prayerDataJob = viewModelScope.launch {
-            var timings = otherTimings[date]
-            if (timings == null) {
-                val prayersList =
-                    prayerRepository.getPrayersDataNoSaving(
-                        cityName,
-                        day,
-                        month,
-                        year,
-                        lat,
-                        lng,
-                        method,
-                        tune,
-                        save
-                    )
-                prayersList?.forEach {
-                    otherTimings[it.date.gregorian.date] = it.timings
+    private fun getArticles() {
+        articleDataJob?.cancel()
+        articleDataJob = viewModelScope.launch {
+            articlesRepository.fetcharticle()
+                .collect {
+                    if (it?.data != null)
+                        _articleData.value = it.data!!
                 }
-                timings = otherTimings[date]
-            }
-            timings?.run {
-                fajrTime.value = twentyFourConverter(timings.Fajr)
-                zuhrTime.value = twentyFourConverter(timings.Dhuhr)
-                shorokTime.value = twentyFourConverter(timings.Sunrise)
-                asrTime.value = twentyFourConverter(timings.Asr)
-                maghribTime.value = twentyFourConverter(timings.Maghrib)
-                eshaTime.value = twentyFourConverter(timings.Isha)
-                fajrTimeAPM.value = twentyFourConverter(timings.Fajr, true)
-                zuhrTimeAPM.value = twentyFourConverter(timings.Dhuhr, true)
-                shorokTimeAPM.value = twentyFourConverter(timings.Sunrise, true)
-                asrTimeAPM.value = twentyFourConverter(timings.Asr, true)
-                maghribTimeAPM.value = twentyFourConverter(timings.Maghrib, true)
-                eshaTimeAPM.value = twentyFourConverter(timings.Isha, true)
-                midnightTime.value = twentyFourConverter(timings.Midnight)
-                lastQuarterTime.value = timings.Imsak
-            }
-
         }
-    }
 
-    private fun getNextPrayer(
-        currentDate: Date,
-        timings: Timing,
-    ) {
-        if (remainingTime.value == "00:00") {
-            val sdf = SimpleDateFormat("H:mm", Locale("ar"))
-            val fajrDate = sdf.parse(timings.Fajr)
-            val shorokDate = sdf.parse(timings.Sunrise)
-            val zuhrDate = sdf.parse(timings.Dhuhr)
-            val asrDate = sdf.parse(timings.Asr)
-            val maghribDate = sdf.parse(timings.Maghrib)
-            val ishaDate = sdf.parse(timings.Isha)
-            nextPrayer.value = "صلاة الفجر بعد"
-            nextPrayerId.value = 1
-            var diff = 30000L
-            var basePrayerForNext = fajrDate
-            if (currentDate.after(fajrDate)) {
-                nextPrayerId.value = 2
-                nextPrayer.value = "صلاة الشروق بعد"
-                diff = (shorokDate.time - currentDate.time)
-                basePrayerForNext = shorokDate
-            }
-            if (currentDate.after(shorokDate)) {
-                nextPrayerId.value = 3
-                nextPrayer.value = "صلاة الظهر بعد"
-                diff = (zuhrDate.time - currentDate.time)
-                basePrayerForNext = zuhrDate
-            }
-            if (currentDate.after(zuhrDate)) {
-                nextPrayerId.value = 4
-                nextPrayer.value = "صلاة العصر بعد"
-                diff = (asrDate.time - currentDate.time)
-                basePrayerForNext = asrDate
-            }
-            if (currentDate.after(asrDate)) {
-                nextPrayerId.value = 5
-                nextPrayer.value = "صلاة المغرب بعد"
-                diff = (maghribDate.time - currentDate.time)
-                basePrayerForNext = maghribDate
-            }
-            if (currentDate.after(maghribDate)) {
-                nextPrayer.value = "صلاة العشاء بعد"
-                nextPrayerId.value = 6
-                diff = (ishaDate.time - currentDate.time)
-                basePrayerForNext = ishaDate
-            }
-            if (currentDate.after(ishaDate)) {
-                nextPrayerId.value = 1
-                nextPrayer.value = " صلاة الفجر بعد"
-                diff = (zuhrDate.time - fajrDate.time)
-                basePrayerForNext = fajrDate
-            }
-            object : CountDownTimer(diff, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    val d = Date(millisUntilFinished)
-                    val df = SimpleDateFormat("HH:mm:ss", Locale.getDefault()) // HH for 0-23
-                    df.timeZone = TimeZone.getTimeZone("GMT");
-                    val time = df.format(d)
-                    remainingTime.value = time
-                    //here you can have your logic to set text to edittext
-                }
-
-                override fun onFinish() {
-                    val timeInSecs: Long = basePrayerForNext.time
-                    val afterAdding1Min = Date(timeInSecs + 1 * 60 * 1000)
-                    getNextPrayer(afterAdding1Min, timings)
-                }
-            }.start()
-        }
     }
 
     private fun twentyFourConverter(time: String, am: Boolean = false): String {
         return try {
             val sdf = SimpleDateFormat("H:mm", Locale("ar"))
-            val dateObj: Date? = sdf.parse(time)
-            if (!am) SimpleDateFormat("K:mm").format(dateObj)
+            val dateObj: Date = sdf.parse(time) as Date
+            if (!am) SimpleDateFormat("K:mm", Locale("ar")).format(dateObj)
             else {
-                SimpleDateFormat("a").format(dateObj)
+                SimpleDateFormat("a", Locale("ar")).format(dateObj)
             }
 
         } catch (e: ParseException) {
@@ -272,9 +182,93 @@ class HomeViewModel @Inject constructor(
     }
 
 
+    private fun getNextPrayer(newDate: Date? = null) {
+        val hour = gor.get(Calendar.HOUR_OF_DAY).toString()
+        val minute = gor.get(Calendar.MINUTE).toString()
+        val seconds = gor.get(Calendar.SECOND).toString()
+        val sdf1 = SimpleDateFormat("H:mm:ss", Locale("ar"))
+        val sdf = SimpleDateFormat("H:mm", Locale("ar"))
+        val currentDate = newDate ?: sdf1.parse("$hour:$minute:$seconds") as Date
+        val timings = prayers.value?.timing
+        timings?.let {
+            if (remainingTime.value == "00:00") {
+                val fajrDate = sdf.parse(timings.Fajr) as Date
+                val shorokDate = sdf.parse(timings.Sunrise) as Date
+                val zuhrDate = sdf.parse(timings.Dhuhr) as Date
+                val asrDate = sdf.parse(timings.Asr) as Date
+                val maghribDate = sdf.parse(timings.Maghrib) as Date
+                val ishaDate = sdf.parse(timings.Isha) as Date
+                nextPrayer.value = "صلاة الفجر بعد"
+                nextPrayerId.value = 1
+                var diff = 30000L
+                var basePrayerForNext = fajrDate
+                if (currentDate.after(fajrDate)) {
+                    nextPrayerId.value = 2
+                    nextPrayer.value = "صلاة الشروق بعد"
+                    diff = (shorokDate.time - currentDate.time)
+                    basePrayerForNext = shorokDate
+                }
+                if (currentDate.after(shorokDate)) {
+                    nextPrayerId.value = 3
+                    nextPrayer.value = "صلاة الظهر بعد"
+                    diff = (zuhrDate.time - currentDate.time)
+                    basePrayerForNext = zuhrDate
+                }
+                if (currentDate.after(zuhrDate)) {
+                    nextPrayerId.value = 4
+                    nextPrayer.value = "صلاة العصر بعد"
+                    diff = (asrDate.time - currentDate.time)
+                    basePrayerForNext = asrDate
+                }
+                if (currentDate.after(asrDate)) {
+                    nextPrayerId.value = 5
+                    nextPrayer.value = "صلاة المغرب بعد"
+                    diff = (maghribDate.time - currentDate.time)
+                    basePrayerForNext = maghribDate
+                }
+                if (currentDate.after(maghribDate)) {
+                    nextPrayer.value = "صلاة العشاء بعد"
+                    nextPrayerId.value = 6
+                    diff = (ishaDate.time - currentDate.time)
+                    basePrayerForNext = ishaDate
+                }
+                if (currentDate.after(ishaDate)) {
+                    nextPrayerId.value = 1
+                    nextPrayer.value = " صلاة الفجر بعد"
+                    diff = (zuhrDate.time - fajrDate.time)
+                    basePrayerForNext = fajrDate
+                }
+                object : CountDownTimer(diff, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val d = Date(millisUntilFinished)
+                        val df = SimpleDateFormat("HH:mm:ss", Locale.getDefault()) // HH for 0-23
+                        df.timeZone = TimeZone.getTimeZone("GMT");
+                        val time = df.format(d)
+                        remainingTime.value = time
+                        //here you can have your logic to set text to edittext
+                    }
+
+                    override fun onFinish() {
+                        val timeInSecs: Long = basePrayerForNext.time
+                        val afterAdding1Min = Date(timeInSecs + 1 * 60 * 1000)
+                        remainingTime.value = "00:00"
+
+                        getNextPrayer(newDate = afterAdding1Min)
+                    }
+                }.start()
+            }
+        }
+    }
+
     fun nextDay() {
         gor.add(Calendar.DAY_OF_MONTH, 1)
         hijri.time = gor.time
+
+        val day = gor.get(Calendar.DAY_OF_MONTH)
+        val month = gor.get(Calendar.MONTH) + 1
+        viewModelScope.launch {
+            prayerRepository.getPrayers(day, month.toString())
+        }
         setupDate()
     }
 
@@ -282,7 +276,11 @@ class HomeViewModel @Inject constructor(
         gor.add(Calendar.DAY_OF_MONTH, -1)
         hijri.time = gor.time
         setupDate()
-
+        val day = gor.get(Calendar.DAY_OF_MONTH)
+        val month = gor.get(Calendar.MONTH) + 1
+        viewModelScope.launch {
+            prayerRepository.getPrayers(day, month.toString())
+        }
     }
 
 
@@ -306,8 +304,8 @@ class HomeViewModel @Inject constructor(
         }"
 
 
-        dateDay.value = "$hijriDate"
-        dateMonthYear.value = "$hijriMonthYear"
+        dateDay.value = hijriDate
+        dateMonthYear.value = hijriMonthYear
         gor.add(Calendar.DAY_OF_MONTH, 1)
         nextDayName.value =
             gor.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
@@ -342,9 +340,16 @@ class HomeViewModel @Inject constructor(
         return color
     }
 
-    override fun onCleared() {
-        prayerDataJob?.cancel()
-        super.onCleared()
-    }
+}
 
+@BindingAdapter("setupImage")
+fun bindPrayerHeaderImage(imageView: ImageView, prayerId: Int) {
+    when (prayerId) {
+        1 -> imageView.setImageResource(R.drawable.fajr_pic)
+        2 -> imageView.setImageResource(R.drawable.shorok_pic)
+        3 -> imageView.setImageResource(R.drawable.zuhr_pic)
+        4 -> imageView.setImageResource(R.drawable.asr_pic)
+        5 -> imageView.setImageResource(R.drawable.maghrib_pic)
+        6 -> imageView.setImageResource(R.drawable.isha_pic)
+    }
 }

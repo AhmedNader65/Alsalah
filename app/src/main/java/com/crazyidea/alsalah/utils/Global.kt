@@ -1,6 +1,7 @@
 package com.crazyidea.alsalah.utils
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +11,12 @@ import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.Coordinates
 import com.crazyidea.alsalah.data.model.Language
 import com.crazyidea.alsalah.adapter.BaseViewHolder
 import com.crazyidea.alsalah.adapter.SimpleRecyclerAdapter
+import com.crazyidea.alsalah.data.model.Articles
 import io.github.cosinekitty.astronomy.Observer
 import java.time.DayOfWeek
 import java.time.temporal.WeekFields
@@ -37,8 +40,11 @@ var pmString = DEFAULT_PM
     private set
 var spacedComma = "، "
     private set
+
 fun Coordinates.toObserver() = Observer(this.latitude, this.longitude, this.elevation)
-internal fun TextView.setTextColorRes(@ColorRes color: Int) = setTextColor(context.getColorCompat(color))
+internal fun TextView.setTextColorRes(@ColorRes color: Int) =
+    setTextColor(context.getColorCompat(color))
+
 internal fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getColor(this, color)
 
 fun ViewGroup.inflater(layoutRes: Int): View =
@@ -57,6 +63,7 @@ fun updateStoredPreference(context: Context) {
     val prefs = GlobalPreferences(context)
     coordinates = Coordinates(prefs.getLatitude().toDouble(), prefs.getLongitude().toDouble(), 0.0)
 }
+
 fun daysOfWeekFromLocale(): Array<DayOfWeek> {
     val firstDayOfWeek = WeekFields.of(Locale("ar")).firstDayOfWeek
     val daysOfWeek = DayOfWeek.values()
@@ -65,7 +72,19 @@ fun daysOfWeekFromLocale(): Array<DayOfWeek> {
     if (firstDayOfWeek != DayOfWeek.MONDAY) {
         val rhs = daysOfWeek.sliceArray(firstDayOfWeek.ordinal..daysOfWeek.indices.last)
         val lhs = daysOfWeek.sliceArray(0 until firstDayOfWeek.ordinal)
-        return  rhs + lhs
+        return rhs + lhs
     }
     return daysOfWeek
+}
+
+
+fun Articles.share(context: Context) {
+    val intent = Intent(Intent.ACTION_SEND)
+    intent.type = "text/plain"
+    intent.putExtra(Intent.EXTRA_SUBJECT, title)
+    intent.putExtra(
+        Intent.EXTRA_TEXT,
+        context.getString(R.string.share_text, title, "https://play.google.com/store/apps/details?id=${context.applicationInfo.packageName}")
+    )
+    context.startActivity(Intent.createChooser(intent, "Share via"))
 }
