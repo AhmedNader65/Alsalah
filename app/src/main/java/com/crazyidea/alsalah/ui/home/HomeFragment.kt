@@ -19,6 +19,7 @@ import androidx.work.WorkManager
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.ArticlesAdapter
 import com.crazyidea.alsalah.data.model.Articles
+import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
 import com.crazyidea.alsalah.utils.*
@@ -141,7 +142,7 @@ class HomeFragment : Fragment(), PermissionListener {
     }
 
     private fun collectData() {
-        viewModel.prayerData.observe(viewLifecycleOwner) {
+        viewModel.prayers.observe(viewLifecycleOwner) {
             Log.e("Work manager", "started")
             val dailyWorkRequest = OneTimeWorkRequestBuilder<DailyAzanWorker>()
 //            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
@@ -234,29 +235,29 @@ class HomeFragment : Fragment(), PermissionListener {
 
                         binding.dateLayout.leftArrowIcon.setOnClickListener { ttt ->
                             viewModel.nextDay()
-                            viewModel.getAnotherDayPrayerData(
-                                cityName,
-                                viewModel.gor,
-                                it.latitude.toString(),
-                                it.longitude.toString(),
-                                5,
-                                null,
-                                false
-                            )
+//                            viewModel.getAnotherDayPrayerData(
+//                                cityName,
+//                                viewModel.gor,
+//                                it.latitude.toString(),
+//                                it.longitude.toString(),
+//                                5,
+//                                null,
+//                                false
+//                            )
 
                         }
 
                         binding.dateLayout.rightArrowIcon.setOnClickListener { ttt ->
                             viewModel.prevDay()
-                            viewModel.getAnotherDayPrayerData(
-                                cityName,
-                                viewModel.gor,
-                                it.latitude.toString(),
-                                it.longitude.toString(),
-                                5,
-                                null,
-                                false
-                            )
+//                            viewModel.getAnotherDayPrayerData(
+//                                cityName,
+//                                viewModel.gor,
+//                                it.latitude.toString(),
+//                                it.longitude.toString(),
+//                                5,
+//                                null,
+//                                false
+//                            )
 
                         }
                     }

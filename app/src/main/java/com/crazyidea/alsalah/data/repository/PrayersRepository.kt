@@ -1,14 +1,14 @@
 package com.crazyidea.alsalah.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.crazyidea.alsalah.data.dataSource.PrayersLocalDataSource
 import com.crazyidea.alsalah.data.dataSource.PrayersRemoteDataSource
 import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
+import com.crazyidea.alsalah.data.room.entity.prayers.DateWithTiming
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class PrayersRepository @Inject constructor(
@@ -17,63 +17,29 @@ class PrayersRepository @Inject constructor(
     private val externalScope: CoroutineScope
 ) {
 
-    suspend fun getPrayersData(
-        cityName: String,
-        day: Int,
-        month: String,
-        year: String,
-        lat: String,
-        lng: String,
-        method: Int,
-        tune: String?,
-        save: Boolean = true
-    ): Pair<Timing, Boolean>? {
-        val job = withContext(externalScope.coroutineContext) {
-            var data = getFromLocale(day, month, false)
-            if (data != null) {
-                return@withContext data
-            }
-            fetchPrayers(cityName, day, month, year, lat, lng, method, tune, save)
-            data = getFromLocale(day, month, true)
-            if (data != null) {
-                return@withContext data
-            } else {
-                null
-            }
 
-        }
-        return job
-    }
-    suspend fun getPrayersDataNoSaving(
-        cityName: String,
-        day: Int,
-        month: String,
-        year: String,
-        lat: String,
-        lng: String,
-        method: Int,
-        tune: String?,
-        save: Boolean = false
-    ): List<PrayerResponseApiModel>? {
-        val job = withContext(externalScope.coroutineContext) {
-            return@withContext fetchAndReturnPrayers(cityName, day, month, year, lat, lng, method, tune, save)
+    /**
+     * A list of asteroids that can be shown on the screen.
+     */
+    private var _prayers: MutableLiveData<DateWithTiming> = MutableLiveData()
+    var prayers: LiveData<DateWithTiming> = _prayers
+    suspend fun getPrayers(day: Int, month: String) {
 
+        return withContext(externalScope.coroutineContext) {
+            val data  = localDataSource.getDayTimings(day, month)
+            _prayers.postValue(data.value)
+            val x = 5
         }
-        return job
     }
 
-    private fun getFromLocale(
-        day: Int,
-        month: String,
-        shouldFetch: Boolean
-    ): Pair<Timing, Boolean>? {
-        localDataSource.getDayTimings(day, month)?.let {
-            return Pair(it, shouldFetch)
-        }
-        return null
-    }
-
-    private suspend fun fetchPrayers(
+    /**
+     * Refresh the asteroids stored in the offline cache.
+     *
+     * This function uses the IO dispatcher to ensure the database insert database operation
+     * happens on the IO dispatcher. By switching to the IO dispatcher using `withContext` this
+     * function is now safe to call from any thread including the Main thread.
+     */
+    suspend fun refreshPrayers(
         cityName: String,
         day: Int,
         month: String,
@@ -84,26 +50,100 @@ class PrayersRepository @Inject constructor(
         tune: String?,
         save: Boolean = true
     ) {
-        val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
-        if (save)
-            localDataSource.insertData(cityName, result.data!!)
-
+        withContext(Dispatchers.IO) {
+            val prayers =
+                remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
+            prayers.data?.let { localDataSource.insertData(cityName, it) }
+        }
     }
-    private suspend fun fetchAndReturnPrayers(
-        cityName: String,
-        day: Int,
-        month: String,
-        year: String,
-        lat: String,
-        lng: String,
-        method: Int,
-        tune: String?,
-        save: Boolean = false
-    ): List<PrayerResponseApiModel>? {
-        val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
-        return result.data
 
-    }
+//    suspend fun getPrayersData(
+//        cityName: String,
+//        day: Int,
+//        month: String,
+//        year: String,
+//        lat: String,
+//        lng: String,
+//        method: Int,
+//        tune: String?,
+//        save: Boolean = true
+//    ): Pair<Timing, Boolean>? {
+//        val job = withContext(externalScope.coroutineContext) {
+//            var data = getFromLocale(day, month, false)
+//            if (data != null) {
+//                return@withContext data
+//            }
+//            fetchPrayers(cityName, day, month, year, lat, lng, method, tune, save)
+//            data = getFromLocale(day, month, true)
+//            if (data != null) {
+//                return@withContext data
+//            } else {
+//                null
+//            }
+//
+//        }
+//        return job
+//    }
+//    suspend fun getPrayersDataNoSaving(
+//        cityName: String,
+//        day: Int,
+//        month: String,
+//        year: String,
+//        lat: String,
+//        lng: String,
+//        method: Int,
+//        tune: String?,
+//        save: Boolean = false
+//    ): List<PrayerResponseApiModel>? {
+//        val job = withContext(externalScope.coroutineContext) {
+//            return@withContext fetchAndReturnPrayers(cityName, day, month, year, lat, lng, method, tune, save)
+//
+//        }
+//        return job
+//    }
+//
+//    private fun getFromLocale(
+//        day: Int,
+//        month: String,
+//        shouldFetch: Boolean
+//    ): Pair<Timing, Boolean>? {
+//        localDataSource.getDayTimings(day, month)?.let {
+//            return Pair(it, shouldFetch)
+//        }
+//        return null
+//    }
+//
+//    private suspend fun fetchPrayers(
+//        cityName: String,
+//        day: Int,
+//        month: String,
+//        year: String,
+//        lat: String,
+//        lng: String,
+//        method: Int,
+//        tune: String?,
+//        save: Boolean = true
+//    ) {
+//        val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
+//        if (save)
+//            localDataSource.insertData(cityName, result.data!!)
+//
+//    }
+//    private suspend fun fetchAndReturnPrayers(
+//        cityName: String,
+//        day: Int,
+//        month: String,
+//        year: String,
+//        lat: String,
+//        lng: String,
+//        method: Int,
+//        tune: String?,
+//        save: Boolean = false
+//    ): List<PrayerResponseApiModel>? {
+//        val result = remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
+//        return result.data
+//
+//    }
 
     suspend fun getAzkar() {
         val shouldFetch = localDataSource.shouldFetchAzkar()
