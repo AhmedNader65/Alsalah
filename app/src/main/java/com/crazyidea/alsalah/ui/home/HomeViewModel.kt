@@ -37,46 +37,67 @@ class HomeViewModel @Inject constructor(
     val prayers = prayerRepository.prayers
 
     val fajrTimeFormatter = Transformations.map(prayers) { time ->
-        Pair(twentyFourConverter(time.timing.Fajr), twentyFourConverter(time.timing.Fajr, true))
-
+        if (time != null)
+            Pair(twentyFourConverter(time.timing.Fajr), twentyFourConverter(time.timing.Fajr, true))
+        else
+            Pair("", "")
     }
     val shorokTimeFormatter = Transformations.map(prayers) { time ->
-        Pair(
-            twentyFourConverter(time.timing.Sunrise),
-            twentyFourConverter(time.timing.Sunrise, true)
-        )
+        if (time != null)
+            Pair(
+                twentyFourConverter(time.timing.Sunrise),
+                twentyFourConverter(time.timing.Sunrise, true)
+            )
+        else
+            Pair("", "")
     }
     val zuhrTimeTimeFormatter = Transformations.map(prayers) { time ->
-        Pair(
-            twentyFourConverter(time.timing.Dhuhr),
-            twentyFourConverter(time.timing.Dhuhr, true)
-        )
+        if (time != null)
+            Pair(
+                twentyFourConverter(time.timing.Dhuhr),
+                twentyFourConverter(time.timing.Dhuhr, true)
+            )
+        else
+            Pair("", "")
     }
     val asrTimeFormatter = Transformations.map(prayers) { time ->
-        Pair(twentyFourConverter(time.timing.Asr), twentyFourConverter(time.timing.Asr, true))
-
+        if (time != null)
+            Pair(twentyFourConverter(time.timing.Asr), twentyFourConverter(time.timing.Asr, true))
+        else
+            Pair("", "")
     }
     val maghribTimeFormatter = Transformations.map(prayers) { time ->
-        Pair(
-            twentyFourConverter(time.timing.Maghrib),
-            twentyFourConverter(time.timing.Maghrib, true)
-        )
+        if (time != null)
+            Pair(
+                twentyFourConverter(time.timing.Maghrib),
+                twentyFourConverter(time.timing.Maghrib, true)
+            )
+        else
+            Pair("", "")
     }
     val ishaTimeFormatter = Transformations.map(prayers) { time ->
-        Pair(twentyFourConverter(time.timing.Isha), twentyFourConverter(time.timing.Isha, true))
-
+        if (time != null)
+            Pair(twentyFourConverter(time.timing.Isha), twentyFourConverter(time.timing.Isha, true))
+        else
+            Pair("", "")
     }
     val midnightTimeFormatter = Transformations.map(prayers) { time ->
-        Pair(
-            twentyFourConverter(time.timing.Midnight),
-            twentyFourConverter(time.timing.Midnight, true)
-        )
+        if (time != null)
+            Pair(
+                twentyFourConverter(time.timing.Midnight),
+                twentyFourConverter(time.timing.Midnight, true)
+            )
+        else
+            Pair("", "")
     }
     val lastQuarterTimeFormatter = Transformations.map(prayers) { time ->
-        Pair(
-            twentyFourConverter(time.timing.Imsak),
-            twentyFourConverter(time.timing.Imsak, true)
-        )
+        if (time != null)
+            Pair(
+                twentyFourConverter(time.timing.Imsak),
+                twentyFourConverter(time.timing.Imsak, true)
+            )
+        else
+            Pair("", "")
     }
 
     val nextPrayer = MutableLiveData(" صلاة الظهر بعد")
@@ -136,6 +157,7 @@ class HomeViewModel @Inject constructor(
                 lat,
                 lng,
                 method,
+                school,
                 tune,
                 save
             )
@@ -150,7 +172,7 @@ class HomeViewModel @Inject constructor(
     private fun getArticles() {
         articleDataJob?.cancel()
         articleDataJob = viewModelScope.launch {
-            articlesRepository.fetcharticle()
+            articlesRepository.fetchRecentArticle()
                 .collect {
                     if (it?.data != null)
                         _articleData.value = it.data!!

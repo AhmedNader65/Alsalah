@@ -74,8 +74,7 @@ class HomeFragment : Fragment(), PermissionListener {
         adapter = ArticlesAdapter(arrayListOf(), onReadMore = {
             findNavController().navigate(
                 HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(
-                    it,
-                    1
+                    it
                 )
             )
         }, onFavourite = {
@@ -142,15 +141,15 @@ class HomeFragment : Fragment(), PermissionListener {
     }
 
     private fun collectData() {
-        viewModel.prayers.observe(viewLifecycleOwner) {
-            Log.e("Work manager", "started")
-            val dailyWorkRequest = OneTimeWorkRequestBuilder<DailyAzanWorker>()
-//            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
-                .addTag(TAG_OUTPUT).build()
-            WorkManager.getInstance(requireContext()).enqueue(dailyWorkRequest)
 
-            blogViewModel.likedComment.observe(viewLifecycleOwner) {
-                adapter
+        viewModel.prayers.observe(viewLifecycleOwner) {
+            if (it != null) {
+                Log.e("Work manager", "started")
+                val dailyWorkRequest = OneTimeWorkRequestBuilder<DailyAzanWorker>()
+//            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
+                    .addTag(TAG_OUTPUT).build()
+                WorkManager.getInstance(requireContext()).enqueue(dailyWorkRequest)
+
             }
 //            WorkManager.getInstance(requireContext()).enqueueUniqueWork(
 //                TAG_OUTPUT,

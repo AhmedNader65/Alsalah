@@ -32,7 +32,7 @@ class FawaedSettingViewModel @Inject constructor(
     fun getFawaed() {
         fawaedDataJob?.cancel()
         fawaedDataJob = viewModelScope.launch {
-            articlesRepository.fetchFwaed()
+            articlesRepository.fetcharticle()
                 .collect {
                     if (it?.data != null)
                         _fawaedData.value = it.data!!

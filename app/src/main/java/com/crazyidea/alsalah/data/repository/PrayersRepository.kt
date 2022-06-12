@@ -28,7 +28,6 @@ class PrayersRepository @Inject constructor(
         return withContext(externalScope.coroutineContext) {
             val data  = localDataSource.getDayTimings(day, month)
             _prayers.postValue(data.value)
-            val x = 5
         }
     }
 
@@ -55,7 +54,7 @@ class PrayersRepository @Inject constructor(
 
         withContext(Dispatchers.IO) {
             val prayers =
-                remoteDataSource.getDayPrayers(month, year, lat, lng, method, tune)
+                remoteDataSource.getDayPrayers(month, year, lat, lng, method,school, tune)
             prayers.data?.let { localDataSource.insertData(cityName, it) }
         }
     }

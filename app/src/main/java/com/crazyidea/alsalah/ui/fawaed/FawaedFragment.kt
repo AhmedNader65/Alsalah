@@ -71,7 +71,7 @@ class FawaedFragment : Fragment(), ArticlesAdapter.ArticleListner {
     override fun onArticlePicked(article: Articles) {
         findNavController().navigate(
             FawaedFragmentDirections.actionFawaedFragment2ToBlogDetailFragment(
-                article,2
+                article
             )
         )
     }

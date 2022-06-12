@@ -306,10 +306,6 @@
         <argument
             android:name="article"
             app:argType="com.crazyidea.alsalah.data.model.Articles" />
-        <argument
-            android:name="type"
-            app:argType="integer"
-            android:defaultValue="0" />
     </fragment>
 
 </navigation>
