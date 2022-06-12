@@ -42,6 +42,13 @@ interface ArticlesAPI {
         @Field("comment") comment: String,
     ): Response<ServerResponse<Comment>>
 
+
+    @GET
+    suspend fun postShare(
+        @Header("Accept-Language") language: String,
+        @Url url: String,
+    ): Response<ServerResponse<String>>
+
     @POST
     @FormUrlEncoded
     suspend fun postFwaedComment(

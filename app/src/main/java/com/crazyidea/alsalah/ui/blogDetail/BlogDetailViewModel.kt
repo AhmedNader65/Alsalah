@@ -26,13 +26,16 @@ class BlogDetailViewModel @Inject constructor(
     val commentData: LiveData<ArrayList<Comment>> = _commentData
     private val _comments = MutableLiveData<Comment>()
     private val _likedComments = MutableLiveData<String>()
+    private val _share = MutableLiveData<String>()
     val comments: LiveData<Comment> = _comments
     val likedComment: LiveData<String> = _likedComments
+    val share: LiveData<String> = _share
     private var commentDataJob: Job? = null
     private var fawaedcommentDataJob: Job? = null
     private var postArticleCommentJob: Job? = null
     private var postFwaedCommentJob: Job? = null
     private var postFwaedLikeJob: Job? = null
+    private var postArticleShare: Job? = null
     private var postArticleLikeJob: Job? = null
 
 
@@ -113,6 +116,19 @@ class BlogDetailViewModel @Inject constructor(
 
     }
 
+
+     fun postShareArticle(id: Int) {
+         postArticleShare?.cancel()
+         postArticleShare = viewModelScope.launch {
+            articlesRepository.postShareArticle(id)
+                .collect {
+                    if (it?.data != null)
+                        _share.value = it.data!!
+                }
+        }
+
+    }
+
     override fun onCleared() {
         commentDataJob?.cancel()
         fawaedcommentDataJob?.cancel()
@@ -120,6 +136,7 @@ class BlogDetailViewModel @Inject constructor(
         postFwaedCommentJob?.cancel()
         postFwaedLikeJob?.cancel()
         postArticleLikeJob?.cancel()
+        postArticleShare?.cancel()
         super.onCleared()
     }
 }

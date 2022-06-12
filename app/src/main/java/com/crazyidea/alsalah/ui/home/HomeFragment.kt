@@ -82,6 +82,7 @@ class HomeFragment : Fragment(), PermissionListener {
             blogViewModel.postArticleLike(it.id)
         }, onShare = {
             it.share(requireContext())
+            blogViewModel.postShareArticle(it.id)
         })
         binding.blogItem.adapter = adapter
         binding.khatmaLayout.setOnClickListener {
