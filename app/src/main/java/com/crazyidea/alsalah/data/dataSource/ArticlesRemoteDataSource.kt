@@ -62,6 +62,20 @@ class ArticlesRemoteDataSource @Inject constructor(
         )
     }
 
+
+    suspend fun postShare(articleID: Int): Resource<String> {
+        return getResponse(
+            request = {
+                articlesAPI.postShare(
+                    globalPreferences.getLocale(),
+                    "${baseURL}share/${articleID}/article"
+                )
+            },
+            defaultErrorMessage = "Error sharing articles"
+        )
+    }
+
+
     suspend fun postArticleLike(articleID: Int): Resource<String> {
         return getResponse(
             request = {

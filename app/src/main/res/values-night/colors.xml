@@ -14,6 +14,7 @@
     <color name="general_setting_line">#344E41</color>
     <color name="green">#38AD00</color>
     <color name="next_prayer_bg">#4E7850</color>
+    <color name="next_green_clicked">#C2D3C3</color>
     <color name="text_orange_color">#EEB34B</color>
     <color name="text_brown_color">#C49C2D</color>
     <color name="light_green">#94AA41</color>
