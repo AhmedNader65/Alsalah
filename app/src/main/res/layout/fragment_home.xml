@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24sdp"
                 android:elevation="@dimen/_4sdp"
-                android:text="@{model.nextPrayer}"
+                android:text="@{model.clickedPrayerId==0?model.nextPrayer:model.clickedPrayer }"
                 android:textAlignment="center"
                 android:textColor="@{model.setTextColor(2,context)}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_minus9sdp"
                 android:elevation="@dimen/_4sdp"
-                android:text="@{model.remainingTime}"
+                android:text="@{model.clickedPrayerId==0?model.remainingTime:model.clickedremainingTime }"
                 android:textAlignment="center"
 
                 android:textColor="@{model.setTextColor(model.nextPrayerId,context)}"
@@ -53,13 +53,14 @@
 
             <ImageView
                 android:id="@+id/prayer_pic"
+                clickedID="@{model.clickedPrayerId}"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_330sdp"
                 android:scaleType="fitXY"
-                app:setupImage="@{model.nextPrayerId}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:setupImage="@{(model.nextPrayerId)}" />
 
             <include
                 android:id="@+id/date_layout"
@@ -71,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_16sdp"
+                android:onClick="@{()->model.clickPrayer((1))}"
                 app:cardCornerRadius="@dimen/_16sdp"
                 app:cardElevation="0dp"
                 app:layout_constrainedWidth="true"
@@ -86,7 +88,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@{model.nextPrayerId==1? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:background="@{model.nextPrayerId==1? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): model.clickedPrayerId==1?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked):context.getColor(com.crazyidea.alsalah.R.color.white)}"
                     android:gravity="center"
 
                     android:padding="@dimen/_8sdp">
@@ -150,6 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
+                android:onClick="@{()->model.clickPrayer((2))}"
                 app:cardCornerRadius="@dimen/_16sdp"
                 app:cardElevation="0dp"
                 app:layout_constrainedWidth="true"
@@ -163,7 +166,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@{model.nextPrayerId==2? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:background="@{model.nextPrayerId==2? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg):model.clickedPrayerId==2?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked): context.getColor(com.crazyidea.alsalah.R.color.white)}"
                     android:gravity="center"
                     android:padding="@dimen/_8sdp">
 
@@ -225,6 +228,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
+                android:onClick="@{()->model.clickPrayer((3))}"
                 app:cardCornerRadius="@dimen/_16sdp"
                 app:cardElevation="0dp"
                 app:layout_constrainedWidth="true"
@@ -238,7 +242,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@{model.nextPrayerId==3? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:background="@{model.nextPrayerId==3? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): model.clickedPrayerId==3?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked):context.getColor(com.crazyidea.alsalah.R.color.white)}"
                     android:gravity="center"
                     android:padding="@dimen/_8sdp">
 
@@ -296,10 +300,12 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+
                 android:id="@+id/asr_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
+                android:onClick="@{()->model.clickPrayer((4))}"
                 app:cardCornerRadius="@dimen/_16sdp"
                 app:cardElevation="0dp"
                 app:layout_constrainedWidth="true"
@@ -313,7 +319,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@{model.nextPrayerId==4? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:background="@{model.nextPrayerId==4? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): model.clickedPrayerId==4?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked):context.getColor(com.crazyidea.alsalah.R.color.white)}"
                     android:gravity="center"
                     android:padding="@dimen/_8sdp">
 
@@ -376,6 +382,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
+                android:onClick="@{()->model.clickPrayer((5))}"
                 app:cardCornerRadius="@dimen/_16sdp"
                 app:cardElevation="0dp"
                 app:layout_constrainedWidth="true"
@@ -387,9 +394,10 @@
                 app:strokeWidth=".5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@{model.nextPrayerId==5? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:background="@{model.nextPrayerId==5? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): model.clickedPrayerId==5?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked):context.getColor(com.crazyidea.alsalah.R.color.white)}"
                     android:gravity="center"
                     android:padding="@dimen/_8sdp">
 
@@ -453,6 +461,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
+                android:onClick="@{()->model.clickPrayer((6))}"
                 app:cardCornerRadius="@dimen/_16sdp"
                 app:cardElevation="0dp"
                 app:layout_constrainedWidth="true"
@@ -466,8 +475,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@{model.nextPrayerId==6? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): context.getColor(com.crazyidea.alsalah.R.color.white)}"
+                    android:background="@{model.nextPrayerId==6? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg):model.clickedPrayerId==6?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked): context.getColor(com.crazyidea.alsalah.R.color.white)}"
                     android:gravity="center"
+                    android:onClick="@{()->model.clickPrayer((6))}"
                     android:padding="@dimen/_8sdp">
 
                     <TextView

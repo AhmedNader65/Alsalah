@@ -24,6 +24,7 @@ class ArticlesRepository @Inject constructor(
     private var articleComments: Resource<ArrayList<Comment>>? = null
     private var commentData: Resource<Comment>? = null
     private var likeData: Resource<String>? = null
+    private var shareData: Resource<String>? = null
 
     suspend fun fetcharticle(): Flow<Resource<ArrayList<Articles>>?> {
         return flow {
@@ -124,6 +125,20 @@ class ArticlesRepository @Inject constructor(
                 result.let {
                     infoDataMutex.withLock {
                         likeData = it
+                    }
+                }
+            }
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
+    suspend fun postShareArticle(id: Int): Flow<Resource<String>?> {
+        return flow {
+            emit(Resource.loading())
+            val result = dataSource.postShare(id)
+            if (result.status == Status.SUCCESS) {
+                result.let {
+                    infoDataMutex.withLock {
+                        shareData = it
                     }
                 }
             }

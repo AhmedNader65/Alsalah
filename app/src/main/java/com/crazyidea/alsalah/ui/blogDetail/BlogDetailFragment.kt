@@ -91,6 +91,7 @@ class BlogDetailFragment : Fragment() {
         }
         binding.shareImg.setOnClickListener {
             args.article.share(requireContext())
+            viewModel.postShareArticle(it.id)
         }
 
 
