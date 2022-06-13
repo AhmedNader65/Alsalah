@@ -41,10 +41,10 @@ class ArticlesRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun fetchFwaed(): Flow<Resource<ArrayList<Articles>>?> {
+    suspend fun fetchRecentArticle(): Flow<Resource<ArrayList<Articles>>?> {
         return flow {
             emit(Resource.loading())
-            val result = dataSource.getFawaed()
+            val result = dataSource.getRecentArticles()
             if (result.status == Status.SUCCESS) {
                 result.let {
                     infoDataMutex.withLock {
@@ -55,6 +55,7 @@ class ArticlesRepository @Inject constructor(
             emit(result)
         }.flowOn(Dispatchers.IO)
     }
+
 
     suspend fun fetchComments(id: Int): Flow<Resource<ArrayList<Comment>>?> {
         return flow {
@@ -71,37 +72,7 @@ class ArticlesRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun fetchFwaedComments(id: Int): Flow<Resource<ArrayList<Comment>>?> {
-        return flow {
-            emit(Resource.loading())
-            val result = dataSource.getFawaedComment(id)
-            if (result.status == Status.SUCCESS) {
-                result.let {
-                    infoDataMutex.withLock {
-                        articleComments = it
-                    }
-                }
-            }
-            emit(result)
-        }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun postFwaedComments(id: Int, comment: String): Flow<Resource<Comment>?> {
-        return flow {
-            emit(Resource.loading())
-            val result = dataSource.postFwaedComment(id, comment)
-            if (result.status == Status.SUCCESS) {
-                result.let {
-                    infoDataMutex.withLock {
-                        commentData = it
-                    }
-                }
-            }
-            emit(result)
-        }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun posArticleComments(id: Int, comment: String): Flow<Resource<Comment>?> {
+    suspend fun postArticleComment(id: Int, comment: String): Flow<Resource<Comment>?> {
         return flow {
             emit(Resource.loading())
             val result = dataSource.postArticleComment(id, comment)
@@ -117,20 +88,6 @@ class ArticlesRepository @Inject constructor(
     }
 
 
-    suspend fun postFwaedLike(id: Int): Flow<Resource<String>?> {
-        return flow {
-            emit(Resource.loading())
-            val result = dataSource.postFwaedLike(id)
-            if (result.status == Status.SUCCESS) {
-                result.let {
-                    infoDataMutex.withLock {
-                        likeData = it
-                    }
-                }
-            }
-            emit(result)
-        }.flowOn(Dispatchers.IO)
-    }
     suspend fun postShareArticle(id: Int): Flow<Resource<String>?> {
         return flow {
             emit(Resource.loading())

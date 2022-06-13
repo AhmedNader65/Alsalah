@@ -239,6 +239,10 @@ class RegisterFragment : Fragment() {
                 )
             }
         }
+
+        viewModel.user.observe(viewLifecycleOwner) {
+            globalPreferences.storeUserId(it.id)
+        }
     }
 
     private fun signIn() {
@@ -250,7 +254,7 @@ class RegisterFragment : Fragment() {
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
             // If currentUser != null, let's go to the next screen
-            viewModel.login(currentUser.uid, currentUser.displayName?:"")
+            viewModel.login(currentUser.uid, currentUser.displayName ?: "")
         } else {
             // If the user hasn't already declined to use One Tap sign-in
             if (!userDeclinedOneTap) {

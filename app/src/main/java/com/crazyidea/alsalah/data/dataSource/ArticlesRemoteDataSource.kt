@@ -19,16 +19,20 @@ class ArticlesRemoteDataSource @Inject constructor(
             request = {
                 articlesAPI.getArticles(
                     globalPreferences.getLocale(),
-                    "${baseURL}articles"
+                    "${baseURL}articles", globalPreferences.getUserId()
                 )
             },
             defaultErrorMessage = "Error fetching articles"
         )
     }
-
-    suspend fun getFawaed(): Resource<ArrayList<Articles>> {
+    suspend fun getRecentArticles(): Resource<ArrayList<Articles>> {
         return getResponse(
-            request = { articlesAPI.getFawaed(globalPreferences.getLocale(), "${baseURL}fawaed") },
+            request = {
+                articlesAPI.getArticles(
+                    globalPreferences.getLocale(),
+                    "${baseURL}recent-articles", globalPreferences.getUserId()
+                )
+            },
             defaultErrorMessage = "Error fetching articles"
         )
     }
@@ -45,24 +49,13 @@ class ArticlesRemoteDataSource @Inject constructor(
         )
     }
 
-    suspend fun getFawaedComment(articleID: Int): Resource<ArrayList<Comment>> {
-        return getResponse(
-            request = {
-                articlesAPI.getFawaedComments(
-                    globalPreferences.getLocale(),
-                    "${baseURL}fawaed/${articleID}/comment"
-                )
-            },
-            defaultErrorMessage = "Error fetching articles"
-        )
-    }
 
     suspend fun postArticleComment(articleID: Int, comment: String): Resource<Comment> {
         return getResponse(
             request = {
                 articlesAPI.postArticleComment(
                     globalPreferences.getLocale(),
-                    "${baseURL}article-comment", 1, articleID, comment
+                    "${baseURL}article-comment",globalPreferences.getUserId(), articleID, comment
                 )
             },
             defaultErrorMessage = "Error fetching articles"
@@ -82,39 +75,17 @@ class ArticlesRemoteDataSource @Inject constructor(
         )
     }
 
-    suspend fun postFwaedComment(articleID: Int, comment: String): Resource<Comment> {
-        return getResponse(
-            request = {
-                articlesAPI.postFwaedComment(
-                    globalPreferences.getLocale(),
-                    "${baseURL}fawaed-comment", 1, articleID, comment
-                )
-            },
-            defaultErrorMessage = "Error fetching articles"
-        )
-    }
 
     suspend fun postArticleLike(articleID: Int): Resource<String> {
         return getResponse(
             request = {
                 articlesAPI.postArticleLike(
                     globalPreferences.getLocale(),
-                    "${baseURL}article-like", 1, articleID
+                    "${baseURL}article-like",globalPreferences.getUserId(), articleID
                 )
             },
             defaultErrorMessage = "Error fetching articles"
         )
     }
 
-    suspend fun postFwaedLike(articleID: Int): Resource<String> {
-        return getResponse(
-            request = {
-                articlesAPI.postFwaedLike(
-                    globalPreferences.getLocale(),
-                    "${baseURL}fawaed-like", 1, articleID
-                )
-            },
-            defaultErrorMessage = "Error fetching articles"
-        )
-    }
 }

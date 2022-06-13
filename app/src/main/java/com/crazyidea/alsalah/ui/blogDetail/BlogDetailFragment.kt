@@ -45,10 +45,7 @@ class BlogDetailFragment : Fragment() {
         viewModel.article.postValue(args.article)
         binding.model = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        if (args.type == 1)
             viewModel.getComments(args.article.id)
-        else
-            viewModel.getFwaedComments(args.article.id)
         return root
     }
 
@@ -75,18 +72,12 @@ class BlogDetailFragment : Fragment() {
         // setting the text after formatting html and downloading and setting images
         binding.blogDesc.text = styledText
         binding.storeImgContainer.setOnClickListener {
-            if (args.type == 1)
                 viewModel.postArticleComment(args.article.id, binding.myText.text.toString())
-            else
-                viewModel.postFwaedComment(args.article.id, binding.myText.text.toString())
         }
         checkImageStatus(bool)
 
         binding.likesImg.setOnClickListener {
-            if (args.type == 1)
                 viewModel.postArticleLike(args.article.id)
-            else
-                viewModel.postFwaedLike(args.article.id)
 
         }
         binding.shareImg.setOnClickListener {

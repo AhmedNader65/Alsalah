@@ -11,6 +11,7 @@ private const val PREFS_NAME = "SalahPref"
 private const val LATITUDE = "lat"
 private const val CALCULATION_METHOD = "calc_method"
 private const val SCHOOL_METHOD = "school_method"
+private const val USER_ID = "user_id"
 private const val POLE = "pole"
 private const val AZAN = "azan"
 private const val COLOR = "color"
@@ -30,6 +31,11 @@ class GlobalPreferences(context: Context) {
         this.context = context
         prefs = context.getSharedPreferences(PREFS_NAME, 0)
         prefsEditor = prefs.edit()
+    }
+
+    fun storeUserId(userId: Int) {
+        prefsEditor.putInt(USER_ID, userId)
+        prefsEditor.commit()
     }
 
     fun storeLocale(locale: String) {
@@ -64,6 +70,9 @@ class GlobalPreferences(context: Context) {
 
     fun getLocale(): String {
         return prefs.getString(APP_LANGUAGE, "ar")!!
+    }
+    fun getUserId(): Int {
+        return prefs.getInt(USER_ID, 0)
     }
 
     fun getCalculationMethod(): Int {

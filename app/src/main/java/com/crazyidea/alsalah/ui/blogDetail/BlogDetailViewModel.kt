@@ -31,9 +31,7 @@ class BlogDetailViewModel @Inject constructor(
     val likedComment: LiveData<String> = _likedComments
     val share: LiveData<String> = _share
     private var commentDataJob: Job? = null
-    private var fawaedcommentDataJob: Job? = null
     private var postArticleCommentJob: Job? = null
-    private var postFwaedCommentJob: Job? = null
     private var postFwaedLikeJob: Job? = null
     private var postArticleShare: Job? = null
     private var postArticleLikeJob: Job? = null
@@ -52,23 +50,10 @@ class BlogDetailViewModel @Inject constructor(
     }
 
 
-     fun getFwaedComments(id: Int) {
-         fawaedcommentDataJob?.cancel()
-         fawaedcommentDataJob = viewModelScope.launch {
-            articlesRepository.fetchFwaedComments(id)
-                .collect {
-                    if (it?.data != null)
-                        _commentData.value = it.data!!
-                }
-        }
-
-    }
-
-
      fun postArticleComment(id: Int,comment:String) {
          postArticleCommentJob?.cancel()
          postArticleCommentJob = viewModelScope.launch {
-            articlesRepository.posArticleComments(id,comment)
+            articlesRepository.postArticleComment(id,comment)
                 .collect {
                     if (it?.data != null)
                         _comments.value = it.data!!
@@ -78,17 +63,6 @@ class BlogDetailViewModel @Inject constructor(
     }
 
 
-     fun postFwaedComment(id: Int,comment:String) {
-         postFwaedCommentJob?.cancel()
-         postFwaedCommentJob = viewModelScope.launch {
-            articlesRepository.postFwaedComments(id,comment)
-                .collect {
-                    if (it?.data != null)
-                        _comments.value = it.data!!
-                }
-        }
-
-    }
 
 
      fun postArticleLike(id: Int) {
@@ -107,7 +81,7 @@ class BlogDetailViewModel @Inject constructor(
      fun postFwaedLike(id: Int) {
          postFwaedLikeJob?.cancel()
          postFwaedLikeJob = viewModelScope.launch {
-            articlesRepository.postFwaedLike(id)
+            articlesRepository.postArticleLike(id)
                 .collect {
                     if (it?.data != null)
                         _likedComments.value = it.data!!
@@ -131,10 +105,7 @@ class BlogDetailViewModel @Inject constructor(
 
     override fun onCleared() {
         commentDataJob?.cancel()
-        fawaedcommentDataJob?.cancel()
         postArticleCommentJob?.cancel()
-        postFwaedCommentJob?.cancel()
-        postFwaedLikeJob?.cancel()
         postArticleLikeJob?.cancel()
         postArticleShare?.cancel()
         super.onCleared()
