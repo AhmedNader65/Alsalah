@@ -23,7 +23,7 @@ import kotlin.coroutines.coroutineContext
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class AzkarDetailsFragment : Fragment(), Animator.AnimatorListener {
+class AzkarDetailsFragment : Fragment() {
 
     private var animator: ObjectAnimator? = null
     private var _binding: FragmentAzkarDetailsBinding? = null
@@ -61,7 +61,7 @@ class AzkarDetailsFragment : Fragment(), Animator.AnimatorListener {
                 )
             )
         }
-
+        setupObserver()
         binding.model = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return root
@@ -77,7 +77,18 @@ class AzkarDetailsFragment : Fragment(), Animator.AnimatorListener {
                     progress
                 )
                 animator!!.duration = 300
-                animator!!.addListener(this@AzkarDetailsFragment)
+                animator!!.addListener(object : AnimatorListenerAdapter(){
+                    override fun onAnimationStart(animation: Animator?) {
+                        super.onAnimationStart(animation)
+                        Log.i("Animation", "onAnimationStart")
+                    }
+
+                    override fun onAnimationEnd(animation: Animator?) {
+                        super.onAnimationEnd(animation)
+                        Log.i("Animation", "onAnimationEnd")
+                        viewModel.getNextAzkar()
+                    }
+                })
                 animator!!.start()
             }
         }
@@ -110,22 +121,6 @@ class AzkarDetailsFragment : Fragment(), Animator.AnimatorListener {
         _binding = null
     }
 
-    override fun onAnimationStart(animation: Animator?) {
-
-        Log.i("Animation", "onAnimationStart")
-    }
-
-    override fun onAnimationEnd(animation: Animator?) {
-        Log.i("Animation", "onAnimationEnd")
-        viewModel.getNextAzkar()
-    }
-
-    override fun onAnimationCancel(animation: Animator?) {
-    }
-
-    override fun onAnimationRepeat(animation: Animator?) {
-
-    }
 
     override fun onDestroy() {
         super.onDestroy()
