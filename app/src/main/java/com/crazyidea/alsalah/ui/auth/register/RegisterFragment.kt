@@ -2,7 +2,6 @@ package com.crazyidea.alsalah.ui.auth.register
 
 import android.app.Activity
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.net.Uri
@@ -33,11 +32,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
@@ -230,7 +230,7 @@ class RegisterFragment : Fragment() {
         }
         binding.twitterCon.setOnClickListener {
             if (binding.privacyCheckBox.isChecked) {
-
+                twitterFirebase()
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -281,6 +281,8 @@ class RegisterFragment : Fragment() {
                     }
             }
         }
+
+        requireActivity().onBackPressed()
     }
 
     private fun firebaseAuthWithGoogle(googleIdToken: String) {
@@ -304,6 +306,60 @@ class RegisterFragment : Fragment() {
                 }
 
             }
+    }
+
+
+    private fun twitterFirebase() {
+        val provider = OAuthProvider.newBuilder("twitter.com")
+        provider.addCustomParameter("lang", "en")
+        val pendingResultTask: Task<AuthResult>? = auth.getPendingAuthResult()
+        if (pendingResultTask != null) {
+            // There's something already here! Finish the sign-in for your user.
+            pendingResultTask
+                .addOnSuccessListener(
+                    OnSuccessListener<AuthResult?> {
+                        Log.e(TAG, "twitterFirebase: " + it.user?.email)
+                        updateUI(it.user)
+
+
+                        // User is signed in.
+                        // IdP data available in
+                        // authResult.getAdditionalUserInfo().getProfile().
+                        // The OAuth access token can also be retrieved:
+                        // authResult.getCredential().getAccessToken().
+                        // The OAuth secret can be retrieved by calling:
+                        // authResult.getCredential().getSecret().
+                    })
+                .addOnFailureListener(
+                    OnFailureListener {
+                        // Handle failure.
+                        Log.e(TAG, "twitterFirebase: "+it.localizedMessage )
+                    })
+        } else {
+            auth
+                .startActivityForSignInWithProvider( /* activity= */requireActivity(),
+                    provider.build()
+                )
+                .addOnSuccessListener(
+                    OnSuccessListener<AuthResult?> {
+                        updateUI(it.user)
+
+                        // User is signed in.
+                        // IdP data available in
+                        // authResult.getAdditionalUserInfo().getProfile().
+                        // The OAuth access token can also be retrieved:
+                        // authResult.getCredential().getAccessToken().
+                        // The OAuth secret can be retrieved by calling:
+                        // authResult.getCredential().getSecret().
+                    })
+                .addOnFailureListener(
+                    OnFailureListener {
+                        // Handle failure.
+                        Log.e(TAG, "twitterFirebase: "+it.localizedMessage )
+                    })
+        }
+
+
     }
 
 
