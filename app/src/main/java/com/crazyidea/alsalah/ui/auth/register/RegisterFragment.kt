@@ -24,6 +24,10 @@ import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentRegisterBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.themeColor
+import com.facebook.*
+import com.facebook.appevents.AppEventsLogger
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -52,6 +56,9 @@ class RegisterFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private var _binding: FragmentRegisterBinding? = null
 
+    private lateinit var callbackManager: CallbackManager
+    private lateinit var buttonFacebookLogin: LoginButton
+
 
     // Control whether user declined One Tap UI
     private var userDeclinedOneTap = false
@@ -73,6 +80,7 @@ class RegisterFragment : Fragment() {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         val root: View = binding.root
         auth = Firebase.auth
+        callbackManager = CallbackManager.Factory.create()
         return root
     }
 
@@ -122,6 +130,7 @@ class RegisterFragment : Fragment() {
             }
         }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         disableButtons()
@@ -129,7 +138,6 @@ class RegisterFragment : Fragment() {
         val word1 = resources.getString(R.string.privacyPolicy)
         val word2 = resources.getString(R.string.terms)
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
-
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.google_web_client_id))
@@ -156,6 +164,28 @@ class RegisterFragment : Fragment() {
                     .build()
             )
             .build()
+
+
+        // Set up the Facebook login button
+        FacebookSdk.sdkInitialize(requireContext());
+        AppEventsLogger.activateApp(requireActivity().application);
+        buttonFacebookLogin = binding.facebookBTN
+        buttonFacebookLogin.setReadPermissions("email", "public_profile")
+        buttonFacebookLogin.registerCallback(callbackManager, object :
+            FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                Log.d(TAG, "facebook:onSuccess:$loginResult")
+                handleFacebookAccessToken(loginResult.accessToken)
+            }
+
+            override fun onCancel() {
+                Log.d(TAG, "facebook:onCancel")
+            }
+
+            override fun onError(error: FacebookException) {
+                Log.d(TAG, "facebook:onError", error)
+            }
+        })
 
 
         val ss = SpannableString(text)
@@ -218,7 +248,7 @@ class RegisterFragment : Fragment() {
         }
         binding.facebookCon.setOnClickListener {
             if (binding.privacyCheckBox.isChecked) {
-
+                buttonFacebookLogin.performClick()
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -333,7 +363,7 @@ class RegisterFragment : Fragment() {
                 .addOnFailureListener(
                     OnFailureListener {
                         // Handle failure.
-                        Log.e(TAG, "twitterFirebase: "+it.localizedMessage )
+                        Log.e(TAG, "twitterFirebase: " + it.localizedMessage)
                     })
         } else {
             auth
@@ -355,7 +385,7 @@ class RegisterFragment : Fragment() {
                 .addOnFailureListener(
                     OnFailureListener {
                         // Handle failure.
-                        Log.e(TAG, "twitterFirebase: "+it.localizedMessage )
+                        Log.e(TAG, "twitterFirebase: " + it.localizedMessage)
                     })
         }
 
@@ -423,6 +453,36 @@ class RegisterFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Pass the activity result back to the Facebook SDK
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        Log.d(TAG, "handleFacebookAccessToken:$token")
+
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    val user = auth.currentUser
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(
+                        requireContext(), "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    updateUI(null)
+                }
+            }
     }
 
 }
