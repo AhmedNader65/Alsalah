@@ -281,6 +281,8 @@ class RegisterFragment : Fragment() {
                     }
             }
         }
+
+        requireActivity().onBackPressed()
     }
 
     private fun firebaseAuthWithGoogle(googleIdToken: String) {
