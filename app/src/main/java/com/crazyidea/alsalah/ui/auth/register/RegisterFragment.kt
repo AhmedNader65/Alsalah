@@ -168,7 +168,7 @@ class RegisterFragment : Fragment() {
 
         // Set up the Facebook login button
         FacebookSdk.sdkInitialize(requireContext());
-        AppEventsLogger.activateApp(requireActivity().application);
+//        AppEventsLogger.activateApp(requireActivity().application);
         buttonFacebookLogin = binding.facebookBTN
         buttonFacebookLogin.setReadPermissions("email", "public_profile")
         buttonFacebookLogin.registerCallback(callbackManager, object :
