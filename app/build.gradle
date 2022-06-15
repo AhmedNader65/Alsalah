@@ -106,5 +106,9 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
     implementation 'com.github.AhmedNader65:Hijri-CalendarView:1.0.3'
 
-    
+    implementation 'com.facebook.android:facebook-core:13.2.0'
+
+    // Facebook Login only
+    implementation 'com.facebook.android:facebook-login:13.2.0'
+    implementation 'com.facebook.android:facebook-android-sdk:13.2.0'
 }

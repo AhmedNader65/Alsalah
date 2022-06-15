@@ -188,6 +188,12 @@
                 android:layout_height="match_parent"
                 android:padding="@dimen/_8sdp">
 
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/facebookBTN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/googleIMG"

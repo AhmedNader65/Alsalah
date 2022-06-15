@@ -195,6 +195,8 @@ class HomeFragment : Fragment(), PermissionListener {
         alert.show()
     }
 
+
+
     override fun isPermissionGranted(isGranted: Boolean) {
         try {
 
