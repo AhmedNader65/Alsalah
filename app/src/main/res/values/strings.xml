@@ -211,9 +211,9 @@
     <string name="ellipsis">...</string>
     <string name="articleDetail">تفاصيل المقال</string>
     <string name="views_count">عدد المشاهدات %d</string>
-    <string name="facebook_app_id">1234</string>
-    <string name="fb_login_protocol_scheme">fb1234</string>
-    <string name="facebook_client_token">56789</string>
+    <string name="facebook_app_id">544008467426216</string>
+    <string name="fb_login_protocol_scheme">fb544008467426216</string>
+    <string name="facebook_client_token">2e03dcfb584132ede02b76ae3d597426</string>
     <string name="share_text">"اقرأ عن %s على تطبيق الصلاة من خلال الرابط التالي %s"</string>
     <string name="google_web_client_id">827997406585-b88lvths3a7a3hjeu7ss0dv0umr71i5g.apps.googleusercontent.com</string>
 </resources>

@@ -170,7 +170,8 @@ class RegisterFragment : Fragment() {
         FacebookSdk.sdkInitialize(requireContext());
 //        AppEventsLogger.activateApp(requireActivity().application);
         buttonFacebookLogin = binding.facebookBTN
-        buttonFacebookLogin.setReadPermissions("email", "public_profile")
+        buttonFacebookLogin.setFragment(this)
+        buttonFacebookLogin.setReadPermissions("email", "public_profile", "user_friends")
         buttonFacebookLogin.registerCallback(callbackManager, object :
             FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
@@ -456,10 +457,10 @@ class RegisterFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
 
         // Pass the activity result back to the Facebook SDK
-        callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {
