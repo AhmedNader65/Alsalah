@@ -2,6 +2,49 @@ package com.crazyidea.alsalah.data.room.entity.prayers
 
 import androidx.room.*
 
+@Entity
+data class Timing(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long?=0,
+    @ColumnInfo(name = "Fajr") val Fajr: String,
+    @ColumnInfo(name = "Sunrise") val Sunrise: String,
+    @ColumnInfo(name = "Dhuhr") val Dhuhr: String,
+    @ColumnInfo(name = "Asr") val Asr: String,
+    @ColumnInfo(name = "Sunset") val Sunset: String,
+    @ColumnInfo(name = "Maghrib") val Maghrib: String,
+    @ColumnInfo(name = "Isha") val Isha: String,
+    @ColumnInfo(name = "Imsak") val Imsak: String,
+    @ColumnInfo(name = "Midnight") val Midnight: String,
+)
+
+
+@Entity
+data class Meta(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long?=0,
+    @ColumnInfo(name = "method") val method: Int,
+    @ColumnInfo(name = "month") val month: String,
+    @ColumnInfo(name = "school") val school: Int,
+)
+
+data class DateWithTiming(
+    @Embedded val date: Date,
+    @Relation(
+        parentColumn = "timingId",
+        entityColumn = "id"
+    )
+    val timing: Timing
+)
+
+data class DateAndMeta(
+    @Embedded val date: Date,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "metaId"
+    )
+    val meta: Meta
+)
+
 @Entity(
     foreignKeys = arrayOf(
         ForeignKey(
@@ -21,8 +64,8 @@ import androidx.room.*
 data class Date(
     @PrimaryKey(autoGenerate = true)
     val id: Long? = 0,
-    @ColumnInfo(name = "timingId") val timingId: Long,
-    @ColumnInfo(name = "metaId") val metaId: Long,
+    @ColumnInfo(name = "timingId") var timingId: Long,
+    @ColumnInfo(name = "metaId") var metaId: Long,
     @ColumnInfo(name = "readable") val readable: String,
     @ColumnInfo(name = "timestamp") val timestamp: String,
     @ColumnInfo(name = "g_date") val g_date: String,

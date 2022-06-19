@@ -5,6 +5,7 @@ import com.crazyidea.alsalah.data.getResponse
 import com.crazyidea.alsalah.data.getResponseNoServerResource
 import com.crazyidea.alsalah.data.model.AzkarResponseApiModel
 import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
+import com.crazyidea.alsalah.data.model.PrayersNetworkContainer
 import com.crazyidea.alsalah.data.model.Resource
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
@@ -21,7 +22,7 @@ class PrayersRemoteDataSource @Inject constructor(
         method: Int,
         school: Int,
         tune: String?
-    ): Resource<List<PrayerResponseApiModel>> {
+    ): Resource<PrayersNetworkContainer> {
         return getResponse(
             request = {
                 prayersAPI.getPrayersTimingByAddress(lat, lng, month, year, method,school, tune)

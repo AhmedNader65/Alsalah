@@ -2,6 +2,7 @@ package com.crazyidea.alsalah.data.api
 
 import com.crazyidea.alsalah.data.model.AzkarResponseApiModel
 import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
+import com.crazyidea.alsalah.data.model.PrayersNetworkContainer
 import com.crazyidea.alsalah.data.model.ServerResponse
 import retrofit2.Response
 import retrofit2.http.*
@@ -16,7 +17,7 @@ interface PrayersAPI {
         @Query("method") method:Int,
         @Query("school") school:Int,
         @Query("tune") tune:String?
-    ): Response<ServerResponse<List<PrayerResponseApiModel>>>
+    ): Response<ServerResponse<PrayersNetworkContainer>>
 
     @GET
     suspend fun getAzkar(

@@ -2,21 +2,16 @@ package com.crazyidea.alsalah.ui.home
 
 import android.content.Context
 import android.os.CountDownTimer
-import android.os.Handler
-import android.text.format.DateUtils
 import android.util.Log
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.*
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.Articles
-import com.crazyidea.alsalah.data.model.PrayerTimingApiModel
 import com.crazyidea.alsalah.data.repository.ArticlesRepository
-import com.crazyidea.alsalah.data.repository.PrayersRepository
-import com.crazyidea.alsalah.data.room.entity.prayers.Timing
+import com.crazyidea.alsalah.data.repository.AzkarRepository
+import com.crazyidea.alsalah.data.prayers.PrayersRepository
 import com.crazyidea.alsalah.utils.GlobalPreferences
-import com.crazyidea.alsalah.utils.themeColor
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -31,9 +26,9 @@ import kotlin.collections.ArrayList
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val azkarRepository: AzkarRepository,
     private val prayerRepository: PrayersRepository,
-    private val articlesRepository: ArticlesRepository,
-    private val globalPreferences: GlobalPreferences
+    private val articlesRepository: ArticlesRepository
 ) : ViewModel() {
     val prayers = prayerRepository.prayers
 
@@ -154,7 +149,7 @@ class HomeViewModel @Inject constructor(
         val year = gor.get(Calendar.YEAR).toString()
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
-
+            Log.e("HomeViewModel","refreshing data")
             prayerRepository.refreshPrayers(
                 cityName,
                 day,
@@ -168,7 +163,7 @@ class HomeViewModel @Inject constructor(
                 save
             )
             prayerRepository.getPrayers(day, month)
-            prayerRepository.getAzkar()
+            azkarRepository.getAzkar()
             getFirstAzkar()
             getNextPrayer()
         }
@@ -205,8 +200,8 @@ class HomeViewModel @Inject constructor(
     private suspend fun getFirstAzkar() {
         viewModelScope.launch {
             azkarAfterPrayer.value =
-                prayerRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
-            azkar.value = prayerRepository.getFirstAzkar().content
+                azkarRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
+            azkar.value = azkarRepository.getFirstAzkar().content
         }
     }
 

@@ -9,17 +9,12 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.ArticlesAdapter
-import com.crazyidea.alsalah.data.model.Articles
-import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
 import com.crazyidea.alsalah.utils.*

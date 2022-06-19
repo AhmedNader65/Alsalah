@@ -2,7 +2,7 @@ package com.crazyidea.alsalah.ui.khatma
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.crazyidea.alsalah.data.repository.PrayersRepository
+import com.crazyidea.alsalah.data.prayers.PrayersRepository
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.ParseException

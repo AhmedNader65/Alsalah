@@ -7,6 +7,7 @@ import com.crazyidea.alsalah.data.api.AuthAPI
 import com.crazyidea.alsalah.data.api.CalendarAPI
 import com.crazyidea.alsalah.data.api.PrayersAPI
 import com.crazyidea.alsalah.data.dataSource.*
+import com.crazyidea.alsalah.data.prayers.PrayersRepository
 import com.crazyidea.alsalah.data.repository.*
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.utils.GlobalPreferences
@@ -51,9 +52,9 @@ class DataModule {
     @Singleton
     fun provideArticlesRemoteDataSource(
         articlesAPI: ArticlesAPI,
-         globalPreferences: GlobalPreferences, @Named("base_url") BASE_URL: String
+        globalPreferences: GlobalPreferences, @Named("base_url") BASE_URL: String
     ) =
-        ArticlesRemoteDataSource(articlesAPI,globalPreferences,BASE_URL)
+        ArticlesRemoteDataSource(articlesAPI, globalPreferences, BASE_URL)
 
     @Provides
     @Singleton
@@ -61,7 +62,7 @@ class DataModule {
         authAPI: AuthAPI,
         @Named("base_url") BASE_URL: String
     ) =
-        UserRemoteDataSource(authAPI,BASE_URL)
+        UserRemoteDataSource(authAPI, BASE_URL)
 
     @Provides
     @Singleton
@@ -76,11 +77,6 @@ class DataModule {
         calendarAPI: CalendarAPI, @Named("wiki_url") BASE_URL: String
     ) =
         EventsRemoteDataSource(calendarAPI, BASE_URL)
-
-    @Provides
-    @Singleton
-    fun providePrayersLocalDataSource(coroutineScope: CoroutineScope, appDatabase: AppDatabase) =
-        PrayersLocalDataSource(appDatabase, coroutineScope)
 
     @Provides
     @Singleton
@@ -101,10 +97,10 @@ class DataModule {
     @Singleton
     fun providePrayersRepository(
         coroutineScope: CoroutineScope,
-        remoteDataSource: PrayersRemoteDataSource,
-        localDataSource: PrayersLocalDataSource
+        appDatabase: AppDatabase,
+        remoteDataSource: PrayersRemoteDataSource
     ) =
-        PrayersRepository(remoteDataSource, localDataSource, coroutineScope)
+        PrayersRepository(remoteDataSource, appDatabase, coroutineScope)
 
     @Provides
     @Singleton

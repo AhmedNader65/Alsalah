@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.repository.ArticlesRepository
-import com.crazyidea.alsalah.data.repository.PrayersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect

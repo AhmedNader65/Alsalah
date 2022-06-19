@@ -1,19 +1,20 @@
-package com.crazyidea.alsalah.data.repository
+package com.crazyidea.alsalah.data.prayers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.crazyidea.alsalah.data.dataSource.PrayersLocalDataSource
 import com.crazyidea.alsalah.data.dataSource.PrayersRemoteDataSource
-import com.crazyidea.alsalah.data.model.PrayerResponseApiModel
-import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
+import com.crazyidea.alsalah.data.model.asDateDatabaseModel
+import com.crazyidea.alsalah.data.model.asMetaDatabaseModel
+import com.crazyidea.alsalah.data.model.asTimingDatabaseModel
+import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.entity.prayers.DateWithTiming
-import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 import kotlinx.coroutines.*
+import java.util.*
 import javax.inject.Inject
 
 class PrayersRepository @Inject constructor(
     private val remoteDataSource: PrayersRemoteDataSource,
-    private val localDataSource: PrayersLocalDataSource,
+    private val appDatabase: AppDatabase,
     private val externalScope: CoroutineScope
 ) {
 
@@ -26,8 +27,8 @@ class PrayersRepository @Inject constructor(
     suspend fun getPrayers(day: Int, month: String) {
 
         return withContext(externalScope.coroutineContext) {
-            val data  = localDataSource.getDayTimings(day, month)
-            _prayers.postValue(data.value)
+            val dayFormatted = String.format(Locale.ENGLISH, "%02d", day)
+            _prayers.postValue(appDatabase.prayersDao().getTodayTimings(dayFormatted, month))
         }
     }
 
@@ -54,30 +55,22 @@ class PrayersRepository @Inject constructor(
 
         withContext(Dispatchers.IO) {
             val prayers =
-                remoteDataSource.getDayPrayers(month, year, lat, lng, method,school, tune)
-            prayers.data?.let { localDataSource.insertData(cityName, it) }
-        }
-    }
-
-    suspend fun getAzkar() {
-        val shouldFetch = localDataSource.shouldFetchAzkar()
-        if (shouldFetch)
-            withContext(externalScope.coroutineContext) {
-                val result = remoteDataSource.getAzkar()
-                result.data?.let { localDataSource.insertAzkar(it) }
+                remoteDataSource.getDayPrayers(month, year, lat, lng, method, school, tune)
+            appDatabase.prayersDao().deleteDates()
+            appDatabase.prayersDao().deleteMeta()
+            appDatabase.prayersDao().deleteTimings()
+            prayers.data?.let {
+                val inMetaId = appDatabase.prayersDao().insertMeta(it.asMetaDatabaseModel())
+                it.asTimingDatabaseModel().forEach { timing ->
+                    val inTimingId = appDatabase.prayersDao().insertTiming(timing)
+                    val dateId =
+                        appDatabase.prayersDao().insertDate(it.asDateDatabaseModel().apply {
+                            metaId = inMetaId
+                            timingId = inTimingId
+                        })
+                }
             }
-    }
-
-    suspend fun getFirstAzkarByCategory(category: String): Azkar {
-        return localDataSource.getFirstAzkarByCategory(category)
-    }
-
-    suspend fun getAzkarByCategory(category: String): List<Azkar> {
-        return localDataSource.getAzkarByCategory(category)
-    }
-
-    suspend fun getFirstAzkar(): Azkar {
-        return localDataSource.getFirstAzkar()
+        }
     }
 
 
