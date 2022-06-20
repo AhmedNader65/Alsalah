@@ -2,11 +2,6 @@ package com.crazyidea.alsalah.di
 
 import android.content.Context
 import androidx.room.Room
-import com.crazyidea.alsalah.data.api.ArticlesAPI
-import com.crazyidea.alsalah.data.api.AuthAPI
-import com.crazyidea.alsalah.data.api.CalendarAPI
-import com.crazyidea.alsalah.data.api.PrayersAPI
-import com.crazyidea.alsalah.data.dataSource.*
 import com.crazyidea.alsalah.data.prayers.PrayersRepository
 import com.crazyidea.alsalah.data.repository.*
 import com.crazyidea.alsalah.data.room.AppDatabase
@@ -19,7 +14,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -43,50 +37,10 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providePrayersRemoteDataSource(
-        prayersAPI: PrayersAPI
-    ) =
-        PrayersRemoteDataSource(prayersAPI)
-
-    @Provides
-    @Singleton
-    fun provideArticlesRemoteDataSource(
-        articlesAPI: ArticlesAPI,
-        globalPreferences: GlobalPreferences, @Named("base_url") BASE_URL: String
-    ) =
-        ArticlesRemoteDataSource(articlesAPI, globalPreferences, BASE_URL)
-
-    @Provides
-    @Singleton
-    fun provideUserRemoteDataSource(
-        authAPI: AuthAPI,
-        @Named("base_url") BASE_URL: String
-    ) =
-        UserRemoteDataSource(authAPI, BASE_URL)
-
-    @Provides
-    @Singleton
     fun provideArticlesRepository(
-        remoteDataSource: ArticlesRemoteDataSource,
+        globalPreferences: GlobalPreferences
     ) =
-        ArticlesRepository(remoteDataSource)
-
-    @Provides
-    @Singleton
-    fun provideEventsRemoteDataSource(
-        calendarAPI: CalendarAPI, @Named("wiki_url") BASE_URL: String
-    ) =
-        EventsRemoteDataSource(calendarAPI, BASE_URL)
-
-    @Provides
-    @Singleton
-    fun provideAzkarLocalDataSource(coroutineScope: CoroutineScope, appDatabase: AppDatabase) =
-        AzkarLocalDataSource(appDatabase, coroutineScope)
-
-    @Provides
-    @Singleton
-    fun provideFajrListDataSource(coroutineScope: CoroutineScope, appDatabase: AppDatabase) =
-        FajrListDataSource(appDatabase, coroutineScope)
+        ArticlesRepository(globalPreferences)
 
     @Provides
     @Singleton
@@ -98,40 +52,37 @@ class DataModule {
     fun providePrayersRepository(
         coroutineScope: CoroutineScope,
         appDatabase: AppDatabase,
-        remoteDataSource: PrayersRemoteDataSource
     ) =
-        PrayersRepository(remoteDataSource, appDatabase, coroutineScope)
+        PrayersRepository(appDatabase, coroutineScope)
 
     @Provides
     @Singleton
     fun provideAzkarRepository(
-        coroutineScope: CoroutineScope,
-        remoteDataSource: PrayersRemoteDataSource,
-        localDataSource: AzkarLocalDataSource
+        appDatabase: AppDatabase,
+        globalPreferences: GlobalPreferences,
+        coroutineScope: CoroutineScope
     ) =
-        AzkarRepository(remoteDataSource, localDataSource, coroutineScope)
+        AzkarRepository(appDatabase, globalPreferences, coroutineScope)
 
     @Provides
     @Singleton
     fun provideUserRepository(
         coroutineScope: CoroutineScope,
-        userRemoteDataSource: UserRemoteDataSource,
     ) =
-        UserRepository(userRemoteDataSource, coroutineScope)
+        UserRepository(coroutineScope)
 
     @Provides
     @Singleton
     fun provideCalendarRepository(
         coroutineScope: CoroutineScope,
-        remoteDataSource: EventsRemoteDataSource,
     ) =
-        CalendarRepository(remoteDataSource, coroutineScope)
+        CalendarRepository(coroutineScope)
 
     @Provides
     @Singleton
     fun provideFajrListRepository(
         coroutineScope: CoroutineScope,
-        dataSource: FajrListDataSource,
+        appDatabase: AppDatabase,
     ) =
-        FajrListRepository(dataSource, coroutineScope)
+        FajrListRepository(appDatabase, coroutineScope)
 }

@@ -195,6 +195,7 @@ class HomeFragment : Fragment(), PermissionListener {
     override fun isPermissionGranted(isGranted: Boolean) {
         try {
 
+            Log.e("HomeViewModel","getting1 location")
             getDeviceLocation()
         } catch (e: Exception) {
             Log.e(TAG, "isPermissionGranted: " + e.localizedMessage)
@@ -206,6 +207,7 @@ class HomeFragment : Fragment(), PermissionListener {
             val locationResult = fusedLocationProviderClient.lastLocation
             locationResult.addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
+
                     // Set the map's camera position to the current location of the device.
                     lastKnownLocation = task.result
                     lastKnownLocation?.let {

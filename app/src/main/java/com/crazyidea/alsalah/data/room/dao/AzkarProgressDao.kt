@@ -18,7 +18,7 @@ interface AzkarProgressDao {
 
     @Transaction
     @Query("SELECT * FROM AzkarProgress WHERE day = :date")
-    fun getAzkarProgressByDay( date:String): AzkarProgress
+    fun getAzkarProgressByDay( date:String): AzkarProgress?
 
 
     @Transaction

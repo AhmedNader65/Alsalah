@@ -22,8 +22,8 @@ class CalendarViewModel @Inject constructor(
 
     private var eventsDataJob: Job? = null
 
-    private val _eventsData = MutableLiveData<Resource<String>>()
-    val eventsData: LiveData<Resource<String>> = _eventsData
+    private val _eventsData = MutableLiveData<String?>()
+    val eventsData: LiveData<String?> = _eventsData
 
     fun fetchEventsData(
         date: String

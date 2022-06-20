@@ -29,7 +29,7 @@ interface AzkarDao {
     fun getFirstAzkarGeneral(): Azkar
 
     @Insert
-    fun insertData(azkar: Azkar): Long
+    fun insertData(vararg azkar: Azkar)
 
     @Query("DELETE FROM Azkar")
     fun deleteAzkar()

@@ -9,10 +9,10 @@ import androidx.room.PrimaryKey
 data class AzkarProgress(
     @PrimaryKey
     @ColumnInfo(name = "day") val day: String,
-    @ColumnInfo(name = "morning") var morning: Int,
-    @ColumnInfo(name = "evening") var evening: Int,
-    @ColumnInfo(name = "sleeping") var sleeping: Int,
-    @ColumnInfo(name = "prayer") var prayer: Int,
-    @ColumnInfo(name = "sebha") var sebha: Int,
-    @ColumnInfo(name = "more") var more: Int,
+    @ColumnInfo(name = "morning") var morning: Int=0,
+    @ColumnInfo(name = "evening") var evening: Int=0,
+    @ColumnInfo(name = "sleeping") var sleeping: Int=0,
+    @ColumnInfo(name = "prayer") var prayer: Int=0,
+    @ColumnInfo(name = "sebha") var sebha: Int=0,
+    @ColumnInfo(name = "more") var more: Int=0,
     )

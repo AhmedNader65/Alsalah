@@ -150,18 +150,18 @@ class HomeViewModel @Inject constructor(
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
             Log.e("HomeViewModel","refreshing data")
-            prayerRepository.refreshPrayers(
-                cityName,
-                day,
-                month,
-                year,
-                lat,
-                lng,
-                method,
-                school,
-                tune,
-                save
-            )
+//            prayerRepository.refreshPrayers(
+//                cityName,
+//                day,
+//                month,
+//                year,
+//                lat,
+//                lng,
+//                method,
+//                school,
+//                tune,
+//                save
+//            )
             prayerRepository.getPrayers(day, month)
             azkarRepository.getAzkar()
             getFirstAzkar()

@@ -4,8 +4,9 @@ import com.crazyidea.alsalah.data.room.entity.prayers.Date
 import com.crazyidea.alsalah.data.room.entity.prayers.Meta
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 
+
 data class PrayersNetworkContainer(
-    val prayers: List<PrayerResponseApiModel>
+    val data: List<PrayerResponseApiModel>
 )
 
 data class PrayerResponseApiModel(
@@ -57,53 +58,51 @@ data class PrayerTimingApiModel(
     val Midnight: String,
 )
 
-fun PrayersNetworkContainer.asTimingDatabaseModel(): Array<Timing> {
-    return prayers.map {
-        Timing(
-            null,
-            it.timings.Fajr.substring(0, 5),
-            it.timings.Sunrise.substring(0, 5),
-            it.timings.Dhuhr.substring(0, 5),
-            it.timings.Asr.substring(0, 5),
-            it.timings.Sunset.substring(0, 5),
-            it.timings.Maghrib.substring(0, 5),
-            it.timings.Isha.substring(0, 5),
-            it.timings.Imsak.substring(0, 5),
-            it.timings.Midnight.substring(0, 5)
-        )
-    }.toTypedArray()
+fun PrayerTimingApiModel.asTimingDatabaseModel(): Timing {
+    return Timing(
+        null,
+        Fajr.substring(0, 5),
+        Sunrise.substring(0, 5),
+        Dhuhr.substring(0, 5),
+        Asr.substring(0, 5),
+        Sunset.substring(0, 5),
+        Maghrib.substring(0, 5),
+        Isha.substring(0, 5),
+        Imsak.substring(0, 5),
+        Midnight.substring(0, 5)
+    )
 }
 
-fun PrayersNetworkContainer.asMetaDatabaseModel(): Meta {
+fun PrayerResponseApiModel.asMetaDatabaseModel(): Meta {
     return Meta(
         null,
-        prayers.first().meta.method.id,
-        prayers.first().date.gregorian.month.number,
-        if (prayers.first().meta.school == "STANDARD") 0 else 1
+        meta.method.id,
+        date.gregorian.month.number,
+        if (meta.school == "STANDARD") 0 else 1
     )
 
 }
 
-fun PrayersNetworkContainer.asDateDatabaseModel(): Date {
+fun PrayerDateApiModel.asDateDatabaseModel(): Date {
     return Date(
         null,
         0,
         0,
-        prayers.first().date.readable,
-        prayers.first().date.timestamp,
-        prayers.first().date.gregorian.date,
-        prayers.first().date.gregorian.day,
-        prayers.first().date.gregorian.month.number,
-        prayers.first().date.gregorian.month.en,
-        prayers.first().date.gregorian.year,
-        prayers.first().date.hijri.date,
-        prayers.first().date.hijri.day,
-        prayers.first().date.hijri.weekday.en,
-        prayers.first().date.hijri.weekday.ar,
-        prayers.first().date.hijri.month.number,
-        prayers.first().date.hijri.month.en,
-        prayers.first().date.hijri.month.ar,
-        prayers.first().date.hijri.year
+        readable,
+        timestamp,
+        gregorian.date,
+        gregorian.day,
+        gregorian.month.number,
+        gregorian.month.en,
+        gregorian.year,
+        hijri.date,
+        hijri.day,
+        hijri.weekday.en,
+        hijri.weekday.ar,
+        hijri.month.number,
+        hijri.month.en,
+        hijri.month.ar,
+        hijri.year
     )
 
 }

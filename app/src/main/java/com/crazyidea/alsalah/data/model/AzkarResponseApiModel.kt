@@ -22,3 +22,4 @@ data class AzkarResponseApiModel(
     @SerializedName("أذكار بعد السلام من الصلاة المفروضة")
     val afterPrayer_azkar: List<Azkar>
 )
+
