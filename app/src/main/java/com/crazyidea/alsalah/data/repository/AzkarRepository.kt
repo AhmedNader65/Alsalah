@@ -7,6 +7,7 @@ import com.crazyidea.alsalah.data.room.entity.azkar.AzkarProgress
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class AzkarRepository @Inject constructor(
@@ -16,24 +17,31 @@ class AzkarRepository @Inject constructor(
 ) {
 
     suspend fun insertProgress(date: String, category: String) {
-        val progress = getProgress(date)
-        progress?.let {
-            alterProgress(it, category)
+        var progress = getProgress(date)
+        if (progress == null)
+            progress = AzkarProgress(date, 0, 0, 0, 0, 0, 0)
+        progress = alterProgress(progress, category)
+        withContext(externalScope.coroutineContext) {
             appDatabase.azkarProgressDao().insertOrUpdateProgress(progress)
         }
     }
 
     suspend fun getTotalProgress(date: String): Int {
-        val progress = getProgress(date)
-        return progress?.let { calculateProgress(progress) }
-            .run {
-                0
-            }
+        return withContext(externalScope.coroutineContext) {
+            val progress = getProgress(date) ?: return@withContext 0
+            val prog = calculateProgress(progress)
+            Timber.e("progress is $prog")
+
+            return@withContext prog
+
+        }
     }
 
     private fun calculateProgress(progress: AzkarProgress): Int {
+        val prog =
+            (progress.morning + progress.evening + progress.sleeping + progress.more + progress.sebha + progress.prayer)
         val value =
-            ((progress.morning + progress.evening + progress.sleeping + progress.more + progress.sebha + progress.prayer) / 6.0) * 100
+            (prog / 6.0) * 100
         return value.toInt()
     }
 
@@ -50,18 +58,16 @@ class AzkarRepository @Inject constructor(
     }
 
     private suspend fun getProgress(date: String): AzkarProgress? {
-        val progress =
-            withContext(externalScope.coroutineContext) {
-                appDatabase.azkarProgressDao().getAzkarProgressByDay(date)
-            }
-        return progress
+        return withContext(externalScope.coroutineContext) {
+
+            appDatabase.azkarProgressDao().getAzkarProgressByDay(date)
+        }
     }
 
     suspend fun getAzkar() {
 
         return withContext(externalScope.coroutineContext) {
             val azkar = Network.azkar.getAzkar(language = globalPreferences.getLocale())
-            appDatabase.azkarDao().deleteAzkar()
             appDatabase.azkarDao().insertData(*azkar.evening_azkar.toTypedArray())
             appDatabase.azkarDao().insertData(*azkar.afterPrayer_azkar.toTypedArray())
             appDatabase.azkarDao().insertData(*azkar.morning_azkar.toTypedArray())

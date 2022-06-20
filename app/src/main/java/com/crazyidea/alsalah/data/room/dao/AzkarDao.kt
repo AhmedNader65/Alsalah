@@ -1,6 +1,7 @@
 package com.crazyidea.alsalah.data.room.dao
 
 import androidx.room.*
+import androidx.room.OnConflictStrategy.Companion.REPLACE
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import com.crazyidea.alsalah.data.room.entity.azkar.AzkarProgress
 import com.crazyidea.alsalah.data.room.entity.prayers.Date
@@ -28,7 +29,7 @@ interface AzkarDao {
     @Query("SELECT * FROM Azkar LIMIT 1")
     fun getFirstAzkarGeneral(): Azkar
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertData(vararg azkar: Azkar)
 
     @Query("DELETE FROM Azkar")

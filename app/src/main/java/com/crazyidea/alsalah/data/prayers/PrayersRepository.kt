@@ -42,16 +42,13 @@ class PrayersRepository @Inject constructor(
      * function is now safe to call from any thread including the Main thread.
      */
     suspend fun refreshPrayers(
-        cityName: String,
-        day: Int,
         month: String,
         year: String,
         lat: String,
         lng: String,
         method: Int,
         school: Int,
-        tune: String?,
-        save: Boolean = true
+        tune: String?
     ) {
 
         withContext(externalScope.coroutineContext) {

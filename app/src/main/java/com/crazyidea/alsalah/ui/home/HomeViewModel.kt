@@ -136,13 +136,11 @@ class HomeViewModel @Inject constructor(
     }
 
     fun fetchPrayerData(
-        cityName: String,
         lat: String,
         lng: String,
         method: Int,
         school: Int,
         tune: String?,
-        save: Boolean = true
     ) {
         val day = gor.get(Calendar.DAY_OF_MONTH)
         val month = (gor.get(Calendar.MONTH) + 1).toString()
@@ -150,18 +148,14 @@ class HomeViewModel @Inject constructor(
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
             Log.e("HomeViewModel","refreshing data")
-//            prayerRepository.refreshPrayers(
-//                cityName,
-//                day,
-//                month,
-//                year,
-//                lat,
-//                lng,
-//                method,
-//                school,
-//                tune,
-//                save
-//            )
+            prayerRepository.refreshPrayers(
+                month,
+                year,
+                lat,
+                lng,
+                method,
+                school,
+                tune)
             prayerRepository.getPrayers(day, month)
             azkarRepository.getAzkar()
             getFirstAzkar()

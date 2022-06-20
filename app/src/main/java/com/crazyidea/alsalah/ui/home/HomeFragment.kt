@@ -1,10 +1,7 @@
 package com.crazyidea.alsalah.ui.home
 
-import android.Manifest
-import android.app.AlertDialog
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
+import android.content.Context
+import android.location.*
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -19,27 +16,25 @@ import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
 import com.crazyidea.alsalah.utils.*
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
 
+private const val MIN_TIME: Long = 400
+private const val MIN_DISTANCE = 1000f
 
 private const val TAG_OUTPUT: String = "DailyAzanWorker"
 private const val TAG: String = "HOME FRAGMENT"
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), PermissionListener {
+class HomeFragment : Fragment(), LocationListener {
 
     private lateinit var adapter: ArticlesAdapter
-    private lateinit var permissionHelper: PermissionHelper
     private var _binding: FragmentHomeBinding? = null
 
     private val viewModel by viewModels<HomeViewModel>()
     private val blogViewModel by viewModels<BlogDetailViewModel>()
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private var lastKnownLocation: Location? = null
+    private var locationManager: LocationManager? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -58,14 +53,12 @@ class HomeFragment : Fragment(), PermissionListener {
         binding.model = viewModel
         binding.dateLayout.model = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        permissionHelper = PermissionHelper(this, this)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireActivity())
+        getDeviceLocation()
         adapter = ArticlesAdapter(arrayListOf(), onReadMore = {
             findNavController().navigate(
                 HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(
@@ -91,14 +84,6 @@ class HomeFragment : Fragment(), PermissionListener {
         })
 
         setupArticles()
-
-        permissionHelper.checkForMultiplePermissions(
-            arrayOf(
-                Manifest.permission.SYSTEM_ALERT_WINDOW,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-            )
-        )
         setupNavigation()
         collectData()
     }
@@ -159,95 +144,40 @@ class HomeFragment : Fragment(), PermissionListener {
         _binding = null
     }
 
-    override fun shouldShowRationaleInfo() {
-
-        val dialogBuilder = AlertDialog.Builder(requireContext())
-
-        // set message of alert dialog
-        dialogBuilder.setMessage("Location permission is Required")
-            // if the dialog is cancelable
-            .setCancelable(false)
-            // positive button text and action
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.cancel()
-                permissionHelper.launchPermissionDialogForMultiplePermissions(
-                    arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    )
-                )
-            }
-            // negative button text and action
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.cancel()
-            }
-
-        // create dialog box
-        val alert = dialogBuilder.create()
-        // set title for alert dialog box
-        alert.setTitle("Location Permission")
-        // show alert dialog
-        alert.show()
-    }
-
-
-
-    override fun isPermissionGranted(isGranted: Boolean) {
-        try {
-
-            Log.e("HomeViewModel","getting1 location")
-            getDeviceLocation()
-        } catch (e: Exception) {
-            Log.e(TAG, "isPermissionGranted: " + e.localizedMessage)
-        }
-    }
 
     private fun getDeviceLocation() {
-        try {
-            val locationResult = fusedLocationProviderClient.lastLocation
-            locationResult.addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
 
-                    // Set the map's camera position to the current location of the device.
-                    lastKnownLocation = task.result
-                    lastKnownLocation?.let {
-                        val geocoder = Geocoder(requireContext(), Locale("en"))
-                        val addresses: List<Address> = geocoder.getFromLocation(
-                            it.latitude,
-                            it.longitude,
-                            1
-                        )
-
-                        globalPreferences.storeLatitude(it.latitude.toString())
-                        globalPreferences.storeLongitude(it.longitude.toString())
-                        val cityName: String = addresses[0].locality
-                        viewModel.fetchPrayerData(
-                            cityName,
-                            it.latitude.toString(),
-                            it.longitude.toString(),
-                            globalPreferences.getCalculationMethod(),
-                            globalPreferences.getSchool(),
-                            null
-                        )
-
-                        binding.dateLayout.leftArrowIcon.setOnClickListener { ttt ->
-                            viewModel.nextDay()
-                        }
-
-                        binding.dateLayout.rightArrowIcon.setOnClickListener { ttt ->
-                            viewModel.prevDay()
-                        }
-                    }
-                } else {
-                    Log.d(TAG, "Current location is null. Using defaults.")
-                    Log.e(TAG, "Exception: %s", task.exception)
-
-                }
-            }
-
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
-        }
+        locationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locationManager?.requestLocationUpdates(
+            LocationManager.NETWORK_PROVIDER,
+            MIN_TIME,
+            MIN_DISTANCE,
+            this
+        )
     }
 
+    override fun onLocationChanged(location: Location) {
+        globalPreferences.storeLatitude(location.latitude.toString())
+        globalPreferences.storeLongitude(location.longitude.toString())
+        viewModel.fetchPrayerData(
+            location.latitude.toString(),
+            location.longitude.toString(),
+            globalPreferences.getCalculationMethod(),
+            globalPreferences.getSchool(),
+            null
+        )
+
+        binding.dateLayout.leftArrowIcon.setOnClickListener {
+            viewModel.nextDay()
+        }
+
+        binding.dateLayout.rightArrowIcon.setOnClickListener {
+            viewModel.prevDay()
+        }
+        locationManager?.removeUpdates(this)
+    }
+
+    override fun onProviderDisabled(provider: String) {}
+    override fun onProviderEnabled(provider: String) {}
 }
