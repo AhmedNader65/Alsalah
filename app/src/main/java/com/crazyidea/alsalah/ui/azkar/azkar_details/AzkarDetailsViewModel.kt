@@ -1,15 +1,9 @@
 package com.crazyidea.alsalah.ui.azkar.azkar_details
 
-import android.animation.ObjectAnimator
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.TextView.BufferType
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.repository.AzkarRepository
-import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AzkarDetailsViewModel @Inject constructor(
-    private val prayerRepository: PrayersRepository,
     private val azkarRepository: AzkarRepository,
 ) : ViewModel() {
     private var gettingNextAzkar: Boolean = false
@@ -33,7 +26,7 @@ class AzkarDetailsViewModel @Inject constructor(
     suspend fun getAzkar(category: String) {
         this.category = category
         withContext(viewModelScope.coroutineContext) {
-            allAzkar.value = prayerRepository.getAzkarByCategory(category)
+            allAzkar.value = azkarRepository.getAzkarByCategory(category)
             allAzkar.value?.let {
                 if (it.isNotEmpty())
                     azkar.value = it[0]

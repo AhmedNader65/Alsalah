@@ -8,6 +8,7 @@ import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -38,7 +39,9 @@ class AzkarViewModel @Inject constructor(
             val date =
                 java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(gor.time)
             withContext(viewModelScope.coroutineContext) {
-                progress.value = azkarRepository.getTotalProgress(date)
+                val prog = azkarRepository.getTotalProgress(date)
+                Timber.e("progress is $prog")
+                progress.value = prog
             }
         }
     }

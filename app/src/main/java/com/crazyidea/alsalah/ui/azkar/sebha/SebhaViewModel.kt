@@ -3,7 +3,7 @@ package com.crazyidea.alsalah.ui.azkar.sebha
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.crazyidea.alsalah.data.repository.PrayersRepository
+import com.crazyidea.alsalah.data.repository.AzkarRepository
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.withContext
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SebhaViewModel @Inject constructor(
-    private val prayerRepository: PrayersRepository,
+    private val azkarRepository: AzkarRepository,
 ) : ViewModel() {
 
     private var gettingNextAzkar: Boolean = false
@@ -24,7 +24,7 @@ class SebhaViewModel @Inject constructor(
     val allAzkar = MutableLiveData<List<Azkar>>(listOf(Azkar(1, "", 2, "", "", "")))
     suspend fun getSebha() {
         withContext(viewModelScope.coroutineContext) {
-            allAzkar.value = prayerRepository.getAzkarByCategory("تسابيح")
+            allAzkar.value = azkarRepository.getAzkarByCategory("تسابيح")
             azkar.value = allAzkar.value!![0]
         }
     }

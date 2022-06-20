@@ -211,19 +211,10 @@ class CalendarFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.eventsData.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    it.data?.let { data ->
-                        this@CalendarFragment.binding.eventsText.text =
-                            HtmlCompat.fromHtml(data, HtmlCompat.FROM_HTML_MODE_LEGACY)
-                    }
-                }
-                Status.ERROR -> {
+            it?.let { data ->
+                this@CalendarFragment.binding.eventsText.text =
+                    HtmlCompat.fromHtml(data, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
-                }
-                Status.LOADING -> {
-
-                }
             }
         }
     }
