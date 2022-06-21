@@ -3,6 +3,8 @@ package com.crazyidea.alsalah.ui.azanSetting
 import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.media.MediaPlayer
@@ -22,6 +24,7 @@ import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.AzanSoundAdapter
 import com.crazyidea.alsalah.data.model.Azan
 import com.crazyidea.alsalah.databinding.FragmentAzanSettingBinding
+import com.crazyidea.alsalah.receiver.AlarmReceiver
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener
@@ -39,7 +42,7 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
     private val binding get() = _binding!!
     private val viewModel by viewModels<AzanSettingViewModel>()
     lateinit var mediaPlayer: MediaPlayer
-    private var whereFrom = 0
+    private var whereFrom = 1
     private lateinit var permissionHelper: PermissionHelper
 
     @Inject
@@ -95,41 +98,27 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode === 1) {
-            if (resultCode === RESULT_OK) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
 
                 //the selected audio.
                 val uri: Uri? = data?.data
                 if (uri != null) {
 
-                    globalPreferences.saveAzan(uri.toString())
+                    globalPreferences.saveCustomAzanUri(uri)
                 }
-            }
-        } else {
-            if (resultCode === RESULT_OK) {
-
-                //the selected audio.
-                val uri: Uri? = data?.data
-                if (uri != null) {
-                    Log.e("TAG", "onActivityResult: " + uri.toString())
-                    globalPreferences.saveAzan(uri.toString())
-                }
-
             }
         }
     }
 
     private fun createAzans(): ArrayList<Azan> {
-        var arrayList = ArrayList<Azan>()
-        arrayList.add(Azan("الاذان المكي", R.raw.azan))
-        arrayList.add(Azan("الاذان المدني", R.raw.azan))
-        arrayList.add(Azan("اذان الاقصى", R.raw.azan))
-        arrayList.add(Azan("الاذان المكي تكبيرتان", R.raw.azan))
-        arrayList.add(Azan("الاذان المدني تكبيرتان", R.raw.azan))
-        arrayList.add(Azan("اذان الاقصى تكبيرتان", R.raw.azan))
-        arrayList.add(Azan("محمد صديق المنشاوي", R.raw.azan))
-        arrayList.add(Azan("عبدالباسط عبدالصمد", R.raw.azan))
-        arrayList.add(Azan("السديسي", R.raw.azan, false))
+        val arrayList = ArrayList<Azan>()
+        arrayList.add(Azan(1, "الاذان المكي", R.raw.mecca))
+        arrayList.add(Azan(2, "الاذان المدني", R.raw.madny))
+        arrayList.add(Azan(3, "اذان الاقصى", R.raw.aqsa))
+        arrayList.add(Azan(4, "محمد صديق المنشاوي", R.raw.menshawy))
+        arrayList.add(Azan(5, "عبدالباسط عبدالصمد", R.raw.abdelbaset))
+        arrayList.add(Azan(6, "ناصر القطامي", R.raw.azan, false))
         return arrayList
 
     }
@@ -143,8 +132,10 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
     }
 
     override fun onAzanPicked(azan: Azan) {
-        Log.e("TAG", "onAzanPicked: " + azan.shortcut)
-        globalPreferences.saveAzan(azan.shortcut.toString())
+        val notificationManager: NotificationManager =
+            requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.deleteNotificationChannel(globalPreferences.getPrayerChannelId())
+        globalPreferences.saveAzan(azan.id)
 
     }
 
