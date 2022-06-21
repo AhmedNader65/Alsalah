@@ -159,7 +159,6 @@ class HomeViewModel @Inject constructor(
             prayerRepository.getPrayers(day, month)
             azkarRepository.getAzkar()
             getFirstAzkar()
-            getNextPrayer()
         }
     }
 
@@ -317,7 +316,7 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private fun getNextPrayer(newDate: Date? = null) {
+    fun getNextPrayer(newDate: Date? = null) {
 
         val hour = gor.get(Calendar.HOUR_OF_DAY).toString()
         val minute = gor.get(Calendar.MINUTE).toString()

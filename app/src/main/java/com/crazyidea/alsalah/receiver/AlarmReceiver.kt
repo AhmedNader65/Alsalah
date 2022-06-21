@@ -125,7 +125,6 @@ class AlarmReceiver : BroadcastReceiver() {
 
     private fun sendNotification(context: Context, title: String, pendingIntent: PendingIntent) {
         sound = getAzanSound(context)
-        Timber.e("sound uri $sound")
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_after_prayer)
@@ -151,7 +150,6 @@ class AlarmReceiver : BroadcastReceiver() {
 
     private fun getAzanSound(context: Context): Uri {
         val azanId = globalPreferences.getAzan()
-        Timber.e("selected azan id $azanId")
         val azanRes = when (azanId) {
             1 -> R.raw.mecca
             2 -> R.raw.madny
@@ -168,8 +166,6 @@ class AlarmReceiver : BroadcastReceiver() {
     // 2022-06-21 03:03:00.663 15691-15691/com.crazyidea.alsalah E/AlarmReceiver: sound uri android.resource://com.crazyidea.alsalah/2131820545
     private fun createChannel(context: Context) {
         val soundUri = getAzanSound(context)
-        Timber.e("sound uri $soundUri")
-        Timber.e("CHANNEL_ID $CHANNEL_ID")
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

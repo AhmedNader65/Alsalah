@@ -30,8 +30,6 @@ class AzkarRepository @Inject constructor(
         return withContext(externalScope.coroutineContext) {
             val progress = getProgress(date) ?: return@withContext 0
             val prog = calculateProgress(progress)
-            Timber.e("progress is $prog")
-
             return@withContext prog
 
         }

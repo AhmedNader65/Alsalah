@@ -259,6 +259,7 @@ class HomeFragment : Fragment(), LocationListener {
 
         viewModel.prayers.observe(viewLifecycleOwner) {
             if (it != null) {
+                viewModel.getNextPrayer()
                 Log.e("Work manager", "started")
                 val dailyWorkRequest = OneTimeWorkRequestBuilder<DailyAzanWorker>()
 //            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)

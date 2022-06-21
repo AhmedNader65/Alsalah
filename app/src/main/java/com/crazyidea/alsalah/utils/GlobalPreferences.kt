@@ -163,7 +163,6 @@ class GlobalPreferences(context: Context) {
     }
 
     fun saveAzan(azan: Int) {
-        Timber.e("saved azan id $azan")
         prefsEditor.putInt(AZAN, azan)
         prefsEditor.commit()
         saveChannelID("PRAYER" + Random().nextInt())
