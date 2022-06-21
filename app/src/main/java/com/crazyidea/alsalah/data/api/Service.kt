@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import java.util.concurrent.TimeUnit
 
 interface PrayersApi {
     @GET("calendar")
@@ -35,6 +36,13 @@ interface AzkarAPI {
         @Header("Accept-Language") language: String,
         @Url url: String = BuildConfig.BASE_URL + "azkar"
     ): AzkarResponseApiModel
+
+}
+interface QuranAPI {
+    @GET
+    suspend fun getQuran(
+        @Url url: String = BuildConfig.QURAN_BASE_URL + "quran-uthmani"
+    ): QuranNetworkContainer
 
 }
 
@@ -111,6 +119,8 @@ object Network {
 
     private fun getClient(): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
 
         if (BuildConfig.DEBUG) {
             val logging = HttpLoggingInterceptor()
@@ -125,4 +135,5 @@ object Network {
     val articles = retrofit.create(ArticlesAPI::class.java)
     val azkar = retrofit.create(AzkarAPI::class.java)
     val calendar = retrofit.create(CalendarAPI::class.java)
+    val quran = retrofit.create(QuranAPI::class.java)
 }

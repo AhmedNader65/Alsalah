@@ -57,6 +57,15 @@ class DataModule {
 
     @Provides
     @Singleton
+    fun provideQuranRepository(
+        coroutineScope: CoroutineScope,
+        globalPreferences: GlobalPreferences,
+        appDatabase: AppDatabase,
+    ) =
+        QuranRepository(appDatabase,globalPreferences, coroutineScope)
+
+    @Provides
+    @Singleton
     fun provideAzkarRepository(
         appDatabase: AppDatabase,
         globalPreferences: GlobalPreferences,

@@ -307,5 +307,9 @@
             android:name="article"
             app:argType="com.crazyidea.alsalah.data.model.Articles" />
     </fragment>
+    <fragment
+        android:id="@+id/quranFragment"
+        android:name="com.crazyidea.alsalah.ui.quran.QuranFragment"
+        android:label="QuranFragment" />
 
 </navigation>
