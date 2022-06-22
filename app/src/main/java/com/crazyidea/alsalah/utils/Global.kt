@@ -84,7 +84,47 @@ fun Articles.share(context: Context) {
     intent.putExtra(Intent.EXTRA_SUBJECT, title)
     intent.putExtra(
         Intent.EXTRA_TEXT,
-        context.getString(R.string.share_text, title, "https://play.google.com/store/apps/details?id=${context.applicationInfo.packageName}")
+        context.getString(
+            R.string.share_text,
+            title,
+            "https://play.google.com/store/apps/details?id=${context.applicationInfo.packageName}"
+        )
     )
     context.startActivity(Intent.createChooser(intent, "Share via"))
+}
+
+fun String.getJuzName(context: Context): String {
+
+    return when (this.toInt()) {
+        1 -> context.getString(R.string.juz1)
+        2 -> context.getString(R.string.juz2)
+        3 -> context.getString(R.string.juz3)
+        4 -> context.getString(R.string.juz4)
+        5 -> context.getString(R.string.juz5)
+        6 -> context.getString(R.string.juz6)
+        7 -> context.getString(R.string.juz7)
+        8 -> context.getString(R.string.juz8)
+        9 -> context.getString(R.string.juz9)
+        10 -> context.getString(R.string.juz10)
+        11 -> context.getString(R.string.juz11)
+        12 -> context.getString(R.string.juz12)
+        13 -> context.getString(R.string.juz13)
+        14 -> context.getString(R.string.juz14)
+        15 -> context.getString(R.string.juz15)
+        16 -> context.getString(R.string.juz16)
+        17 -> context.getString(R.string.juz17)
+        18 -> context.getString(R.string.juz18)
+        19 -> context.getString(R.string.juz19)
+        20 -> context.getString(R.string.juz20)
+        21 -> context.getString(R.string.juz21)
+        22 -> context.getString(R.string.juz22)
+        23 -> context.getString(R.string.juz23)
+        24 -> context.getString(R.string.juz24)
+        25 -> context.getString(R.string.juz25)
+        26 -> context.getString(R.string.juz26)
+        27 -> context.getString(R.string.juz27)
+        28 -> context.getString(R.string.juz28)
+        29 -> context.getString(R.string.juz29)
+        else -> context.getString(R.string.juz30)
+    }
 }

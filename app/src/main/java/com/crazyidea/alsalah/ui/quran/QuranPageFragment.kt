@@ -10,10 +10,12 @@ import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.crazyidea.alsalah.databinding.FragmentQuranPageBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.utils.getJuzName
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -75,6 +77,9 @@ class QuranPageFragment : Fragment() {
             var lastIndex = 0
             var surah = if (it.first().number == 1) 1 else 2
             var surahName = ""
+            var firstAyatLength = 0
+            var secondAyatLength = 0
+            var thirdAyatLength = 0
             it.forEach {
                 if (it.number == 1) {
                     when (surah) {
@@ -87,7 +92,9 @@ class QuranPageFragment : Fragment() {
                         }
                         2 -> {
                             setAyatText(spannable, surahName)
+                            firstAyatLength = spannable.length
                             spannable.clear()
+
                             lastIndex = 0
                             surahName = it.surah
                             surahTV = binding.secondLevelSurahName
@@ -98,6 +105,7 @@ class QuranPageFragment : Fragment() {
                         }
                         3 -> {
                             setAyatText(spannable, surahName)
+                            secondAyatLength = spannable.length
                             spannable.clear()
                             lastIndex = 0
                             surahName = it.surah
@@ -110,7 +118,6 @@ class QuranPageFragment : Fragment() {
                     }
                     surah++
                 }
-
                 val newText = it.text.replace("بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", "\uFDFD\n")
                 spannable.insert(lastIndex, newText)
                 lastIndex += newText.length
@@ -136,10 +143,31 @@ class QuranPageFragment : Fragment() {
 //                )
                 lastIndex += it.number.toString().length + 3
             }
+
+            if (surah == 4) {
+                thirdAyatLength = spannable.length
+            } else if (surah == 3) {
+                secondAyatLength = spannable.length
+            } else if (surah == 2) {
+                firstAyatLength = spannable.length
+            } else {
+                firstAyatLength = spannable.length
+            }
             setAyatText(spannable, surahName)
-            binding.juz.text = it.first().juz.toString()
+            binding.juz.text = it.first().juz.toString().getJuzName(requireContext())
             binding.surah.text = it.first().surah
+            setupWeights(firstAyatLength, secondAyatLength, thirdAyatLength)
         }
+    }
+
+    private fun setupWeights(firstAyatLength: Int, secondAyatLength: Int, thirdAyatLength: Int) {
+        val sum = firstAyatLength + secondAyatLength + thirdAyatLength
+        val set = ConstraintSet()
+        set.clone(binding.container)
+        set.setVerticalWeight(binding.ayah.id, firstAyatLength / sum.toFloat())
+        set.setVerticalWeight(binding.ayah2.id, secondAyatLength / sum.toFloat())
+        set.setVerticalWeight(binding.ayah3.id, thirdAyatLength / sum.toFloat())
+        set.applyTo(binding.container)
     }
 
     private fun setAyatText(spannable: SpannableStringBuilder, surah: String) {
