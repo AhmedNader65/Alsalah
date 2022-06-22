@@ -17,6 +17,8 @@ data class Ayat(
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "number") val number: Int,
     @ColumnInfo(name = "juz") val juz: Int,
+    @ColumnInfo(name = "surah") val surah: String,
+    @ColumnInfo(name = "surah_id") val surah_id: Int,
     @ColumnInfo(name = "manzil") val manzil: Int,
     @ColumnInfo(name = "page") val page: Int,
     @ColumnInfo(name = "ruku") val ruku: Int,

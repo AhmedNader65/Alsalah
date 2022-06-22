@@ -3,6 +3,7 @@ package com.crazyidea.alsalah.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.crazyidea.alsalah.data.api.Network
+import com.crazyidea.alsalah.data.model.asAyatDatabaseModel
 import com.crazyidea.alsalah.data.model.asDatabaseModel
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.entity.Ayat
@@ -37,7 +38,7 @@ class QuranRepository @Inject constructor(
             appDatabase.quranDao().emptySurah()
             appDatabase.quranDao().insertSurah(*quran.data.surahs.asDatabaseModel().toTypedArray())
             quran.data.surahs.forEach {
-                appDatabase.quranDao().insertAyah(*it.ayahs.asDatabaseModel().toTypedArray())
+                appDatabase.quranDao().insertAyah(*it.asAyatDatabaseModel().toTypedArray())
             }
         }
     }

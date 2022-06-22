@@ -32,13 +32,15 @@ data class AyatResponseApiModel(
 )
 
 @JvmName("asDatabaseModelAyatResponseApiModel")
-fun List<AyatResponseApiModel>.asDatabaseModel(): List<Ayat> {
-    return map {
+fun SurahResponseApiModel.asAyatDatabaseModel(): List<Ayat> {
+    return ayahs.map {
         Ayat(
             it.number.toLong(),
             it.text,
             it.numberInSurah,
             it.juz,
+            name,
+            number,
             it.manzil,
             it.page,
             it.ruku,

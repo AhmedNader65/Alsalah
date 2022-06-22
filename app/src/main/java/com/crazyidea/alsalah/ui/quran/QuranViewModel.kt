@@ -17,19 +17,19 @@ class QuranViewModel @Inject constructor(
 ) : ViewModel() {
     private val _pageContent = MutableLiveData<List<Ayat>>()
     val pageContent: LiveData<List<Ayat>> = _pageContent
-    fun getQuran() {
+    fun getQuran(page:Int) {
         viewModelScope.launch {
-            Timber.e("Getting quran")
-            _pageContent.postValue(quranRepository.getPage(1))
+            Timber.e("Getting quran $page")
+            _pageContent.postValue(quranRepository.getPage(page))
         }
     }
 
     init {
-//        Timber.e("Getting quran")
-//        viewModelScope.launch {
-//            Timber.e("Getting quran")
+        Timber.e("Getting quran")
+        viewModelScope.launch {
+            Timber.e("Getting quran")
 //            quranRepository.downloadQuran()
-//        }
+        }
     }
 
 }

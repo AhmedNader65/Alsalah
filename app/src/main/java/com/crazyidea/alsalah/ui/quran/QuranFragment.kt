@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.crazyidea.alsalah.adapter.QuranPageAdapter
 import com.crazyidea.alsalah.databinding.FragmentQuranBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,14 +41,8 @@ class QuranFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getQuran()
-        viewModel.pageContent.observe(viewLifecycleOwner) {
-            var text = ""
-            it.forEach {
-                text += "${it.text}  \uFD3F${it.number}\uFD3E"
-            }
-            binding.ayah.text = text
-        }
+        binding.viewPager.adapter = QuranPageAdapter(this)
+        binding.viewPager.setCurrentItem(600,false)
     }
 
     override fun onDestroyView() {
