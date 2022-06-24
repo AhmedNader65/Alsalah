@@ -142,12 +142,14 @@ class HomeViewModel @Inject constructor(
         school: Int,
         tune: String?,
     ) {
+        Log.e("HomeViewModel","refreshing data")
         val day = gor.get(Calendar.DAY_OF_MONTH)
         val month = (gor.get(Calendar.MONTH) + 1).toString()
         val year = gor.get(Calendar.YEAR).toString()
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
             Log.e("HomeViewModel","refreshing data")
+            try{
             prayerRepository.refreshPrayers(
                 month,
                 year,
@@ -156,8 +158,11 @@ class HomeViewModel @Inject constructor(
                 method,
                 school,
                 tune)
+                azkarRepository.getAzkar()
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             prayerRepository.getPrayers(day, month)
-            azkarRepository.getAzkar()
             getFirstAzkar()
         }
     }
@@ -166,11 +171,15 @@ class HomeViewModel @Inject constructor(
     private fun getArticles() {
         articleDataJob?.cancel()
         articleDataJob = viewModelScope.launch {
-            articlesRepository.fetchRecentArticle()
-                .collect {
-                    if (it?.data != null)
-                        _articleData.value = it.data!!
-                }
+            try {
+                articlesRepository.fetchRecentArticle()
+                    .collect {
+                        if (it?.data != null)
+                            _articleData.value = it.data!!
+                    }
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
         }
 
     }

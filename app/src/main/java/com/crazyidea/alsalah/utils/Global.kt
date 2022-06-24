@@ -3,6 +3,7 @@ package com.crazyidea.alsalah.utils
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,7 +64,14 @@ fun updateStoredPreference(context: Context) {
     val prefs = GlobalPreferences(context)
     coordinates = Coordinates(prefs.getLatitude().toDouble(), prefs.getLongitude().toDouble(), 0.0)
 }
+fun ignoreCaseOpt(ignoreCase: Boolean) =
+    if (ignoreCase) setOf(RegexOption.IGNORE_CASE) else emptySet()
 
+fun SpannableStringBuilder?.indexesOf(pat: String, ignoreCase: Boolean = true): List<Int> =
+    pat.toRegex(ignoreCaseOpt(ignoreCase))
+        .findAll(this?: "")
+        .map { it.range.first }
+        .toList()
 fun daysOfWeekFromLocale(): Array<DayOfWeek> {
     val firstDayOfWeek = WeekFields.of(Locale("ar")).firstDayOfWeek
     val daysOfWeek = DayOfWeek.values()

@@ -35,149 +35,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/top_level_surah"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_24sdp"
-            android:scaleType="fitXY"
-            android:visibility="gone"
-            android:src="@drawable/surah_img"
-            app:layout_constraintBottom_toTopOf="@id/ayah"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
-
-        <TextView
-            android:id="@+id/top_level_surah_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="@dimen/_14ssp"
-            android:fontFamily="@font/quran"
-            android:text="سورة الفاتحة"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/top_level_surah"
-            app:layout_constraintEnd_toEndOf="@id/top_level_surah"
-            app:layout_constraintStart_toStartOf="@id/top_level_surah"
-            app:layout_constraintTop_toTopOf="@id/top_level_surah" />
-
         <TextView
             android:id="@+id/ayah"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fontFamily="@font/quran"
-            android:padding="@dimen/_14sdp"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/_14sdp"
+            android:paddingEnd="@dimen/_14sdp"
             android:textAlignment="center"
+            android:text="@string/longStr"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
             app:autoSizeMaxTextSize="@dimen/_100ssp"
             app:autoSizeMinTextSize="@dimen/_5ssp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toTopOf="@id/second_level_surah"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_level_surah"
-            app:layout_constraintVertical_weight="1"
-            app:layout_goneMarginTop="@dimen/_24sdp" />
-
-        <ImageView
-            android:id="@+id/second_level_surah"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/surah_img"
-            android:visibility="gone"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            app:layout_constraintBottom_toTopOf="@+id/ayah2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ayah" />
-
-        <TextView
-            android:id="@+id/second_level_surah_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="سورة الفاتحة"
-            android:textStyle="bold"
-            android:textSize="@dimen/_14ssp"
-            android:fontFamily="@font/quran"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/second_level_surah"
-            app:layout_constraintEnd_toEndOf="@id/second_level_surah"
-            app:layout_constraintStart_toStartOf="@id/second_level_surah"
-            app:layout_constraintTop_toTopOf="@id/second_level_surah" />
-
-        <TextView
-            android:id="@+id/ayah2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fontFamily="@font/quran"
-            android:padding="@dimen/_14sdp"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16ssp"
-            android:visibility="gone"
-            app:autoSizeMaxTextSize="@dimen/_100ssp"
-            app:autoSizeMinTextSize="@dimen/_5ssp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toTopOf="@id/third_level_surah"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/second_level_surah"
-            app:layout_constraintVertical_weight="1" />
-
-        <ImageView
-            android:id="@+id/third_level_surah"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/surah_img"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/ayah3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ayah2" />
-
-        <TextView
-            android:id="@+id/third_level_surah_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="سورة الفاتحة"
-            android:textStyle="bold"
-            android:textSize="@dimen/_14ssp"
-            android:fontFamily="@font/quran"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/third_level_surah"
-            app:layout_constraintEnd_toEndOf="@id/third_level_surah"
-            app:layout_constraintStart_toStartOf="@id/third_level_surah"
-            app:layout_constraintTop_toTopOf="@id/third_level_surah" />
-
-        <TextView
-            android:id="@+id/ayah3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fontFamily="@font/quran"
-            android:padding="@dimen/_14sdp"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16ssp"
-            android:visibility="gone"
-            app:autoSizeMaxTextSize="@dimen/_100ssp"
-            app:autoSizeMinTextSize="@dimen/_5ssp"
-            app:autoSizeStepGranularity="1sp"
+            app:autoSizeStepGranularity=".1sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/third_level_surah"
-            app:layout_constraintVertical_weight="1" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
