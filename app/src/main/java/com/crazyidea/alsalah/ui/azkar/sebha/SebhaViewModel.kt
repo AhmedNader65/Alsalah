@@ -21,12 +21,13 @@ class SebhaViewModel @Inject constructor(
     val vibrate = MutableLiveData(false)
     var currentIndex = MutableLiveData(0)
     val azkarCounter = MutableLiveData(0)
-    val allAzkar = MutableLiveData<List<Azkar>>(listOf(Azkar(1, "", 2, "", "", "")))
+    val allAzkar = MutableLiveData<List<Azkar>>()
     suspend fun getSebha() {
-        withContext(viewModelScope.coroutineContext) {
-            allAzkar.value = azkarRepository.getAzkarByCategory("تسابيح")
-            azkar.value = allAzkar.value!![0]
-        }
+        if (allAzkar.value == null)
+            withContext(viewModelScope.coroutineContext) {
+                allAzkar.value = azkarRepository.getAzkarByCategory("تسابيح")
+                azkar.value = allAzkar.value!![0]
+            }
     }
 
     fun increaseCounter() {

@@ -42,7 +42,6 @@ class QuranFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewPager.adapter = QuranPageAdapter(this)
-        binding.viewPager.setCurrentItem(600,false)
     }
 
     override fun onDestroyView() {

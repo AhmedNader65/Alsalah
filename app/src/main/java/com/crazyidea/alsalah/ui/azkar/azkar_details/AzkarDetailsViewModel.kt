@@ -25,13 +25,14 @@ class AzkarDetailsViewModel @Inject constructor(
     val allAzkar = MutableLiveData<List<Azkar>>()
     suspend fun getAzkar(category: String) {
         this.category = category
-        withContext(viewModelScope.coroutineContext) {
-            allAzkar.value = azkarRepository.getAzkarByCategory(category)
-            allAzkar.value?.let {
-                if (it.isNotEmpty())
-                    azkar.value = it[0]
+        if (allAzkar.value == null)
+            withContext(viewModelScope.coroutineContext) {
+                allAzkar.value = azkarRepository.getAzkarByCategory(category)
+                allAzkar.value?.let {
+                    if (it.isNotEmpty())
+                        azkar.value = it[0]
+                }
             }
-        }
     }
 
     private fun increaseProgress(date: String, category: String) {

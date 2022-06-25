@@ -29,6 +29,8 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
+const val MODE = "SEBHA_MODE"
+
 @AndroidEntryPoint
 class SebhaFragment : Fragment(), Animator.AnimatorListener {
 
@@ -40,7 +42,7 @@ class SebhaFragment : Fragment(), Animator.AnimatorListener {
     private var _binding: FragmentSebhaBinding? = null
     private val viewModel by viewModels<SebhaViewModel>()
     lateinit var mp: MediaPlayer
-    lateinit var vp :Vibrator
+    lateinit var vp: Vibrator
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -62,7 +64,7 @@ class SebhaFragment : Fragment(), Animator.AnimatorListener {
         savedInstanceState: Bundle?
     ): View {
         mp = MediaPlayer.create(requireContext(), R.raw.click)
-        vp =  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        vp = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager =
                 requireActivity().getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
             vibratorManager.defaultVibrator
@@ -103,6 +105,7 @@ class SebhaFragment : Fragment(), Animator.AnimatorListener {
                 animator!!.start()
             }
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -159,6 +162,16 @@ class SebhaFragment : Fragment(), Animator.AnimatorListener {
             }
 
         })
+
+        if (savedInstanceState != null) {
+            binding.tabLayout.selectTab(binding.tabLayout.getTabAt(savedInstanceState.getInt(MODE)))
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(MODE, binding.tabLayout.selectedTabPosition)
+        super.onSaveInstanceState(outState)
+
     }
 
     override fun onDestroyView() {
