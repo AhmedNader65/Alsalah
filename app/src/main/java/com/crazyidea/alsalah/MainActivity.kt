@@ -56,7 +56,9 @@ class MainActivity : AppCompatActivity() {
                 window.setStatusBarColor(resources.getColor(R.color.header_color))
             }
         }
-        navController.navigate(R.id.navigation_home)
+        if (savedInstanceState == null) {
+            navController.navigate(R.id.navigation_home)
+        }
 
         navView.setupWithNavController(navController)
         // Add your own reselected listener
