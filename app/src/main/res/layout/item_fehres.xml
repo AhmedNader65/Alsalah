@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="surah"
+            type="com.crazyidea.alsalah.data.room.entity.Surah" />
+
+        <variable
+            name="clickListener"
+            type="com.crazyidea.alsalah.adapter.SurahClickListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:onClick="@{() -> clickListener.onClick(surah)}"
+        app:cardCornerRadius="@dimen/_8sdp"
+        app:cardBackgroundColor="#F1EDED"
+        app:strokeColor="@{surah.checked ? @color/text_orange_color : 0}"
+        app:strokeWidth="@dimen/_1sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp">
+
+            <TextView
+                android:id="@+id/surah_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quran"
+                android:text="@{surah.name}"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/surah_info"
+                style="@style/lightText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{context.getString(com.crazyidea.alsalah.R.string.surah_number)+` `+surah.id+` - `+context.getString(com.crazyidea.alsalah.R.string.surah_ayat)+` `+surah.numberOfAyahs+` `+ ((surah.revelationType.equals(`Meccan`)) ? context.getString(com.crazyidea.alsalah.R.string.meccan) : context.getString(com.crazyidea.alsalah.R.string.madanya))}"
+                android:textSize="@dimen/_8ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/surah_name" />
+
+            <TextView
+                android:id="@+id/surah_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{surah.page+``}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

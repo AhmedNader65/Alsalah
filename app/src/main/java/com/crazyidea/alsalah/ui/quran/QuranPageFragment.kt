@@ -1,7 +1,10 @@
 package com.crazyidea.alsalah.ui.quran
 
 import android.content.res.Resources
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -32,7 +35,7 @@ class QuranPageFragment : Fragment() {
 
     private var pageNum: Int = 0
     private var _binding: FragmentQuranPageBinding? = null
-    private val viewModel by viewModels<QuranViewModel>()
+    private val viewModel by viewModels<QuranViewModel>({ requireActivity() })
 
     lateinit var surahTV: TextView
     lateinit var ayatTV: TextView
@@ -68,8 +71,6 @@ class QuranPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getQuran(pageNum)
         ayatTV = binding.ayah
-//        val drawables: Drawable = resources.getDrawable(R.drawable.surah_img)
-
 //        surahTV = binding.topLevelSurahName
         viewModel.pageContent.observe(viewLifecycleOwner) {
             var spannable = SpannableStringBuilder("")
@@ -140,6 +141,12 @@ class QuranPageFragment : Fragment() {
                 Locale(globalPreferences.getLocale()),
                 "%d", it.first().page
             )
+        }
+        binding.juz.setOnClickListener {
+            viewModel.openDrawer.value = true
+        }
+        binding.surah.setOnClickListener {
+            viewModel.openDrawer.value = true
         }
     }
 

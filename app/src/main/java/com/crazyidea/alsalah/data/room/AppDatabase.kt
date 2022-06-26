@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.crazyidea.alsalah.data.room.dao.*
 import com.crazyidea.alsalah.data.room.entity.Ayat
+import com.crazyidea.alsalah.data.room.entity.Edition
 import com.crazyidea.alsalah.data.room.entity.Surah
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import com.crazyidea.alsalah.data.room.entity.azkar.AzkarProgress
@@ -13,8 +14,8 @@ import com.crazyidea.alsalah.data.room.entity.prayers.Meta
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 
 @Database(
-    entities = [Surah::class, Ayat::class, Date::class, Meta::class, Timing::class, Fajr::class, Azkar::class, AzkarProgress::class],
-    version = 11
+    entities = [Surah::class, Edition::class, Ayat::class, Date::class, Meta::class, Timing::class, Fajr::class, Azkar::class, AzkarProgress::class],
+    version = 17
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun prayersDao(): PrayerDao

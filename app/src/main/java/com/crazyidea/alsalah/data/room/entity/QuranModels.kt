@@ -2,13 +2,21 @@ package com.crazyidea.alsalah.data.room.entity
 
 import androidx.room.*
 
-
 @Entity
 data class Surah(
     @PrimaryKey(autoGenerate = true)
     val id: Long? = 0,
-    @ColumnInfo(name = "name") val name: String
-)
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "revelationType") val revelationType: String,
+    @ColumnInfo(name = "numberOfAyahs") val numberOfAyahs: Int,
+    @ColumnInfo(name = "page") val page: Int,
+    @ColumnInfo(name = "last_page") val last_page: Int,
+    @ColumnInfo(name = "juz") val juz: Int,
+
+){
+    @Ignore
+    var checked: Boolean = false
+}
 
 @Entity
 data class Ayat(
@@ -24,6 +32,15 @@ data class Ayat(
     @ColumnInfo(name = "ruku") val ruku: Int,
     @ColumnInfo(name = "hizbQuarter") val hizbQuarter: Int,
     @ColumnInfo(name = "sajda") val sajda: Boolean,
+)
+
+@Entity
+data class Edition(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long? = 0,
+    @ColumnInfo(name = "identifier") val identifier: String,
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "language") val language: String
 )
 
 
