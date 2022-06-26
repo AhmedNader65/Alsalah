@@ -1,6 +1,8 @@
 package com.crazyidea.alsalah.ui.quran.drawer
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +28,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FehresFragment : Fragment() {
 
+    private lateinit var allData: MutableList<DataItem>
     private lateinit var adapter: SurahAdapter
     private var lastChecked: Surah? = null
     private var _binding: FragmentFehresBinding? = null
@@ -53,6 +56,8 @@ class FehresFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         adapter = SurahAdapter(SurahClickListener { surah ->
             lastChecked?.let {
                 it.checked = false
@@ -60,12 +65,36 @@ class FehresFragment : Fragment() {
             lastChecked = surah
             surah.checked = true
             adapter.notifyDataSetChanged()
-            viewModel.getQuran(surah.page)
+            viewModel.setCurrentPage(surah.page)
             viewModel.openDrawer.value = false
         })
         viewModel.getAllSurah()
         binding.juz.adapter = adapter
-        viewModel.currentPage.observe(viewLifecycleOwner) { page ->
+        binding.searchSurah.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null && s.isNotEmpty()) {
+                    adapter.submitList(adapter.getData().filter {
+                        (it is DataItem.surahItem && it.surah.name.contains(s.toString()))
+                    })
+                }else{
+                    adapter.addHeaderAndSubmitList(allData)
+                }
+
+            }
+
+        })
+        setupObservers()
+    }
+
+    private fun setupObservers() {
+
+        viewModel.sidePage.observe(viewLifecycleOwner) { page ->
             lastChecked?.let {
                 it.checked = false
             }
@@ -73,7 +102,7 @@ class FehresFragment : Fragment() {
                 (it is DataItem.surahItem && it.surah.page <= page && it.surah.last_page >= page)
             }
             dataItem?.let {
-                lastChecked = ( it as DataItem.surahItem).surah
+                lastChecked = (it as DataItem.surahItem).surah
                 lastChecked!!.checked = true
                 adapter.notifyDataSetChanged()
             }
@@ -84,13 +113,14 @@ class FehresFragment : Fragment() {
                 list.add(DataItem.Header(juz.toString()))
                 list += listOfSurahs.filter { it.juz == juz }.map {
                     DataItem.surahItem(it.apply {
-                        if (it.page == viewModel.currentPage.value)
+                        if (it.page == viewModel.sidePage.value)
                             checked = true
                     })
                 }
             }
-            adapter.addHeaderAndSubmitList(list)
-            binding.juz.scrollToPosition(viewModel.currentPage.value?.minus(1) ?: 0)
+            allData = list
+            adapter.addHeaderAndSubmitList(allData)
+            binding.juz.scrollToPosition(viewModel.sidePage.value?.minus(1) ?: 0)
         }
     }
 

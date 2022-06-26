@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.adapter.DataItem
 import com.crazyidea.alsalah.adapter.QuranPageAdapter
 import com.crazyidea.alsalah.databinding.FragmentQuranBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
@@ -63,13 +64,18 @@ class QuranFragment : Fragment() {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
             }
         }
-        binding.viewPager.registerOnPageChangeCallback(callback)
+
+//        viewModel.currentPage.observe(viewLifecycleOwner) { page ->
+//            binding.viewPager.setCurrentItem(page - 1, true)
+//        }
+//        binding.viewPager.registerOnPageChangeCallback(callback)
     }
 
     private var callback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
-            viewModel.setCurrentPage(position + 1)
+            Timber.e("page selected $position")
+            viewModel.setSideDrawerPage(position + 1)
         }
     }
 
