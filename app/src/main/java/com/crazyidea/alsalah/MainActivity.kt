@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             if (destination.id != R.id.navigation_home) {
                 val window: Window = window
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                window.setStatusBarColor(resources.getColor(R.color.header_color))
+                window.statusBarColor = resources.getColor(R.color.header_color)
             }
         }
         if (savedInstanceState == null) {

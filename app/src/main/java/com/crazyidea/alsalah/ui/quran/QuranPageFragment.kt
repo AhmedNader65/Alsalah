@@ -35,7 +35,8 @@ class QuranPageFragment : Fragment() {
 
     private var pageNum: Int = 0
     private var _binding: FragmentQuranPageBinding? = null
-    private val viewModel by viewModels<QuranViewModel>({ requireActivity() })
+    private val sharedViewModel by viewModels<SharedQuranViewModel>({ requireActivity() })
+    private val viewModel by viewModels<QuranViewModel>()
 
     lateinit var surahTV: TextView
     lateinit var ayatTV: TextView
@@ -143,10 +144,10 @@ class QuranPageFragment : Fragment() {
             )
         }
         binding.juz.setOnClickListener {
-            viewModel.openDrawer.value = true
+            sharedViewModel.openDrawer.value = true
         }
         binding.surah.setOnClickListener {
-            viewModel.openDrawer.value = true
+            sharedViewModel.openDrawer.value = true
         }
     }
 

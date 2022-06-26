@@ -6,21 +6,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.DataItem
-import com.crazyidea.alsalah.adapter.QuranPageAdapter
 import com.crazyidea.alsalah.adapter.SurahAdapter
 import com.crazyidea.alsalah.adapter.SurahClickListener
 import com.crazyidea.alsalah.data.room.entity.Surah
 import com.crazyidea.alsalah.databinding.FragmentFehresBinding
-import com.crazyidea.alsalah.databinding.FragmentQuranBinding
-import com.crazyidea.alsalah.ui.quran.QuranViewModel
+import com.crazyidea.alsalah.ui.quran.SharedQuranViewModel
 import com.crazyidea.alsalah.utils.GlobalPreferences
-import com.crazyidea.alsalah.utils.getJuzName
-import com.crazyidea.alsalah.utils.withSimpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,7 +26,7 @@ class FehresFragment : Fragment() {
     private lateinit var adapter: SurahAdapter
     private var lastChecked: Surah? = null
     private var _binding: FragmentFehresBinding? = null
-    private val viewModel by viewModels<QuranViewModel>({ requireActivity() })
+    private val viewModel by viewModels<SharedQuranViewModel>({ requireActivity() })
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
@@ -82,8 +76,9 @@ class FehresFragment : Fragment() {
                     adapter.submitList(adapter.getData().filter {
                         (it is DataItem.surahItem && it.surah.name.contains(s.toString()))
                     })
-                }else{
-                    adapter.addHeaderAndSubmitList(allData)
+                } else {
+                    if (this@FehresFragment::allData.isInitialized)
+                        adapter.addHeaderAndSubmitList(allData)
                 }
 
             }

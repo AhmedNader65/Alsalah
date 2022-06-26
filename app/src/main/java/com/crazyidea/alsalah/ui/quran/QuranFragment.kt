@@ -25,7 +25,7 @@ class QuranFragment : Fragment() {
 
     private lateinit var alert: AlertDialog
     private var _binding: FragmentQuranBinding? = null
-    private val viewModel by viewModels<QuranViewModel>({ requireActivity() })
+    private val viewModel by viewModels<SharedQuranViewModel>({ requireActivity() })
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
@@ -65,10 +65,10 @@ class QuranFragment : Fragment() {
             }
         }
 
-//        viewModel.currentPage.observe(viewLifecycleOwner) { page ->
-//            binding.viewPager.setCurrentItem(page - 1, true)
-//        }
-//        binding.viewPager.registerOnPageChangeCallback(callback)
+        viewModel.currentPage.observe(viewLifecycleOwner) { page ->
+            binding.viewPager.setCurrentItem(page - 1, false)
+        }
+        binding.viewPager.registerOnPageChangeCallback(callback)
     }
 
     private var callback = object : ViewPager2.OnPageChangeCallback() {

@@ -142,28 +142,32 @@ class HomeViewModel @Inject constructor(
         school: Int,
         tune: String?,
     ) {
-        Log.e("HomeViewModel","refreshing data")
+        Log.e("HomeViewModel", "refreshing data")
         val day = gor.get(Calendar.DAY_OF_MONTH)
         val month = (gor.get(Calendar.MONTH) + 1).toString()
         val year = gor.get(Calendar.YEAR).toString()
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
-            Log.e("HomeViewModel","refreshing data")
-            try{
-            prayerRepository.refreshPrayers(
-                month,
-                year,
-                lat,
-                lng,
-                method,
-                school,
-                tune)
+            Log.e("HomeViewModel", "refreshing data")
+            try {
+                prayerRepository.refreshPrayers(
+                    month,
+                    year,
+                    lat,
+                    lng,
+                    method,
+                    school,
+                    tune
+                )
                 azkarRepository.getAzkar()
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
-            prayerRepository.getPrayers(day, month)
-            getFirstAzkar()
+            try {
+                prayerRepository.getPrayers(day, month)
+            } catch (e: Exception) {
+            }
+                getFirstAzkar()
         }
     }
 
@@ -177,7 +181,7 @@ class HomeViewModel @Inject constructor(
                         if (it?.data != null)
                             _articleData.value = it.data!!
                     }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
@@ -201,9 +205,13 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun getFirstAzkar() {
         viewModelScope.launch {
+            try {
             azkarAfterPrayer.value =
                 azkarRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
             azkar.value = azkarRepository.getFirstAzkar().content
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
