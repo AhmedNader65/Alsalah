@@ -118,8 +118,10 @@ class HomeFragment : Fragment(), LocationListener {
 
     private fun checkPermissions() {
         if (foregroundLocationPermissionApproved()) {
+            Timber.d("foregroundLocationPermiss ionApproved")
             checkDeviceLocationSettingsAndStartApp()
         } else {
+            Timber.d("foregroundLocationPermissionNotApproved")
             requestForegroundLocationPermission()
         }
     }
@@ -180,6 +182,7 @@ class HomeFragment : Fragment(), LocationListener {
     }
 
     private fun checkDeviceLocationSettingsAndStartApp(resolve: Boolean = true) {
+        Timber.d("checkDeviceLocationSettingsAndStartApp")
         val locationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_LOW_POWER
         }
@@ -189,6 +192,7 @@ class HomeFragment : Fragment(), LocationListener {
             settingsClient.checkLocationSettings(builder.build())
         locationSettingsResponseTask.addOnFailureListener { exception ->
             if (exception is ResolvableApiException && resolve) {
+                Timber.d("startIntentSenderForResult")
                 try {
                     startIntentSenderForResult(
                         exception.resolution.intentSender,
@@ -209,7 +213,9 @@ class HomeFragment : Fragment(), LocationListener {
             }
         }
         locationSettingsResponseTask.addOnCompleteListener {
+            Timber.d("addOnCompleteListener")
             if (it.isSuccessful) {
+                Timber.d("isSuccessful")
                 getDeviceLocation()
             }
         }
@@ -282,6 +288,7 @@ class HomeFragment : Fragment(), LocationListener {
 
 
     private fun getDeviceLocation() {
+        Timber.d("getDeviceLocation")
 
         locationManager =
             requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -294,6 +301,7 @@ class HomeFragment : Fragment(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
+        Timber.d("onLocationChanged")
         globalPreferences.storeLatitude(location.latitude.toString())
         globalPreferences.storeLongitude(location.longitude.toString())
         viewModel.fetchPrayerData(

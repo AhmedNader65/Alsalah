@@ -44,7 +44,7 @@
             android:includeFontPadding="false"
             android:paddingStart="@dimen/_14sdp"
             android:paddingEnd="@dimen/_14sdp"
-            android:text="@string/longStr"
+            tools:text="@string/longStr"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
@@ -61,10 +61,12 @@
             android:id="@+id/page_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:layout_marginBottom="@dimen/_16sdp"
+            tools:text="1"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/juz_border"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
