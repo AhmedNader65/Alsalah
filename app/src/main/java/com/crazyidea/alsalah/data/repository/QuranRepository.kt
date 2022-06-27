@@ -60,4 +60,10 @@ class QuranRepository @Inject constructor(
             return@withContext true
         }
     }
+
+    suspend fun getJuzPage(toInt: Int): Int {
+        return withContext(externalScope.coroutineContext) {
+            return@withContext appDatabase.quranDao().getJuzPage(toInt)
+        }
+    }
 }

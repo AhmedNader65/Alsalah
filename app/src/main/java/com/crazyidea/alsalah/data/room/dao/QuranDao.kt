@@ -43,4 +43,7 @@ interface QuranDao {
 
     @Query("DELETE FROM Edition")
     fun emptyEdition()
+
+    @Query("SELECT page FROM Ayat where juz = :juz LIMIT 1")
+    fun getJuzPage(juz: Int): Int
 }

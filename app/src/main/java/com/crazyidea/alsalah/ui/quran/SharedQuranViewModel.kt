@@ -47,4 +47,10 @@ class SharedQuranViewModel @Inject constructor(
         _sidePage.value = page
     }
 
+    fun getJuzPage(toInt: Int) {
+        viewModelScope.launch {
+            _currentPage.postValue(quranRepository.getJuzPage(toInt))
+        }
+    }
+
 }

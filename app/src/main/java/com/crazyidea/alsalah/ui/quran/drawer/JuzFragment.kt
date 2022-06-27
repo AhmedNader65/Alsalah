@@ -54,16 +54,10 @@ class JuzFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        adapter = SurahAdapter(SurahClickListener { surah ->
-            lastChecked?.let {
-                it.checked = false
-            }
-            lastChecked = surah
-            surah.checked = true
-            adapter.notifyDataSetChanged()
-            viewModel.setCurrentPage(surah.page)
+        adapter = SurahAdapter(SurahClickListener({},{
+            viewModel.getJuzPage(it.toInt())
             viewModel.openDrawer.value = false
-        })
+        }))
         viewModel.getAllSurah()
         binding.juz.adapter = adapter
 

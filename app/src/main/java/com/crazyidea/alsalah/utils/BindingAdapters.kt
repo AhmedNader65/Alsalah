@@ -32,22 +32,30 @@ fun bindSurahInfo(textView: TextView, surah: Surah) {
     val sharedPref = GlobalPreferences(context)
     var text = context.getString(R.string.surah_number)
     text += " "
-    text += String.format(Locale(sharedPref.getLocale()),"%d", surah.id)
+    text += String.format(Locale(sharedPref.getLocale()), "%d", surah.id)
     text += " - "
     text += context.getString(R.string.surah_ayat)
     text += " "
-    text += String.format(Locale(sharedPref.getLocale()),"%d",  surah.numberOfAyahs)
+    text += String.format(Locale(sharedPref.getLocale()), "%d", surah.numberOfAyahs)
     text += " - "
     text += if (surah.revelationType == "Meccan") context.getString(R.string.meccan) else context.getString(
         R.string.madanya
     )
     textView.text = text
 }
+
 @BindingAdapter("setupSurahPage")
 fun bindSurahPage(textView: TextView, surah: Surah) {
     val context = textView.context
     val sharedPref = GlobalPreferences(context)
-    var text = String.format(Locale(sharedPref.getLocale()),"%d", surah.page)
+    var text = String.format(Locale(sharedPref.getLocale()), "%d", surah.page)
 
+    textView.text = text
+}
+
+@BindingAdapter("setupJuzName")
+fun bindJuzName(textView: TextView, juz: String) {
+    val context = textView.context
+    var text = juz.getJuzName(context)
     textView.text = text
 }

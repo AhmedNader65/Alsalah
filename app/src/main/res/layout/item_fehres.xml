@@ -20,7 +20,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_8sdp"
-        android:onClick="@{() -> clickListener.onClick(surah)}"
+        android:onClick="@{() -> clickListener.onSurahClick(surah)}"
         app:cardCornerRadius="@dimen/_8sdp"
         app:cardBackgroundColor="#F1EDED"
         app:strokeColor="@{surah.checked ? @color/text_orange_color : 0}"

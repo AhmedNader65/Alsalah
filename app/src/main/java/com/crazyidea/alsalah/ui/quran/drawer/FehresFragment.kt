@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -55,7 +56,7 @@ class FehresFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        adapter = SurahAdapter(SurahClickListener { surah ->
+        adapter = SurahAdapter(SurahClickListener({ surah ->
             lastChecked?.let {
                 it.checked = false
             }
@@ -64,7 +65,10 @@ class FehresFragment : Fragment() {
             adapter.notifyDataSetChanged()
             viewModel.setCurrentPage(surah.page)
             viewModel.openDrawer.value = false
-        })
+        }, {
+            viewModel.getJuzPage(it.toInt())
+            viewModel.openDrawer.value = false
+        }))
         viewModel.getAllSurah()
         binding.juz.adapter = adapter
         binding.searchSurah.addTextChangedListener(object : TextWatcher {
@@ -91,11 +95,13 @@ class FehresFragment : Fragment() {
         })
         setupObservers()
     }
-    fun getWithoutDiac(st:String): String{
+
+    fun getWithoutDiac(st: String): String {
 
         val surWithDiac = st.withoutDiacritics()
         return surWithDiac
     }
+
     private fun setupObservers() {
 
         viewModel.sidePage.observe(viewLifecycleOwner) { page ->
@@ -127,7 +133,7 @@ class FehresFragment : Fragment() {
             binding.juz.scrollToPosition(viewModel.sidePage.value?.minus(1) ?: 0)
         }
 
-        binding.juz.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.juz.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 (requireActivity() as MainActivity).hideKeyboard()

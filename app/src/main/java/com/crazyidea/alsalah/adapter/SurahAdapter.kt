@@ -62,7 +62,7 @@ class SurahAdapter(
         }
 
         fun bind(clickListener: SurahClickListener, item: String) {
-            binding.juzSt = item.getJuzName(context = binding.juz.context )
+            binding.juzSt = item
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
@@ -100,8 +100,12 @@ class SurahAdapter(
 
 }
 
-class SurahClickListener(val clickListener: (surah: Surah) -> Unit) {
-    fun onClick(surah: Surah) = clickListener(surah)
+class SurahClickListener(
+    val clickListener: (surah: Surah) -> Unit,
+    val clickJuzListener: (juz: String) -> Unit
+) {
+    fun onSurahClick(surah: Surah) = clickListener(surah)
+    fun onJuzClick(head: String) = clickJuzListener(head)
 }
 
 class SurahDiffCallback : DiffUtil.ItemCallback<DataItem>() {
