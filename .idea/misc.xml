@@ -36,6 +36,8 @@
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/drawable/round_green_background.xml" value="0.153" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout-v28/date_layout.xml" value="0.28888888888888886" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout-v28/fragment_home.xml" value="0.16" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/action_item_horizontal.xml" value="0.25" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/action_item_vertical.xml" value="0.33" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/date_layout.xml" value="0.28888888888888886" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/dsad.xml" value="0.67" />
@@ -51,12 +53,15 @@
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_qibla.xml" value="0.33" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_quran.xml" value="0.1351004702864472" />
-        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_quran_page.xml" value="0.14578879863189398" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_quran_page.xml" value="0.2" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/fragment_sebha.xml" value="0.22" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/horiz_separator.xml" value="0.10004275331338179" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/item_blog.xml" value="0.22" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/item_fehres.xml" value="0.2594995366079703" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/item_fehres_header.xml" value="0.2594995366079703" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/layout_bottom_reading_toolbar.xml" value="0.2074074074074074" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/popup_horizontal.xml" value="0.9" />
+        <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/layout/popup_vertical.xml" value="0.67" />
         <entry key="..\:/Users/Nader/AndroidStudioProjects/alsalah/app/src/main/res/menu/bottom_nav_menu.xml" value="0.165625" />
       </map>
     </option>
