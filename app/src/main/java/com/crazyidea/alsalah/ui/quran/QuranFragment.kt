@@ -1,18 +1,22 @@
 package com.crazyidea.alsalah.ui.quran
 
-import android.Manifest
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.QuranPageAdapter
 import com.crazyidea.alsalah.databinding.FragmentQuranBinding
@@ -52,7 +56,8 @@ class QuranFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(requireActivity(), R.id.quran_categories_host_fragment)
+        navController =
+            Navigation.findNavController(requireActivity(), R.id.quran_categories_host_fragment)
 
         viewModel.downloadQuran()
         showDialog()
@@ -80,6 +85,22 @@ class QuranFragment : Fragment() {
         binding.fehres.setOnClickListener {
             navController.navigate(R.id.fehresFragment)
         }
+
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                (requireActivity() as MainActivity).hideKeyboard()
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+            }
+
+        })
     }
 
     private var callback = object : ViewPager2.OnPageChangeCallback() {
@@ -109,6 +130,18 @@ class QuranFragment : Fragment() {
         super.onDestroyView()
         binding.viewPager.unregisterOnPageChangeCallback(callback)
         _binding = null
+    }
+
+    override fun onStart() {
+        super.onStart()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
     }
 
 }

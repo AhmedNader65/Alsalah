@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
@@ -145,5 +146,11 @@ class MainActivity : AppCompatActivity() {
         binding.progress.isVisible = show
     }
 
+    fun hideKeyboard(){
+
+        val keyboard: InputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        keyboard.hideSoftInputFromWindow(binding.root.windowToken, 0)
+    }
 }
 

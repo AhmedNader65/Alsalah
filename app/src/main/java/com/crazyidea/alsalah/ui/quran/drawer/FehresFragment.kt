@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
+import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.adapter.DataItem
 import com.crazyidea.alsalah.adapter.SurahAdapter
 import com.crazyidea.alsalah.adapter.SurahClickListener
@@ -124,6 +126,13 @@ class FehresFragment : Fragment() {
             adapter.addHeaderAndSubmitList(allData)
             binding.juz.scrollToPosition(viewModel.sidePage.value?.minus(1) ?: 0)
         }
+
+        binding.juz.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                (requireActivity() as MainActivity).hideKeyboard()
+            }
+        })
     }
 
     override fun onDestroyView() {
