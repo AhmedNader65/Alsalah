@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.adapter.DataItem
 import com.crazyidea.alsalah.adapter.QuranPageAdapter
 import com.crazyidea.alsalah.databinding.FragmentQuranBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
@@ -23,6 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class QuranFragment : Fragment() {
 
+    private lateinit var navController: NavController
     private lateinit var alert: AlertDialog
     private var _binding: FragmentQuranBinding? = null
     private val viewModel by viewModels<SharedQuranViewModel>({ requireActivity() })
@@ -49,6 +52,8 @@ class QuranFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(requireActivity(), R.id.quran_categories_host_fragment)
+
         viewModel.downloadQuran()
         showDialog()
         viewModel.downloaded.observe(viewLifecycleOwner) {
@@ -69,6 +74,12 @@ class QuranFragment : Fragment() {
             binding.viewPager.setCurrentItem(page - 1, false)
         }
         binding.viewPager.registerOnPageChangeCallback(callback)
+        binding.juzs.setOnClickListener {
+            navController.navigate(R.id.juzsFragment)
+        }
+        binding.fehres.setOnClickListener {
+            navController.navigate(R.id.fehresFragment)
+        }
     }
 
     private var callback = object : ViewPager2.OnPageChangeCallback() {

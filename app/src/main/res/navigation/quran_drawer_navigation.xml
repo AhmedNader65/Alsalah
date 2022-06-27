@@ -10,4 +10,9 @@
         android:name="com.crazyidea.alsalah.ui.quran.drawer.FehresFragment"
         android:label="FehresFragment"
         tools:layout="@layout/fragment_fehres" />
+    <fragment
+        android:id="@+id/juzsFragment"
+        android:name="com.crazyidea.alsalah.ui.quran.drawer.JuzFragment"
+        android:label="JuzFragment"
+        tools:layout="@layout/fragment_juz" />
 </navigation>

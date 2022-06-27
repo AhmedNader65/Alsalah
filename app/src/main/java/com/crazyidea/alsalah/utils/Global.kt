@@ -19,6 +19,7 @@ import com.crazyidea.alsalah.adapter.BaseViewHolder
 import com.crazyidea.alsalah.adapter.SimpleRecyclerAdapter
 import com.crazyidea.alsalah.data.model.Articles
 import io.github.cosinekitty.astronomy.Observer
+import java.text.Normalizer
 import java.time.DayOfWeek
 import java.time.temporal.WeekFields
 import java.util.*
@@ -64,14 +65,16 @@ fun updateStoredPreference(context: Context) {
     val prefs = GlobalPreferences(context)
     coordinates = Coordinates(prefs.getLatitude().toDouble(), prefs.getLongitude().toDouble(), 0.0)
 }
+
 fun ignoreCaseOpt(ignoreCase: Boolean) =
     if (ignoreCase) setOf(RegexOption.IGNORE_CASE) else emptySet()
 
 fun SpannableStringBuilder?.indexesOf(pat: String, ignoreCase: Boolean = true): List<Int> =
     pat.toRegex(ignoreCaseOpt(ignoreCase))
-        .findAll(this?: "")
+        .findAll(this ?: "")
         .map { it.range.first }
         .toList()
+
 fun daysOfWeekFromLocale(): Array<DayOfWeek> {
     val firstDayOfWeek = WeekFields.of(Locale("ar")).firstDayOfWeek
     val daysOfWeek = DayOfWeek.values()
@@ -135,4 +138,11 @@ fun String.getJuzName(context: Context): String {
         29 -> context.getString(R.string.juz29)
         else -> context.getString(R.string.juz30)
     }
+}
+
+fun String.withoutDiacritics(): String {
+
+    var input = Normalizer.normalize(this, Normalizer.Form.NFKD).replace("\\p{M}".toRegex(), "")
+    input = input.replace("ٱ","ا")
+    return input
 }

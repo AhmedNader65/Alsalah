@@ -512,20 +512,3 @@ class HomeViewModel @Inject constructor(
 
 }
 
-
-@BindingAdapter("setupImage", "clickedID", requireAll = false)
-fun bindPrayerHeaderImage(imageView: ImageView, prayerId: Int, clickedID: Int) {
-    var myMethod = prayerId
-    if (clickedID == 0)
-        myMethod = prayerId
-    else
-        myMethod = clickedID
-    when (myMethod) {
-        1 -> imageView.setImageResource(R.drawable.fajr_pic)
-        2 -> imageView.setImageResource(R.drawable.shorok_pic)
-        3 -> imageView.setImageResource(R.drawable.zuhr_pic)
-        4 -> imageView.setImageResource(R.drawable.asr_pic)
-        5 -> imageView.setImageResource(R.drawable.maghrib_pic)
-        6 -> imageView.setImageResource(R.drawable.isha_pic)
-    }
-}

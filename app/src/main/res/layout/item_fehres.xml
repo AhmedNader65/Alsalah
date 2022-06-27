@@ -47,7 +47,7 @@
                 style="@style/lightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{context.getString(com.crazyidea.alsalah.R.string.surah_number)+` `+surah.id+` - `+context.getString(com.crazyidea.alsalah.R.string.surah_ayat)+` `+surah.numberOfAyahs+` `+ ((surah.revelationType.equals(`Meccan`)) ? context.getString(com.crazyidea.alsalah.R.string.meccan) : context.getString(com.crazyidea.alsalah.R.string.madanya))}"
+                app:setupSurahInfo="@{(surah)}"
                 android:textSize="@dimen/_8ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/surah_name" />
@@ -56,7 +56,7 @@
                 android:id="@+id/surah_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{surah.page+``}"
+                app:setupSurahPage="@{(surah)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

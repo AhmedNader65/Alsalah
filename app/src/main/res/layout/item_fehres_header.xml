@@ -16,7 +16,10 @@
         android:id="@+id/juz"
         style="@style/lightText"
         android:background="#E4DECF"
+
         android:paddingStart="@dimen/_16sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quran"
