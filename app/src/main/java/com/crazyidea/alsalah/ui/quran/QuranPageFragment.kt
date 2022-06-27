@@ -1,5 +1,9 @@
 package com.crazyidea.alsalah.ui.quran
 
+import android.R.attr.label
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -37,20 +41,19 @@ import javax.inject.Inject
 
 private const val ARG_PARAM1 = "param1"
 
+// action id
+private const val ID_ITEM_COPY = 1
+private const val ID_ITEM_BOOKMARK = 2
+private const val ID_ITEM_PLAY = 3
+
 @AndroidEntryPoint
 class QuranPageFragment : Fragment() {
 
 
-    // action id
-    private val ID_ITEM_1 = 1
-    private val ID_ITEM_2 = 2
-    private val ID_ITEM_3 = 3
-    private val ID_ITEM_4 = 4
-    private val ID_ITEM_5 = 5
-
+    private var startSpace: Int = 0
+    private var end: Int = 0
     private val selectIdx = 0
 
-    private val itemArray = intArrayOf(ID_ITEM_1, ID_ITEM_2, ID_ITEM_3, ID_ITEM_4, ID_ITEM_5)
     private lateinit var mQuickAction: QuickAction
     private lateinit var originalText: SpannableStringBuilder
     private var longClicked: Boolean = false
@@ -206,21 +209,24 @@ class QuranPageFragment : Fragment() {
         else
             binding.ayah.text = originalText
         val sb = SpannableStringBuilder(binding.ayah.text)
-        var ayat = sb.indexesOf("\u06DD")
-        var spaces = sb.indexesOf(" ")
-        val start = ayat.findLast {
+        val ayat = sb.indexesOf("\u06DD")
+        val spaces = sb.indexesOf(" ")
+        val start: Int = ayat.findLast {
             indexClicked > it
-        }
-        val startSpace = spaces.find {
-            it > start!!
-        }
-        val end = ayat.find {
+        } ?: 0
+        startSpace = if (start == 0)
+            0
+        else
+            spaces.find {
+                it > start
+            } ?: 0
+        end = ayat.find {
             indexClicked < it
-        }
+        } ?: 0
         sb.setSpan(
             BackgroundColorSpan(Color.parseColor("#E4DECF")),
-            startSpace!!,
-            end!!,
+            startSpace,
+            end,
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
         binding.ayah.text = sb
@@ -235,40 +241,44 @@ class QuranPageFragment : Fragment() {
         mQuickAction = QuickAction(requireContext())
         mQuickAction.setOnActionItemClickListener(mActionClick)
 
-            val copyItem = ActionItem(
-                0,
-                "Copy",
-                resources.getDrawable(R.drawable.ic_baseline_content_copy_24),
-                selectIdx
-            )
-            val bookmarkItem = ActionItem(
-                0,
-                "Bookmark",
-                resources.getDrawable(R.drawable.ic_baseline_bookmark_add_24),
-                selectIdx
-            )
-            val playItem = ActionItem(
-                0,
-                "Play",
-                resources.getDrawable(R.drawable.ic_baseline_play_arrow_24),
-                selectIdx
-            )
-            mQuickAction.addActionItem(bookmarkItem) // add action items into QuickAction.
-            mQuickAction.addActionItem(copyItem) // add action items into QuickAction.
-            mQuickAction.addActionItem(playItem) // add action items into QuickAction.
+        val copyItem = ActionItem(
+            ID_ITEM_COPY,
+            "Copy",
+            resources.getDrawable(R.drawable.ic_baseline_content_copy_24),
+            selectIdx
+        )
+        val bookmarkItem = ActionItem(
+            ID_ITEM_BOOKMARK,
+            "Bookmark",
+            resources.getDrawable(R.drawable.ic_baseline_bookmark_add_24),
+            selectIdx
+        )
+        val playItem = ActionItem(
+            ID_ITEM_PLAY,
+            "Play",
+            resources.getDrawable(R.drawable.ic_baseline_play_arrow_24),
+            selectIdx
+        )
+        mQuickAction.addActionItem(bookmarkItem) // add action items into QuickAction.
+        mQuickAction.addActionItem(copyItem) // add action items into QuickAction.
+        mQuickAction.addActionItem(playItem) // add action items into QuickAction.
 
     }
 
 
     private val mActionClick: OnActionItemClickListener = object : OnActionItemClickListener {
         override fun onItemClick(source: QuickAction, pos: Int, actionId: Int, selectIdx: Int) {
-            val msg = ""
-            if (actionId in ID_ITEM_1..ID_ITEM_5) {
-                Toast.makeText(
-                    requireContext(),
-                    String.format("ITEM ${source.getActionItem(pos).title}"),
-                    Toast.LENGTH_SHORT
-                ).show()
+            when (actionId) {
+                ID_ITEM_COPY -> {
+                    // Copy highlighted text to clipboard
+                    val clipboard: ClipboardManager =
+                        requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip =
+                        ClipData.newPlainText("label", originalText.substring(startSpace, end))
+                    clipboard.setPrimaryClip(clip)
+                    Toast.makeText(requireContext(), getString(R.string.copied), Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
             mQuickAction.dismiss()
         }
