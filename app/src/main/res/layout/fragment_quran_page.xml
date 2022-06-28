@@ -22,6 +22,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/bookmarkPage"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:cropToPadding="true"
+            android:clickable="true"
+            android:src="@drawable/ic_border_bookmark"
+            app:layout_constraintBottom_toBottomOf="@id/surah"
+            app:layout_constraintEnd_toStartOf="@id/surah"
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="true" />
+
         <TextView
             android:id="@+id/surah"
             android:layout_width="wrap_content"
@@ -44,7 +57,6 @@
             android:includeFontPadding="false"
             android:paddingStart="@dimen/_14sdp"
             android:paddingEnd="@dimen/_14sdp"
-            tools:text="@string/longStr"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
@@ -55,18 +67,19 @@
             app:layout_constraintBottom_toTopOf="@+id/page_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/longStr" />
 
         <TextView
             android:id="@+id/page_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="1"
+            android:background="@drawable/juz_border"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/juz_border"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -26,7 +26,6 @@ class PrayersRepository @Inject constructor(
     private var _prayers: MutableLiveData<DateWithTiming> = MutableLiveData()
     var prayers: LiveData<DateWithTiming> = _prayers
     suspend fun getPrayers(day: Int, month: String) {
-
         return withContext(externalScope.coroutineContext) {
             val dayFormatted = String.format(Locale.ENGLISH, "%02d", day)
             _prayers.postValue(appDatabase.prayersDao().getTodayTimings(dayFormatted, month))

@@ -9,10 +9,7 @@ import com.crazyidea.alsalah.data.model.asAyatDatabaseModel
 import com.crazyidea.alsalah.data.model.asDatabaseModel
 import com.crazyidea.alsalah.data.model.asEditionDatabaseModel
 import com.crazyidea.alsalah.data.room.AppDatabase
-import com.crazyidea.alsalah.data.room.entity.Ayat
-import com.crazyidea.alsalah.data.room.entity.AyatBookMark
-import com.crazyidea.alsalah.data.room.entity.Bookmarks
-import com.crazyidea.alsalah.data.room.entity.Surah
+import com.crazyidea.alsalah.data.room.entity.*
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import com.crazyidea.alsalah.data.room.entity.azkar.AzkarProgress
 import com.crazyidea.alsalah.data.room.entity.prayers.DateWithTiming
@@ -27,7 +24,7 @@ class QuranRepository @Inject constructor(
     private val globalPreferences: GlobalPreferences,
     private val externalScope: CoroutineScope
 ) {
-
+    val bookmarks: LiveData<List<BookmarkWithAya>> = appDatabase.quranDao().getBookmarks()
 
     suspend fun getPage(page: Int = 1): List<Ayat> {
 
@@ -77,20 +74,28 @@ class QuranRepository @Inject constructor(
         }
     }
 
-    suspend fun bookmarkPage(page: Int) {
+    suspend fun bookmarkPage(page: Long) {
         return withContext(externalScope.coroutineContext) {
-            return@withContext appDatabase.quranDao().bookmark(Bookmarks(page = page))
+            val pageBookmarked = appDatabase.quranDao().isPageBookmarked(page).isNotEmpty()
+            if (pageBookmarked) {
+                appDatabase.quranDao().deletePageBookmark(page)
+            } else {
+                appDatabase.quranDao().bookmark(Bookmarks(null, page = page))
+            }
         }
     }
-    suspend fun bookmarkAya(aya: Long) {
+
+    suspend fun bookmarkAya(text:String,ayaId: Int,page:Int) {
         return withContext(externalScope.coroutineContext) {
-            appDatabase.quranDao().updateAya(AyatBookMark(aya,true))
-            return@withContext appDatabase.quranDao().bookmark(Bookmarks(aya = aya))
+            val id = appDatabase.quranDao().getAyaId(text, ayaId, page).toLong()
+            val ayaBookmarked = appDatabase.quranDao().isAyaBookmarked(id)
+            appDatabase.quranDao().updateAya(AyatBookMark(id, !ayaBookmarked))
+            if (ayaBookmarked) {
+                appDatabase.quranDao().deleteAyaBookmark(id)
+            } else {
+                appDatabase.quranDao().bookmark(Bookmarks(null, aya = id))
+            }
         }
     }
-    suspend fun getBookmarks(): List<Bookmarks> {
-        return withContext(externalScope.coroutineContext) {
-            return@withContext appDatabase.quranDao().getBookmarks()
-        }
-    }
+
 }

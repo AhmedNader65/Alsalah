@@ -55,6 +55,7 @@ fun SurahResponseApiModel.asAyatDatabaseModel(): List<Ayat> {
             it.page,
             it.ruku,
             it.hizbQuarter,
+            false,
             false
         )
     }

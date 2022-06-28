@@ -86,6 +86,10 @@ class QuranFragment : Fragment() {
             navController.navigate(R.id.fehresFragment)
         }
 
+        binding.bookmarks.setOnClickListener {
+            navController.navigate(R.id.bookmarksFragment)
+        }
+
         binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
             }

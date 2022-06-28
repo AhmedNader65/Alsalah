@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.repository.QuranRepository
 import com.crazyidea.alsalah.data.room.entity.Ayat
+import com.crazyidea.alsalah.data.room.entity.BookmarkWithAya
+import com.crazyidea.alsalah.data.room.entity.Bookmarks
 import com.crazyidea.alsalah.data.room.entity.Surah
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,13 +21,14 @@ class SharedQuranViewModel @Inject constructor(
     private val _allSurahs = MutableLiveData<List<Surah>>()
     private val _downloaded = MutableLiveData(false)
     private val _currentPage = MutableLiveData(1)
+    private val _bookmarks = MutableLiveData<List<BookmarkWithAya>>()
     private val _sidePage = MutableLiveData(1)
     val openDrawer = MutableLiveData(false)
     val allSurahs: LiveData<List<Surah>> = _allSurahs
     val downloaded: LiveData<Boolean> = _downloaded
     val currentPage: LiveData<Int> = _currentPage
     val sidePage: LiveData<Int> = _sidePage
-
+    val bookmarks = quranRepository.bookmarks
 
     fun getAllSurah() {
         viewModelScope.launch {
@@ -52,5 +55,6 @@ class SharedQuranViewModel @Inject constructor(
             _currentPage.postValue(quranRepository.getJuzPage(toInt))
         }
     }
+
 
 }

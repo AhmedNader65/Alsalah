@@ -1,5 +1,6 @@
 package com.crazyidea.alsalah.data.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.crazyidea.alsalah.data.room.entity.*
 
@@ -30,6 +31,13 @@ interface QuranDao {
     fun insertAyah(vararg ayat: Ayat)
 
 
+    @Query("SELECT bookmarked FROM Ayat where id = :id")
+    fun isAyaBookmarked(id: Long): Boolean
+
+    @Query("SELECT * FROM Bookmarks where page = :id")
+    fun isPageBookmarked(id: Long): List<Bookmarks>
+
+
     @Query("DELETE FROM Ayat")
     fun emptyAyat()
 
@@ -49,8 +57,14 @@ interface QuranDao {
     @Insert
     fun bookmark(bookmark: Bookmarks)
 
+    @Query("DELETE FROM Bookmarks where aya = :id")
+    fun deleteAyaBookmark(id: Long)
+
+    @Query("DELETE FROM Bookmarks where page = :id")
+    fun deletePageBookmark(id: Long)
+
     @Query("SELECT * FROM Bookmarks")
-    fun getBookmarks(): List<Bookmarks>
+    fun getBookmarks(): LiveData<List<BookmarkWithAya>>
 
     @Update(entity = Ayat::class)
     fun updateAya(obj: AyatBookMark)

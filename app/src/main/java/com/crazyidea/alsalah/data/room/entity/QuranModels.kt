@@ -69,3 +69,13 @@ data class SurahWithAyat(
     )
     val ayat: Ayat
 )
+
+data class BookmarkWithAya(
+    @Embedded val bookmark: Bookmarks,
+    @Relation(
+        parentColumn = "aya",
+        entityColumn = "id"
+    )
+    val ayat: Ayat?
+)
+

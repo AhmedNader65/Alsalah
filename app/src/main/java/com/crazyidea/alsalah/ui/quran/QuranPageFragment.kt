@@ -53,6 +53,7 @@ private const val ID_ITEM_PLAY = 3
 class QuranPageFragment : Fragment() {
 
 
+    private var bookmarked: Boolean = false
     private lateinit var highlightedText: String
     private var ayahId: Int = 0
     private var isPLAYING: Boolean = false
@@ -103,7 +104,67 @@ class QuranPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getQuran(pageNum)
         ayatTV = binding.ayah
+
 //        surahTV = binding.topLevelSurahName
+        setupObservers()
+        binding.juz.setOnClickListener {
+            sharedViewModel.openDrawer.value = true
+        }
+        binding.surah.setOnClickListener {
+            sharedViewModel.openDrawer.value = true
+        }
+
+        binding.bookmarkPage.setOnClickListener {
+            if (!bookmarked) {
+                binding.bookmarkPage.setImageResource(R.drawable.ic_bookmarked)
+            } else {
+                binding.bookmarkPage.setImageResource(R.drawable.ic_border_bookmark)
+            }
+            viewModel.bookmarkPage(pageNum.toLong())
+
+        }
+        binding.ayah.setOnTouchListener { v, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_UP -> {
+                    if (longClicked) {
+                        val mOffset =
+                            binding.ayah.getOffsetForPosition(motionEvent.x, motionEvent.y)
+                        highlightText(
+                            findWord(
+                                binding.ayah.text.toString(),
+                                mOffset
+                            )
+                        )
+                        longClicked = false
+                    } else {
+                        v.performClick()
+                    }
+                }
+            }
+
+            false
+        }
+        binding.ayah.setOnLongClickListener {
+            longClicked = true
+            false
+        }
+
+    }
+
+    private fun setupObservers() {
+        if (bookmarked) {
+            binding.bookmarkPage.setImageResource(R.drawable.ic_bookmarked)
+        } else {
+            binding.bookmarkPage.setImageResource(R.drawable.ic_border_bookmark)
+
+        }
+        sharedViewModel.bookmarks.observe(viewLifecycleOwner) {
+            if (it != null)
+                if (it.filter { it.bookmark.page == pageNum.toLong() }.isNotEmpty()) {
+                    bookmarked = true
+                    binding.bookmarkPage.setImageResource(R.drawable.ic_bookmarked)
+                }
+        }
         viewModel.pageContent.observe(viewLifecycleOwner) {
             var spannable = SpannableStringBuilder("")
             var first = true
@@ -194,39 +255,6 @@ class QuranPageFragment : Fragment() {
                 Timber.e("prepare() failed")
             }
         }
-        binding.juz.setOnClickListener {
-            sharedViewModel.openDrawer.value = true
-        }
-        binding.surah.setOnClickListener {
-            sharedViewModel.openDrawer.value = true
-        }
-
-        binding.ayah.setOnTouchListener { v, motionEvent ->
-            when (motionEvent.action) {
-                MotionEvent.ACTION_UP -> {
-                    if (longClicked) {
-                        val mOffset =
-                            binding.ayah.getOffsetForPosition(motionEvent.x, motionEvent.y)
-                        highlightText(
-                            findWord(
-                                binding.ayah.text.toString(),
-                                mOffset
-                            )
-                        )
-                        longClicked = false
-                    } else {
-                        v.performClick()
-                    }
-                }
-            }
-
-            false
-        }
-        binding.ayah.setOnLongClickListener {
-            longClicked = true
-            false
-        }
-
     }
 
     private fun highlightText(indexClicked: Int) {
@@ -333,6 +361,9 @@ class QuranPageFragment : Fragment() {
                         playImg.setImageResource(R.drawable.ic_baseline_play_arrow_24)
                         stopPlaying()
                     }
+                }
+                ID_ITEM_BOOKMARK -> {
+                    viewModel.bookmarkAya(highlightedText, ayahId, pageNum)
                 }
             }
         }

@@ -40,5 +40,25 @@ class QuranViewModel @Inject constructor(
 
         }
     }
+    fun bookmarkAya(ayah:String,ayahId: Int,page: Int) {
+        Timber.e("bookmarking ayah $ayah")
+        try {
+            viewModelScope.launch {
+               quranRepository.bookmarkAya(ayah,ayahId,page)
+            }
+        }catch (e:Exception){
+
+        }
+    }
+    fun bookmarkPage(page:Long) {
+        Timber.e("bookmarking page $page")
+        try {
+            viewModelScope.launch {
+               quranRepository.bookmarkPage(page)
+            }
+        }catch (e:Exception){
+
+        }
+    }
 
 }
