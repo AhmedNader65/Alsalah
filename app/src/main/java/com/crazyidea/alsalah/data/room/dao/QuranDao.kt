@@ -63,7 +63,7 @@ interface QuranDao {
     @Query("DELETE FROM Bookmarks where page = :id")
     fun deletePageBookmark(id: Long)
 
-    @Query("SELECT * FROM Bookmarks")
+    @Query("SELECT * FROM Bookmarks ORDER BY id DESC")
     fun getBookmarks(): LiveData<List<BookmarkWithAya>>
 
     @Update(entity = Ayat::class)
