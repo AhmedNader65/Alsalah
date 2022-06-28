@@ -18,6 +18,7 @@ private const val USER_ID = "user_id"
 private const val POLE = "pole"
 private const val PRAYER_CHANNEL = "prayer-channel"
 private const val AZAN_CHANGED = "azan_changed"
+private const val LAST_PAGE_QURAN = "last-quran"
 private const val AZAN = "azan"
 private const val CUSTOM_AZAN = "custom-azan"
 private const val COLOR = "color"
@@ -152,6 +153,10 @@ class GlobalPreferences(context: Context) {
         prefsEditor.commit()
     }
 
+    fun lastReadingPage(): Int {
+       return prefs.getInt(LAST_PAGE_QURAN, 0)
+    }
+
     fun storeLatitude(latitude: String?) {
         prefsEditor.putString(LATITUDE, latitude)
         prefsEditor.commit()
@@ -171,6 +176,11 @@ class GlobalPreferences(context: Context) {
     fun saveCustomAzanUri(uri: Uri) {
         prefsEditor.putBoolean(AZAN_CHANGED, true)
         prefsEditor.putString(CUSTOM_AZAN, uri.toString())
+        prefsEditor.commit()
+    }
+
+    fun saveLastReadingPage(page: Int) {
+        prefsEditor.putInt(LAST_PAGE_QURAN, page)
         prefsEditor.commit()
     }
 

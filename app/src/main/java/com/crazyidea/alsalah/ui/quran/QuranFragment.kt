@@ -65,6 +65,10 @@ class QuranFragment : Fragment() {
             if (it == true) {
                 binding.viewPager.adapter = QuranPageAdapter(this)
                 alert.dismiss()
+
+                if (globalPreferences.lastReadingPage() != 0) {
+                    viewModel.setCurrentPage(globalPreferences.lastReadingPage())
+                }
             }
         }
         viewModel.openDrawer.observe(viewLifecycleOwner) {
@@ -110,6 +114,7 @@ class QuranFragment : Fragment() {
     private var callback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
+            globalPreferences.saveLastReadingPage(position)
             Timber.e("page selected $position")
             viewModel.setSideDrawerPage(position + 1)
         }
@@ -139,7 +144,6 @@ class QuranFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-
     }
 
     override fun onStop() {
