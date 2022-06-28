@@ -25,6 +25,7 @@ import android.widget.Toast
 import androidx.core.content.PackageManagerCompat.LOG_TAG
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.text.getSpans
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.crazyidea.alsalah.R
@@ -160,7 +161,7 @@ class QuranPageFragment : Fragment() {
         }
         sharedViewModel.bookmarks.observe(viewLifecycleOwner) {
             if (it != null)
-                if (it.filter { it.bookmark.page == pageNum.toLong() }.isNotEmpty()) {
+                if (it.any { it.bookmark.page == pageNum.toLong() }) {
                     bookmarked = true
                     binding.bookmarkPage.setImageResource(R.drawable.ic_bookmarked)
                 }
@@ -209,11 +210,19 @@ class QuranPageFragment : Fragment() {
                 spannable.append(
                     numberAya
                 )
-                spannable.setSpan(
-                    ForegroundColorSpan(Color.parseColor("#58452f")),
-                    spannable.length - numberAya.length, spannable.length,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
+                if (it.bookmarked) {
+                    spannable.setSpan(
+                        ForegroundColorSpan(Color.RED),
+                        spannable.length - numberAya.length, spannable.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                } else {
+                    spannable.setSpan(
+                        ForegroundColorSpan(Color.parseColor("#58452f")),
+                        spannable.length - numberAya.length, spannable.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
                 val allah = "ٱللَّهُ "
                 val allah2 = "ٱللَّهِ "
                 val allah3 = "ٱللَّهَ "
@@ -364,6 +373,27 @@ class QuranPageFragment : Fragment() {
                 }
                 ID_ITEM_BOOKMARK -> {
                     viewModel.bookmarkAya(highlightedText, ayahId, pageNum)
+                    binding.ayah.text = originalText
+                    val spannable = SpannableStringBuilder(binding.ayah.text)
+                    val textAfterEnd = spannable.substring(end)
+                    val nextSpace = textAfterEnd.indexOfFirst {
+                        it == ' '
+                    }
+                    val oldSpan = spannable.getSpans<ForegroundColorSpan>(end, end + nextSpace)
+                    if (oldSpan.any { it.foregroundColor== Color.RED})
+                        spannable.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#58452f")),
+                            end, end + nextSpace,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    else
+                        spannable.setSpan(
+                            ForegroundColorSpan(Color.RED),
+                            end, end + nextSpace,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    originalText = spannable
+                    binding.ayah.text = spannable
                 }
             }
         }
