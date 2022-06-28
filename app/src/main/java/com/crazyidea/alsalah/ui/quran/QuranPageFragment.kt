@@ -1,6 +1,5 @@
 package com.crazyidea.alsalah.ui.quran
 
-import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -9,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -18,10 +18,11 @@ import android.text.style.ImageSpan
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.PackageManagerCompat.LOG_TAG
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
@@ -35,6 +36,8 @@ import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.getJuzName
 import com.crazyidea.alsalah.utils.indexesOf
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
@@ -50,6 +53,10 @@ private const val ID_ITEM_PLAY = 3
 class QuranPageFragment : Fragment() {
 
 
+    private lateinit var highlightedText: String
+    private var ayahId: Int = 0
+    private var isPLAYING: Boolean = false
+    private lateinit var mp: MediaPlayer
     private var startSpace: Int = 0
     private var end: Int = 0
     private val selectIdx = 0
@@ -167,6 +174,26 @@ class QuranPageFragment : Fragment() {
                 "%d", it.first().page
             )
         }
+
+
+        viewModel.ayahContent.observe(viewLifecycleOwner) {
+            val tracks = mQuickAction.mRootView.findViewById<ViewGroup>(R.id.tracks)
+            val playImg = (tracks
+                .getChildAt(4) as ImageView)
+            playImg.setImageResource(R.drawable.ic_baseline_stop_24)
+            mp = MediaPlayer()
+            try {
+                mp.setDataSource(it)
+                mp.prepare()
+                mp.start()
+                mp.setOnCompletionListener {
+                    isPLAYING = false
+                    playImg.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                }
+            } catch (e: IOException) {
+                Timber.e("prepare() failed")
+            }
+        }
         binding.juz.setOnClickListener {
             sharedViewModel.openDrawer.value = true
         }
@@ -175,13 +202,12 @@ class QuranPageFragment : Fragment() {
         }
 
         binding.ayah.setOnTouchListener { v, motionEvent ->
-            when (motionEvent.getAction()) {
+            when (motionEvent.action) {
                 MotionEvent.ACTION_UP -> {
                     if (longClicked) {
                         val mOffset =
                             binding.ayah.getOffsetForPosition(motionEvent.x, motionEvent.y)
                         highlightText(
-                            motionEvent.x, motionEvent.y,
                             findWord(
                                 binding.ayah.text.toString(),
                                 mOffset
@@ -196,14 +222,14 @@ class QuranPageFragment : Fragment() {
 
             false
         }
-        binding.ayah.setOnLongClickListener(OnLongClickListener {
+        binding.ayah.setOnLongClickListener {
             longClicked = true
             false
-        })
+        }
 
     }
 
-    private fun highlightText(x: Float, y: Float, indexClicked: Int) {
+    private fun highlightText(indexClicked: Int) {
         if (!this::originalText.isInitialized)
             originalText = SpannableStringBuilder(binding.ayah.text)
         else
@@ -220,9 +246,22 @@ class QuranPageFragment : Fragment() {
             spaces.find {
                 it > start
             } ?: 0
+
         end = ayat.find {
             indexClicked < it
         } ?: 0
+
+        val x = spaces.find {
+            it > end
+        } ?: 0
+        val ayahIdSt = sb.substring(end, x)
+        ayahId = ayahIdSt.replace("\u06DD", "").toInt()
+        highlightedText = sb.substring(
+            startSpace,
+            end
+        ).trim()
+        if (highlightedText.contains("﷽\n"))
+            highlightedText = highlightedText.substring("﷽\n".length + 1).trim()
         sb.setSpan(
             BackgroundColorSpan(Color.parseColor("#E4DECF")),
             startSpace,
@@ -259,6 +298,7 @@ class QuranPageFragment : Fragment() {
             resources.getDrawable(R.drawable.ic_baseline_play_arrow_24),
             selectIdx
         )
+        playItem.isSticky = true
         mQuickAction.addActionItem(bookmarkItem) // add action items into QuickAction.
         mQuickAction.addActionItem(copyItem) // add action items into QuickAction.
         mQuickAction.addActionItem(playItem) // add action items into QuickAction.
@@ -278,10 +318,29 @@ class QuranPageFragment : Fragment() {
                     clipboard.setPrimaryClip(clip)
                     Toast.makeText(requireContext(), getString(R.string.copied), Toast.LENGTH_SHORT)
                         .show()
+                    mQuickAction.dismiss()
+                }
+                ID_ITEM_PLAY -> {
+
+                    if (!isPLAYING) {
+                        isPLAYING = true
+                        viewModel.getAudio(highlightedText, ayahId, pageNum)
+                    } else {
+                        isPLAYING = false
+                        val tracks = mQuickAction.mRootView.findViewById<ViewGroup>(R.id.tracks)
+                        val playImg = (tracks
+                            .getChildAt(4) as ImageView)
+                        playImg.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                        stopPlaying()
+                    }
                 }
             }
-            mQuickAction.dismiss()
         }
+    }
+
+    private fun stopPlaying() {
+        if (this::mp.isInitialized)
+            mp.release()
     }
 
     // This function is to change allah color to red

@@ -18,9 +18,9 @@ class QuickAction @JvmOverloads constructor(
     context: Context,
 ) :
     PopupWindows(context), OnDismissListener {
-    override lateinit var mRootView: View
+    public override lateinit var mRootView: View
     private val mInflater: LayoutInflater
-    private var mTrack: ViewGroup? = null
+    var mTrack: ViewGroup? = null
     private var mScroller: ScrollView? = null
     private var mItemClickListener: OnActionItemClickListener? = null
     private var mDismissListener: OnDismissListener? = null

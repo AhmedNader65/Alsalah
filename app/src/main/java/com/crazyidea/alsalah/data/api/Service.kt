@@ -41,7 +41,12 @@ interface AzkarAPI {
 interface QuranAPI {
     @GET
     suspend fun getQuran(
-        @Url url: String = BuildConfig.QURAN_BASE_URL + "quran-uthmani"
+        @Url url: String = BuildConfig.QURAN_BASE_URL + "quran/quran-uthmani"
+    ): QuranNetworkContainer
+
+    @GET
+    suspend fun getAudio(
+        @Url url: String
     ): QuranNetworkContainer
 
 }

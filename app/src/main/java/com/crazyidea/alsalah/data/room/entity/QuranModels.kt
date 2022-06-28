@@ -13,7 +13,7 @@ data class Surah(
     @ColumnInfo(name = "last_page") val last_page: Int,
     @ColumnInfo(name = "juz") val juz: Int,
 
-){
+    ) {
     @Ignore
     var checked: Boolean = false
 }
@@ -32,6 +32,23 @@ data class Ayat(
     @ColumnInfo(name = "ruku") val ruku: Int,
     @ColumnInfo(name = "hizbQuarter") val hizbQuarter: Int,
     @ColumnInfo(name = "sajda") val sajda: Boolean,
+    @ColumnInfo(name = "bookmarked") val bookmarked: Boolean,
+)
+
+
+@Entity
+data class AyatBookMark(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long? = 0,
+    @ColumnInfo(name = "bookmarked") val bookmarked: Boolean,
+)
+
+@Entity
+data class Bookmarks(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long? = 0,
+    @ColumnInfo(name = "page") val page: Long = 0,
+    @ColumnInfo(name = "aya") val aya: Long = 0,
 )
 
 @Entity

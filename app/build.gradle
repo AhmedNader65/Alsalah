@@ -20,7 +20,7 @@ android {
         buildConfigField 'String', 'PRAYERS_BASE_URL', "\"https://api.aladhan.com/v1/\""
         buildConfigField 'String', 'BASE_URL', "\"https://salah.crazyideaco.com/public/api/\""
         buildConfigField 'String', 'WIKI_BASE_URL', "\"https://ar.wikipedia.org/w/api.php?action=parse&format=json&section=1&prop=text\""
-        buildConfigField 'String', 'QURAN_BASE_URL', "\"https://api.alquran.cloud/v1/quran/\""
+        buildConfigField 'String', 'QURAN_BASE_URL', "\"https://api.alquran.cloud/v1/\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

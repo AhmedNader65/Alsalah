@@ -13,6 +13,7 @@ data class QuranNetworkContainer(
 data class QuranResponseApiModel(
     val surahs: List<SurahResponseApiModel>,
     val edition: EditionResponseApiModel,
+    val audio: String,
 )
 
 data class SurahResponseApiModel(

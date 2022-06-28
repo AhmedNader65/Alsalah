@@ -1,12 +1,7 @@
 package com.crazyidea.alsalah.data.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
-import com.crazyidea.alsalah.data.room.entity.Ayat
-import com.crazyidea.alsalah.data.room.entity.Edition
-import com.crazyidea.alsalah.data.room.entity.Surah
+import androidx.room.*
+import com.crazyidea.alsalah.data.room.entity.*
 
 @Dao
 interface QuranDao {
@@ -46,4 +41,18 @@ interface QuranDao {
 
     @Query("SELECT page FROM Ayat where juz = :juz LIMIT 1")
     fun getJuzPage(juz: Int): Int
+
+    @Query("SELECT id FROM Ayat where page = :page AND number = :ayahId AND text LIKE '%' || :ayah  || '%'")
+    fun getAyaId(ayah: String, ayahId: Int, page: Int): Int
+
+    @Transaction
+    @Insert
+    fun bookmark(bookmark: Bookmarks)
+
+    @Query("SELECT * FROM Bookmarks")
+    fun getBookmarks(): List<Bookmarks>
+
+    @Update(entity = Ayat::class)
+    fun updateAya(obj: AyatBookMark)
+
 }
