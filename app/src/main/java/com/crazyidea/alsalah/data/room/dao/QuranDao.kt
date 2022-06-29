@@ -68,5 +68,4 @@ interface QuranDao {
 
     @Update(entity = Ayat::class)
     fun updateAya(obj: AyatBookMark)
-
 }

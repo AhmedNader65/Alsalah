@@ -107,15 +107,12 @@ class QuranFragment : Fragment() {
 
             override fun onDrawerStateChanged(newState: Int) {
             }
-
         })
     }
-
     private var callback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
-            globalPreferences.saveLastReadingPage(position)
-            Timber.e("page selected $position")
+            globalPreferences.saveLastReadingPage(position + 1)
             viewModel.setSideDrawerPage(position + 1)
         }
     }
