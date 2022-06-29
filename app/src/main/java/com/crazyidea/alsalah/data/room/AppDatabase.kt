@@ -12,8 +12,8 @@ import com.crazyidea.alsalah.data.room.entity.prayers.Meta
 import com.crazyidea.alsalah.data.room.entity.prayers.Timing
 
 @Database(
-    entities = [Surah::class, Edition::class, AyatBookMark::class, Bookmarks::class, Ayat::class, Date::class, Meta::class, Timing::class, Fajr::class, Azkar::class, AzkarProgress::class],
-    version = 18
+    entities = [Surah::class, Edition::class, Khatma::class, AyatBookMark::class, Bookmarks::class, Ayat::class, Date::class, Meta::class, Timing::class, Fajr::class, Azkar::class, AzkarProgress::class],
+    version = 4
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun prayersDao(): PrayerDao
@@ -21,4 +21,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun azkarDao(): AzkarDao
     abstract fun fajrDao(): FajrDao
     abstract fun quranDao(): QuranDao
+    abstract fun khatmaDao(): KhatmaDao
 }

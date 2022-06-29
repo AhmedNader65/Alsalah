@@ -26,7 +26,7 @@ class AddKhatmaFragment3 : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val viewModel by viewModels<KhatmaViewModel>()
+    private val viewModel by viewModels<KhatmaViewModel>({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -23,7 +23,7 @@ class AddKhatmaFragment2 : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val viewModel by viewModels<KhatmaViewModel>()
+    private val viewModel by viewModels<KhatmaViewModel>({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +33,6 @@ class AddKhatmaFragment2 : Fragment() {
 
         _binding = FragmentAddKhatma2Binding.inflate(inflater, container, false)
         val root: View = binding.root
-
         binding.model = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return root
@@ -41,10 +40,11 @@ class AddKhatmaFragment2 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
-        binding.next.setOnClickListener { findNavController().navigate(AddKhatmaFragment2Directions.actionAddKhatmaFragment2ToAddKhatmaFragment3()) }
+        binding.next.setOnClickListener {
+            viewModel.saveKhatma()
+            findNavController().navigate(AddKhatmaFragment2Directions.actionAddKhatmaFragment2ToAddKhatmaFragment3())
+        }
         binding.expectedTimeRadio.setOnClickListener { setChecked(ExpectedTime.TIME) }
         binding.expectedTimeCard.setOnClickListener { setChecked(ExpectedTime.TIME) }
         binding.expectedWerdRadio.setOnClickListener { setChecked(ExpectedTime.WERD) }
@@ -60,13 +60,17 @@ class AddKhatmaFragment2 : Fragment() {
             binding.expectedTimeText.text = resources.getString(R.string.requiredTime)
             binding.daysHezb.text = resources.getString(R.string.days)
             viewModel.days.postValue(30)
+            viewModel.result.postValue(20)
+            viewModel.type.postValue(0)
 
         } else if (expectedTime == ExpectedTime.WERD) {
             binding.expectedWerdRadio.isChecked = true
             binding.expectedTimeRadio.isChecked = false
             binding.expectedTimeText.text = resources.getString(R.string.requiredWerd)
-            binding.daysHezb.text = resources.getString(R.string.hezb)
-            viewModel.days.postValue(2)
+            binding.daysHezb.text = resources.getString(R.string.page)
+            viewModel.days.postValue(20)
+            viewModel.result.postValue(30)
+            viewModel.type.postValue(1)
 
         }
     }
@@ -82,7 +86,8 @@ class AddKhatmaFragment2 : Fragment() {
         binding.partsAutoComplete.setAdapter<ArrayAdapter<String>>(fieldsAdapter)
         binding.partsAutoComplete.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView: AdapterView<*>?, view1: View, i: Int, l: Long ->
-
+                viewModel.khatma.value?.start = i.plus(1)
+                viewModel.khatma.value = viewModel.khatma.value
             }
     }
 

@@ -59,3 +59,14 @@ fun bindJuzName(textView: TextView, juz: String) {
     var text = juz.getJuzName(context)
     textView.text = text
 }
+
+@BindingAdapter("num", "type")
+fun bindKhatmaExpectingResult(textView: TextView, num: Int, type: Int) {
+    val context = textView.context
+    val text  =if (type == 0)
+     context.getString(R.string.number_of_pages,num)
+    else
+        context.getString(R.string.number_of_days,num)
+
+    textView.text = text
+}

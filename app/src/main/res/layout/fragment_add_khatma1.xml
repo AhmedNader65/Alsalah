@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="model"
+            type="com.crazyidea.alsalah.ui.khatma.KhatmaViewModel" />
+
     </data>
 
 
@@ -51,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/khatmaName"/>
+                android:text="@string/khatmaName" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -74,16 +78,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/dinnextregular"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@={model.khatma.name}" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
                 style="@style/boldText"
-                android:layout_marginTop="@dimen/_12sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:gravity="center"
-                android:text="@string/khatmaType"/>
+                android:text="@string/khatmaType" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/typeIT"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -102,11 +109,11 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <AutoCompleteTextView
+                    android:id="@+id/typesAutoComplete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/typesAutoComplete"
                     android:fontFamily="@font/dinnextregular"
-                    android:inputType="textAutoComplete" />
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
 

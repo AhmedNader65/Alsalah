@@ -66,6 +66,15 @@ class DataModule {
 
     @Provides
     @Singleton
+    fun provideKhatmaRepository(
+        coroutineScope: CoroutineScope,
+        globalPreferences: GlobalPreferences,
+        appDatabase: AppDatabase,
+    ) =
+        KhatmaRepository(appDatabase,globalPreferences, coroutineScope)
+
+    @Provides
+    @Singleton
     fun provideAzkarRepository(
         appDatabase: AppDatabase,
         globalPreferences: GlobalPreferences,
