@@ -5,6 +5,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.room.entity.Khatma
 import com.crazyidea.alsalah.data.room.entity.Surah
 import java.util.*
 
@@ -63,10 +64,42 @@ fun bindJuzName(textView: TextView, juz: String) {
 @BindingAdapter("num", "type")
 fun bindKhatmaExpectingResult(textView: TextView, num: Int, type: Int) {
     val context = textView.context
-    val text  =if (type == 0)
-     context.getString(R.string.number_of_pages,num)
+    val text = if (type == 0)
+        context.getString(R.string.number_of_pages, num)
     else
-        context.getString(R.string.number_of_days,num)
+        context.getString(R.string.number_of_days, num)
+
+    textView.text = text
+}
+
+@BindingAdapter("setupKhatmaName")
+fun bindKhatmaExpectingResult(textView: TextView, item: Khatma) {
+    val context = textView.context
+    val text =
+        context.getString(R.string.khatma)
+    val type  = when (item.type) {
+        "review" -> context.getString(R.string.review)
+        "memorise" -> context.getString(R.string.memorise)
+        "think" -> context.getString(R.string.thinking)
+        else -> context.getString(R.string.reading)
+    }
+    textView.text = text + " $type #${item.name}"
+}
+
+@BindingAdapter("setupKhatmaRemainging")
+fun bindKhatmaRemainging(textView: TextView, item: Khatma) {
+    val context = textView.context
+    val text =
+        context.getString(R.string.number_of_days, item.days)
+
+    textView.text = text
+}
+
+@BindingAdapter("setupKhatmaDetails")
+fun bindKhatmaDetails(textView: TextView, item: Khatma) {
+    val context = textView.context
+    val text =
+        context.getString(R.string.khatma_details, item.read, 604 - item.read)
 
     textView.text = text
 }

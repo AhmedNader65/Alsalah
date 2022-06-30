@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
@@ -30,6 +31,7 @@ import javax.inject.Inject
 class QuranFragment : Fragment() {
 
     private lateinit var navController: NavController
+    private val args by navArgs<QuranFragmentArgs>()
     private lateinit var alert: AlertDialog
     private var _binding: FragmentQuranBinding? = null
     private val viewModel by viewModels<SharedQuranViewModel>({ requireActivity() })
@@ -65,10 +67,12 @@ class QuranFragment : Fragment() {
             if (it == true) {
                 binding.viewPager.adapter = QuranPageAdapter(this)
                 alert.dismiss()
-
-                if (globalPreferences.lastReadingPage() != 0) {
-                    viewModel.setCurrentPage(globalPreferences.lastReadingPage())
-                }
+                if (args.type != "quran")
+                    viewModel.setCurrentPage(args.page)
+                else
+                    if (globalPreferences.lastReadingPage() != 0) {
+                        viewModel.setCurrentPage(globalPreferences.lastReadingPage())
+                    }
             }
         }
         viewModel.openDrawer.observe(viewLifecycleOwner) {
@@ -109,6 +113,7 @@ class QuranFragment : Fragment() {
             }
         })
     }
+
     private var callback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)

@@ -19,4 +19,7 @@ interface KhatmaDao {
 
     @Query("Select * FROM Khatma")
     fun getAll(): LiveData<List<Khatma>>
+
+    @Query("Select * FROM Khatma WHERE status = 0")
+    fun getActive(): List<Khatma>
 }

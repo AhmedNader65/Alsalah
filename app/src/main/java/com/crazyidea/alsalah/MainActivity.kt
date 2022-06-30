@@ -103,39 +103,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAlarm(title: String, timeInMillis: Long) {
-        val alarmManager =
-            applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(applicationContext, AlarmReceiver::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.action = title
-        intent.putExtra("salah", title)
-        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PendingIntent.getBroadcast(
-                applicationContext,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-        } else {
-            PendingIntent.getBroadcast(applicationContext, 0, intent, 0)
-        }
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                timeInMillis,
-                pendingIntent
-            )
-            alarmManager.setExact(
-                AlarmManager.RTC_WAKEUP,
-                timeInMillis,
-                pendingIntent
-            )
-        } else {
-        }
-    }
-
     fun restartActivity() {
         val intent = intent
         finish()
@@ -147,7 +114,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun hideKeyboard(){
-
         val keyboard: InputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         keyboard.hideSoftInputFromWindow(binding.root.windowToken, 0)

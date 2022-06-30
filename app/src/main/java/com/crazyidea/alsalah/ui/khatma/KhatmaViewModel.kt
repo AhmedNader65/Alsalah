@@ -7,6 +7,7 @@ import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 import com.crazyidea.alsalah.data.prayers.PrayersRepository
 import com.crazyidea.alsalah.data.repository.KhatmaRepository
+import com.crazyidea.alsalah.data.repository.QuranRepository
 import com.crazyidea.alsalah.data.room.entity.Khatma
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,16 +20,17 @@ import javax.inject.Inject
 @HiltViewModel
 class KhatmaViewModel @Inject constructor(
     private val repository: KhatmaRepository,
-    private val globalPreferences: GlobalPreferences
+    private val quranRepository: QuranRepository
 ) : ViewModel() {
 
+    val khatmas = repository.khatmas
 
-    var khatma = MutableLiveData(Khatma(null, null, null))
+    var khatma = MutableLiveData(Khatma(null, null, null, time = null, days = 30))
     var days = MutableLiveData(30)
     var result = MutableLiveData(20)
     var type = MutableLiveData(0)
 
-    fun controllDays(boolean: Boolean) {
+    fun controlDays(boolean: Boolean) {
         if (boolean) {
             days.value = days.value!! + 1
         } else {
@@ -51,18 +53,15 @@ class KhatmaViewModel @Inject constructor(
     }
 
 
-    fun twentyFourConverter(hour: Int, minutes: Int): String {
-        return try {
-            val sdf = SimpleDateFormat("H:mm a", Locale("ar"))
-            val dateObj: Date? = sdf.parse("$hour:$minutes")
-            dateObj.toString()
-        } catch (e: ParseException) {
-            e.printStackTrace()
-            return "am"
-        }
-    }
-
     fun saveKhatma() {
         khatma.value?.let { viewModelScope.launch { repository.saveKhatma(it) } }
+    }
+
+    fun getJuzPage(plus: Int) {
+
+        viewModelScope.launch {
+            khatma.value?.read = quranRepository.getJuzPage(plus)
+            khatma.value = khatma.value
+        }
     }
 }

@@ -21,7 +21,6 @@ class SharedQuranViewModel @Inject constructor(
     private val _allSurahs = MutableLiveData<List<Surah>>()
     private val _downloaded = MutableLiveData(false)
     private val _currentPage = MutableLiveData(1)
-    private val _bookmarks = MutableLiveData<List<BookmarkWithAya>>()
     private val _sidePage = MutableLiveData(1)
     val openDrawer = MutableLiveData(false)
     val allSurahs: LiveData<List<Surah>> = _allSurahs

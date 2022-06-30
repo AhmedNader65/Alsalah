@@ -42,7 +42,6 @@ class AddKhatmaFragment2 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
         binding.next.setOnClickListener {
-            viewModel.saveKhatma()
             findNavController().navigate(AddKhatmaFragment2Directions.actionAddKhatmaFragment2ToAddKhatmaFragment3())
         }
         binding.expectedTimeRadio.setOnClickListener { setChecked(ExpectedTime.TIME) }
@@ -86,8 +85,7 @@ class AddKhatmaFragment2 : Fragment() {
         binding.partsAutoComplete.setAdapter<ArrayAdapter<String>>(fieldsAdapter)
         binding.partsAutoComplete.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView: AdapterView<*>?, view1: View, i: Int, l: Long ->
-                viewModel.khatma.value?.start = i.plus(1)
-                viewModel.khatma.value = viewModel.khatma.value
+                viewModel.getJuzPage(i.plus(1))
             }
     }
 

@@ -254,6 +254,9 @@
         <action
             android:id="@+id/action_khatmaFragment_to_addKhatmaFragment1"
             app:destination="@id/addKhatmaFragment1" />
+        <action
+            android:id="@+id/action_khatmaFragment_to_quranFragment"
+            app:destination="@id/quranFragment" />
     </fragment>
     <fragment
         android:id="@+id/addKhatmaFragment1"
@@ -310,6 +313,16 @@
     <fragment
         android:id="@+id/quranFragment"
         android:name="com.crazyidea.alsalah.ui.quran.QuranFragment"
-        android:label="QuranFragment" />
+        android:label="QuranFragment" >
+        <argument
+            android:name="page"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="type"
+            app:argType="string"
+            android:defaultValue="quran" />
+
+    </fragment>
 
 </navigation>
