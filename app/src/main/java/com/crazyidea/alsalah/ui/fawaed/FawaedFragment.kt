@@ -18,6 +18,7 @@ import com.crazyidea.alsalah.databinding.FragmentFawaedBinding
 import com.crazyidea.alsalah.databinding.FragmentFawaedBolgsBinding
 import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
 import com.crazyidea.alsalah.ui.home.HomeFragmentDirections
+import com.crazyidea.alsalah.utils.messageShown
 import com.crazyidea.alsalah.utils.share
 import com.crazyidea.alsalah.utils.withSimpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +52,10 @@ class FawaedFragment : Fragment(), ArticlesAdapter.ArticleListner {
         setupFwaed()
 
         blogViewModel.toastLiveData.observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            if (it != null) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                blogViewModel.toastLiveData.messageShown()
+            }
         }
     }
 

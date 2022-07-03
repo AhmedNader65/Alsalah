@@ -1,12 +1,15 @@
 package com.crazyidea.alsalah.utils
 
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.room.entity.Ayat
 import com.crazyidea.alsalah.data.room.entity.Khatma
 import com.crazyidea.alsalah.data.room.entity.Surah
+import timber.log.Timber
 import java.util.*
 
 
@@ -77,13 +80,27 @@ fun bindKhatmaExpectingResult(textView: TextView, item: Khatma) {
     val context = textView.context
     val text =
         context.getString(R.string.khatma)
-    val type  = when (item.type) {
+    val type = when (item.type) {
         "review" -> context.getString(R.string.review)
         "memorise" -> context.getString(R.string.memorise)
         "think" -> context.getString(R.string.thinking)
         else -> context.getString(R.string.reading)
     }
     textView.text = text + " $type #${item.name}"
+}
+
+@BindingAdapter("mainKhatmaType")
+fun bindMainKhatmaType(textView: TextView, item: Khatma?) {
+    val context = textView.context
+    val text =
+        context.getString(R.string.intention)
+    val type = when (item?.type) {
+        "review" -> context.getString(R.string.review)
+        "memorise" -> context.getString(R.string.memorise)
+        "think" -> context.getString(R.string.thinking)
+        else -> context.getString(R.string.reading)
+    }
+    textView.text = text + " $type"
 }
 
 @BindingAdapter("setupKhatmaRemainging")
@@ -102,4 +119,65 @@ fun bindKhatmaDetails(textView: TextView, item: Khatma) {
         context.getString(R.string.khatma_details, item.read, 604 - item.read)
 
     textView.text = text
+}
+
+@BindingAdapter("setupMainKhatmaSteps")
+fun bindMainKhatmaSteps(textView: TextView, item: Khatma?) {
+    item?.let {
+        val context = textView.context
+        val text =
+            context.getString(R.string.reading_steps, item.pages_num)
+
+        textView.text = text
+    }
+}
+
+@BindingAdapter("setupMainKhatmaRemaining")
+fun bindMainKhatmaRemaining(textView: TextView, item: Khatma?) {
+    item?.let {
+        val context = textView.context
+        if (item.pages_num != 0) {
+            val text =
+                context.getString(R.string.ending_in, (604 - item.read) / item.pages_num)
+            textView.text = text
+        }
+    }
+
+}
+
+@BindingAdapter("setupMainKhatmaRemaining")
+fun bindKhatmaLocation(textView: TextView, item: Khatma?) {
+    item?.let {
+        val context = textView.context
+        if (item.pages_num != 0) {
+            val text =
+                context.getString(R.string.ending_in, (604 - item.read) / item.pages_num)
+            textView.text = text
+        }
+    }
+
+}
+
+@BindingAdapter("setupKhatmaProgress")
+fun bindKhatmaProgress(progressBar: ProgressBar, item: Khatma?) {
+    item?.let {
+        val perc = (item.read / 604.0) * 100
+        progressBar.secondaryProgress = perc.toInt()
+    }
+
+}
+
+@BindingAdapter("setupAyah")
+fun setupAyah(textView: TextView, item: Ayat?) {
+    val sharedPref = GlobalPreferences(textView.context)
+    item?.let {
+        textView.text =
+            "${item.surah} : ${textView.context.getString(R.string.ayah)} ${
+                String.format(
+                    Locale(
+                        sharedPref.getLocale()
+                    ), "%d", item.number
+                )
+            }"
+    }
 }

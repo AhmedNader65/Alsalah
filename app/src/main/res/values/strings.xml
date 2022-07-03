@@ -271,4 +271,8 @@
     <string name="type_khatma_name">ادخل اسم الختمة</string>
     <string name="saved_khatma">تم حفظ الختمة بنجاح</string>
     <string name="khatma_reminder">نذكرك باستكمال الختمة</string>
+    <string name="intention">"المقصد : "</string>
+    <string name="ending_in">الانتهاء: بعد %d يوم</string>
+    <string name="reading_steps">القدر : %d صفحة يومياً</string>
+    <string name="ayah">"آية "</string>
 </resources>

@@ -13,6 +13,8 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -24,6 +26,7 @@ import com.crazyidea.alsalah.*
 import com.crazyidea.alsalah.adapter.ArticlesAdapter
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
+import com.crazyidea.alsalah.ui.khatma.KhatmaFragmentDirections
 import com.crazyidea.alsalah.utils.*
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
 import com.google.android.gms.common.api.ResolvableApiException
@@ -103,6 +106,19 @@ class HomeFragment : Fragment(), LocationListener {
         }
         binding.khatmaLayout.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToKhatmaFragment())
+        }
+        binding.startKhatma.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToKhatmaFragment())
+        }
+        binding.continueReading.setOnClickListener {
+
+            viewModel.khatma.value?.let { it1 ->
+                findNavController().navigate(
+                    HomeFragmentDirections.actionNavigationHomeToQuranFragment(
+                        it1, "khatma"
+                    )
+                )
+            }
         }
         viewModel.nextPrayerId.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -263,9 +279,18 @@ class HomeFragment : Fragment(), LocationListener {
     }
 
     private fun collectData() {
-
+        viewModel.khatma.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.latestKhatmaLayout.visibility = VISIBLE
+                viewModel.getKhatmaAya(it.read)
+            } else
+                binding.latestKhatmaLayout.visibility = GONE
+        }
         blogViewModel.toastLiveData.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            if (it != null) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                blogViewModel.toastLiveData.messageShown()
+            }
         }
         viewModel.prayers.observe(viewLifecycleOwner) {
             if (it != null) {

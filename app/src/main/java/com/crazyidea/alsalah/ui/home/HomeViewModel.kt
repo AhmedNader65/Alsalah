@@ -11,6 +11,9 @@ import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.repository.ArticlesRepository
 import com.crazyidea.alsalah.data.repository.AzkarRepository
 import com.crazyidea.alsalah.data.prayers.PrayersRepository
+import com.crazyidea.alsalah.data.repository.KhatmaRepository
+import com.crazyidea.alsalah.data.room.entity.Ayat
+import com.crazyidea.alsalah.data.room.entity.Khatma
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,9 +31,19 @@ import kotlin.collections.ArrayList
 class HomeViewModel @Inject constructor(
     private val azkarRepository: AzkarRepository,
     private val prayerRepository: PrayersRepository,
+    private val khatmaRepository: KhatmaRepository,
     private val articlesRepository: ArticlesRepository
 ) : ViewModel() {
     val prayers = prayerRepository.prayers
+    val khatma = khatmaRepository.randomKhatma
+    var ayah = MutableLiveData<Ayat>()
+
+    fun getKhatmaAya(page: Int) {
+        val page = page.plus(1)
+        viewModelScope.launch {
+            ayah.value = khatmaRepository.getKhatmaAya(page)
+        }
+    }
 
     val fajrTimeFormatter = Transformations.map(prayers) { time ->
         if (time != null)
@@ -167,7 +180,7 @@ class HomeViewModel @Inject constructor(
                 prayerRepository.getPrayers(day, month)
             } catch (e: Exception) {
             }
-                getFirstAzkar()
+            getFirstAzkar()
         }
     }
 
@@ -206,9 +219,9 @@ class HomeViewModel @Inject constructor(
     private suspend fun getFirstAzkar() {
         viewModelScope.launch {
             try {
-            azkarAfterPrayer.value =
-                azkarRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
-            azkar.value = azkarRepository.getFirstAzkar().content
+                azkarAfterPrayer.value =
+                    azkarRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
+                azkar.value = azkarRepository.getFirstAzkar().content
             } catch (e: Exception) {
                 e.printStackTrace()
             }

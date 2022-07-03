@@ -68,7 +68,9 @@ class QuranFragment : Fragment() {
                 binding.viewPager.adapter = QuranPageAdapter(this)
                 alert.dismiss()
                 if (args.type != "quran")
-                    viewModel.setCurrentPage(args.page)
+                    args.khatma?.let {
+                        viewModel.setCurrentPage(it.read.plus(1))
+                    }
                 else
                     if (globalPreferences.lastReadingPage() != 0) {
                         viewModel.setCurrentPage(globalPreferences.lastReadingPage())
@@ -117,6 +119,10 @@ class QuranFragment : Fragment() {
     private var callback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
+            if (args.type != "quran")
+                args.khatma?.let {
+                    viewModel.updateKhatma(it.id!!.toLong(),position + 1)
+                }
             globalPreferences.saveLastReadingPage(position + 1)
             viewModel.setSideDrawerPage(position + 1)
         }
@@ -151,7 +157,6 @@ class QuranFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
     }
 
 }

@@ -34,19 +34,17 @@ class BlogDetailViewModel @Inject constructor(
     private val _comments = MutableLiveData<Comment>()
     private val _likedComments = MutableLiveData<String>()
     private val _share = MutableLiveData<String>()
-    val toastLiveData = MutableLiveData<String>()
+    val toastLiveData = MutableLiveData<String?>()
     val comments: LiveData<Comment> = _comments
     val likedComment: LiveData<String> = _likedComments
     val share: LiveData<String> = _share
     private var commentDataJob: Job? = null
     private var postArticleCommentJob: Job? = null
-    private var postFwaedLikeJob: Job? = null
     private var postArticleShare: Job? = null
     private var postArticleLikeJob: Job? = null
     private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, throwable ->
         throwable.printStackTrace()
         toastLiveData.value = throwable.showError(throwable)
-
     }
 
 

@@ -66,6 +66,9 @@ interface QuranDao {
     @Query("SELECT * FROM Bookmarks ORDER BY id DESC")
     fun getBookmarks(): LiveData<List<BookmarkWithAya>>
 
+    @Query("SELECT * FROM Ayat where page = :page LIMIT 1")
+    fun getFirstAyaOfPage(page:Int): Ayat
+
     @Update(entity = Ayat::class)
     fun updateAya(obj: AyatBookMark)
 }

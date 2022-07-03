@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.BaseViewHolder
@@ -119,8 +120,8 @@ fun Throwable.showError(throwable: Throwable): String {
         // parse error body message from
         return try {
             val type = object : TypeToken<ServerResponse<String>>() {}.type
-            val response : ServerResponse<String> =
-                Gson().fromJson(throwable.response()!!.errorBody()!!.charStream(),type)
+            val response: ServerResponse<String> =
+                Gson().fromJson(throwable.response()!!.errorBody()!!.charStream(), type)
             response.message
         } catch (e: Exception) {
             e.printStackTrace()
@@ -134,6 +135,11 @@ fun Throwable.showError(throwable: Throwable): String {
         return "Check internet connection"
     }
     return "Something went wrong"
+}
+
+fun MutableLiveData<String?>.messageShown(shown: Boolean = true) {
+    if (shown)
+        this.value = null
 }
 
 fun String.getJuzName(context: Context): String {

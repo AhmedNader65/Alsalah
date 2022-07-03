@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.crazyidea.alsalah.data.repository.KhatmaRepository
 import com.crazyidea.alsalah.data.repository.QuranRepository
 import com.crazyidea.alsalah.data.room.entity.Ayat
 import com.crazyidea.alsalah.data.room.entity.BookmarkWithAya
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SharedQuranViewModel @Inject constructor(
-    private val quranRepository: QuranRepository
+    private val quranRepository: QuranRepository,
+    private val khatmaRepository: KhatmaRepository
 ) : ViewModel() {
     private val _allSurahs = MutableLiveData<List<Surah>>()
     private val _downloaded = MutableLiveData(false)
@@ -52,6 +54,12 @@ class SharedQuranViewModel @Inject constructor(
     fun getJuzPage(toInt: Int) {
         viewModelScope.launch {
             _currentPage.postValue(quranRepository.getJuzPage(toInt))
+        }
+    }
+
+    fun updateKhatma(id: Long, read: Int) {
+        viewModelScope.launch {
+            khatmaRepository.updateKhatma(id, read)
         }
     }
 

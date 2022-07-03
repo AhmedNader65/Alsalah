@@ -1,9 +1,12 @@
 package com.crazyidea.alsalah.data.room.entity
 
+import android.os.Parcelable
 import androidx.room.*
+import kotlinx.parcelize.Parcelize
 import java.sql.Time
 
 @Entity
+@Parcelize
 @TypeConverters(TimeConverter::class)
 data class Khatma(
     @PrimaryKey(autoGenerate = true)
@@ -17,7 +20,7 @@ data class Khatma(
     @ColumnInfo(name = "time") var time: Time?,
     @ColumnInfo(name = "notify") var notify: Boolean = true,
     @ColumnInfo(name = "status") var status :Int= 0,
-) {}
+) : Parcelable {}
 
 class TimeConverter {
         @TypeConverter
@@ -32,3 +35,12 @@ class TimeConverter {
             return time?.time
         }
 }
+
+
+@Entity
+data class KhatmaUpdate(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long? = 0,
+    @ColumnInfo(name = "read") val read: Int,
+    @ColumnInfo(name = "status") val status: Int,
+)
