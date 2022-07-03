@@ -19,6 +19,7 @@
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:text="الجٌزًءِ اًلَخَاٌمٍسَ"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,6 +45,7 @@
             android:fontFamily="@font/quran"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
+            android:textColor="@color/black"
             android:text="سُـــــورَةُ النَّبَإِ"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +60,7 @@
             android:paddingStart="@dimen/_14sdp"
             android:paddingEnd="@dimen/_14sdp"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/bw"
             android:textSize="@dimen/_16ssp"
             app:autoSizeMaxTextSize="@dimen/_100ssp"
             app:autoSizeMinTextSize="@dimen/_5ssp"
@@ -77,6 +79,7 @@
             android:background="@drawable/juz_border"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

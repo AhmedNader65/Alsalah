@@ -80,7 +80,7 @@ public class DailyAzanWorker @AssistedInject constructor(
                     applicationContext,
                     "khatma",
                     it.name!!,
-                    it.time!!.time
+                    dueDate.timeInMillis
                 )
             }
         }

@@ -197,15 +197,16 @@ class QuranPageFragment : Fragment() {
                 }
                 spannable.append(newText)
                 spannable.setSpan(
-                    ForegroundColorSpan(Color.BLACK),
-                    spannable.length - newText.length, spannable.length,
-                    Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-                )
-                val numberAya = " \u06DD${
-                    String.format(
-                        Locale(globalPreferences.getLocale()),
-                        "%d", it.number
+                    ForegroundColorSpan(
+                        resources.getColor(R.color.bw, requireActivity().theme)),
+                        spannable.length - newText.length, spannable.length,
+                        Spannable.SPAN_EXCLUSIVE_INCLUSIVE
                     )
+                    val numberAya = " \u06DD${
+                String.format(
+                    Locale(globalPreferences.getLocale()),
+                    "%d", it.number
+                )
                 } "
                 spannable.append(
                     numberAya
@@ -380,7 +381,7 @@ class QuranPageFragment : Fragment() {
                         it == ' '
                     }
                     val oldSpan = spannable.getSpans<ForegroundColorSpan>(end, end + nextSpace)
-                    if (oldSpan.any { it.foregroundColor== Color.RED})
+                    if (oldSpan.any { it.foregroundColor == Color.RED })
                         spannable.setSpan(
                             ForegroundColorSpan(Color.parseColor("#58452f")),
                             end, end + nextSpace,
@@ -439,7 +440,7 @@ class QuranPageFragment : Fragment() {
         p.typeface = ResourcesCompat.getFont(requireContext(), R.font.quran)
 
         p.textSize = resources.getDimensionPixelSize(com.intuit.ssp.R.dimen._14ssp).toFloat()
-        p.color = resources.getColor(R.color.black)
+        p.color = resources.getColor(R.color.bw)
         c.drawText(
             surah, (bmp.width - p.measureText(surah)) / 2, (c.height / 2
                     - (p.descent() + p.ascent()) / 2 - 10), p

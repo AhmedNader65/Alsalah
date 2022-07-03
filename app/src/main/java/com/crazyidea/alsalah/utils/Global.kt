@@ -13,12 +13,17 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.data.model.Coordinates
-import com.crazyidea.alsalah.data.model.Language
 import com.crazyidea.alsalah.adapter.BaseViewHolder
 import com.crazyidea.alsalah.adapter.SimpleRecyclerAdapter
-import com.crazyidea.alsalah.data.model.Articles
+import com.crazyidea.alsalah.data.model.*
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import io.github.cosinekitty.astronomy.Observer
+import org.json.JSONObject
+import retrofit2.HttpException
+import java.net.SocketException
+import java.net.UnknownHostException
 import java.text.Normalizer
 import java.time.DayOfWeek
 import java.time.temporal.WeekFields
@@ -104,6 +109,33 @@ fun Articles.share(context: Context) {
     context.startActivity(Intent.createChooser(intent, "Share via"))
 }
 
+fun Throwable.showError(throwable: Throwable): String {
+    if (throwable is SocketException) {
+        //very bad internet
+        return "Check internet connection"
+    }
+
+    if (throwable is HttpException) {
+        // parse error body message from
+        return try {
+            val type = object : TypeToken<ServerResponse<String>>() {}.type
+            val response : ServerResponse<String> =
+                Gson().fromJson(throwable.response()!!.errorBody()!!.charStream(),type)
+            response.message
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "Something went wrong"
+        }
+
+    }
+
+    if (throwable is UnknownHostException) {
+        // probably no internet or your base url is wrong
+        return "Check internet connection"
+    }
+    return "Something went wrong"
+}
+
 fun String.getJuzName(context: Context): String {
 
     return when (this.toInt()) {
@@ -143,6 +175,6 @@ fun String.getJuzName(context: Context): String {
 fun String.withoutDiacritics(): String {
 
     var input = Normalizer.normalize(this, Normalizer.Form.NFKD).replace("\\p{M}".toRegex(), "")
-    input = input.replace("ٱ","ا")
+    input = input.replace("ٱ", "ا")
     return input
 }

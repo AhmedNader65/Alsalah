@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -91,7 +92,7 @@ class HomeFragment : Fragment(), LocationListener {
         }, onShare = {
             it.share(requireContext())
             blogViewModel.postShareArticle(it.id)
-        })
+        }, isLoggedIn = globalPreferences.getLogged())
         binding.blogItem.adapter = adapter
         binding.dateLayout.leftArrowIcon.setOnClickListener {
             viewModel.nextDay()
@@ -263,6 +264,9 @@ class HomeFragment : Fragment(), LocationListener {
 
     private fun collectData() {
 
+        blogViewModel.toastLiveData.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
         viewModel.prayers.observe(viewLifecycleOwner) {
             if (it != null) {
                 viewModel.getNextPrayer()

@@ -8,6 +8,7 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
@@ -78,13 +79,15 @@ class BlogDetailFragment : Fragment() {
 
         binding.likesImg.setOnClickListener {
                 viewModel.postArticleLike(args.article.id)
-
         }
         binding.shareImg.setOnClickListener {
             args.article.share(requireContext())
             viewModel.postShareArticle(it.id)
         }
 
+        viewModel.toastLiveData.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
 
     }
 

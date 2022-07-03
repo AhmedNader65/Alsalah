@@ -272,6 +272,7 @@ class RegisterFragment : Fragment() {
         }
 
         viewModel.user.observe(viewLifecycleOwner) {
+            globalPreferences.storeLogged(true)
             globalPreferences.storeUserId(it.id)
         }
     }

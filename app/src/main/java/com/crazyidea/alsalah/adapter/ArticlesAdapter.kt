@@ -14,8 +14,11 @@ import com.squareup.picasso.Picasso
 
 
 class ArticlesAdapter(
-    private val dataSet: ArrayList<Articles>, val onReadMore: (Articles) -> Unit,
-    val onShare: (Articles) -> Unit, val onFavourite: (Articles) -> Unit
+    private val dataSet: ArrayList<Articles>,
+    val onReadMore: (Articles) -> Unit,
+    val onShare: (Articles) -> Unit,
+    val onFavourite: (Articles) -> Unit,
+    val isLoggedIn: Boolean = false
 ) :
     RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
     private lateinit var context: Context
@@ -84,11 +87,13 @@ class ArticlesAdapter(
             onShare(article)
         }
         viewHolder.likesImg.setOnClickListener {
-            article.liked = !article.liked
-            if (article.liked) {
-                article.likes = article.likes.plus(1)
-            } else {
-                article.likes = article.likes.minus(1)
+            if (isLoggedIn) {
+                article.liked = !article.liked
+                if (article.liked) {
+                    article.likes = article.likes.plus(1)
+                } else {
+                    article.likes = article.likes.minus(1)
+                }
             }
             onFavourite(article)
             notifyItemChanged(position)
