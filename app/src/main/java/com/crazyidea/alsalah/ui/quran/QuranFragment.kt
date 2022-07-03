@@ -121,6 +121,7 @@ class QuranFragment : Fragment() {
             super.onPageSelected(position)
             if (args.type != "quran")
                 args.khatma?.let {
+                    viewModel.khatma.value = it
                     viewModel.updateKhatma(it.id!!.toLong(),position + 1)
                 }
             globalPreferences.saveLastReadingPage(position + 1)

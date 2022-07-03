@@ -18,6 +18,8 @@ import android.text.style.ImageSpan
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -71,7 +73,6 @@ class QuranPageFragment : Fragment() {
     private val sharedViewModel by viewModels<SharedQuranViewModel>({ requireActivity() })
     private val viewModel by viewModels<QuranViewModel>()
 
-    lateinit var surahTV: TextView
     lateinit var ayatTV: TextView
 
     @Inject
@@ -157,7 +158,19 @@ class QuranPageFragment : Fragment() {
             binding.bookmarkPage.setImageResource(R.drawable.ic_bookmarked)
         } else {
             binding.bookmarkPage.setImageResource(R.drawable.ic_border_bookmark)
+        }
 
+        sharedViewModel.khatma.observe(viewLifecycleOwner){
+            if (it.read.plus(1) == pageNum){
+                binding.khatmaMark.visibility = VISIBLE
+                binding.endKhatmaMark.visibility = GONE
+            }else if(it.read.plus(it.pages_num)== pageNum){
+                binding.endKhatmaMark.visibility = VISIBLE
+                binding.khatmaMark.visibility = GONE
+            }else{
+                binding.khatmaMark.visibility = GONE
+                binding.endKhatmaMark.visibility = GONE
+            }
         }
         sharedViewModel.bookmarks.observe(viewLifecycleOwner) {
             if (it != null)

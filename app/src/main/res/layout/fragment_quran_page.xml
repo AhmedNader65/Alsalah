@@ -23,18 +23,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/khatma_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/juz_border"
+            android:backgroundTint="@color/green"
+            android:fontFamily="@font/quran"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:text="@string/khatma_start"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/bookmarkPage"
+            app:layout_constraintStart_toEndOf="@+id/juz"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/endKhatmaMark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:background="@drawable/juz_border"
+            android:backgroundTint="@color/green"
+            android:fontFamily="@font/quran"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:text="@string/khatma_end"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <ImageView
             android:id="@+id/bookmarkPage"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="0dp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:cropToPadding="true"
             android:clickable="true"
+            android:cropToPadding="true"
+            android:focusable="true"
             android:src="@drawable/ic_border_bookmark"
             app:layout_constraintBottom_toBottomOf="@id/surah"
             app:layout_constraintEnd_toStartOf="@id/surah"
-            app:layout_constraintTop_toTopOf="parent"
-            android:focusable="true" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/surah"
@@ -45,8 +75,8 @@
             android:fontFamily="@font/quran"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
-            android:textColor="@color/black"
             android:text="سُـــــورَةُ النَّبَإِ"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

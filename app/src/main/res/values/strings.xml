@@ -275,4 +275,6 @@
     <string name="ending_in">الانتهاء: بعد %d يوم</string>
     <string name="reading_steps">القدر : %d صفحة يومياً</string>
     <string name="ayah">"آية "</string>
+    <string name="khatma_start">بداية الختمة</string>
+    <string name="khatma_end">نهاية الختمة</string>
 </resources>

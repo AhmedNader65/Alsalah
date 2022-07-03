@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.repository.KhatmaRepository
 import com.crazyidea.alsalah.data.repository.QuranRepository
-import com.crazyidea.alsalah.data.room.entity.Ayat
-import com.crazyidea.alsalah.data.room.entity.BookmarkWithAya
-import com.crazyidea.alsalah.data.room.entity.Bookmarks
-import com.crazyidea.alsalah.data.room.entity.Surah
+import com.crazyidea.alsalah.data.room.entity.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -24,6 +21,7 @@ class SharedQuranViewModel @Inject constructor(
     private val _downloaded = MutableLiveData(false)
     private val _currentPage = MutableLiveData(1)
     private val _sidePage = MutableLiveData(1)
+    val khatma = MutableLiveData<Khatma>()
     val openDrawer = MutableLiveData(false)
     val allSurahs: LiveData<List<Surah>> = _allSurahs
     val downloaded: LiveData<Boolean> = _downloaded
