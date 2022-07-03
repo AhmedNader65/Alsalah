@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -50,6 +49,27 @@ class AddKhatmaFragment2 : Fragment() {
         binding.expectedWerdCard.setOnClickListener { setChecked(ExpectedTime.WERD) }
         setParts()
         binding.expectedTimeCard.performClick()
+        viewModel.updateFields.observe(viewLifecycleOwner) {
+            if (it) {
+                updateFields(viewModel.days.value!!)
+                viewModel.updateFields.value = false
+            }}
+    }
+
+    private fun updateFields(days: Int) {
+
+        viewModel.result.value = (604 - (viewModel.khatma.value?.read ?: 0)) / days
+        viewModel.khatma.value?.pages_num = if (viewModel.type.value == 0) {
+            days
+        } else {
+            604 / days
+        }
+        viewModel.khatma.value?.days = if (viewModel.type.value == 0) {
+            604 / days
+        } else {
+            days
+        }
+        viewModel.khatma.value = viewModel.khatma.value
     }
 
     private fun setChecked(expectedTime: ExpectedTime) {

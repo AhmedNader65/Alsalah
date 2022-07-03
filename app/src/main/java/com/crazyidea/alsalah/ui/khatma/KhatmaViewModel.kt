@@ -27,6 +27,7 @@ class KhatmaViewModel @Inject constructor(
 
     var khatma = MutableLiveData(Khatma(null, null, null, time = null, days = 30))
     var days = MutableLiveData(30)
+    var updateFields = MutableLiveData(false)
     var result = MutableLiveData(20)
     var type = MutableLiveData(0)
 
@@ -38,18 +39,7 @@ class KhatmaViewModel @Inject constructor(
                 days.value = days.value!! - 1
             }
         }
-        result.value = 604 / days.value!!
-        khatma.value?.pages_num = if (type.value == 0) {
-            days.value!!
-        } else {
-            604 / days.value!!
-        }
-        khatma.value?.days = if (type.value == 0) {
-            604 / days.value!!
-        } else {
-            days.value!!
-        }
-        khatma.value = khatma.value
+        updateFields.value = true
     }
 
 
@@ -62,6 +52,7 @@ class KhatmaViewModel @Inject constructor(
         viewModelScope.launch {
             khatma.value?.read = quranRepository.getJuzPage(plus)
             khatma.value = khatma.value
+            updateFields.value = true
         }
     }
 }
