@@ -53,8 +53,10 @@ class AddKhatmaFragment3 : Fragment() {
         binding.notificationTime.setOnClickListener({ openTimer() })
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
         binding.done.setOnClickListener {
-            val time = Time(hour, minute, 0)
-            viewModel.khatma.value?.time = time
+            val cal = Calendar.getInstance()
+            cal.set(Calendar.HOUR_OF_DAY,hour)
+            cal.set(Calendar.MINUTE,minute)
+            viewModel.khatma.value?.time = cal.timeInMillis
             viewModel.khatma.value?.notify = binding.notificationSwitch.isChecked
             viewModel.khatma.value = viewModel.khatma.value
             viewModel.saveKhatma()
@@ -63,7 +65,7 @@ class AddKhatmaFragment3 : Fragment() {
                     requireContext(),
                     "khatma",
                     it1,
-                    time.time
+                    cal.timeInMillis
                 )
             }
             findNavController().navigate(AddKhatmaFragment3Directions.actionAddKhatmaFragment3ToKhatmaFragment())

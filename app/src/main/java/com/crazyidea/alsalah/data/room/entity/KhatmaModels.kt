@@ -7,7 +7,6 @@ import java.sql.Time
 
 @Entity
 @Parcelize
-@TypeConverters(TimeConverter::class)
 data class Khatma(
     @PrimaryKey(autoGenerate = true)
     val id: Long? = 0,
@@ -17,25 +16,10 @@ data class Khatma(
     @ColumnInfo(name = "read") var read: Int = 0,
     @ColumnInfo(name = "days") var days: Int = 0,
     @ColumnInfo(name = "onTrack") var onTrack: Boolean = true,
-    @ColumnInfo(name = "time") var time: Time?,
+    @ColumnInfo(name = "time") var time: Long?,
     @ColumnInfo(name = "notify") var notify: Boolean = true,
     @ColumnInfo(name = "status") var status :Int= 0,
 ) : Parcelable {}
-
-class TimeConverter {
-        @TypeConverter
-        fun toTime(timeLong: Long?): Time? {
-            return timeLong?.let {
-                Time(timeLong)
-            }
-        }
-
-        @TypeConverter
-        fun fromTime(time: Time?): Long? {
-            return time?.time
-        }
-}
-
 
 @Entity
 data class KhatmaUpdate(
