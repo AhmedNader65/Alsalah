@@ -3,13 +3,11 @@ package com.crazyidea.alsalah.utils
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.room.entity.Ayat
 import com.crazyidea.alsalah.data.room.entity.Khatma
 import com.crazyidea.alsalah.data.room.entity.Surah
-import timber.log.Timber
 import java.util.*
 
 
@@ -106,9 +104,28 @@ fun bindMainKhatmaType(textView: TextView, item: Khatma?) {
 @BindingAdapter("setupKhatmaRemainging")
 fun bindKhatmaRemainging(textView: TextView, item: Khatma) {
     val context = textView.context
-    val text =
+    val text = if (item.days == 0) {
+        context.getString(R.string.number_of_days, (604 - item.read) / item.pages_num)
+    } else {
         context.getString(R.string.number_of_days, item.days)
+    }
+    textView.text = text
+}
 
+@BindingAdapter("setupKhatmaWerd")
+fun setupKhatmaWerd(textView: TextView, item: Khatma) {
+    val context = textView.context
+
+    val todayCalendar = Calendar.getInstance()
+
+    val differenceMillis = todayCalendar.timeInMillis - item.time!!
+    val daysDifference = (differenceMillis / (1000 * 60 * 60 * 24)).toInt()
+    val text = if (item.pages_num == 0) {
+        val pages = (604 - item.read) / (item.days - daysDifference + 1)
+        pages.toString()
+    } else {
+        item.pages_num.toString()
+    }
     textView.text = text
 }
 
@@ -116,7 +133,7 @@ fun bindKhatmaRemainging(textView: TextView, item: Khatma) {
 fun bindKhatmaDetails(textView: TextView, item: Khatma) {
     val context = textView.context
     val text =
-        context.getString(R.string.khatma_details, item.read, 604 - item.read)
+        context.getString(R.string.khatma_details, 604 - item.read)
 
     textView.text = text
 }

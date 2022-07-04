@@ -68,8 +68,11 @@ public class DailyAzanWorker @AssistedInject constructor(
 
             val currentDate = Calendar.getInstance()
             val dueDate = Calendar.getInstance()
+            val originalDate  = Calendar.getInstance()
             // Set Execution around 05:00:00 AM
-            dueDate.timeInMillis = it.time!!
+            originalDate.timeInMillis = it.time!!
+            dueDate.set(Calendar.HOUR_OF_DAY,originalDate.get(Calendar.HOUR_OF_DAY))
+            dueDate.set(Calendar.MINUTE,originalDate.get(Calendar.MINUTE))
             if (dueDate.after(currentDate)) {
                 setAlarm(
                     applicationContext,
