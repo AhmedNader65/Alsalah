@@ -282,21 +282,23 @@ class QuranPageFragment : Fragment() {
 
 
         viewModel.ayahContent.observe(viewLifecycleOwner) {
-            val tracks = mQuickAction.mRootView.findViewById<ViewGroup>(R.id.tracks)
-            val playImg = (tracks
-                .getChildAt(4) as ImageView)
-            playImg.setImageResource(R.drawable.ic_baseline_stop_24)
-            mp = MediaPlayer()
-            try {
-                mp.setDataSource(it)
-                mp.prepare()
-                mp.start()
-                mp.setOnCompletionListener {
-                    isPLAYING = false
-                    playImg.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            if (isPLAYING) {
+                val tracks = mQuickAction.mRootView.findViewById<ViewGroup>(R.id.tracks)
+                val playImg = (tracks
+                    .getChildAt(4) as ImageView)
+                playImg.setImageResource(R.drawable.ic_baseline_stop_24)
+                mp = MediaPlayer()
+                try {
+                    mp.setDataSource(it)
+                    mp.prepare()
+                    mp.start()
+                    mp.setOnCompletionListener {
+                        isPLAYING = false
+                        playImg.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                    }
+                } catch (e: IOException) {
+                    Timber.e("prepare() failed")
                 }
-            } catch (e: IOException) {
-                Timber.e("prepare() failed")
             }
         }
     }
@@ -515,6 +517,9 @@ class QuranPageFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        if (isPLAYING) {
+            stopPlaying()
+        }
     }
 
     companion object {

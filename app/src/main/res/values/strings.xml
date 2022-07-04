@@ -277,4 +277,5 @@
     <string name="ayah">"آية "</string>
     <string name="khatma_start">بداية الختمة</string>
     <string name="khatma_end">نهاية الختمة</string>
+    <string name="title_quran">القرآن</string>
 </resources>
