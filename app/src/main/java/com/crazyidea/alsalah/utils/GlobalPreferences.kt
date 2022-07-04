@@ -2,8 +2,11 @@ package com.crazyidea.alsalah.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
 import com.crazyidea.alsalah.data.model.PoleCalculation
 import com.crazyidea.alsalah.data.model.PrimaryColor
+import timber.log.Timber
+import java.util.*
 
 private const val APP_LANGUAGE = "language"
 private const val AZKAR_LANGUAGE = "azkar_language"
@@ -13,7 +16,11 @@ private const val CALCULATION_METHOD = "calc_method"
 private const val SCHOOL_METHOD = "school_method"
 private const val USER_ID = "user_id"
 private const val POLE = "pole"
+private const val PRAYER_CHANNEL = "prayer-channel"
+private const val AZAN_CHANGED = "azan_changed"
+private const val LAST_PAGE_QURAN = "last-quran"
 private const val AZAN = "azan"
+private const val CUSTOM_AZAN = "custom-azan"
 private const val COLOR = "color"
 private const val LONGITUDE = "lng"
 private const val LOGGED = "logged"
@@ -71,6 +78,7 @@ class GlobalPreferences(context: Context) {
     fun getLocale(): String {
         return prefs.getString(APP_LANGUAGE, "ar")!!
     }
+
     fun getUserId(): Int {
         return prefs.getInt(USER_ID, 0)
     }
@@ -99,8 +107,12 @@ class GlobalPreferences(context: Context) {
         return prefs.getString(POLE, "NOTHING")!!
     }
 
-    fun getAzan(): String {
-        return prefs.getString(AZAN, "الاذان المكي")!!
+    fun getAzan(): Int {
+        return prefs.getInt(AZAN, 1)
+    }
+
+    fun getCustomAzanUri(): Uri {
+        return Uri.parse(prefs.getString(CUSTOM_AZAN, ""))
     }
 
 
@@ -141,6 +153,10 @@ class GlobalPreferences(context: Context) {
         prefsEditor.commit()
     }
 
+    fun lastReadingPage(): Int {
+       return prefs.getInt(LAST_PAGE_QURAN, 0)
+    }
+
     fun storeLatitude(latitude: String?) {
         prefsEditor.putString(LATITUDE, latitude)
         prefsEditor.commit()
@@ -151,13 +167,42 @@ class GlobalPreferences(context: Context) {
         prefsEditor.commit()
     }
 
-    fun saveAzan(azan: String?) {
-        prefsEditor.putString(AZAN, azan)
+    fun saveAzan(azan: Int) {
+        prefsEditor.putInt(AZAN, azan)
+        prefsEditor.commit()
+        saveChannelID("PRAYER" + Random().nextInt())
+    }
+
+    fun saveCustomAzanUri(uri: Uri) {
+        prefsEditor.putBoolean(AZAN_CHANGED, true)
+        prefsEditor.putString(CUSTOM_AZAN, uri.toString())
+        prefsEditor.commit()
+    }
+
+    fun saveLastReadingPage(page: Int) {
+        prefsEditor.putInt(LAST_PAGE_QURAN, page)
         prefsEditor.commit()
     }
 
     fun savePole(pole: PoleCalculation) {
         prefsEditor.putString(POLE, pole.toString())
         prefsEditor.commit()
+    }
+
+    fun saveChannelID(id: String) {
+        prefsEditor.putString(PRAYER_CHANNEL, id)
+        prefsEditor.commit()
+    }
+
+    fun getPrayerChannelId(): String {
+        val channelId = prefs.getString(PRAYER_CHANNEL, null)
+        channelId?.let {
+            return it
+        }.run {
+            val newChan = "PRAY_AZAN" + Random().nextInt()
+            saveChannelID(newChan)
+            return newChan
+        }
+
     }
 }

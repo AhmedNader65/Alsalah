@@ -40,7 +40,6 @@ class AzkarViewModel @Inject constructor(
                 java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(gor.time)
             withContext(viewModelScope.coroutineContext) {
                 val prog = azkarRepository.getTotalProgress(date)
-                Timber.e("progress is $prog")
                 progress.value = prog
             }
         }

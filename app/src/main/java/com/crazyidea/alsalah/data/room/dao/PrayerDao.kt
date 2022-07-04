@@ -1,6 +1,5 @@
 package com.crazyidea.alsalah.data.room.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.crazyidea.alsalah.data.room.entity.prayers.Date
 import com.crazyidea.alsalah.data.room.entity.prayers.DateWithTiming

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,7 +22,7 @@ class AddKhatmaFragment2 : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val viewModel by viewModels<KhatmaViewModel>()
+    private val viewModel by viewModels<KhatmaViewModel>({ requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +32,6 @@ class AddKhatmaFragment2 : Fragment() {
 
         _binding = FragmentAddKhatma2Binding.inflate(inflater, container, false)
         val root: View = binding.root
-
         binding.model = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return root
@@ -41,16 +39,37 @@ class AddKhatmaFragment2 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
-        binding.next.setOnClickListener { findNavController().navigate(AddKhatmaFragment2Directions.actionAddKhatmaFragment2ToAddKhatmaFragment3()) }
+        binding.next.setOnClickListener {
+            findNavController().navigate(AddKhatmaFragment2Directions.actionAddKhatmaFragment2ToAddKhatmaFragment3())
+        }
         binding.expectedTimeRadio.setOnClickListener { setChecked(ExpectedTime.TIME) }
         binding.expectedTimeCard.setOnClickListener { setChecked(ExpectedTime.TIME) }
         binding.expectedWerdRadio.setOnClickListener { setChecked(ExpectedTime.WERD) }
         binding.expectedWerdCard.setOnClickListener { setChecked(ExpectedTime.WERD) }
         setParts()
         binding.expectedTimeCard.performClick()
+        viewModel.updateFields.observe(viewLifecycleOwner) {
+            if (it) {
+                updateFields(viewModel.days.value!!)
+                viewModel.updateFields.value = false
+            }}
+    }
+
+    private fun updateFields(days: Int) {
+
+        viewModel.result.value = (604 - (viewModel.khatma.value?.read ?: 0)) / days
+        viewModel.khatma.value?.pages_num = if (viewModel.type.value == 0) {
+            days
+        } else {
+            604 / days
+        }
+        viewModel.khatma.value?.days = if (viewModel.type.value == 0) {
+            604 / days
+        } else {
+            days
+        }
+        viewModel.khatma.value = viewModel.khatma.value
     }
 
     private fun setChecked(expectedTime: ExpectedTime) {
@@ -60,13 +79,17 @@ class AddKhatmaFragment2 : Fragment() {
             binding.expectedTimeText.text = resources.getString(R.string.requiredTime)
             binding.daysHezb.text = resources.getString(R.string.days)
             viewModel.days.postValue(30)
+            viewModel.result.postValue(20)
+            viewModel.type.postValue(0)
 
         } else if (expectedTime == ExpectedTime.WERD) {
             binding.expectedWerdRadio.isChecked = true
             binding.expectedTimeRadio.isChecked = false
             binding.expectedTimeText.text = resources.getString(R.string.requiredWerd)
-            binding.daysHezb.text = resources.getString(R.string.hezb)
-            viewModel.days.postValue(2)
+            binding.daysHezb.text = resources.getString(R.string.page)
+            viewModel.days.postValue(20)
+            viewModel.result.postValue(30)
+            viewModel.type.postValue(1)
 
         }
     }
@@ -82,7 +105,7 @@ class AddKhatmaFragment2 : Fragment() {
         binding.partsAutoComplete.setAdapter<ArrayAdapter<String>>(fieldsAdapter)
         binding.partsAutoComplete.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView: AdapterView<*>?, view1: View, i: Int, l: Long ->
-
+                viewModel.getJuzPage(i.plus(1))
             }
     }
 

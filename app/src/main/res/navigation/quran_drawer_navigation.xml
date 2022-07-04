@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/fehresFragment">
+
+    <fragment
+        android:id="@+id/fehresFragment"
+        android:name="com.crazyidea.alsalah.ui.quran.drawer.FehresFragment"
+        android:label="FehresFragment"
+        tools:layout="@layout/fragment_fehres" />
+    <fragment
+        android:id="@+id/juzsFragment"
+        android:name="com.crazyidea.alsalah.ui.quran.drawer.JuzFragment"
+        android:label="JuzFragment"
+        tools:layout="@layout/fragment_juz" />
+    <fragment
+        android:id="@+id/bookmarksFragment"
+        tools:layout="@layout/fragment_bookmark"
+        android:name="com.crazyidea.alsalah.ui.quran.drawer.BookmarksFragment"
+        android:label="BookmarksFragment" />
+</navigation>

@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_profile"
         android:title="@string/title_profile" />
     <item
-        android:id="@+id/navigation_alarm"
+        android:id="@+id/quranFragment"
         android:icon="@drawable/ic_alarm"
         android:title="@string/title_alarm" />
     <item

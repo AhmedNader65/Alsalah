@@ -11,6 +11,9 @@ import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.repository.ArticlesRepository
 import com.crazyidea.alsalah.data.repository.AzkarRepository
 import com.crazyidea.alsalah.data.prayers.PrayersRepository
+import com.crazyidea.alsalah.data.repository.KhatmaRepository
+import com.crazyidea.alsalah.data.room.entity.Ayat
+import com.crazyidea.alsalah.data.room.entity.Khatma
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,9 +31,19 @@ import kotlin.collections.ArrayList
 class HomeViewModel @Inject constructor(
     private val azkarRepository: AzkarRepository,
     private val prayerRepository: PrayersRepository,
+    private val khatmaRepository: KhatmaRepository,
     private val articlesRepository: ArticlesRepository
 ) : ViewModel() {
     val prayers = prayerRepository.prayers
+    val khatma = khatmaRepository.randomKhatma
+    var ayah = MutableLiveData<Ayat>()
+
+    fun getKhatmaAya(page: Int) {
+        val page = page.plus(1)
+        viewModelScope.launch {
+            ayah.value = khatmaRepository.getKhatmaAya(page)
+        }
+    }
 
     val fajrTimeFormatter = Transformations.map(prayers) { time ->
         if (time != null)
@@ -142,24 +155,32 @@ class HomeViewModel @Inject constructor(
         school: Int,
         tune: String?,
     ) {
+        Log.e("HomeViewModel", "refreshing data")
         val day = gor.get(Calendar.DAY_OF_MONTH)
         val month = (gor.get(Calendar.MONTH) + 1).toString()
         val year = gor.get(Calendar.YEAR).toString()
         prayerDataJob?.cancel()
         prayerDataJob = viewModelScope.launch {
-            Log.e("HomeViewModel","refreshing data")
-            prayerRepository.refreshPrayers(
-                month,
-                year,
-                lat,
-                lng,
-                method,
-                school,
-                tune)
-            prayerRepository.getPrayers(day, month)
-            azkarRepository.getAzkar()
+            Log.e("HomeViewModel", "refreshing data")
+            try {
+                prayerRepository.refreshPrayers(
+                    month,
+                    year,
+                    lat,
+                    lng,
+                    method,
+                    school,
+                    tune
+                )
+                azkarRepository.getAzkar()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            try {
+                prayerRepository.getPrayers(day, month)
+            } catch (e: Exception) {
+            }
             getFirstAzkar()
-            getNextPrayer()
         }
     }
 
@@ -167,11 +188,15 @@ class HomeViewModel @Inject constructor(
     private fun getArticles() {
         articleDataJob?.cancel()
         articleDataJob = viewModelScope.launch {
-            articlesRepository.fetchRecentArticle()
-                .collect {
-                    if (it?.data != null)
-                        _articleData.value = it.data!!
-                }
+            try {
+                articlesRepository.fetchRecentArticle()
+                    .collect {
+                        if (it?.data != null)
+                            _articleData.value = it.data!!
+                    }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
     }
@@ -193,9 +218,13 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun getFirstAzkar() {
         viewModelScope.launch {
-            azkarAfterPrayer.value =
-                azkarRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
-            azkar.value = azkarRepository.getFirstAzkar().content
+            try {
+                azkarAfterPrayer.value =
+                    azkarRepository.getFirstAzkarByCategory("أذكار بعد السلام من الصلاة المفروضة").content
+                azkar.value = azkarRepository.getFirstAzkar().content
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -317,7 +346,7 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private fun getNextPrayer(newDate: Date? = null) {
+    fun getNextPrayer(newDate: Date? = null) {
 
         val hour = gor.get(Calendar.HOUR_OF_DAY).toString()
         val minute = gor.get(Calendar.MINUTE).toString()
@@ -496,20 +525,3 @@ class HomeViewModel @Inject constructor(
 
 }
 
-
-@BindingAdapter("setupImage", "clickedID", requireAll = false)
-fun bindPrayerHeaderImage(imageView: ImageView, prayerId: Int, clickedID: Int) {
-    var myMethod = prayerId
-    if (clickedID == 0)
-        myMethod = prayerId
-    else
-        myMethod = clickedID
-    when (myMethod) {
-        1 -> imageView.setImageResource(R.drawable.fajr_pic)
-        2 -> imageView.setImageResource(R.drawable.shorok_pic)
-        3 -> imageView.setImageResource(R.drawable.zuhr_pic)
-        4 -> imageView.setImageResource(R.drawable.asr_pic)
-        5 -> imageView.setImageResource(R.drawable.maghrib_pic)
-        6 -> imageView.setImageResource(R.drawable.isha_pic)
-    }
-}

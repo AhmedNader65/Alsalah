@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,6 +18,7 @@ import com.crazyidea.alsalah.databinding.FragmentFawaedBinding
 import com.crazyidea.alsalah.databinding.FragmentFawaedBolgsBinding
 import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
 import com.crazyidea.alsalah.ui.home.HomeFragmentDirections
+import com.crazyidea.alsalah.utils.messageShown
 import com.crazyidea.alsalah.utils.share
 import com.crazyidea.alsalah.utils.withSimpleAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +50,13 @@ class FawaedFragment : Fragment(), ArticlesAdapter.ArticleListner {
         super.onViewCreated(view, savedInstanceState)
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
         setupFwaed()
+
+        blogViewModel.toastLiveData.observe(viewLifecycleOwner){
+            if (it != null) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                blogViewModel.toastLiveData.messageShown()
+            }
+        }
     }
 
     private fun setupFwaed() {
@@ -55,7 +64,7 @@ class FawaedFragment : Fragment(), ArticlesAdapter.ArticleListner {
             binding.blogsRV.adapter = ArticlesAdapter(it, onReadMore = {
                 findNavController().navigate(FawaedFragmentDirections.actionFawaedFragment2ToBlogDetailFragment(it))
             }, onFavourite = {
-                blogViewModel.postFwaedLike(it.id)
+                blogViewModel.postArticleLike(it.id)
             }, onShare = {
                 it.share(requireContext())
             })

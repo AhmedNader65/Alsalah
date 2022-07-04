@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/header_color"
         android:paddingBottom="@dimen/_8sdp"
-        android:text="Ahmed Nader"
+        android:text="@string/title_profile"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_18ssp"

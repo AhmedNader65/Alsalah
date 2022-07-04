@@ -14,6 +14,10 @@
             android:id="@+id/action_navigation_home_to_navigation_azkar_details"
             app:destination="@id/navigation_azkar_details" />
         <action
+            android:id="@+id/action_navigation_home_to_quranFragment"
+            app:destination="@id/quranFragment" />
+
+        <action
             android:id="@+id/action_navigation_home_to_compassFragment2"
             app:destination="@id/compassFragment2" />
         <action
@@ -254,6 +258,9 @@
         <action
             android:id="@+id/action_khatmaFragment_to_addKhatmaFragment1"
             app:destination="@id/addKhatmaFragment1" />
+        <action
+            android:id="@+id/action_khatmaFragment_to_quranFragment"
+            app:destination="@id/quranFragment" />
     </fragment>
     <fragment
         android:id="@+id/addKhatmaFragment1"
@@ -306,6 +313,21 @@
         <argument
             android:name="article"
             app:argType="com.crazyidea.alsalah.data.model.Articles" />
+    </fragment>
+    <fragment
+        android:id="@+id/quranFragment"
+        android:name="com.crazyidea.alsalah.ui.quran.QuranFragment"
+        android:label="QuranFragment" >
+        <argument
+            android:name="khatma"
+            app:argType="com.crazyidea.alsalah.data.room.entity.Khatma"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <argument
+            android:name="type"
+            app:argType="string"
+            android:defaultValue="quran" />
+
     </fragment>
 
 </navigation>

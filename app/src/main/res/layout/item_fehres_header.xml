@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="juzSt"
+            type="String" />
+
+        <variable
+            name="clickListener"
+            type="com.crazyidea.alsalah.adapter.SurahClickListener" />
+    </data>
+
+    <TextView
+        android:id="@+id/juz"
+        style="@style/lightText"
+        android:background="#E4DECF"
+        android:onClick="@{() -> clickListener.onJuzClick(juzSt)}"
+        android:paddingStart="@dimen/_16sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quran"
+        app:setupJuzName="@{(juzSt)}"/>
+
+</layout>

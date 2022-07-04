@@ -38,4 +38,5 @@
     <color name="display_dark">@android:color/black</color>
     <color name="display_reflect">#FF666666</color>
     <color name="languages_constraint">#EFEFEF</color>
+    <color name="grey">#727272</color>
 </resources>

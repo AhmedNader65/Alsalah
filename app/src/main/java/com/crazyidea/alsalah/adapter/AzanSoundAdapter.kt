@@ -55,16 +55,18 @@ class AzanSoundAdapter(
     }
 
     private fun findMyAzan() {
-        dataSet.find { it.Name == globalPreferences.getAzan() }?.checked = true
+        dataSet.find { it.id == globalPreferences.getAzan() }?.checked = true
 
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val azan = dataSet.get(position)
+        val azan = dataSet[position]
 
         if (!azan.hasline)
             viewHolder.line.visibility = View.GONE
+        else
+            viewHolder.line.visibility = View.VISIBLE
         viewHolder.radioBtn.text = azan.Name
 
         viewHolder.play.setOnClickListener {
@@ -83,8 +85,8 @@ class AzanSoundAdapter(
         viewHolder.radioBtn.isChecked = azan.checked
 
         viewHolder.radioBtn.setOnClickListener {
-            for (azan in dataSet) {
-                azan.checked = false
+            for (az in dataSet) {
+                az.checked = false
             }
             azan.checked = true
             notifyDataSetChanged()
