@@ -3,24 +3,27 @@ package com.crazyidea.alsalah.ui.azkar.azkar_details
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.animation.addListener
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentAzkarDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import kotlin.coroutines.coroutineContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+
 
 @AndroidEntryPoint
 class AzkarDetailsFragment : Fragment() {
@@ -77,7 +80,7 @@ class AzkarDetailsFragment : Fragment() {
                     progress
                 )
                 animator!!.duration = 300
-                animator!!.addListener(object : AnimatorListenerAdapter(){
+                animator!!.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationStart(animation: Animator?) {
                         super.onAnimationStart(animation)
                         Log.i("Animation", "onAnimationStart")
@@ -97,6 +100,7 @@ class AzkarDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.title.text = args.category
+
         GlobalScope.launch(Dispatchers.Main) {
             viewModel.getAzkar(args.category)
         }
@@ -114,6 +118,8 @@ class AzkarDetailsFragment : Fragment() {
             else
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
+        setConstraints()
+        setSize()
     }
 
     override fun onDestroyView() {
@@ -125,5 +131,46 @@ class AzkarDetailsFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         animator?.addListener(null)
+    }
+
+
+    fun setSize() {
+        val display: Display = requireActivity().getWindowManager().getDefaultDisplay()
+        val size = Point()
+        display.getSize(size)
+        val width: Int = size.x
+        val height: Int = size.y
+        Log.e("TAG", "setSize: height" + height + "      width" + width)
+        val ratioy = ((height.toDouble() / 2280))
+        val ratiox: Double = (width.toDouble() / 1080)
+        Log.e("TAG", "setSize: height" + ratioy + "      width" + ratiox)
+        binding.bottomTools.bottomToolsCard.scaleX = ratiox.toFloat()//set width scale for ma
+        binding.bottomTools.bottomToolsCard.scaleY = ratioy.toFloat()//set height scale for ma
+    }
+
+    fun setConstraints() {
+        binding.counterImage.post {
+            binding.counterImage.width
+           val widthh = binding.counterImage.width
+            val buttonwidth = (widthh * 0.47)
+            val progresswidth = (widthh * 0.7)
+            val fontsize = (widthh * 0.08)
+            Log.e("TAG", "setConstraints: " + widthh + "      " + buttonwidth + "     " + fontsize)
+            binding.materialCard.updateLayoutParams {
+                height = buttonwidth.toInt()
+                width = buttonwidth.toInt()
+            }
+            binding.counter.updateLayoutParams {
+                height = buttonwidth.toInt()
+                width = buttonwidth.toInt()
+            }
+            binding.counter.textSize=fontsize.toFloat()
+            binding.progress.updateLayoutParams {
+                height = progresswidth.toInt()
+                width = progresswidth.toInt()
+            }
+
+        }
+
     }
 }

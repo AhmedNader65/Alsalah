@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,9 +10,7 @@
             type="com.crazyidea.alsalah.ui.azkar.azkar_details.AzkarDetailsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_bg_light_night"
@@ -86,9 +86,11 @@
                 app:tint="@color/light_green" />
 
             <FrameLayout
+                app:layout_constraintTop_toBottomOf="@+id/guideline3"
                 android:id="@+id/counter_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/_24sdp"
                 android:onClick="@{()->model.increaseCounter()}"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -96,12 +98,14 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <ImageView
-                    android:layout_width="@dimen/_170sdp"
-                    android:layout_height="@dimen/_170sdp"
+                    android:id="@+id/counter_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/counter_round_bg" />
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/material_card"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_gravity="center"
@@ -121,14 +125,14 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <ProgressBar
+                    android:id="@+id/progress"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
                     android:layout_gravity="center"
+                    android:animateLayoutChanges="true"
                     android:layoutDirection="ltr"
                     android:max="100"
-                    android:id="@+id/progress"
-                    android:animateLayoutChanges="true"
                     android:progressDrawable="@drawable/circle_progressbar"
                     android:progressTint="@color/green"
                     android:secondaryProgressTint="@color/black" />
@@ -146,6 +150,13 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="319dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
