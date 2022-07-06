@@ -53,21 +53,25 @@ class AddKhatmaFragment2 : Fragment() {
             if (it) {
                 updateFields(viewModel.days.value!!)
                 viewModel.updateFields.value = false
-            }}
+            }
+        }
+        viewModel.type.observe(viewLifecycleOwner) {
+                updateFields(viewModel.days.value!!)
+        }
     }
 
     private fun updateFields(days: Int) {
 
         viewModel.result.value = (604 - (viewModel.khatma.value?.read ?: 0)) / days
-        viewModel.khatma.value?.pages_num = if (viewModel.type.value == 0) {
+        viewModel.khatma.value?.pages_num = if (viewModel.type.value != 0) {
             days
         } else {
-            604 / days
+            0
         }
         viewModel.khatma.value?.days = if (viewModel.type.value == 0) {
-            604 / days
-        } else {
             days
+        } else {
+            0
         }
         viewModel.khatma.value = viewModel.khatma.value
     }
@@ -90,7 +94,6 @@ class AddKhatmaFragment2 : Fragment() {
             viewModel.days.postValue(20)
             viewModel.result.postValue(30)
             viewModel.type.postValue(1)
-
         }
     }
 

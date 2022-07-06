@@ -34,12 +34,13 @@ class KhatmaViewModel @Inject constructor(
     fun controlDays(boolean: Boolean) {
         if (boolean) {
             days.value = days.value!! + 1
+            updateFields.value = true
         } else {
-            if (days.value!! > 0) {
+            if (days.value!! > 1) {
+                updateFields.value = true
                 days.value = days.value!! - 1
             }
         }
-        updateFields.value = true
     }
 
 

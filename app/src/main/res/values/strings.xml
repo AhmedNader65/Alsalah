@@ -246,7 +246,7 @@
     <string name="views_count">عدد المشاهدات %d</string>
     <string name="number_of_pages">عدد الصفحات %d يوميا</string>
     <string name="number_of_days">المدة المتوقعة %d يوم</string>
-    <string name="khatma_details">المقروء : %d صفحة - المتبقي : %d</string>
+    <string name="khatma_details">متبقي : %d صفحة</string>
     <string name="facebook_app_id">544008467426216</string>
     <string name="fb_login_protocol_scheme">fb544008467426216</string>
     <string name="facebook_client_token">2e03dcfb584132ede02b76ae3d597426</string>
@@ -277,4 +277,5 @@
     <string name="ayah">"آية "</string>
     <string name="khatma_start">بداية الختمة</string>
     <string name="khatma_end">نهاية الختمة</string>
+    <string name="title_quran">القرآن</string>
 </resources>

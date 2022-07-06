@@ -1,4 +1,6 @@
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,11 +14,12 @@
 
     </data>
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_4sdp"
+        app:cardCornerRadius="@dimen/_8sdp"
+        app:cardElevation="@dimen/_4sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,10 +29,9 @@
 
             <ImageView
                 android:id="@+id/icon"
-                android:layout_width="@dimen/_48sdp"
-                android:layout_height="@dimen/_48sdp"
-                android:src="@drawable/ic_quran"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="@dimen/_84sdp"
+                android:layout_height="@dimen/_84sdp"
+                android:src="@drawable/group135"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,12 +39,17 @@
                 android:id="@+id/khatma_name"
                 style="@style/mediumText"
                 android:layout_width="0dp"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                app:autoSizeMinTextSize="@dimen/_3ssp"
+                app:autoSizeStepGranularity=".1sp"
+                app:autoSizeTextType="uniform"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:textAlignment="viewStart"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/werd_bg"
                 app:layout_constraintStart_toEndOf="@id/icon"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/icon"
                 app:setupKhatmaName="@{(item)}"
                 tools:text="ختمة حفظ #الله اكبر" />
 
@@ -53,10 +60,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:textAlignment="viewStart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:setupKhatmaRemainging="@{(item)}"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                app:autoSizeMinTextSize="@dimen/_3ssp"
+                app:autoSizeStepGranularity=".1sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toStartOf="@+id/werd_bg"
                 app:layout_constraintStart_toEndOf="@id/icon"
                 app:layout_constraintTop_toBottomOf="@id/khatma_name"
+                app:setupKhatmaRemainging="@{(item)}"
                 tools:text="المدة المتوقعة : 14 يوم" />
 
 
@@ -67,22 +79,75 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:textAlignment="viewStart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:setupKhatmaDetails="@{(item)}"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                app:autoSizeMinTextSize="@dimen/_3ssp"
+                app:autoSizeStepGranularity=".1sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toStartOf="@+id/werd_bg"
                 app:layout_constraintStart_toEndOf="@id/icon"
                 app:layout_constraintTop_toBottomOf="@id/expected"
-                tools:text="المقروء : 6 صفحة - المتبقي : 400" />
+                app:setupKhatmaDetails="@{(item)}"
+                tools:text="متبقي : 400 صفحة" />
+
+            <ImageView
+                android:id="@+id/werd_bg"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:src="@drawable/group1354"
+                app:layout_constraintBottom_toTopOf="@+id/continueReading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/icon" />
+
+            <TextView
+                android:id="@+id/werd"
+                style="@style/boldText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="4"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/werd_bg"
+                app:layout_constraintEnd_toEndOf="@id/werd_bg"
+                app:layout_constraintStart_toStartOf="@id/werd_bg"
+                app:layout_constraintTop_toBottomOf="@id/werd_tv"
+                app:setupKhatmaWerd="@{(item)}" />
+
+            <TextView
+                android:id="@+id/werd_tv"
+                style="@style/mediumText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:textAlignment="center"
+                android:minHeight="0dp"
+                android:minLines="1"
+                android:paddingTop="@dimen/_4sdp"
+                android:text="الورد اليومي"
+                android:textSize="@dimen/_8sdp"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                app:autoSizeMinTextSize="@dimen/_3ssp"
+                app:autoSizeStepGranularity=".1sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toTopOf="@id/werd"
+                app:layout_constraintEnd_toEndOf="@id/werd_bg"
+                app:layout_constraintStart_toStartOf="@id/werd_bg"
+                app:layout_constraintTop_toTopOf="@id/werd_bg"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <Button
                 android:id="@+id/continueReading"
                 style="@style/mediumText"
                 android:layout_width="0dp"
-                android:includeFontPadding="false"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/tab_layout_bg"
+                android:padding="@dimen/_8sdp"
+                android:includeFontPadding="false"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:minHeight="0dp"
@@ -90,8 +155,10 @@
                 android:stateListAnimator="@null"
                 android:text="أكمل وردك"
                 android:textColor="@color/white"
+                app:cornerRadius="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icon"
-                app:layout_constraintTop_toBottomOf="@id/details" />
+                app:layout_constraintTop_toBottomOf="@id/werd_bg" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

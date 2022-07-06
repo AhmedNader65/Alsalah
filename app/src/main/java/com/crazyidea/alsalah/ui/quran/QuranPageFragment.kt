@@ -160,17 +160,37 @@ class QuranPageFragment : Fragment() {
             binding.bookmarkPage.setImageResource(R.drawable.ic_border_bookmark)
         }
 
-        sharedViewModel.khatma.observe(viewLifecycleOwner){
-            if (it.read.plus(1) == pageNum){
+        sharedViewModel.khatma.observe(viewLifecycleOwner) {
+            if (it.read.plus(1) == pageNum) {
                 binding.khatmaMark.visibility = VISIBLE
                 binding.endKhatmaMark.visibility = GONE
-            }else if(it.read.plus(it.pages_num)== pageNum){
-                binding.endKhatmaMark.visibility = VISIBLE
-                binding.khatmaMark.visibility = GONE
-            }else{
-                binding.khatmaMark.visibility = GONE
-                binding.endKhatmaMark.visibility = GONE
+            } else {
+                if (it.pages_num == 0) {
+
+                    val todayCalendar = Calendar.getInstance()
+
+                    val differenceMillis = todayCalendar.timeInMillis - it.time!!
+                    val daysDifference = (differenceMillis / (1000 * 60 * 60 * 24)).toInt()
+                    val pages = (604 - it.read) / (it.days - daysDifference + 1)
+                    if (it.read.plus(pages) == pageNum) {
+                        binding.endKhatmaMark.visibility = VISIBLE
+                        binding.khatmaMark.visibility = GONE
+                    } else {
+                        binding.khatmaMark.visibility = GONE
+                        binding.endKhatmaMark.visibility = GONE
+                    }
+                } else {
+                    if (it.read.plus(it.pages_num) == pageNum) {
+                        binding.endKhatmaMark.visibility = VISIBLE
+                        binding.khatmaMark.visibility = GONE
+                    } else {
+                        binding.khatmaMark.visibility = GONE
+                        binding.endKhatmaMark.visibility = GONE
+                    }
+                }
+
             }
+
         }
         sharedViewModel.bookmarks.observe(viewLifecycleOwner) {
             if (it != null)
@@ -211,15 +231,16 @@ class QuranPageFragment : Fragment() {
                 spannable.append(newText)
                 spannable.setSpan(
                     ForegroundColorSpan(
-                        resources.getColor(R.color.bw, requireActivity().theme)),
-                        spannable.length - newText.length, spannable.length,
-                        Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-                    )
-                    val numberAya = " \u06DD${
-                String.format(
-                    Locale(globalPreferences.getLocale()),
-                    "%d", it.number
+                        resources.getColor(R.color.bw, requireActivity().theme)
+                    ),
+                    spannable.length - newText.length, spannable.length,
+                    Spannable.SPAN_EXCLUSIVE_INCLUSIVE
                 )
+                val numberAya = " \u06DD${
+                    String.format(
+                        Locale(globalPreferences.getLocale()),
+                        "%d", it.number
+                    )
                 } "
                 spannable.append(
                     numberAya
@@ -261,21 +282,23 @@ class QuranPageFragment : Fragment() {
 
 
         viewModel.ayahContent.observe(viewLifecycleOwner) {
-            val tracks = mQuickAction.mRootView.findViewById<ViewGroup>(R.id.tracks)
-            val playImg = (tracks
-                .getChildAt(4) as ImageView)
-            playImg.setImageResource(R.drawable.ic_baseline_stop_24)
-            mp = MediaPlayer()
-            try {
-                mp.setDataSource(it)
-                mp.prepare()
-                mp.start()
-                mp.setOnCompletionListener {
-                    isPLAYING = false
-                    playImg.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+            if (isPLAYING) {
+                val tracks = mQuickAction.mRootView.findViewById<ViewGroup>(R.id.tracks)
+                val playImg = (tracks
+                    .getChildAt(4) as ImageView)
+                playImg.setImageResource(R.drawable.ic_baseline_stop_24)
+                mp = MediaPlayer()
+                try {
+                    mp.setDataSource(it)
+                    mp.prepare()
+                    mp.start()
+                    mp.setOnCompletionListener {
+                        isPLAYING = false
+                        playImg.setImageResource(R.drawable.ic_baseline_play_arrow_24)
+                    }
+                } catch (e: IOException) {
+                    Timber.e("prepare() failed")
                 }
-            } catch (e: IOException) {
-                Timber.e("prepare() failed")
             }
         }
     }
@@ -494,6 +517,9 @@ class QuranPageFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        if (isPLAYING) {
+            stopPlaying()
+        }
     }
 
     companion object {

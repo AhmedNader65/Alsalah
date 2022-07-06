@@ -39,4 +39,5 @@
     <color name="display_reflect">#FF666666</color>
     <color name="languages_constraint">#EFEFEF</color>
     <color name="grey">#727272</color>
+    <color name="red">#F44336</color>
 </resources>
