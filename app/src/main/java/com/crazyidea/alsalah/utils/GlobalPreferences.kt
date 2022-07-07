@@ -19,11 +19,23 @@ private const val POLE = "pole"
 private const val PRAYER_CHANNEL = "prayer-channel"
 private const val AZAN_CHANGED = "azan_changed"
 private const val LAST_PAGE_QURAN = "last-quran"
-private const val AZAN = "azan"
+private const val AZAN = "azannny"
 private const val CUSTOM_AZAN = "custom-azan"
 private const val COLOR = "color"
 private const val LONGITUDE = "lng"
 private const val LOGGED = "logged"
+
+private const val FAJR_MODIFICATION = "fajr-modification"
+private const val SHOROOK_MODIFICATION = "shorok-modification"
+private const val ZUHR_MODIFICATION = "zuhr-modification"
+private const val ASR_MODIFICATION = "asr-modification"
+private const val MAGHRIB_MODIFICATION = "maghrib-modification"
+private const val ISHA_MODIFICATION = "isha-modification"
+private const val AFTER_PRAYER_AZKAR = "AFTER_PRAYER_AZKAR"
+private const val MORNING_AZKAR = "MORNING_AZKAR"
+private const val EVENING_AZKAR = "EVENING_AZKAR"
+private const val SLEEPING_AZKAR = "SLEEPING_AZKAR"
+private const val SLEEPING_TIME = "SLEEPING_TIME"
 
 
 private const val AZKAR_MUTED = "azkar-muted"
@@ -57,6 +69,36 @@ class GlobalPreferences(context: Context) {
 
     fun storeSchoolMethod(school: Int) {
         prefsEditor.putInt(SCHOOL_METHOD, school)
+        prefsEditor.commit()
+    }
+
+    fun storeFajrMod(mod: Int) {
+        prefsEditor.putInt(FAJR_MODIFICATION, mod)
+        prefsEditor.commit()
+    }
+
+    fun storeShorookMod(mod: Int) {
+        prefsEditor.putInt(SHOROOK_MODIFICATION, mod)
+        prefsEditor.commit()
+    }
+
+    fun storeZuhrMod(mod: Int) {
+        prefsEditor.putInt(ZUHR_MODIFICATION, mod)
+        prefsEditor.commit()
+    }
+
+    fun storeAsrMod(mod: Int) {
+        prefsEditor.putInt(ASR_MODIFICATION, mod)
+        prefsEditor.commit()
+    }
+
+    fun storeMaghribMod(mod: Int) {
+        prefsEditor.putInt(MAGHRIB_MODIFICATION, mod)
+        prefsEditor.commit()
+    }
+
+    fun storeIshaMod(mod: Int) {
+        prefsEditor.putInt(ISHA_MODIFICATION, mod)
         prefsEditor.commit()
     }
 
@@ -111,6 +153,58 @@ class GlobalPreferences(context: Context) {
         return prefs.getInt(AZAN, 1)
     }
 
+    fun getFajrModification(): Int {
+        return prefs.getInt(FAJR_MODIFICATION, 0)
+    }
+
+    fun getShorookModification(): Int {
+        return prefs.getInt(SHOROOK_MODIFICATION, 0)
+    }
+
+    fun getZuhrModification(): Int {
+        return prefs.getInt(ZUHR_MODIFICATION, 0)
+    }
+
+    fun getAsrModification(): Int {
+        return prefs.getInt(ASR_MODIFICATION, 0)
+    }
+
+    fun getMaghribModification(): Int {
+        return prefs.getInt(MAGHRIB_MODIFICATION, 0)
+    }
+
+    fun getIshaModification(): Int {
+        return prefs.getInt(ISHA_MODIFICATION, 0)
+    }
+
+    fun isAfterPrayerNotification(): Boolean {
+        return prefs.getBoolean(AFTER_PRAYER_AZKAR, false)
+    }
+
+    fun isMorningNotification(): Boolean {
+        return prefs.getBoolean(MORNING_AZKAR, true)
+    }
+
+    fun isEveningNotification(): Boolean {
+        return prefs.getBoolean(EVENING_AZKAR, true)
+    }
+
+    fun isSleepingNotification(): Boolean {
+        return prefs.getBoolean(SLEEPING_AZKAR, true)
+    }
+
+    fun getSleepingTime(): Long {
+        val calendar1 = Calendar.getInstance()
+        val calendar2 = Calendar.getInstance()
+        val time = prefs.getLong(SLEEPING_TIME, 1657224000991)
+        calendar1.timeInMillis = time
+        calendar1.set(Calendar.YEAR, calendar2.get(Calendar.YEAR))
+        calendar1.set(Calendar.MONTH, calendar2.get(Calendar.MONTH))
+        calendar1.set(Calendar.DAY_OF_MONTH, calendar2.get(Calendar.DAY_OF_MONTH))
+        return calendar1.timeInMillis
+    }
+
+
     fun getCustomAzanUri(): Uri {
         return Uri.parse(prefs.getString(CUSTOM_AZAN, ""))
     }
@@ -154,7 +248,7 @@ class GlobalPreferences(context: Context) {
     }
 
     fun lastReadingPage(): Int {
-       return prefs.getInt(LAST_PAGE_QURAN, 0)
+        return prefs.getInt(LAST_PAGE_QURAN, 0)
     }
 
     fun storeLatitude(latitude: String?) {
@@ -194,6 +288,32 @@ class GlobalPreferences(context: Context) {
         prefsEditor.commit()
     }
 
+    fun storeAfterPrayerNotification(checked: Boolean) {
+        prefsEditor.putBoolean(AFTER_PRAYER_AZKAR, checked)
+        prefsEditor.commit()
+
+    }
+
+    fun storeMorningNotification(checked: Boolean) {
+        prefsEditor.putBoolean(MORNING_AZKAR, checked)
+        prefsEditor.commit()
+    }
+
+    fun storeEveningNotification(checked: Boolean) {
+        prefsEditor.putBoolean(EVENING_AZKAR, checked)
+        prefsEditor.commit()
+    }
+
+    fun storeSleepingNotification(checked: Boolean) {
+        prefsEditor.putBoolean(SLEEPING_AZKAR, checked)
+        prefsEditor.commit()
+    }
+
+    fun storeSleepingTime(time: Long) {
+        prefsEditor.putLong(SLEEPING_TIME, time)
+        prefsEditor.commit()
+    }
+
     fun getPrayerChannelId(): String {
         val channelId = prefs.getString(PRAYER_CHANNEL, null)
         channelId?.let {
@@ -205,4 +325,5 @@ class GlobalPreferences(context: Context) {
         }
 
     }
+
 }

@@ -4,7 +4,6 @@
     <string name="title_azkar">الأذكار</string>
     <string name="title_profile">البروفايل</string>
     <string name="title_alarm">منبة الطاعات</string>
-    <string name="next_prayer">صلاة الظهر بعد</string>
     <string name="next_prayer_time">00:01:30</string>
     <string name="fajr">الفجر</string>
     <string name="zuhr">الظهر</string>
@@ -137,7 +136,6 @@
     <string name="thursday">الخميس</string>
     <string name="saturday">السبت</string>
     <string name="event_day"><font color="#EEB34B">%1$s</font> <font color="#ffffff">%2$s </font> <font color="#EEB34B">%3$s</font></string>
-    <string name="العربيه">العربية</string>
     <string name="arabic">العربيه</string>
     <string name="english">الانجليزية</string>
     <string name="frecnh">الفرنسية</string>
@@ -231,7 +229,7 @@
     <string name="choose_contacts">اختر قائمة الفجر</string>
     <string name="read_contacts">اذن قراءة جهات الاتصال ملطوب حتى تتمكن من اضافة قائمة الفجر</string>
     <string name="display_over_apps">فعل اذن الظهور فوق التطبيقات لنتمكن من الاتصال بقائمة الفجر وقت الفجر</string>
-    <string name="موافق">OK</string>
+    <string name="OK">موافق</string>
     <string name="cancel">الغاء</string>
     <string name="read_contacts_permission">اذن قراءة جهات الاتصال</string>
     <string name="addEditContacts">اضافة وتعديل</string>
@@ -278,4 +276,10 @@
     <string name="khatma_start">بداية الختمة</string>
     <string name="khatma_end">نهاية الختمة</string>
     <string name="title_quran">القرآن</string>
+    <string name="start_now">ابدأ الآن</string>
+    <string name="read">اقرأ</string>
+    <string name="next_prayer">صلاة %s بعد</string>
+    <string name="prev_prayer">صلاة %s منذ</string>
+    <string name="taqabal_allah">تقبل الله</string>
+    <string name="default_time">10:00 م</string>
 </resources>

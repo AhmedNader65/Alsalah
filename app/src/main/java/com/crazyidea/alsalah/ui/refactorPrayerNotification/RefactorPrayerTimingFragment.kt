@@ -10,7 +10,7 @@ import com.crazyidea.alsalah.databinding.FragmentPrayerTimeNotificationBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RefactorPrayerTimingFragment : Fragment(){
+class RefactorPrayerTimingFragment : Fragment() {
 
     private var _binding: FragmentPrayerTimeNotificationBinding? = null
 
@@ -35,7 +35,9 @@ class RefactorPrayerTimingFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.goBack.observe(viewLifecycleOwner) {
+            requireActivity().onBackPressed()
+        }
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }
 

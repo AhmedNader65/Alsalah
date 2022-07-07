@@ -1,9 +1,7 @@
 package com.crazyidea.alsalah
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
+import android.content.ContextWrapper
 import android.os.Build
 import android.os.Bundle
 import android.view.Window
@@ -16,7 +14,6 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.crazyidea.alsalah.data.model.PrimaryColor
 import com.crazyidea.alsalah.databinding.ActivityMainBinding
-import com.crazyidea.alsalah.receiver.AlarmReceiver
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.setLocale
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,26 +21,21 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
-private const val LOCATION_PERMISSION_INDEX = 0
-private const val BACKGROUND_LOCATION_PERMISSION_INDEX = 1
-private const val REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE = 33
-private const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
-private const val REQUEST_TURN_DEVICE_LOCATION_ON = 35
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    @Inject
+    lateinit var globalPreferences: GlobalPreferences
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(ContextWrapper(newBase.setLocale()))
+    }
     private lateinit var binding: ActivityMainBinding
 
     private val runningQOrLater = Build.VERSION.SDK_INT >=
             Build.VERSION_CODES.Q
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setLocale(this, globalPreferences.getLocale())
         setTheme(globalPreferences.getPrimaryColor())
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

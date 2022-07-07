@@ -313,7 +313,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_16sdp"
-            android:text="أذكار بعد الصلاة"
+            android:text="@string/after_prayer_azkar"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"

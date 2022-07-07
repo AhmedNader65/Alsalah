@@ -107,4 +107,12 @@ class AzkarRepository @Inject constructor(
             azkar
         }
     }
+
+    suspend fun getRandomAzkar(category: String): Azkar {
+
+        return withContext(externalScope.coroutineContext) {
+            val azkar = appDatabase.azkarDao().getRandomAzkar(category)
+            azkar
+        }
+    }
 }

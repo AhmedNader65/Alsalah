@@ -83,6 +83,7 @@ class HomeFragment : Fragment(), LocationListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        globalPreferences.getAzan()
         checkPermissions()
         adapter = ArticlesAdapter(arrayListOf(), onReadMore = {
             findNavController().navigate(
@@ -338,7 +339,7 @@ class HomeFragment : Fragment(), LocationListener {
             location.longitude.toString(),
             globalPreferences.getCalculationMethod(),
             globalPreferences.getSchool(),
-            null
+            "0,${globalPreferences.getFajrModification()},${globalPreferences.getShorookModification()},${globalPreferences.getZuhrModification()},${globalPreferences.getAsrModification()},${globalPreferences.getMaghribModification()},${globalPreferences.getIshaModification()},0"
         )
 
         locationManager?.removeUpdates(this)

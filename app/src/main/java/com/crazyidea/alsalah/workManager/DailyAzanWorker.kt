@@ -1,46 +1,44 @@
 package com.crazyidea.alsalah.workManager
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_IMMUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
-import android.util.Log
-import android.widget.Toast
+import android.os.LocaleList
 import androidx.hilt.work.HiltWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.crazyidea.alsalah.receiver.AlarmReceiver
+import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.room.AppDatabase
+import com.crazyidea.alsalah.data.room.dao.AzkarDao
 import com.crazyidea.alsalah.data.room.dao.KhatmaDao
 import com.crazyidea.alsalah.data.room.dao.PrayerDao
+import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.setAlarm
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
 
 
 private const val TAG_OUTPUT: String = "DailyAzanWorker"
 
 @HiltWorker
-public class DailyAzanWorker @AssistedInject constructor(
+class DailyAzanWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    appDatabase: AppDatabase
+    appDatabase: AppDatabase,
+    val globalPreferences: GlobalPreferences,
 ) : Worker(context, workerParams) {
     private var prayerDao: PrayerDao = appDatabase.prayersDao()
     private var khatmaDao: KhatmaDao = appDatabase.khatmaDao()
+    private var azkarDao: AzkarDao = appDatabase.azkarDao()
 
     override fun doWork(): Result {
+        Timber.e("setting alarms")
         val currentDate = Calendar.getInstance()
         val dueDate = Calendar.getInstance()
         // Set Execution around 05:00:00 AM
@@ -59,7 +57,68 @@ public class DailyAzanWorker @AssistedInject constructor(
             .enqueue(dailyWorkRequest)
         setupPrayingAlarms()
         setupKhatmaAlarms()
+        setupAzkarAlarms()
         return Result.success()
+    }
+
+    private fun setupAzkarAlarms() {
+        val currentDate = Calendar.getInstance()
+        val res: Resources = applicationContext.resources
+        var context: Context
+        val configuration: Configuration? = res.configuration
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            configuration?.setLocale(Locale("ar"))
+            val localeList = LocaleList(Locale("ar"))
+            LocaleList.setDefault(localeList)
+            configuration?.setLocales(localeList)
+            context = applicationContext.createConfigurationContext(configuration!!)
+        } else {
+            configuration?.setLocale(Locale("ar"))
+            context = applicationContext.createConfigurationContext(configuration!!)
+        }
+
+        if (globalPreferences.isMorningNotification()) {
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, 7)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            if (currentDate.timeInMillis < calendar.timeInMillis) {
+                setAlarm(
+                    applicationContext,
+                    "azkar",
+                    context.resources.getString(R.string.morning_azkar),
+                    calendar.timeInMillis,
+                    category = "أذكار الصباح",
+                )
+            }
+        }
+        if (globalPreferences.isEveningNotification()) {
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, 19)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            if (currentDate.timeInMillis < calendar.timeInMillis) {
+                setAlarm(
+                    applicationContext,
+                    "azkar",
+                    context.resources.getString(R.string.night_azkar),
+                    calendar.timeInMillis,
+                    category = "أذكار المساء",
+                )
+            }
+        }
+        if (globalPreferences.isSleepingNotification()) {
+
+            if (currentDate.timeInMillis < globalPreferences.getSleepingTime()) {
+                setAlarm(
+                    applicationContext,
+                    "azkar",
+                    context.resources.getString(R.string.sleep_azkar),
+                    globalPreferences.getSleepingTime(),
+                    category = "أذكار النوم",
+                )
+            }
+        }
     }
 
     private fun setupKhatmaAlarms() {
@@ -68,11 +127,11 @@ public class DailyAzanWorker @AssistedInject constructor(
 
             val currentDate = Calendar.getInstance()
             val dueDate = Calendar.getInstance()
-            val originalDate  = Calendar.getInstance()
+            val originalDate = Calendar.getInstance()
             // Set Execution around 05:00:00 AM
             originalDate.timeInMillis = it.time!!
-            dueDate.set(Calendar.HOUR_OF_DAY,originalDate.get(Calendar.HOUR_OF_DAY))
-            dueDate.set(Calendar.MINUTE,originalDate.get(Calendar.MINUTE))
+            dueDate.set(Calendar.HOUR_OF_DAY, originalDate.get(Calendar.HOUR_OF_DAY))
+            dueDate.set(Calendar.MINUTE, originalDate.get(Calendar.MINUTE))
             if (dueDate.after(currentDate)) {
                 setAlarm(
                     applicationContext,
@@ -111,6 +170,7 @@ public class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.SECOND, 0)
 
         if (calendar.after(currentDate)) {
+            Timber.e("SETTING zuhr PRAYER ALARM")
             setAlarm(applicationContext, type, "zuhr", calendar.timeInMillis)
         }
         val AsrTime = timings.Asr.split(":")

@@ -12,12 +12,17 @@ import android.telephony.TelephonyManager
 import android.util.Log
 import android.widget.Toast
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.repository.AzkarRepository
 import com.crazyidea.alsalah.data.repository.FajrListRepository
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.sendNotification
+import com.crazyidea.alsalah.utils.setAlarm
+import com.crazyidea.alsalah.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -29,18 +34,19 @@ class AlarmReceiver : BroadcastReceiver() {
     lateinit var fajrRepository: FajrListRepository
 
     @Inject
+    lateinit var azkarRepository: AzkarRepository
+
+    @Inject
     lateinit var globalPreferences: GlobalPreferences
     lateinit var CHANNEL_ID: String
     override fun onReceive(context: Context, intent: Intent?) {
         Log.e("receiver", "received")
-// Create an explicit intent for an Activity in your app
-        Toast.makeText(context, "alarm ran", Toast.LENGTH_SHORT).show()
+        val context = context.setLocale()
         CHANNEL_ID = globalPreferences.getPrayerChannelId()
 
         if (intent?.hasExtra("salah") == true) {
             if (intent.getStringExtra("salah") == "fajr") {
                 GlobalScope.async {
-
                     val listOfContacts = fajrRepository.getFajrList()
                     listOfNumbers = listOfContacts.map { it.number }
                 }
@@ -65,13 +71,25 @@ class AlarmReceiver : BroadcastReceiver() {
                     telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE)
                 }
             }
+            Timber.e("HERE")
             sendNotification(
                 context,
                 CHANNEL_ID,
-                getTitle(context, intent?.getStringExtra("salah")) as String,
+                getTitle(context, intent.getStringExtra("salah")) as String,
                 context.getString(R.string.continue_using),
                 getAzanSound(globalPreferences, context)
             )
+
+            if (globalPreferences.isAfterPrayerNotification()) {
+                Timber.e("SETTING AFTER PRAYER ALARM")
+                setAlarm(
+                    context,
+                    "azkar",
+                    context.getString(R.string.taqabal_allah),
+                    System.currentTimeMillis().plus(20 * 60000),
+                    category = "أذكار بعد السلام من الصلاة المفروضة"
+                )
+            }
         } else if (intent?.hasExtra("khatma") == true) {
             sendNotification(
                 context,
@@ -79,6 +97,16 @@ class AlarmReceiver : BroadcastReceiver() {
                 intent.getStringExtra("khatma").toString(),
                 context.getString(R.string.khatma_reminder)
             )
+        } else if (intent?.hasExtra("azkar") == true) {
+            Timber.e(intent.getStringExtra("zekr_type").toString())
+            GlobalScope.launch {
+                sendNotification(
+                    context,
+                    "after_prayer_" + intent.getStringExtra("azkar"),
+                    intent.getStringExtra("azkar").toString(),
+                    azkarRepository.getRandomAzkar(intent.getStringExtra("zekr_type").toString()).content
+                )
+            }
         }
     }
 

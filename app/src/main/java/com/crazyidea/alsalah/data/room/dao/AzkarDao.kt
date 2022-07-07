@@ -18,7 +18,7 @@ interface AzkarDao {
 
     @Transaction
     @Query("SELECT * FROM Azkar WHERE category NOT IN (:categories)")
-    fun getOtherAzkar( categories:List<String>): List<Azkar>
+    fun getOtherAzkar(categories: List<String>): List<Azkar>
 
     @Transaction
     @Query("SELECT * FROM Azkar where category = :category LIMIT 1")
@@ -37,5 +37,8 @@ interface AzkarDao {
 
     @Query("Select COUNT(*) FROM Azkar")
     fun shouldFetchData(): Int
+
+    @Query("Select * FROM Azkar where category = :category ORDER BY RANDOM() LIMIT 1")
+    fun getRandomAzkar(category: String): Azkar
 
 }

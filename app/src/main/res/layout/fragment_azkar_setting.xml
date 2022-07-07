@@ -355,7 +355,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         style="@style/mediumText"
-                        android:text="10:00 م"
+                        android:text="@string/default_time"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView

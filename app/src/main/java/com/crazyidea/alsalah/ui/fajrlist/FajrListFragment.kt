@@ -75,12 +75,12 @@ class FajrListFragment : Fragment(), PermissionListener {
         binding.fajrList.adapter = adapter
         binding.addContacts.setOnClickListener {
             permissionHelper.checkForMultiplePermissions(
-                arrayOf(READ_CONTACTS, CALL_PHONE)
+                arrayOf(READ_CONTACTS,READ_PHONE_STATE , CALL_PHONE)
             )
         }
         binding.addContacts2.setOnClickListener {
-            permissionHelper.checkForPermissions(
-                READ_CONTACTS
+            permissionHelper.checkForMultiplePermissions(
+                arrayOf(READ_CONTACTS,READ_PHONE_STATE , CALL_PHONE)
             )
 
         }
@@ -122,7 +122,7 @@ class FajrListFragment : Fragment(), PermissionListener {
             // if the dialog is cancelable
             .setCancelable(false)
             // positive button text and action
-            .setPositiveButton(getString(R.string.موافق)) { dialog, _ ->
+            .setPositiveButton(getString(R.string.OK)) { dialog, _ ->
                 dialog.cancel()
                 permissionHelper.launchPermissionDialogForMultiplePermissions(
                     arrayOf(
@@ -153,7 +153,7 @@ class FajrListFragment : Fragment(), PermissionListener {
             // if the dialog is cancelable
             .setCancelable(false)
             // positive button text and action
-            .setPositiveButton(getString(R.string.موافق)) { dialog, _ ->
+            .setPositiveButton(getString(R.string.OK)) { dialog, _ ->
                 dialog.cancel()
                 requestOverlayPermission()
             }

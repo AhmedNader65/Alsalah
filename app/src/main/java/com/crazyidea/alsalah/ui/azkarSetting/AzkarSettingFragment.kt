@@ -11,13 +11,23 @@ import com.crazyidea.alsalah.adapter.AzkarLanguagesRadioAdapter
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentAzkarSettingBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
+import java.sql.Time
+import java.text.Format
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListner {
 
     private var _binding: FragmentAzkarSettingBinding? = null
+
+    private var hour: Int = 10
+    private var minute: Int = 0
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -47,8 +57,59 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
             checkRecyclerView()
         }
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
+        binding.afterPrayerAzkarSwitch.isChecked = globalPreferences.isAfterPrayerNotification()
+        binding.morningAzkarSwitch.isChecked = globalPreferences.isMorningNotification()
+        binding.nightAzkarSwitch.isChecked = globalPreferences.isEveningNotification()
+        binding.sleepAzkarSwitch.isChecked = globalPreferences.isSleepingNotification()
+        binding.afterPrayerAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
+            globalPreferences.storeAfterPrayerNotification(isChecked)
+        }
+        binding.morningAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
+            globalPreferences.storeMorningNotification(isChecked)
+        }
+        binding.nightAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
+            globalPreferences.storeEveningNotification(isChecked)
+        }
+        binding.sleepAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
+            globalPreferences.storeSleepingNotification(isChecked)
+        }
+        binding.notificationTimeText.setOnClickListener {
+            val picker =
+                MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(hour)
+                    .setMinute(minute)
+                    .setTitleText(resources.getString(R.string.notification_time))
+                    .build()
 
+            picker.show(childFragmentManager, "tag")
+            picker.addOnPositiveButtonClickListener {
+                this.hour = picker.hour
+                this.minute = picker.minute
+                val calendar = Calendar.getInstance()
+                calendar.set(Calendar.HOUR_OF_DAY, hour)
+                calendar.set(Calendar.MINUTE, minute)
+                globalPreferences.storeSleepingTime(calendar.timeInMillis)
+                binding.notificationTimeText.text = getTime(picker.hour, picker.minute)
+            }
+            picker.addOnNegativeButtonClickListener {
+                // call back code
+            }
+            picker.addOnCancelListener {
+                // call back code
+            }
+            picker.addOnDismissListener {
+                // call back code
+            }
+        }
 
+    }
+
+    private fun getTime(hr: Int, min: Int): String? {
+        val tme = Time(hr, min, 0) //seconds by default set to zero
+        val formatter: Format
+        formatter = SimpleDateFormat("h:mm a", Locale(globalPreferences.getLocale()))
+        return formatter.format(tme)
     }
 
     private fun checkRecyclerView() {

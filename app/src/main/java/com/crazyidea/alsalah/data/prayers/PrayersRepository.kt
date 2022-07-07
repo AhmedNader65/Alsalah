@@ -77,7 +77,8 @@ class PrayersRepository @Inject constructor(
                                 timingId = inTimingId
                             })
                     } catch (e: SQLiteConstraintException) {
-                        Timber.e("error",prayerResponseApiModel)
+                        Timber.e("error", e.printStackTrace())
+                        Timber.e("error", prayerResponseApiModel)
                     }
                 }
             }

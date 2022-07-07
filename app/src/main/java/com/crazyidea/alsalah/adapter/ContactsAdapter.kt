@@ -8,6 +8,7 @@ import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.room.entity.fajr.Fajr
+import timber.log.Timber
 
 class ContactsAdapter(
     private var contacts: List<Fajr>,
@@ -28,9 +29,11 @@ class ContactsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val contact = contacts[position]
+        holder.name.setOnCheckedChangeListener(null)
         contact.checked = list.any { it.number == contact.number }
         holder.bind(contact)
         holder.name.setOnCheckedChangeListener { buttonView, isChecked ->
+            Timber.e("check changed")
             if (isChecked != contact.checked) {
                 if (isChecked) {
                     addContact(contact)

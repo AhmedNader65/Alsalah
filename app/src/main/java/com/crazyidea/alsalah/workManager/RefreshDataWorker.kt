@@ -32,7 +32,7 @@ class RefreshDataWorker @AssistedInject constructor(
                 globalPreferences.getLatitude(),
                 globalPreferences.getLongitude(),
                 globalPreferences.getCalculationMethod(),
-                globalPreferences.getSchool(), null
+                globalPreferences.getSchool(), "0,${globalPreferences.getFajrModification()},${globalPreferences.getShorookModification()},${globalPreferences.getZuhrModification()},${globalPreferences.getAsrModification()},${globalPreferences.getMaghribModification()},${globalPreferences.getIshaModification()},0"
             )
             Result.success()
         } catch (e: HttpException) {

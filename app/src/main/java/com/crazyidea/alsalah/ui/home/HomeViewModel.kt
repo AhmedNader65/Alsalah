@@ -109,8 +109,7 @@ class HomeViewModel @Inject constructor(
             Pair("", "")
     }
 
-    val nextPrayer = MutableLiveData(" صلاة الظهر بعد")
-    val clickedPrayer = MutableLiveData(" صلاة الظهر بعد")
+    val nextPrayer = MutableLiveData(Pair("الظهر","الظهر"))
     val nextPrayerId = MutableLiveData(1)
     val clickedPrayerId = MutableLiveData(0)
     val remainingTime = MutableLiveData("00:00")
@@ -203,9 +202,9 @@ class HomeViewModel @Inject constructor(
 
     private fun twentyFourConverter(time: String, am: Boolean = false): String {
         return try {
-            val sdf = SimpleDateFormat("H:mm", Locale("ar"))
+            val sdf = SimpleDateFormat("HH:mm", Locale("ar"))
             val dateObj: Date = sdf.parse(time) as Date
-            if (!am) SimpleDateFormat("K:mm", Locale("ar")).format(dateObj)
+            if (!am) SimpleDateFormat("hh:mm", Locale("ar")).format(dateObj)
             else {
                 SimpleDateFormat("a", Locale("ar")).format(dateObj)
             }
@@ -260,60 +259,60 @@ class HomeViewModel @Inject constructor(
             when (int) {
                 1 -> {
                     if (currentDate.after(fajrDate)) {
-                        clickedPrayer.value = "صلاة الفجر منذ"
+                        nextPrayer.value = Pair("0","الفجر")
                         diff = (currentDate.time - fajrDate.time)
                     } else {
-                        clickedPrayer.value = "صلاة الفجر بعد"
+                        nextPrayer.value =  Pair("1","الفجر")
                         diff = (fajrDate.time - currentDate.time)
 
                     }
                 }
                 2 -> {
                     if (currentDate.after(shorokDate)) {
-                        clickedPrayer.value = "صلاة الشروق منذ"
+                        nextPrayer.value =  Pair("0","الشروق")
                         diff = (currentDate.time - shorokDate.time)
                     } else {
-                        clickedPrayer.value = "صلاة الشروق بعد"
+                        nextPrayer.value =  Pair("1","الشروق")
                         diff = (shorokDate.time - currentDate.time)
 
                     }
                 }
                 3 -> {
                     if (currentDate.after(zuhrDate)) {
-                        clickedPrayer.value = "صلاة الظهر منذ"
+                        nextPrayer.value =  Pair("0","الظهر")
                         diff = (currentDate.time - zuhrDate.time)
                     } else {
-                        clickedPrayer.value = "صلاة الظهر بعد"
+                        nextPrayer.value =  Pair("1","الظهر")
                         diff = (zuhrDate.time - currentDate.time)
 
                     }
                 }
                 4 -> {
                     if (currentDate.after(asrDate)) {
-                        clickedPrayer.value = "صلاة العصر منذ"
+                        nextPrayer.value =  Pair("0","العصر")
                         diff = (currentDate.time - asrDate.time)
                     } else {
-                        clickedPrayer.value = "صلاة العصر بعد"
+                        nextPrayer.value =  Pair("1","العصر")
                         diff = (asrDate.time - currentDate.time)
 
                     }
                 }
                 5 -> {
                     if (currentDate.after(maghribDate)) {
-                        clickedPrayer.value = "صلاة المغرب منذ"
+                        nextPrayer.value =  Pair("0","المغرب")
                         diff = (currentDate.time - maghribDate.time)
                     } else {
-                        clickedPrayer.value = "صلاة المغرب بعد"
+                        nextPrayer.value =  Pair("1","المغرب")
                         diff = (maghribDate.time - currentDate.time)
 
                     }
                 }
                 6 -> {
                     if (currentDate.after(ishaDate)) {
-                        clickedPrayer.value = "صلاة العشاء منذ"
+                        nextPrayer.value =  Pair("0","العشاء")
                         diff = (currentDate.time - ishaDate.time)
                     } else {
-                        clickedPrayer.value = "صلاة العشاء بعد"
+                        nextPrayer.value =  Pair("1","العشاء")
                         diff = (ishaDate.time - currentDate.time)
 
                     }
@@ -339,9 +338,6 @@ class HomeViewModel @Inject constructor(
             }
             timer.start()
         }
-        Log.e("TAG", "clickPrayer: " + clickedPrayer.value)
-        Log.e("TAG", "clickPrayer: " + clickedremainingTime.value)
-
 
     }
 
@@ -363,43 +359,43 @@ class HomeViewModel @Inject constructor(
                 val asrDate = sdf.parse(timings.Asr) as Date
                 val maghribDate = sdf.parse(timings.Maghrib) as Date
                 val ishaDate = sdf.parse(timings.Isha) as Date
-                nextPrayer.value = "صلاة الفجر بعد"
+                nextPrayer.value =  Pair("الفجر","")
                 nextPrayerId.value = 1
                 var diff = 30000L
                 var basePrayerForNext = fajrDate
                 if (currentDate.after(fajrDate)) {
                     nextPrayerId.value = 2
-                    nextPrayer.value = "صلاة الشروق بعد"
+                    nextPrayer.value =  Pair("الشروق","")
                     diff = (shorokDate.time - currentDate.time)
                     basePrayerForNext = shorokDate
                 }
                 if (currentDate.after(shorokDate)) {
                     nextPrayerId.value = 3
-                    nextPrayer.value = "صلاة الظهر بعد"
+                    nextPrayer.value = Pair("الظهر","")
                     diff = (zuhrDate.time - currentDate.time)
                     basePrayerForNext = zuhrDate
                 }
                 if (currentDate.after(zuhrDate)) {
                     nextPrayerId.value = 4
-                    nextPrayer.value = "صلاة العصر بعد"
+                    nextPrayer.value = Pair("العصر","")
                     diff = (asrDate.time - currentDate.time)
                     basePrayerForNext = asrDate
                 }
                 if (currentDate.after(asrDate)) {
                     nextPrayerId.value = 5
-                    nextPrayer.value = "صلاة المغرب بعد"
+                    nextPrayer.value = Pair("المغرب","")
                     diff = (maghribDate.time - currentDate.time)
                     basePrayerForNext = maghribDate
                 }
                 if (currentDate.after(maghribDate)) {
-                    nextPrayer.value = "صلاة العشاء بعد"
+                    nextPrayer.value = Pair("العشاء","")
                     nextPrayerId.value = 6
                     diff = (ishaDate.time - currentDate.time)
                     basePrayerForNext = ishaDate
                 }
                 if (currentDate.after(ishaDate)) {
                     nextPrayerId.value = 1
-                    nextPrayer.value = " صلاة الفجر بعد"
+                    nextPrayer.value = Pair("الفجر","")
                     diff = (zuhrDate.time - fajrDate.time)
                     basePrayerForNext = fajrDate
                 }

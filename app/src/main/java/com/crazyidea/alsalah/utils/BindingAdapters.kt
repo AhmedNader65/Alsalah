@@ -198,3 +198,40 @@ fun setupAyah(textView: TextView, item: Ayat?) {
             }"
     }
 }
+
+@BindingAdapter("bindNextPlayer")
+fun setupNextPrayer(textView: TextView, item: Pair<String, String>) {
+    val context = textView.context
+    textView.text =
+        if (item.first.length < 2) {
+            if (item.first == "0") {
+                context.getString(R.string.prev_prayer, when (item.second){
+                    "الفجر" -> context.getString(R.string.fajr)
+                    "الشروق" -> context.getString(R.string.shorooq)
+                    "الظهر" -> context.getString(R.string.zuhr)
+                    "العصر" -> context.getString(R.string.asr)
+                    "المغرب" -> context.getString(R.string.maghrib)
+                    else -> context.getString(R.string.eshaa)
+                })
+            } else {
+
+                context.getString(R.string.next_prayer,  when (item.second){
+                    "الفجر" -> context.getString(R.string.fajr)
+                    "الشروق" -> context.getString(R.string.shorooq)
+                    "الظهر" -> context.getString(R.string.zuhr)
+                    "العصر" -> context.getString(R.string.asr)
+                    "المغرب" -> context.getString(R.string.maghrib)
+                    else -> context.getString(R.string.eshaa)
+                })
+            }
+        } else {
+            context.getString(R.string.next_prayer, when (item.first){
+                "الفجر" -> context.getString(R.string.fajr)
+                "الشروق" -> context.getString(R.string.shorooq)
+                "الظهر" -> context.getString(R.string.zuhr)
+                "العصر" -> context.getString(R.string.asr)
+                "المغرب" -> context.getString(R.string.maghrib)
+                else -> context.getString(R.string.eshaa)
+            })
+        }
+}

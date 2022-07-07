@@ -10,29 +10,20 @@ import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import com.crazyidea.alsalah.data.model.Language
+import timber.log.Timber
 import java.util.*
 
 
 val Resources.isRtl get() = configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 
-fun setLocale(context: Context, lang: String) {
-    val globalPreferences = GlobalPreferences(context)
-    globalPreferences.storeLocale(lang)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        val overrideConfiguration: Configuration = context.resources.configuration
-        overrideConfiguration.setLocales(LocaleList(Locale(lang)))
-        val resources: Resources = context.resources
-    } else {
-        val res = context.resources
-        // Change locale settings in the app.
-        val dm = res.displayMetrics
-        val conf = res.configuration
-        conf.setLocale(Locale(lang)) // API 17+ only.
-        // Use conf.locale = new Locale(...) if targeting lower versions
-        // Use conf.locale = new Locale(...) if targeting lower versions
-        res.updateConfiguration(conf, dm)
-    }
-    Locale.setDefault(Locale(lang))
+fun Context.setLocale(): Context {
+    val globalPreferences = GlobalPreferences(this)
+    val locale = Locale(globalPreferences.getLocale())
+    Locale.setDefault(locale)
+    val config = resources.configuration
+    config.setLocale(locale)
+    config.setLayoutDirection(locale)
+    return createConfigurationContext(config)
 }
 
 fun formatNumber(number: Double): String {
