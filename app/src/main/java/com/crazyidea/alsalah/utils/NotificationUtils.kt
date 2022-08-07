@@ -1,9 +1,6 @@
 package com.crazyidea.alsalah.utils
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -12,6 +9,7 @@ import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import com.crazyidea.alsalah.BuildConfig
@@ -21,14 +19,16 @@ import com.crazyidea.alsalah.R
 
 fun sendNotification(
     context: Context,
-    channel_ID: String, title: String, msg: String, sound: Uri = RingtoneManager.getDefaultUri(
-        RingtoneManager.TYPE_NOTIFICATION
-    )
+    channel_ID: String,
+    title: String,
+    msg: String,
+    sound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
+    destIntent: Intent = Intent(context, MainActivity::class.java)
 ) {
     val notificationManager = context
         .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val fullScreenIntent = Intent(context, MainActivity::class.java)
+    val fullScreenIntent = destIntent
     val fullScreenPendingIntent = PendingIntent.getActivity(
         context, 0,
         fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -52,6 +52,7 @@ fun sendNotification(
         .setDefaults(NotificationCompat.DEFAULT_ALL)
         .setSound(sound)
         .setContentIntent(fullScreenPendingIntent)
+        .setFullScreenIntent(fullScreenPendingIntent, true)
         .build()
 
     notificationManager.notify(getUniqueId(), notification)

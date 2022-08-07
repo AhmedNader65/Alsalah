@@ -1,16 +1,25 @@
 package com.crazyidea.alsalah.receiver
 
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
+import android.media.PlaybackParams
 import android.net.Uri
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import android.util.Log
-import android.widget.Toast
+import android.view.Window
+import android.view.WindowManager
+import android.widget.*
+import com.crazyidea.alsalah.AzanActivity
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.repository.AzkarRepository
 import com.crazyidea.alsalah.data.repository.FajrListRepository
@@ -19,6 +28,7 @@ import com.crazyidea.alsalah.utils.sendNotification
 import com.crazyidea.alsalah.utils.setAlarm
 import com.crazyidea.alsalah.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.internal.Contexts.getApplication
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -71,14 +81,106 @@ class AlarmReceiver : BroadcastReceiver() {
                     telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE)
                 }
             }
-            Timber.e("HERE")
-            sendNotification(
-                context,
-                CHANNEL_ID,
-                getTitle(context, intent.getStringExtra("salah")) as String,
-                context.getString(R.string.continue_using),
-                getAzanSound(globalPreferences, context)
-            )
+
+            Handler(Looper.getMainLooper()).post {
+                val dialog = Dialog(context)
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog.setContentView(R.layout.dialog_azan)
+                dialog.setCancelable(false)
+
+                val videoView: VideoView = dialog.findViewById(R.id.videoView);
+                val closeBtn: ImageButton = dialog.findViewById(R.id.close);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    dialog.getWindow()!!
+                        .setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+                } else {
+                    dialog.getWindow()!!.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+                }
+                dialog.getWindow()!!.setLayout(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+
+
+                dialog.show()
+                val mp = MediaPlayer.create(context, getAzanSound(globalPreferences, context))
+                videoView.setOnPreparedListener {
+                    var position = 0
+
+                    val videoRatio = it.videoWidth / it.videoHeight.toFloat()
+                    val screenRatio = videoView.width / videoView.height.toFloat()
+                    val scaleX = videoRatio / screenRatio
+                    if (scaleX >= 1f) {
+                        videoView.scaleX = scaleX
+                    } else {
+                        videoView.scaleY = 1f / scaleX
+                    }
+                    val speed = it.duration.toFloat() / mp.duration.toFloat()
+                    val myPlayBackParams = PlaybackParams()
+                    Toast.makeText(
+                        context,
+                        "${mp.duration} >>> ${it.duration} >>> $speed",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    myPlayBackParams.speed = speed //you can set speed here
+
+                    it.playbackParams = myPlayBackParams
+                    videoView.seekTo(position)
+                    mp.start()
+                    videoView.start()
+
+                }
+                mp.setOnCompletionListener {
+                    mp.stop()
+                    dialog.cancel()
+                }
+                closeBtn.setOnClickListener {
+                    dialog.cancel()
+                    mp.stop()
+                }
+                try {
+                    // ID of video file.
+                    val id: Int = R.raw.azan_vid
+                    val uri: Uri =
+                        Uri.parse("android.resource://${context.packageName}/$id")
+                    Timber.i("Video URI: $uri")
+                    videoView.setVideoURI(uri)
+                    videoView.requestFocus()
+                } catch (e: Exception) {
+                    Timber.e("Error Play Raw Video: " + e.message)
+                    Toast.makeText(
+                        context,
+                        "Error Play Raw Video: " + e.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    e.printStackTrace()
+                }
+            }
+            var overlayEnabled = false
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                overlayEnabled = Settings.canDrawOverlays(context);
+
+            }
+            if (!overlayEnabled) {
+                sendNotification(
+                    context,
+                    CHANNEL_ID,
+                    getTitle(context, intent.getStringExtra("salah")) as String,
+                    context.getString(R.string.continue_using),
+                    getAzanSound(globalPreferences, context),
+                    Intent(context, AzanActivity::class.java)
+                )
+            }
+            else {
+                Toast.makeText(context, "false", Toast.LENGTH_SHORT).show()
+                sendNotification(
+                    context,
+                    CHANNEL_ID,
+                    getTitle(context, intent.getStringExtra("salah")) as String,
+                    context.getString(R.string.continue_using)
+                )
+            }
 
             if (globalPreferences.isAfterPrayerNotification()) {
                 Timber.e("SETTING AFTER PRAYER ALARM")
@@ -104,7 +206,9 @@ class AlarmReceiver : BroadcastReceiver() {
                     context,
                     "after_prayer_" + intent.getStringExtra("azkar"),
                     intent.getStringExtra("azkar").toString(),
-                    azkarRepository.getRandomAzkar(intent.getStringExtra("zekr_type").toString()).content
+                    azkarRepository.getRandomAzkar(
+                        intent.getStringExtra("zekr_type").toString()
+                    ).content
                 )
             }
         }

@@ -47,7 +47,7 @@ class AzanActivity : AppCompatActivity() {
             } else {
                 binding.videoView.scaleY = 1f / scaleX
             }
-            val speed = it.duration / mp.duration.toFloat()
+            val speed = it.duration.toFloat() / mp.duration.toFloat()
             val myPlayBackParams = PlaybackParams()
             Toast.makeText(this, "${mp.duration} >>> ${it.duration} >>> $speed", Toast.LENGTH_SHORT)
                 .show()
