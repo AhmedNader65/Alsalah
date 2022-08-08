@@ -76,6 +76,9 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
 
 
+        binding.notifyBeforePrayerSwitch.setOnCheckedChangeListener { _, isChecked ->
+            globalPreferences.storeBeforePrayerNotification(isChecked)
+        }
     }
 
 

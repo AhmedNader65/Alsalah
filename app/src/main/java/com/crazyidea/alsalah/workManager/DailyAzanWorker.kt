@@ -162,6 +162,12 @@ class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.SECOND, 0)
 
         if (calendar.after(currentDate)) {
+                setAlarm(
+                    applicationContext,
+                    "before_prayer",
+                    "fajr",
+                    calendar.timeInMillis - (10 * 60000)
+                )
             setAlarm(applicationContext, type, "fajr", calendar.timeInMillis)
         }
         val ZuhrTime = timings.Dhuhr.split(":")
@@ -171,6 +177,12 @@ class DailyAzanWorker @AssistedInject constructor(
 
         if (calendar.after(currentDate)) {
             Timber.e("SETTING zuhr PRAYER ALARM")
+                setAlarm(
+                    applicationContext,
+                    "before_prayer",
+                    "zuhr",
+                    calendar.timeInMillis - (10 * 60000)
+                )
             setAlarm(applicationContext, type, "zuhr", calendar.timeInMillis)
         }
         val AsrTime = timings.Asr.split(":")
@@ -178,6 +190,12 @@ class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.MINUTE, AsrTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
         if (calendar.after(currentDate)) {
+                setAlarm(
+                    applicationContext,
+                    "before_prayer",
+                    "asr",
+                    calendar.timeInMillis - (10 * 60000)
+                )
             setAlarm(applicationContext, type, "asr", calendar.timeInMillis)
         }
         val MaghribTime = timings.Maghrib.split(":")
@@ -185,6 +203,13 @@ class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.MINUTE, MaghribTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
         if (calendar.after(currentDate)) {
+            Timber.e("before prayer is here 3")
+                setAlarm(
+                    applicationContext,
+                    "before_prayer",
+                    "maghrib",
+                    calendar.timeInMillis - (10 * 60000)
+                )
             setAlarm(applicationContext, type, "maghrib", calendar.timeInMillis)
         }
         val IshaTime = timings.Isha.split(":")
@@ -192,6 +217,12 @@ class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.MINUTE, IshaTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
         if (calendar.after(currentDate)) {
+                setAlarm(
+                    applicationContext,
+                    "before_prayer",
+                    "isha",
+                    calendar.timeInMillis - (10 * 60000)
+                )
             setAlarm(applicationContext, type, "isha", calendar.timeInMillis)
         }
 

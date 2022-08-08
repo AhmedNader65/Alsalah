@@ -28,7 +28,6 @@ import com.crazyidea.alsalah.utils.sendNotification
 import com.crazyidea.alsalah.utils.setAlarm
 import com.crazyidea.alsalah.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.internal.Contexts.getApplication
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -166,18 +165,17 @@ class AlarmReceiver : BroadcastReceiver() {
                 sendNotification(
                     context,
                     CHANNEL_ID,
-                    getTitle(context, intent.getStringExtra("salah")) as String,
+                    getPrayerTitle(context, intent.getStringExtra("salah")) as String,
                     context.getString(R.string.continue_using),
                     getAzanSound(globalPreferences, context),
                     Intent(context, AzanActivity::class.java)
                 )
-            }
-            else {
+            } else {
                 Toast.makeText(context, "false", Toast.LENGTH_SHORT).show()
                 sendNotification(
                     context,
                     CHANNEL_ID,
-                    getTitle(context, intent.getStringExtra("salah")) as String,
+                    getPrayerTitle(context, intent.getStringExtra("salah")) as String,
                     context.getString(R.string.continue_using)
                 )
             }
@@ -211,6 +209,17 @@ class AlarmReceiver : BroadcastReceiver() {
                     ).content
                 )
             }
+        } else if (intent?.hasExtra("before_prayer") == true) {
+            Timber.e("before prayer is here")
+            if (globalPreferences.notifyBeforePrayer())
+                Timber.e("before prayer is here 2")
+                sendNotification(
+                    context,
+                    "before_prayer_",
+                    getBeforePrayer(context, intent.getStringExtra("before_prayer")) as String,
+                    context.getString(R.string.continue_using),
+                    getBeforeAzanSound(context),
+                )
         }
     }
 
@@ -247,7 +256,7 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
 
-    private fun getTitle(context: Context, stringExtra: String?): CharSequence? {
+    private fun getPrayerTitle(context: Context, stringExtra: String?): CharSequence? {
         return when (stringExtra) {
             "fajr" -> context.getString(R.string.fajr_prayer_notification)
             "zuhr" ->
@@ -262,6 +271,27 @@ class AlarmReceiver : BroadcastReceiver() {
             "isha" ->
                 context
                     .getString(R.string.isha_prayer_notification)
+            else ->
+                context
+                    .getString(R.string.prayer_notification)
+        }
+    }
+
+    private fun getBeforePrayer(context: Context, stringExtra: String?): CharSequence? {
+        return when (stringExtra) {
+            "fajr" -> context.getString(R.string.fajr_prayer_soon_notification)
+            "zuhr" ->
+                context
+                    .getString(R.string.zuhr_prayer_soon_notification)
+            "asr" ->
+                context
+                    .getString(R.string.asr_prayer_soon_notification)
+            "maghrib" ->
+                context
+                    .getString(R.string.maghrib_prayer_soon_notification)
+            "isha" ->
+                context
+                    .getString(R.string.isha_prayer_soon_notification)
             else ->
                 context
                     .getString(R.string.prayer_notification)
@@ -289,5 +319,10 @@ private fun getAzanSound(globalPreferences: GlobalPreferences, context: Context)
 
     }
     return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + azanRes)
+
+}
+
+private fun getBeforeAzanSound(context: Context): Uri {
+    return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.before_prayer)
 
 }

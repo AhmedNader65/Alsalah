@@ -74,6 +74,11 @@
     <string name="asr_prayer_notification">حان الآن موعد صلاة العصر</string>
     <string name="maghrib_prayer_notification">حان الآن موعد صلاة المغرب</string>
     <string name="isha_prayer_notification">حان الآن موعد صلاة العشاء</string>
+    <string name="fajr_prayer_soon_notification">اقتربت صلاة الفجر</string>
+    <string name="zuhr_prayer_soon_notification">اقتربت صلاة الظهر</string>
+    <string name="asr_prayer_soon_notification">اقتربت صلاة العصر</string>
+    <string name="maghrib_prayer_soon_notification">اقتربت صلاة المغرب</string>
+    <string name="isha_prayer_soon_notification">اقتربت صلاة العشاء</string>
     <string name="prayer_notification">حان الآن موعد الصلاة</string>
     <string name="continue_using">للاستمرار في تلقى الاشعارات برجاء فتح التطبيق باستمرار</string>
     <string name="channel_name">prayer_times</string>

@@ -41,6 +41,10 @@ private const val SLEEPING_TIME = "SLEEPING_TIME"
 private const val AZKAR_MUTED = "azkar-muted"
 private const val AZKAR_VIBRATE = "azkar-vibrate"
 
+// PRAYER
+
+private const val BEFORE_PRAYER_NOTIFICATION = "BEFORE_PRAYER_NOTIFICATION"
+
 class GlobalPreferences(context: Context) {
     var context: Context? = null
     private var prefs: SharedPreferences
@@ -325,5 +329,14 @@ class GlobalPreferences(context: Context) {
         }
 
     }
+
+
+    // PRAYER SETTINGS
+    fun storeBeforePrayerNotification(checked: Boolean) {
+        prefsEditor.putBoolean(BEFORE_PRAYER_NOTIFICATION, checked)
+        prefsEditor.commit()
+    }
+    fun notifyBeforePrayer() :Boolean = prefs.getBoolean(BEFORE_PRAYER_NOTIFICATION,true)
+
 
 }

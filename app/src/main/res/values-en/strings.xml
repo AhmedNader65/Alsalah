@@ -70,10 +70,15 @@ Blessed be You, O Possessor of Majesty and Honor.</string>
     <string name="tasbeh_exp">There is no god but God, the One, He has no partner, His is the Sovereignty, and His is the Praise, and He has power over all things.
 He had ten necks, a hundred good deeds were written for him, a hundred bad deeds were erased from him, and it was a protection for him from Satan.</string>
     <string name="fajr_prayer_notification">It is now time for Fajr prayer</string>
-    <string name="zuhr_prayer_notification">It is now time for the noon prayer</string>
-    <string name="asr_prayer_notification">It is now time for afternoon prayer</string>
+    <string name="zuhr_prayer_notification">It is now time for the Dhuhr prayer</string>
+    <string name="asr_prayer_notification">It is now time for Asr prayer</string>
     <string name="maghrib_prayer_notification">It is now time for Maghrib prayer</string>
-    <string name="isha_prayer_notification">It is now time for evening prayer</string>
+    <string name="isha_prayer_notification">It is now time for Isha prayer</string>
+    <string name="fajr_prayer_soon_notification">Fajr prayer is soon</string>
+    <string name="zuhr_prayer_soon_notification">Dhuhr prayer is soon</string>
+    <string name="asr_prayer_soon_notification">Asr prayer is soon</string>
+    <string name="maghrib_prayer_soon_notification">Maghrib prayer is soon</string>
+    <string name="isha_prayer_soon_notification">Isha prayer is soon</string>
     <string name="prayer_notification">It is now time for prayer</string>
     <string name="continue_using">To continue receiving notifications, please open the app constantly</string>
     <string name="channel_name">prayer_times</string>
