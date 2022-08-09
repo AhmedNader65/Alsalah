@@ -80,6 +80,7 @@ He had ten necks, a hundred good deeds were written for him, a hundred bad deeds
     <string name="maghrib_prayer_soon_notification">Maghrib prayer is soon</string>
     <string name="isha_prayer_soon_notification">Isha prayer is soon</string>
     <string name="prayer_notification">It is now time for prayer</string>
+    <string name="iqama_notification">It is prayers Iqama</string>
     <string name="continue_using">To continue receiving notifications, please open the app constantly</string>
     <string name="channel_name">prayer_times</string>
     <string name="channel_description">Prayer timings</string>

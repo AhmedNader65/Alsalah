@@ -210,13 +210,20 @@ class AlarmReceiver : BroadcastReceiver() {
                 )
             }
         } else if (intent?.hasExtra("before_prayer") == true) {
-            Timber.e("before prayer is here")
             if (globalPreferences.notifyBeforePrayer())
-                Timber.e("before prayer is here 2")
                 sendNotification(
                     context,
                     "before_prayer_",
                     getBeforePrayer(context, intent.getStringExtra("before_prayer")) as String,
+                    context.getString(R.string.continue_using),
+                    getBeforeAzanSound(context),
+                )
+        }else if (intent?.hasExtra("iqama") == true) {
+            if (globalPreferences.notifyIqama())
+                sendNotification(
+                    context,
+                    "iqama",
+                    getIqamaTitle(context) as String,
                     context.getString(R.string.continue_using),
                     getBeforeAzanSound(context),
                 )
@@ -275,6 +282,11 @@ class AlarmReceiver : BroadcastReceiver() {
                 context
                     .getString(R.string.prayer_notification)
         }
+    }
+    private fun getIqamaTitle(context: Context): CharSequence {
+
+        return  context
+            .getString(R.string.iqama_notification)
     }
 
     private fun getBeforePrayer(context: Context, stringExtra: String?): CharSequence? {
