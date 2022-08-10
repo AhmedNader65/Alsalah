@@ -69,6 +69,7 @@
 
 
                 <RadioGroup
+                    android:id="@+id/background_video"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
@@ -337,6 +338,7 @@
 
                     <RadioButton
                         android:id="@+id/iqama"
+                        android:checked="true"
                         style="@style/mediumText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

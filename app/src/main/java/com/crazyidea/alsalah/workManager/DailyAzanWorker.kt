@@ -162,19 +162,24 @@ class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.SECOND, 0)
 
         if (calendar.after(currentDate)) {
+            setAlarm(applicationContext, type, "fajr", calendar.timeInMillis)
+            calendar.timeInMillis =
+                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            if (calendar.after(currentDate))
                 setAlarm(
                     applicationContext,
                     "before_prayer",
                     "fajr",
-                    calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                    calendar.timeInMillis
                 )
+            calendar.timeInMillis =
+                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
             setAlarm(
                 applicationContext,
                 "iqama",
                 "fajr",
                 calendar.timeInMillis + (20 * 60000)
             )
-            setAlarm(applicationContext, type, "fajr", calendar.timeInMillis)
         }
         val ZuhrTime = timings.Dhuhr.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, ZuhrTime[0].toInt())
@@ -182,78 +187,96 @@ class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.SECOND, 0)
 
         if (calendar.after(currentDate)) {
-            Timber.e("SETTING zuhr PRAYER ALARM")
-                setAlarm(
-                    applicationContext,
-                    "before_prayer",
-                    "zuhr",
-                    calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
-                )
+            setAlarm(applicationContext, type, "zuhr", calendar.timeInMillis)
+            calendar.timeInMillis =
+                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            if (calendar.after(currentDate))
+            setAlarm(
+                applicationContext,
+                "before_prayer",
+                "zuhr",
+                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            )
+            calendar.timeInMillis =
+                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
             setAlarm(
                 applicationContext,
                 "iqama",
                 "zuhr",
                 calendar.timeInMillis + (10 * 60000)
             )
-            setAlarm(applicationContext, type, "zuhr", calendar.timeInMillis)
         }
         val AsrTime = timings.Asr.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, AsrTime[0].toInt())
         calendar.set(Calendar.MINUTE, AsrTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
         if (calendar.after(currentDate)) {
-                setAlarm(
-                    applicationContext,
-                    "before_prayer",
-                    "asr",
-                    calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
-                )
+            setAlarm(applicationContext, type, "asr", calendar.timeInMillis)
+            calendar.timeInMillis =
+                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            if (calendar.after(currentDate))
+            setAlarm(
+                applicationContext,
+                "before_prayer",
+                "asr",
+                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            )
+            calendar.timeInMillis =
+                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
             setAlarm(
                 applicationContext,
                 "iqama",
                 "asr",
                 calendar.timeInMillis + (10 * 60000)
             )
-            setAlarm(applicationContext, type, "asr", calendar.timeInMillis)
         }
         val MaghribTime = timings.Maghrib.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, MaghribTime[0].toInt())
         calendar.set(Calendar.MINUTE, MaghribTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
         if (calendar.after(currentDate)) {
-            Timber.e("before prayer is here 3")
-                setAlarm(
-                    applicationContext,
-                    "before_prayer",
-                    "maghrib",
-                    calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
-                )
+            setAlarm(applicationContext, type, "maghrib", calendar.timeInMillis)
+            calendar.timeInMillis =
+                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            if (calendar.after(currentDate))
+            setAlarm(
+                applicationContext,
+                "before_prayer",
+                "maghrib",
+                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            )
+            calendar.timeInMillis =
+                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
             setAlarm(
                 applicationContext,
                 "iqama",
                 "maghrib",
                 calendar.timeInMillis + (10 * 60000)
             )
-            setAlarm(applicationContext, type, "maghrib", calendar.timeInMillis)
         }
         val IshaTime = timings.Isha.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, IshaTime[0].toInt())
         calendar.set(Calendar.MINUTE, IshaTime[1].toInt())
         calendar.set(Calendar.SECOND, 0)
         if (calendar.after(currentDate)) {
-                setAlarm(
-                    applicationContext,
-                    "before_prayer",
-                    "isha",
-                    calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
-                )
-                setAlarm(
-                    applicationContext,
-                    "iqama",
-                    "isha",
-                    calendar.timeInMillis + (10 * 60000)
-                )
             setAlarm(applicationContext, type, "isha", calendar.timeInMillis)
+            calendar.timeInMillis =
+                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            if (calendar.after(currentDate))
+            setAlarm(
+                applicationContext,
+                "before_prayer",
+                "isha",
+                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            )
+            calendar.timeInMillis =
+                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+            setAlarm(
+                applicationContext,
+                "iqama",
+                "isha",
+                calendar.timeInMillis + (10 * 60000)
+            )
         }
 
     }

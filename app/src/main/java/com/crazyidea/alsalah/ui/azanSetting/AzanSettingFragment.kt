@@ -79,6 +79,17 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
         binding.notifyBeforePrayerSwitch.setOnCheckedChangeListener { _, isChecked ->
             globalPreferences.storeBeforePrayerNotification(isChecked)
         }
+        binding.notifyBeforePrayerSwitch.setOnCheckedChangeListener { _, isChecked ->
+            globalPreferences.storeBeforePrayerNotification(isChecked)
+        }
+        binding.mosques.isChecked = globalPreferences.getAzanBackground()
+        binding.naturalViews.isChecked = !globalPreferences.getAzanBackground()
+        binding.backgroundVideo.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.naturalViews -> globalPreferences.setAzanBackgroundMosque(false)
+                else -> globalPreferences.setAzanBackgroundMosque(true)
+            }
+        }
     }
 
 

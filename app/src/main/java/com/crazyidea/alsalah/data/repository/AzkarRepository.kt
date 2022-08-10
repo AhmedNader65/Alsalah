@@ -14,7 +14,7 @@ class AzkarRepository @Inject constructor(
     private val appDatabase: AppDatabase,
     private val globalPreferences: GlobalPreferences,
     private val externalScope: CoroutineScope
-) {
+) : BaseRepository {
 
     suspend fun insertProgress(date: String, category: String) {
         var progress = getProgress(date)

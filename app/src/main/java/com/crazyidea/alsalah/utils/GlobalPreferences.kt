@@ -46,6 +46,7 @@ private const val AZKAR_VIBRATE = "azkar-vibrate"
 private const val BEFORE_PRAYER_NOTIFICATION = "BEFORE_PRAYER_NOTIFICATION"
 private const val IQAMA_NOTIFICATION = "IQAMA_NOTIFICATION"
 private const val BEFORE_PRAYER_NOTIFICATION_TIME = "BEFORE_PRAYER_NOTIFICATION_TIME"
+private const val AZAN_BACKGROUND_MOSQUE = "AZAN_BACKGROUND_MOSQUE"
 
 class GlobalPreferences(context: Context) {
     var context: Context? = null
@@ -347,6 +348,12 @@ class GlobalPreferences(context: Context) {
     fun beforeAzanNotificationPeriod() :Int = prefs.getInt(BEFORE_PRAYER_NOTIFICATION_TIME,10)
 
     fun notifyIqama() :Boolean = prefs.getBoolean(IQAMA_NOTIFICATION,true)
+
+    fun setAzanBackgroundMosque(mosque:Boolean) {
+        prefsEditor.putBoolean(AZAN_BACKGROUND_MOSQUE, mosque)
+        prefsEditor.commit()
+    }
+    fun getAzanBackground()= prefs.getBoolean(AZAN_BACKGROUND_MOSQUE,true)
 
 
 }

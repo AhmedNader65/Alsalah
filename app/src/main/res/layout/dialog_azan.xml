@@ -10,11 +10,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ImageButton
-        app:layout_constraintTop_toTopOf="parent"
+    <!--    <com.crazyidea.alsalah.utils.SubtitleView-->
+    <!--        android:id="@+id/subtitles"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:fontFamily="@font/azan"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        app:autoSizeMaxTextSize="@dimen/_100ssp"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        android:gravity="bottom|center_horizontal"-->
+    <!--        app:autoSizeMinTextSize="@dimen/_3ssp"-->
+    <!--        app:autoSizeStepGranularity="1sp"-->
+    <!--        android:textSize="@dimen/_100ssp"-->
+    <!--        android:text="الله أكبر الله أكبر"-->
+    <!--        android:singleLine="true"-->
+    <!--        android:ellipsize="none"-->
+    <!--        app:autoSizeTextType="uniform"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent" />-->
+
+    <com.crazyidea.alsalah.utils.SubtitleView
+        android:id="@+id/subtitles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:fontFamily="@font/adoody"
+        android:gravity="center"
+        android:lines="1"
+        android:textColor="#FFD700"
+        android:textSize="@dimen/_100ssp"
+        android:shadowRadius="10"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowColor="#FFD700"
+        app:autoSizeMaxTextSize="@dimen/_100ssp"
+        app:autoSizeMinTextSize="@dimen/_3ssp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
         android:id="@+id/close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

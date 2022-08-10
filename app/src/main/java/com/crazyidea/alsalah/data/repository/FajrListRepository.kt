@@ -9,7 +9,7 @@ import javax.inject.Inject
 class FajrListRepository @Inject constructor(
     private val appDatabase: AppDatabase,
     private val externalScope: CoroutineScope
-) {
+) : BaseRepository {
 
     suspend fun getFajrList(): List<Fajr> {
         return withContext(externalScope.coroutineContext) {

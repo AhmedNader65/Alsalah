@@ -20,7 +20,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <TextView
                 android:id="@+id/next_prayer"
                 style="@style/mediumText"
@@ -44,7 +43,6 @@
                 android:elevation="@dimen/_4sdp"
                 android:text="@{model.clickedPrayerId==0?model.remainingTime:model.clickedremainingTime }"
                 android:textAlignment="center"
-
                 android:textColor="@{model.setTextColor(model.nextPrayerId,context)}"
                 android:textSize="@dimen/_20ssp"
                 app:layout_constraintEnd_toEndOf="parent"
