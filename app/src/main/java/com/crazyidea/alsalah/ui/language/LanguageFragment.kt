@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.LanguagesAdapter
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentChooseLanguageBinding
+import com.crazyidea.alsalah.ui.setting.AppSettings
+import com.crazyidea.alsalah.ui.setting.SettingViewModel
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,7 +25,7 @@ class LanguageFragment : Fragment(), LanguagesAdapter.LanguagListner {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val viewModel by viewModels<LanguageViewModel>()
+    private val viewModel by activityViewModels<SettingViewModel>()
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
@@ -65,6 +67,7 @@ class LanguageFragment : Fragment(), LanguagesAdapter.LanguagListner {
     }
 
     override fun onlangPicked(language: SupportedLanguage) {
+        viewModel.update(AppSettings.APP_LANGUAGE, language.shortcut)
         globalPreferences.storeLocale(language.shortcut)
         (activity as MainActivity).restartActivity()
     }

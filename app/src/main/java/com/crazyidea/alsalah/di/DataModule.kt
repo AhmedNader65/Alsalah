@@ -2,7 +2,8 @@ package com.crazyidea.alsalah.di
 
 import android.content.Context
 import androidx.room.Room
-import com.crazyidea.alsalah.data.prayers.PrayersRepository
+import com.crazyidea.alsalah.data.DataStoreManager
+import com.crazyidea.alsalah.data.repository.DefaultPrayersRepository
 import com.crazyidea.alsalah.data.repository.*
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.utils.GlobalPreferences
@@ -39,21 +40,21 @@ class DataModule {
     @Singleton
     fun provideArticlesRepository(
         globalPreferences: GlobalPreferences
-    ) =
-        ArticlesRepository(globalPreferences)
+    ): ArticlesRepository =
+        DefaultArticlesRepository(globalPreferences)
 
     @Provides
     @Singleton
     fun provideExternalScope() =
-        CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     @Provides
     @Singleton
     fun providePrayersRepository(
         coroutineScope: CoroutineScope,
         appDatabase: AppDatabase,
-    ) =
-        PrayersRepository(appDatabase, coroutineScope)
+    ): PrayersRepository =
+        DefaultPrayersRepository(appDatabase, coroutineScope)
 
     @Provides
     @Singleton
@@ -61,8 +62,8 @@ class DataModule {
         coroutineScope: CoroutineScope,
         globalPreferences: GlobalPreferences,
         appDatabase: AppDatabase,
-    ) =
-        QuranRepository(appDatabase,globalPreferences, coroutineScope)
+    ): QuranRepository =
+        DefaultQuranRepository(appDatabase, globalPreferences, coroutineScope)
 
     @Provides
     @Singleton
@@ -70,8 +71,8 @@ class DataModule {
         coroutineScope: CoroutineScope,
         globalPreferences: GlobalPreferences,
         appDatabase: AppDatabase,
-    ) =
-        KhatmaRepository(appDatabase,globalPreferences, coroutineScope)
+    ): KhatmaRepository =
+        DefaultKhatmaRepository(appDatabase, globalPreferences, coroutineScope)
 
     @Provides
     @Singleton
@@ -79,28 +80,44 @@ class DataModule {
         appDatabase: AppDatabase,
         globalPreferences: GlobalPreferences,
         coroutineScope: CoroutineScope
-    ) =
-        AzkarRepository(appDatabase, globalPreferences, coroutineScope)
+    ): AzkarRepository =
+        DefaultAzkarRepository(appDatabase, globalPreferences, coroutineScope)
 
     @Provides
     @Singleton
     fun provideUserRepository(
         coroutineScope: CoroutineScope,
-    ) =
-        UserRepository(coroutineScope)
+    ): UserRepository =
+        DefaultUserRepository(coroutineScope)
 
     @Provides
     @Singleton
     fun provideCalendarRepository(
         coroutineScope: CoroutineScope,
-    ) =
-        CalendarRepository(coroutineScope)
+    ): CalendarRepository =
+        DefaultCalendarRepository(coroutineScope)
+
+    @Provides
+    @Singleton
+    fun provideAppSettingsRepository(
+        coroutineScope: CoroutineScope,
+        dataStoreManager: DataStoreManager,
+    ): SettingsRepository =
+        DefaultSettingsRepository(coroutineScope,dataStoreManager)
 
     @Provides
     @Singleton
     fun provideFajrListRepository(
         coroutineScope: CoroutineScope,
         appDatabase: AppDatabase,
-    ) =
-        FajrListRepository(appDatabase, coroutineScope)
+    ): FajrListRepository =
+        DefaultFajrListRepository(appDatabase, coroutineScope)
+
+    @Provides
+    @Singleton
+    fun provideDataStoreManager(
+        @ApplicationContext context: Context
+    ): DataStoreManager =
+        DataStoreManager(context)
+
 }

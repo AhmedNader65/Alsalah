@@ -1,6 +1,5 @@
 package com.crazyidea.alsalah.ui.blogDetail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,13 +10,9 @@ import com.crazyidea.alsalah.data.repository.ArticlesRepository
 import com.crazyidea.alsalah.utils.showError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.net.SocketException
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel

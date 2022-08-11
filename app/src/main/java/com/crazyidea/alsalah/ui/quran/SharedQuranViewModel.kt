@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.repository.KhatmaRepository
 import com.crazyidea.alsalah.data.repository.QuranRepository
-import com.crazyidea.alsalah.data.room.entity.*
+import com.crazyidea.alsalah.data.room.entity.Khatma
+import com.crazyidea.alsalah.data.room.entity.Surah
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

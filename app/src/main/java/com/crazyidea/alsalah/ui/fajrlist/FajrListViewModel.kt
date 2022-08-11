@@ -8,7 +8,6 @@ import com.crazyidea.alsalah.data.repository.FajrListRepository
 import com.crazyidea.alsalah.data.room.entity.fajr.Fajr
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel

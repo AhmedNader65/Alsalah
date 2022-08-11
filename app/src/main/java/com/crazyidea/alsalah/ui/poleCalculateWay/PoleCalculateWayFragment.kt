@@ -41,7 +41,14 @@ class PoleCalculateWayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         globalPreferences = GlobalPreferences(requireContext())
-        PoleCalculation.values().find { it.name == globalPreferences.getPole() }
+        PoleCalculation.values().find {
+            it.name == when (globalPreferences.getPole()) {
+                3 -> PoleCalculation.ANGLE.toString()
+                2 -> PoleCalculation.ONEONSEVEN.toString()
+                1 -> PoleCalculation.MIDNIGHT.toString()
+                else -> PoleCalculation.NOTHING.toString()
+            }
+        }
             ?.let { checkMazhab(it) }
         binding.nothingCon.setOnClickListener { checkMazhab(PoleCalculation.NOTHING) }
         binding.angelarCon.setOnClickListener { checkMazhab(PoleCalculation.ANGLE) }
@@ -53,16 +60,27 @@ class PoleCalculateWayFragment : Fragment() {
 
     fun checkMazhab(poleCalculation: PoleCalculation) {
         clearPoles()
+        var selectedPole = 3
         when (poleCalculation) {
-            PoleCalculation.ANGLE -> setColor(binding.angelarImg, binding.angelarSelected)
-            PoleCalculation.ONEONSEVEN -> setColor(
-                binding.oneOfSevenImg,
-                binding.oneOfSevenSelected
-            )
+            PoleCalculation.ANGLE -> {
+                selectedPole = 3
+                setColor(binding.angelarImg, binding.angelarSelected)
+            }
+            PoleCalculation.ONEONSEVEN -> {
+                selectedPole = 2
+                setColor(
+                    binding.oneOfSevenImg,
+                    binding.oneOfSevenSelected
+                )
+            }
             PoleCalculation.NOTHING -> setColor(binding.nothingImg, binding.nothingImgSelected)
-            PoleCalculation.MIDNIGHT -> setColor(binding.midnightImg, binding.midnightImgSelected)
+            PoleCalculation.MIDNIGHT -> {
+                setColor(binding.midnightImg, binding.midnightImgSelected)
+
+                selectedPole = 1
+            }
         }
-        globalPreferences.savePole(poleCalculation)
+        globalPreferences.savePole(selectedPole)
 
     }
 

@@ -2,11 +2,8 @@ package com.crazyidea.alsalah.notifications
 
 import android.content.ContentResolver
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
-import com.crazyidea.alsalah.AzanActivity
 import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.data.repository.AzkarRepository
 import com.crazyidea.alsalah.data.repository.BaseRepository
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.sendNotification

@@ -24,7 +24,7 @@ Blessed be You, O Possessor of Majesty and Honor.</string>
     <string name="generalSetting">General Settings</string>
     <string name="backgroundPermission">Enable the worshiper to run in the background</string>
     <string name="locationPermission">Give location permission automatically</string>
-    <string name="solveAzanProblem">Solve ear problems for some devices</string>
+    <string name="solveAzanProblem">Solve Adhan problems for some devices</string>
     <string name="azanSoundType">Choose azan sound style</string>
     <string name="editPrayerTime">Correction of prayer times</string>
     <string name="calculateWay">Calculation Method</string>

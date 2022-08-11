@@ -370,10 +370,18 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/general_setting_line"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/autAzkarText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.crazyidea.alsalah.data.model.Resource
 import com.crazyidea.alsalah.data.repository.CalendarRepository
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel

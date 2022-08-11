@@ -1,17 +1,14 @@
 package com.crazyidea.alsalah.ui.quran
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.repository.QuranRepository
 import com.crazyidea.alsalah.data.room.entity.Ayat
-import com.crazyidea.alsalah.data.room.entity.Surah
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel

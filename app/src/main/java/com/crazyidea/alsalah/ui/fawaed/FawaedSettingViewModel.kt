@@ -11,6 +11,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
 class FawaedSettingViewModel @Inject constructor(
     private val articlesRepository: ArticlesRepository
@@ -31,7 +32,7 @@ class FawaedSettingViewModel @Inject constructor(
     fun getFawaed() {
         fawaedDataJob?.cancel()
         fawaedDataJob = viewModelScope.launch {
-            articlesRepository.fetcharticle()
+            articlesRepository.fetchArticle()
                 .collect {
                     if (it?.data != null)
                         _fawaedData.value = it.data!!

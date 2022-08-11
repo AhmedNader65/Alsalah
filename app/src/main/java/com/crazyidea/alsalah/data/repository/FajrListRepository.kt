@@ -6,23 +6,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FajrListRepository @Inject constructor(
-    private val appDatabase: AppDatabase,
-    private val externalScope: CoroutineScope
-) : BaseRepository {
-
-    suspend fun getFajrList(): List<Fajr> {
-        return withContext(externalScope.coroutineContext) {
-            return@withContext appDatabase.fajrDao().getList()
-        }
-    }
-
+interface FajrListRepository : BaseRepository {
+    suspend fun getFajrList(): List<Fajr>
     suspend fun insert(
         list: List<Fajr>
-    ) {
-        withContext(externalScope.coroutineContext) {
-            appDatabase.fajrDao().empty()
-            appDatabase.fajrDao().insertAll(*list.toTypedArray())
-        }
-    }
+    )
 }

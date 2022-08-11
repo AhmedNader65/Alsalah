@@ -339,7 +339,8 @@ class HomeFragment : Fragment(), LocationListener {
             location.longitude.toString(),
             globalPreferences.getCalculationMethod(),
             globalPreferences.getSchool(),
-            "0,${globalPreferences.getFajrModification()},${globalPreferences.getShorookModification()},${globalPreferences.getZuhrModification()},${globalPreferences.getAsrModification()},${globalPreferences.getMaghribModification()},${globalPreferences.getIshaModification()},0"
+            "0,${globalPreferences.getFajrModification()},${globalPreferences.getShorookModification()},${globalPreferences.getZuhrModification()},${globalPreferences.getAsrModification()},${globalPreferences.getMaghribModification()},${globalPreferences.getIshaModification()},0",
+            globalPreferences.getPole()
         )
 
         locationManager?.removeUpdates(this)

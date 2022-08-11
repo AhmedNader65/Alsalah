@@ -18,7 +18,8 @@ interface PrayersApi {
         @Query("year") year: String,
         @Query("method") method: Int,
         @Query("school") school: Int,
-        @Query("tune") tune: String?
+        @Query("tune") tune: String?,
+        @Query("latitudeAdjustmentMethod") adjustment: Int
     ): PrayersNetworkContainer
 
 }

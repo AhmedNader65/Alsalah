@@ -1,13 +1,31 @@
 package com.crazyidea.alsalah.ui.setting
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.crazyidea.alsalah.data.repository.SettingsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SettingViewModel : ViewModel() {
+@HiltViewModel
+class SettingViewModel @Inject constructor(
+    private val settingsRepository: SettingsRepository
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+    fun update(key: Preferences.Key<String>, value: String) {
+        viewModelScope.launch {
+        settingsRepository.updateAppSettings(key, value)
+        }
     }
-    val text: LiveData<String> = _text
+    fun update(key: Preferences.Key<Int>, value: Int) {
+        viewModelScope.launch {
+        settingsRepository.updateAppSettings(key, value)
+        }
+    }
+    fun update(key: Preferences.Key<Boolean>, value: Boolean) {
+        viewModelScope.launch {
+        settingsRepository.updateAppSettings(key, value)
+        }
+    }
 }

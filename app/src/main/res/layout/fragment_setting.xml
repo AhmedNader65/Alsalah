@@ -278,6 +278,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/summerTime"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -622,6 +623,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/notification_sound"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp">
 
@@ -657,6 +659,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/azanIkama"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp">
@@ -695,6 +698,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/nawafel"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp">
@@ -883,6 +887,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp">
 

@@ -1,31 +1,37 @@
-package com.crazyidea.alsalah.data.prayers
+package com.crazyidea.alsalah.data.repository
 
 import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.api.Network
 import com.crazyidea.alsalah.data.model.asDateDatabaseModel
 import com.crazyidea.alsalah.data.model.asMetaDatabaseModel
 import com.crazyidea.alsalah.data.model.asTimingDatabaseModel
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.entity.prayers.DateWithTiming
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
-class PrayersRepository @Inject constructor(
+class DefaultPrayersRepository @Inject constructor(
     private val appDatabase: AppDatabase,
-    private val externalScope: CoroutineScope
-) {
+    private val externalScope: CoroutineScope,
+) : PrayersRepository{
 
 
     /**
      * A list of asteroids that can be shown on the screen.
      */
     private var _prayers: MutableLiveData<DateWithTiming> = MutableLiveData()
-    var prayers: LiveData<DateWithTiming> = _prayers
-    suspend fun getPrayers(day: Int, month: String) {
+    override var prayers: LiveData<DateWithTiming> = _prayers
+    override suspend fun getPrayers(day: Int, month: String) {
         return withContext(externalScope.coroutineContext) {
             val dayFormatted = String.format(Locale.ENGLISH, "%02d", day)
             _prayers.postValue(appDatabase.prayersDao().getTodayTimings(dayFormatted, month))
@@ -40,14 +46,15 @@ class PrayersRepository @Inject constructor(
      * happens on the IO dispatcher. By switching to the IO dispatcher using `withContext` this
      * function is now safe to call from any thread including the Main thread.
      */
-    suspend fun refreshPrayers(
+    override suspend fun refreshPrayers(
         month: String,
         year: String,
         lat: String,
         lng: String,
         method: Int,
         school: Int,
-        tune: String?
+        tune: String?,
+        adjustment: Int
     ) {
 
         withContext(externalScope.coroutineContext) {
@@ -58,7 +65,8 @@ class PrayersRepository @Inject constructor(
                 year,
                 method,
                 school,
-                tune
+                tune,
+                adjustment,
             )
 
             appDatabase.prayersDao().deleteDates()

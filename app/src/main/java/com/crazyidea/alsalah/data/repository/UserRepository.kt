@@ -1,20 +1,8 @@
 package com.crazyidea.alsalah.data.repository
 
-import com.crazyidea.alsalah.data.api.Network
-import com.crazyidea.alsalah.data.model.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import com.crazyidea.alsalah.data.model.ServerResponse
+import com.crazyidea.alsalah.data.model.User
 
-class UserRepository @Inject constructor(
-    private val externalScope: CoroutineScope
-) {
-
-
-    suspend fun login(uid:String, name:String):ServerResponse<User> {
-        return withContext(externalScope.coroutineContext) {
-            return@withContext Network.auth.login(uid,name)
-        }
-    }
-
+interface UserRepository : BaseRepository{
+    suspend fun login(uid:String, name:String):ServerResponse<User>
 }

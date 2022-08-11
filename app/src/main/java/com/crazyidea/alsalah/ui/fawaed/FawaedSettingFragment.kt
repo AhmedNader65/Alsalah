@@ -10,13 +10,17 @@ import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.LanguagesAdapter
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentFawaedBinding
+import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FawaedSettingFragment : Fragment(), LanguagesAdapter.LanguagListner {
 
     private var _binding: FragmentFawaedBinding? = null
 
+    @Inject
+    lateinit var globalPreferences: GlobalPreferences
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -54,6 +58,6 @@ class FawaedSettingFragment : Fragment(), LanguagesAdapter.LanguagListner {
     }
 
     override fun onlangPicked(language: SupportedLanguage) {
-
+        globalPreferences.storeArticleLocale(language.shortcut)
     }
 }

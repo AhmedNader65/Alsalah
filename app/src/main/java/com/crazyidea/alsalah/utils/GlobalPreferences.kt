@@ -9,6 +9,7 @@ import timber.log.Timber
 import java.util.*
 
 private const val APP_LANGUAGE = "language"
+private const val Article_LANGUAGE = "article-language"
 private const val AZKAR_LANGUAGE = "azkar_language"
 private const val PREFS_NAME = "SalahPref"
 private const val LATITUDE = "lat"
@@ -64,8 +65,9 @@ class GlobalPreferences(context: Context) {
         prefsEditor.commit()
     }
 
-    fun storeLocale(locale: String) {
-        prefsEditor.putString(APP_LANGUAGE, locale)
+
+    fun storeArticleLocale(locale: String) {
+        prefsEditor.putString(Article_LANGUAGE, locale)
         prefsEditor.commit()
     }
 
@@ -127,6 +129,9 @@ class GlobalPreferences(context: Context) {
     fun getLocale(): String {
         return prefs.getString(APP_LANGUAGE, "ar")!!
     }
+    fun getArticlesLocale(): String {
+        return prefs.getString(Article_LANGUAGE, "ar")!!
+    }
 
     fun getUserId(): Int {
         return prefs.getInt(USER_ID, 0)
@@ -152,8 +157,8 @@ class GlobalPreferences(context: Context) {
         return prefs.getString(LONGITUDE, "")!!
     }
 
-    fun getPole(): String {
-        return prefs.getString(POLE, "NOTHING")!!
+    fun getPole(): Int {
+        return prefs.getInt(POLE, 3)
     }
 
     fun getAzan(): Int {
@@ -285,8 +290,9 @@ class GlobalPreferences(context: Context) {
         prefsEditor.commit()
     }
 
-    fun savePole(pole: PoleCalculation) {
-        prefsEditor.putString(POLE, pole.toString())
+    fun savePole(pole: Int) {
+
+        prefsEditor.putInt(POLE, pole)
         prefsEditor.commit()
     }
 

@@ -2,8 +2,12 @@ package com.crazyidea.alsalah
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -52,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             navController.navigate(R.id.navigation_home)
         }
-
         navView.setupWithNavController(navController)
         // Add your own reselected listener
         binding.navView.apply {

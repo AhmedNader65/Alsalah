@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.crazyidea.alsalah.data.prayers.PrayersRepository
+import com.crazyidea.alsalah.data.repository.PrayersRepository
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -32,7 +32,9 @@ class RefreshDataWorker @AssistedInject constructor(
                 globalPreferences.getLatitude(),
                 globalPreferences.getLongitude(),
                 globalPreferences.getCalculationMethod(),
-                globalPreferences.getSchool(), "0,${globalPreferences.getFajrModification()},${globalPreferences.getShorookModification()},${globalPreferences.getZuhrModification()},${globalPreferences.getAsrModification()},${globalPreferences.getMaghribModification()},${globalPreferences.getIshaModification()},0"
+                globalPreferences.getSchool(),
+                "0,${globalPreferences.getFajrModification()},${globalPreferences.getShorookModification()},${globalPreferences.getZuhrModification()},${globalPreferences.getAsrModification()},${globalPreferences.getMaghribModification()},${globalPreferences.getIshaModification()},0",
+                globalPreferences.getPole()
             )
             Result.success()
         } catch (e: HttpException) {

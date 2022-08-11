@@ -4,7 +4,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import com.crazyidea.alsalah.R
-import com.crazyidea.alsalah.data.repository.AzkarRepository
+import com.crazyidea.alsalah.data.repository.DefaultAzkarRepository
 import com.crazyidea.alsalah.data.repository.BaseRepository
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.sendNotification
@@ -43,7 +43,7 @@ class Azkar(
 
     override suspend fun getMsg(): String {
         return withContext(Dispatchers.IO) {
-            (repository as AzkarRepository).getRandomAzkar(
+            (repository as DefaultAzkarRepository).getRandomAzkar(
                 msg
             ).content
         }
