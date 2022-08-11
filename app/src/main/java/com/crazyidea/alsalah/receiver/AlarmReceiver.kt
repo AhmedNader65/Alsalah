@@ -3,6 +3,7 @@ package com.crazyidea.alsalah.receiver
 import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -29,6 +30,9 @@ import com.crazyidea.alsalah.utils.SubtitleView
 import com.crazyidea.alsalah.utils.setAlarm
 import com.crazyidea.alsalah.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -48,7 +52,8 @@ class AlarmReceiver : BroadcastReceiver() {
     lateinit var CHANNEL_ID: String
     override fun onReceive(context: Context, intent: Intent?) {
         Log.e("receiver", "received")
-        val context = context.setLocale()
+        runBlocking {
+            val context = context.setLocale()
         CHANNEL_ID = globalPreferences.getPrayerChannelId()
 
         if (intent?.hasExtra("salah") == true) {
@@ -119,6 +124,7 @@ class AlarmReceiver : BroadcastReceiver() {
                         context = context
                     )
                 )
+        }
         }
     }
 

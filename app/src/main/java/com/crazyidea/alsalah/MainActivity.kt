@@ -22,6 +22,9 @@ import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.setLocale
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
@@ -30,7 +33,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var globalPreferences: GlobalPreferences
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ContextWrapper(newBase.setLocale()))
+        runBlocking {
+            super.attachBaseContext(ContextWrapper(newBase.setLocale()))
+        }
     }
     private lateinit var binding: ActivityMainBinding
 

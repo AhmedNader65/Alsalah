@@ -14,6 +14,9 @@ import com.crazyidea.alsalah.databinding.ActivityAzanBinding
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -25,7 +28,9 @@ class AzanActivity : AppCompatActivity() {
     @Inject
     lateinit var globalPreferences: GlobalPreferences
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ContextWrapper(newBase.setLocale()))
+        runBlocking{
+            super.attachBaseContext(ContextWrapper(newBase.setLocale()))
+        }
     }
 
     lateinit var mp: MediaPlayer

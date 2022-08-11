@@ -24,7 +24,6 @@ class LanguagesAdapter(
     RecyclerView.Adapter<LanguagesAdapter.ViewHolder>() {
     private lateinit var context: Context
 
-    lateinit var globalPreferences: GlobalPreferences
 
     /**
      * Provide a reference to the type of views that you are using
@@ -49,8 +48,6 @@ class LanguagesAdapter(
         // Create a new view, which defines the UI of the list item
 
         context = viewGroup.context
-        globalPreferences = GlobalPreferences(context)
-        findMyLanguage()
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.item_language, viewGroup, false)
 
@@ -59,10 +56,6 @@ class LanguagesAdapter(
 
     }
 
-    private fun findMyLanguage() {
-        dataSet.find { it.shortcut == globalPreferences.getLocale() }?.checked = true
-
-    }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {

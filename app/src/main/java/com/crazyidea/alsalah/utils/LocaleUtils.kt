@@ -9,16 +9,22 @@ import android.util.TypedValue
 import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.model.Language
+import com.crazyidea.alsalah.ui.setting.AppSettings
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.util.*
 
 
 val Resources.isRtl get() = configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 
-fun Context.setLocale(): Context {
-    val globalPreferences = GlobalPreferences(this)
-    val locale = Locale(globalPreferences.getLocale())
+suspend fun Context.setLocale(): Context {
+    val dataStoreManager = DataStoreManager(this)
+    val locale = Locale(dataStoreManager.settingsDataStore.data.map { preferences ->
+        preferences[AppSettings.APP_LANGUAGE] ?: "ar"
+    }.first())
     Locale.setDefault(locale)
     val config = resources.configuration
     config.setLocale(locale)

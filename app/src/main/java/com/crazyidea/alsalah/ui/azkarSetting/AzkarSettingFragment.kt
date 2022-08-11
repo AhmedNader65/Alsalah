@@ -6,14 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.AzkarLanguagesRadioAdapter
+import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentAzkarSettingBinding
+import com.crazyidea.alsalah.ui.setting.AppSettings
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.sql.Time
 import java.text.Format
 import java.text.SimpleDateFormat
@@ -24,6 +29,7 @@ import kotlin.collections.ArrayList
 @AndroidEntryPoint
 class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListner {
 
+    private lateinit var language : String
     private var _binding: FragmentAzkarSettingBinding? = null
 
     private var hour: Int = 10
@@ -35,6 +41,8 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
     private val viewModel by viewModels<AzkarSettingViewModel>()
     var status = true
 
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
     @Inject
     lateinit var globalPreferences: GlobalPreferences
     override fun onCreateView(
@@ -56,6 +64,11 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
             status = !status
             checkRecyclerView()
         }
+
+        val languageFlow :Flow<String> = dataStoreManager.settingsDataStore.data.map { preferences ->
+            return@map preferences[AppSettings.APP_LANGUAGE] ?: "ar"
+        }
+        viewLifecycleOwner.lifecycleScope
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
         binding.afterPrayerAzkarSwitch.isChecked = globalPreferences.isAfterPrayerNotification()
         binding.morningAzkarSwitch.isChecked = globalPreferences.isMorningNotification()
@@ -108,7 +121,7 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
     private fun getTime(hr: Int, min: Int): String? {
         val tme = Time(hr, min, 0) //seconds by default set to zero
         val formatter: Format
-        formatter = SimpleDateFormat("h:mm a", Locale(globalPreferences.getLocale()))
+        formatter = SimpleDateFormat("h:mm a", Locale(language))
         return formatter.format(tme)
     }
 
