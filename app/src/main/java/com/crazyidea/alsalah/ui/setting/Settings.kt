@@ -6,5 +6,4 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 
 object AppSettings{
     val APP_LANGUAGE = stringPreferencesKey("app-language")
-    val aAPP_LANGUAGE = booleanPreferencesKey("app-language")
 }
