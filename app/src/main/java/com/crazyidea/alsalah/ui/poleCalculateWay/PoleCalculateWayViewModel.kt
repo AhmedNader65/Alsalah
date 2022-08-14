@@ -1,4 +1,4 @@
-package com.crazyidea.alsalah.ui.mazhab
+package com.crazyidea.alsalah.ui.poleCalculateWay
 
 import androidx.lifecycle.ViewModel
 import com.crazyidea.alsalah.data.repository.PrayerSettingsRepository
@@ -7,9 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MazhabViewModel @Inject constructor(
-    private val settingsRepository: PrayerSettingsRepository
-) : BaseSettingViewModel(settingsRepository) {
+class PoleCalculateWayViewModel @Inject constructor(
+    prayerSettingsRepository: PrayerSettingsRepository
+) : BaseSettingViewModel(prayerSettingsRepository) {
 
 
 }

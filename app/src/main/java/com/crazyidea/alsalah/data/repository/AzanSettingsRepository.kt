@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DefaultSettingsRepository @Inject constructor(
+class AzanSettingsRepository @Inject constructor(
     private val externalScope: CoroutineScope,
     private val dataStoreManager: DataStoreManager
 ) : SettingsRepository {
     override suspend fun updateAppSettings(key: Preferences.Key<String>, value: String) {
         externalScope.launch {
-            dataStoreManager.settingsDataStore.edit { settings ->
+            dataStoreManager.settingsAzan.edit { settings ->
                 settings[key] = value
             }
         }
@@ -24,21 +24,41 @@ class DefaultSettingsRepository @Inject constructor(
 
     override suspend fun updateAppSettings(key: Preferences.Key<Int>, value: Int) {
         externalScope.launch {
-            dataStoreManager.settingsDataStore.edit { settings ->
+            dataStoreManager.settingsAzan.edit { settings ->
                 settings[key] = value
             }
         }
     }
 
-    override fun fetchStringAppSettings(key: Preferences.Key<String>): Flow<String> {
-       return dataStoreManager.settingsDataStore.data.map { preferences ->
-            return@map preferences[AppSettings.APP_LANGUAGE]?: "ar"
+    override fun fetchStringAppSettings(
+        key: Preferences.Key<String>,
+        default: String
+    ): Flow<String> {
+        return dataStoreManager.settingsAzan.data.map { preferences ->
+            return@map preferences[key] ?: default
         }
     }
 
+    override fun fetchBooleanAppSettings(
+        key: Preferences.Key<Boolean>,
+        default: Boolean
+    ): Flow<Boolean> {
+        return dataStoreManager.settingsAzan.data.map { preferences ->
+            return@map preferences[key] ?: default
+        }
+    }
+
+    override fun fetchIntAppSettings(key: Preferences.Key<Int>, default: Int): Flow<Int> {
+        return dataStoreManager.settingsAzan.data.map { preferences ->
+            return@map preferences[key] ?: default
+        }
+    }
+
+    override fun fetchData(): Flow<Preferences> = dataStoreManager.settingsAzan.data
+
     override suspend fun updateAppSettings(key: Preferences.Key<Boolean>, value: Boolean) {
         externalScope.launch {
-            dataStoreManager.settingsDataStore.edit { settings ->
+            dataStoreManager.settingsAzan.edit { settings ->
                 settings[key] = value
             }
         }

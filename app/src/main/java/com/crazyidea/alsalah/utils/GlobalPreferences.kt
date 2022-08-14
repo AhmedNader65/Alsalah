@@ -8,15 +8,9 @@ import com.crazyidea.alsalah.data.model.PrimaryColor
 import timber.log.Timber
 import java.util.*
 
-private const val APP_LANGUAGE = "language"
-private const val Article_LANGUAGE = "article-language"
 private const val AZKAR_LANGUAGE = "azkar_language"
 private const val PREFS_NAME = "SalahPref"
 private const val LATITUDE = "lat"
-private const val CALCULATION_METHOD = "calc_method"
-private const val SCHOOL_METHOD = "school_method"
-private const val USER_ID = "user_id"
-private const val POLE = "pole"
 private const val PRAYER_CHANNEL = "prayer-channel"
 private const val AZAN_CHANGED = "azan_changed"
 private const val LAST_PAGE_QURAN = "last-quran"
@@ -24,14 +18,7 @@ private const val AZAN = "azannny"
 private const val CUSTOM_AZAN = "custom-azan"
 private const val COLOR = "color"
 private const val LONGITUDE = "lng"
-private const val LOGGED = "logged"
 
-private const val FAJR_MODIFICATION = "fajr-modification"
-private const val SHOROOK_MODIFICATION = "shorok-modification"
-private const val ZUHR_MODIFICATION = "zuhr-modification"
-private const val ASR_MODIFICATION = "asr-modification"
-private const val MAGHRIB_MODIFICATION = "maghrib-modification"
-private const val ISHA_MODIFICATION = "isha-modification"
 private const val AFTER_PRAYER_AZKAR = "AFTER_PRAYER_AZKAR"
 private const val MORNING_AZKAR = "MORNING_AZKAR"
 private const val EVENING_AZKAR = "EVENING_AZKAR"
@@ -44,11 +31,6 @@ private const val AZKAR_VIBRATE = "azkar-vibrate"
 
 // PRAYER
 
-private const val BEFORE_PRAYER_NOTIFICATION = "BEFORE_PRAYER_NOTIFICATION"
-private const val IQAMA_NOTIFICATION = "IQAMA_NOTIFICATION"
-private const val BEFORE_PRAYER_NOTIFICATION_TIME = "BEFORE_PRAYER_NOTIFICATION_TIME"
-private const val AZAN_BACKGROUND_MOSQUE = "AZAN_BACKGROUND_MOSQUE"
-
 class GlobalPreferences(context: Context) {
     var context: Context? = null
     private var prefs: SharedPreferences
@@ -60,94 +42,9 @@ class GlobalPreferences(context: Context) {
         prefsEditor = prefs.edit()
     }
 
-    fun storeUserId(userId: Int) {
-        prefsEditor.putInt(USER_ID, userId)
-        prefsEditor.commit()
-    }
 
 
-    fun storeArticleLocale(locale: String) {
-        prefsEditor.putString(Article_LANGUAGE, locale)
-        prefsEditor.commit()
-    }
 
-    fun storeCalculationMethod(method: Int) {
-        prefsEditor.putInt(CALCULATION_METHOD, method)
-        prefsEditor.commit()
-    }
-
-    fun storeSchoolMethod(school: Int) {
-        prefsEditor.putInt(SCHOOL_METHOD, school)
-        prefsEditor.commit()
-    }
-
-    fun storeFajrMod(mod: Int) {
-        prefsEditor.putInt(FAJR_MODIFICATION, mod)
-        prefsEditor.commit()
-    }
-
-    fun storeShorookMod(mod: Int) {
-        prefsEditor.putInt(SHOROOK_MODIFICATION, mod)
-        prefsEditor.commit()
-    }
-
-    fun storeZuhrMod(mod: Int) {
-        prefsEditor.putInt(ZUHR_MODIFICATION, mod)
-        prefsEditor.commit()
-    }
-
-    fun storeAsrMod(mod: Int) {
-        prefsEditor.putInt(ASR_MODIFICATION, mod)
-        prefsEditor.commit()
-    }
-
-    fun storeMaghribMod(mod: Int) {
-        prefsEditor.putInt(MAGHRIB_MODIFICATION, mod)
-        prefsEditor.commit()
-    }
-
-    fun storeIshaMod(mod: Int) {
-        prefsEditor.putInt(ISHA_MODIFICATION, mod)
-        prefsEditor.commit()
-    }
-
-
-    fun storeAzkarLanguage(locale: String) {
-        prefsEditor.putString(AZKAR_LANGUAGE, locale)
-        prefsEditor.commit()
-    }
-
-    fun storeLogged(logged: Boolean) {
-        prefsEditor.putBoolean(LOGGED, logged)
-        prefsEditor.commit()
-    }
-
-    fun getLogged(): Boolean {
-        return prefs.getBoolean(LOGGED, false)
-    }
-
-    fun getLocale(): String {
-        return prefs.getString(APP_LANGUAGE, "ar")!!
-    }
-    fun getArticlesLocale(): String {
-        return prefs.getString(Article_LANGUAGE, "ar")!!
-    }
-
-    fun getUserId(): Int {
-        return prefs.getInt(USER_ID, 0)
-    }
-
-    fun getCalculationMethod(): Int {
-        return prefs.getInt(CALCULATION_METHOD, 5)
-    }
-
-    fun getSchool(): Int {
-        return prefs.getInt(SCHOOL_METHOD, 0)
-    }
-
-    fun getAzkarLanguage(): String {
-        return prefs.getString(AZKAR_LANGUAGE, "ar")!!
-    }
 
     fun getLatitude(): String {
         return prefs.getString(LATITUDE, "")!!
@@ -157,36 +54,8 @@ class GlobalPreferences(context: Context) {
         return prefs.getString(LONGITUDE, "")!!
     }
 
-    fun getPole(): Int {
-        return prefs.getInt(POLE, 3)
-    }
-
     fun getAzan(): Int {
         return prefs.getInt(AZAN, 1)
-    }
-
-    fun getFajrModification(): Int {
-        return prefs.getInt(FAJR_MODIFICATION, 0)
-    }
-
-    fun getShorookModification(): Int {
-        return prefs.getInt(SHOROOK_MODIFICATION, 0)
-    }
-
-    fun getZuhrModification(): Int {
-        return prefs.getInt(ZUHR_MODIFICATION, 0)
-    }
-
-    fun getAsrModification(): Int {
-        return prefs.getInt(ASR_MODIFICATION, 0)
-    }
-
-    fun getMaghribModification(): Int {
-        return prefs.getInt(MAGHRIB_MODIFICATION, 0)
-    }
-
-    fun getIshaModification(): Int {
-        return prefs.getInt(ISHA_MODIFICATION, 0)
     }
 
     fun isAfterPrayerNotification(): Boolean {
@@ -217,9 +86,6 @@ class GlobalPreferences(context: Context) {
     }
 
 
-    fun getCustomAzanUri(): Uri {
-        return Uri.parse(prefs.getString(CUSTOM_AZAN, ""))
-    }
 
 
     fun isAzkarMuted(): Boolean {
@@ -273,28 +139,11 @@ class GlobalPreferences(context: Context) {
         prefsEditor.commit()
     }
 
-    fun saveAzan(azan: Int) {
-        prefsEditor.putInt(AZAN, azan)
-        prefsEditor.commit()
-        saveChannelID("PRAYER" + Random().nextInt())
-    }
-
-    fun saveCustomAzanUri(uri: Uri) {
-        prefsEditor.putBoolean(AZAN_CHANGED, true)
-        prefsEditor.putString(CUSTOM_AZAN, uri.toString())
-        prefsEditor.commit()
-    }
-
     fun saveLastReadingPage(page: Int) {
         prefsEditor.putInt(LAST_PAGE_QURAN, page)
         prefsEditor.commit()
     }
 
-    fun savePole(pole: Int) {
-
-        prefsEditor.putInt(POLE, pole)
-        prefsEditor.commit()
-    }
 
     fun saveChannelID(id: String) {
         prefsEditor.putString(PRAYER_CHANNEL, id)
@@ -340,26 +189,6 @@ class GlobalPreferences(context: Context) {
     }
 
 
-    // PRAYER SETTINGS
-    fun storeBeforePrayerNotification(checked: Boolean) {
-        prefsEditor.putBoolean(BEFORE_PRAYER_NOTIFICATION, checked)
-        prefsEditor.commit()
-    }
-    fun notifyBeforePrayer() :Boolean = prefs.getBoolean(BEFORE_PRAYER_NOTIFICATION,true)
-
-    fun storeBeforePrayerNotificationPeriod(minutes: Int) {
-        prefsEditor.putInt(BEFORE_PRAYER_NOTIFICATION_TIME, minutes)
-        prefsEditor.commit()
-    }
-    fun beforeAzanNotificationPeriod() :Int = prefs.getInt(BEFORE_PRAYER_NOTIFICATION_TIME,10)
-
-    fun notifyIqama() :Boolean = prefs.getBoolean(IQAMA_NOTIFICATION,true)
-
-    fun setAzanBackgroundMosque(mosque:Boolean) {
-        prefsEditor.putBoolean(AZAN_BACKGROUND_MOSQUE, mosque)
-        prefsEditor.commit()
-    }
-    fun getAzanBackground()= prefs.getBoolean(AZAN_BACKGROUND_MOSQUE,true)
 
 
 }

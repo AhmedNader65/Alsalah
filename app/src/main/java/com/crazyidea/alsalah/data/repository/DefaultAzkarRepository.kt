@@ -1,5 +1,6 @@
 package com.crazyidea.alsalah.data.repository
 
+import com.crazyidea.alsalah.App
 import com.crazyidea.alsalah.data.api.Network
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
@@ -64,7 +65,7 @@ class DefaultAzkarRepository @Inject constructor(
     override suspend fun getAzkar() {
 
         return withContext(externalScope.coroutineContext) {
-            val azkar = Network.azkar.getAzkar(language = globalPreferences.getLocale())
+            val azkar = Network.azkar.getAzkar(language = App.instance.getAppLocale().language)
             appDatabase.azkarDao().insertData(*azkar.evening_azkar.toTypedArray())
             appDatabase.azkarDao().insertData(*azkar.afterPrayer_azkar.toTypedArray())
             appDatabase.azkarDao().insertData(*azkar.morning_azkar.toTypedArray())

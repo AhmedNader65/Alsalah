@@ -15,6 +15,7 @@ class AzkarLanguagesRadioAdapter(
     private val listner: LanguagListner
 ) :
     RecyclerView.Adapter<AzkarLanguagesRadioAdapter.ViewHolder>() {
+    private var selectedLanguage: String = "ar"
     private lateinit var context: Context
 
     lateinit var globalPreferences: GlobalPreferences
@@ -30,6 +31,13 @@ class AzkarLanguagesRadioAdapter(
             // Define click listener for the ViewHolder's View.
             radioBtn = view.findViewById(R.id.radioBtn)
 
+        }
+    }
+
+    fun updateSelectedLanguage(lang: String) {
+        if (lang != selectedLanguage) {
+            selectedLanguage = lang
+            notifyDataSetChanged()
         }
     }
 
@@ -49,7 +57,7 @@ class AzkarLanguagesRadioAdapter(
     }
 
     private fun findMyLanguage() {
-        dataSet.find { it.shortcut == globalPreferences.getAzkarLanguage() }?.checked = true
+        dataSet.find { it.shortcut == this.selectedLanguage }?.checked = true
 
     }
 

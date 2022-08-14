@@ -8,12 +8,18 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.PoleCalculation
 import com.crazyidea.alsalah.databinding.FragmentChoosePoleCalculateWayBinding
+import com.crazyidea.alsalah.ui.setting.SalahSettings
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.themeColor
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PoleCalculateWayFragment : Fragment() {
@@ -23,8 +29,7 @@ class PoleCalculateWayFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val viewModel by viewModels<PoleCalcculateWayViewModel>()
-    lateinit var globalPreferences: GlobalPreferences
+    private val viewModel by viewModels<PoleCalculateWayViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,16 +45,23 @@ class PoleCalculateWayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        globalPreferences = GlobalPreferences(requireContext())
-        PoleCalculation.values().find {
-            it.name == when (globalPreferences.getPole()) {
-                3 -> PoleCalculation.ANGLE.toString()
-                2 -> PoleCalculation.ONEONSEVEN.toString()
-                1 -> PoleCalculation.MIDNIGHT.toString()
-                else -> PoleCalculation.NOTHING.toString()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchIntegerData(SalahSettings.POLE_CALCULATION).collect { pole ->
+                    PoleCalculation.values().find {
+                        it.name == when (pole) {
+                            3 -> PoleCalculation.ANGLE.toString()
+                            2 -> PoleCalculation.ONEONSEVEN.toString()
+                            1 -> PoleCalculation.MIDNIGHT.toString()
+                            else -> PoleCalculation.NOTHING.toString()
+                        }
+                    }
+                        ?.let { checkMazhab(it) }
+                }
             }
         }
-            ?.let { checkMazhab(it) }
+
         binding.nothingCon.setOnClickListener { checkMazhab(PoleCalculation.NOTHING) }
         binding.angelarCon.setOnClickListener { checkMazhab(PoleCalculation.ANGLE) }
         binding.midnightCon.setOnClickListener { checkMazhab(PoleCalculation.MIDNIGHT) }
@@ -80,7 +92,7 @@ class PoleCalculateWayFragment : Fragment() {
                 selectedPole = 1
             }
         }
-        globalPreferences.savePole(selectedPole)
+        viewModel.update(SalahSettings.POLE_CALCULATION, selectedPole)
 
     }
 

@@ -30,6 +30,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.text.getSpans
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.crazyidea.alsalah.App
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentQuranPageBinding
 import com.crazyidea.alsalah.ui.quickaction.ActionItem
@@ -238,7 +239,7 @@ class QuranPageFragment : Fragment() {
                 )
                 val numberAya = " \u06DD${
                     String.format(
-                        Locale(globalPreferences.getLocale()),
+                        App.instance.getAppLocale(),
                         "%d", it.number
                     )
                 } "
@@ -275,7 +276,7 @@ class QuranPageFragment : Fragment() {
             binding.juz.text = it.first().juz.toString().getJuzName(requireContext())
             binding.surah.text = it.first().surah
             binding.pageNumber.text = String.format(
-                Locale(globalPreferences.getLocale()),
+                App.instance.getAppLocale(),
                 "%d", it.first().page
             )
         }

@@ -19,6 +19,9 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -27,6 +30,7 @@ import com.crazyidea.alsalah.adapter.ArticlesAdapter
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
 import com.crazyidea.alsalah.ui.khatma.KhatmaFragmentDirections
+import com.crazyidea.alsalah.ui.setting.SalahSettings
 import com.crazyidea.alsalah.utils.*
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
 import com.google.android.gms.common.api.ResolvableApiException
@@ -35,6 +39,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -51,6 +57,16 @@ private const val REQUEST_TURN_DEVICE_LOCATION_ON = 35
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), LocationListener {
+
+    private var calculationMethod: Int = 0
+    private var school: Int = 0
+    private var poleCalc: Int = 0
+    private var fajrMargin: Int = 0
+    private var shorokMargin: Int = 0
+    private var dhuhrMargin: Int = 0
+    private var asrMargin: Int = 0
+    private var maghribMargin: Int = 0
+    private var ishaMargin: Int = 0
 
     private lateinit var adapter: ArticlesAdapter
     private var _binding: FragmentHomeBinding? = null
@@ -96,7 +112,7 @@ class HomeFragment : Fragment(), LocationListener {
         }, onShare = {
             it.share(requireContext())
             blogViewModel.postShareArticle(it.id)
-        }, isLoggedIn = globalPreferences.getLogged())
+        }, isLoggedIn = DataStoreCollector.loggedIn)
         binding.blogItem.adapter = adapter
         binding.dateLayout.leftArrowIcon.setOnClickListener {
             viewModel.nextDay()
@@ -303,10 +319,21 @@ class HomeFragment : Fragment(), LocationListener {
                 WorkManager.getInstance(requireContext()).enqueue(dailyWorkRequest)
 
             }
-//            WorkManager.getInstance(requireContext()).enqueueUniqueWork(
-//                TAG_OUTPUT,
-//                ExistingWorkPolicy.REPLACE, dailyWorkRequest
-//            )
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchData().collect {
+                    calculationMethod = it[SalahSettings.CALCULATION_METHOD] ?: 0
+                    school = it[SalahSettings.SCHOOL] ?: 0
+                    poleCalc = it[SalahSettings.POLE_CALCULATION] ?: 0
+                    fajrMargin = it[SalahSettings.FAJR_MARGIN] ?: 0
+                    shorokMargin = it[SalahSettings.SHOROK_MARGIN] ?: 0
+                    dhuhrMargin = it[SalahSettings.DHUHR_MARGIN] ?: 0
+                    asrMargin = it[SalahSettings.ASR_MARGIN] ?: 0
+                    maghribMargin = it[SalahSettings.MAGHRIB_MARGIN] ?: 0
+                    ishaMargin = it[SalahSettings.ISHA_MARGIN] ?: 0
+                }
+            }
         }
     }
 
@@ -328,6 +355,12 @@ class HomeFragment : Fragment(), LocationListener {
             MIN_DISTANCE,
             this
         )
+        locationManager?.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,
+            MIN_TIME,
+            MIN_DISTANCE,
+            this
+        )
     }
 
     override fun onLocationChanged(location: Location) {
@@ -337,10 +370,10 @@ class HomeFragment : Fragment(), LocationListener {
         viewModel.fetchPrayerData(
             location.latitude.toString(),
             location.longitude.toString(),
-            globalPreferences.getCalculationMethod(),
-            globalPreferences.getSchool(),
-            "0,${globalPreferences.getFajrModification()},${globalPreferences.getShorookModification()},${globalPreferences.getZuhrModification()},${globalPreferences.getAsrModification()},${globalPreferences.getMaghribModification()},${globalPreferences.getIshaModification()},0",
-            globalPreferences.getPole()
+            calculationMethod,
+            school,
+            "0,$fajrMargin,$shorokMargin,$dhuhrMargin,$asrMargin,$maghribMargin,$ishaMargin,0",
+            poleCalc
         )
 
         locationManager?.removeUpdates(this)

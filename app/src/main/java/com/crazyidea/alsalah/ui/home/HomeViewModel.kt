@@ -4,13 +4,13 @@ import android.content.Context
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
+import com.crazyidea.alsalah.App
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.Articles
-import com.crazyidea.alsalah.data.repository.ArticlesRepository
-import com.crazyidea.alsalah.data.repository.AzkarRepository
-import com.crazyidea.alsalah.data.repository.KhatmaRepository
-import com.crazyidea.alsalah.data.repository.PrayersRepository
+import com.crazyidea.alsalah.data.repository.*
 import com.crazyidea.alsalah.data.room.entity.Ayat
+import com.crazyidea.alsalah.ui.setting.BaseSettingViewModel
+import com.crazyidea.alsalah.ui.setting.SettingViewModel
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -27,8 +27,9 @@ class HomeViewModel @Inject constructor(
     private val azkarRepository: AzkarRepository,
     private val prayerRepository: PrayersRepository,
     private val khatmaRepository: KhatmaRepository,
-    private val articlesRepository: ArticlesRepository
-) : ViewModel() {
+    private val articlesRepository: ArticlesRepository,
+    private val prayerSettingsRepository: PrayerSettingsRepository
+) : BaseSettingViewModel(prayerSettingsRepository) {
     val prayers = prayerRepository.prayers
     val khatma = khatmaRepository.randomKhatma
     var ayah = MutableLiveData<Ayat>()
@@ -199,11 +200,11 @@ class HomeViewModel @Inject constructor(
 
     private fun twentyFourConverter(time: String, am: Boolean = false): String {
         return try {
-            val sdf = SimpleDateFormat("HH:mm", Locale("ar"))
+            val sdf = SimpleDateFormat("HH:mm", App.instance.getAppLocale())
             val dateObj: Date = sdf.parse(time) as Date
-            if (!am) SimpleDateFormat("hh:mm", Locale("ar")).format(dateObj)
+            if (!am) SimpleDateFormat("hh:mm", App.instance.getAppLocale()).format(dateObj)
             else {
-                SimpleDateFormat("a", Locale("ar")).format(dateObj)
+                SimpleDateFormat("a", App.instance.getAppLocale()).format(dateObj)
             }
 
         } catch (e: ParseException) {
@@ -238,8 +239,8 @@ class HomeViewModel @Inject constructor(
         val hour = gor.get(Calendar.HOUR_OF_DAY).toString()
         val minute = gor.get(Calendar.MINUTE).toString()
         val seconds = gor.get(Calendar.SECOND).toString()
-        val sdf1 = SimpleDateFormat("H:mm:ss", Locale("ar"))
-        val sdf = SimpleDateFormat("H:mm", Locale("ar"))
+        val sdf1 = SimpleDateFormat("H:mm:ss", App.instance.getAppLocale())
+        val sdf = SimpleDateFormat("H:mm", App.instance.getAppLocale())
         val currentDate = sdf1.parse("$hour:$minute:$seconds") as Date
         val timings = prayers.value?.timing
 
@@ -344,8 +345,8 @@ class HomeViewModel @Inject constructor(
         val hour = gor.get(Calendar.HOUR_OF_DAY).toString()
         val minute = gor.get(Calendar.MINUTE).toString()
         val seconds = gor.get(Calendar.SECOND).toString()
-        val sdf1 = SimpleDateFormat("H:mm:ss", Locale("ar"))
-        val sdf = SimpleDateFormat("H:mm", Locale("ar"))
+        val sdf1 = SimpleDateFormat("H:mm:ss", App.instance.getAppLocale())
+        val sdf = SimpleDateFormat("H:mm", App.instance.getAppLocale())
         val currentDate = newDate ?: sdf1.parse("$hour:$minute:$seconds") as Date
         val timings = prayers.value?.timing
         timings?.let {

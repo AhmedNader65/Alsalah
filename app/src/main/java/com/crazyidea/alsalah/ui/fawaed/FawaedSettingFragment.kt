@@ -1,11 +1,13 @@
 package com.crazyidea.alsalah.ui.fawaed
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.LanguagesAdapter
 import com.crazyidea.alsalah.data.model.SupportedLanguage
@@ -21,6 +23,7 @@ class FawaedSettingFragment : Fragment(), LanguagesAdapter.LanguagListner {
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -42,13 +45,35 @@ class FawaedSettingFragment : Fragment(), LanguagesAdapter.LanguagListner {
         super.onViewCreated(view, savedInstanceState)
         binding.languagesRV.adapter = LanguagesAdapter(createLanguages(), this)
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
+        binding.notificationsSwitch.isChecked = DataStoreCollector.showArticlesNotifications
+        binding.notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.saveNotificationPref(isChecked)
+        }
     }
 
     private fun createLanguages(): ArrayList<SupportedLanguage> {
-        var languages = ArrayList<SupportedLanguage>()
-        languages.add(SupportedLanguage(resources.getString(R.string.arabic), "ar", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.english), "en", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.alll), "all", false))
+        val languages = ArrayList<SupportedLanguage>()
+        languages.add(
+            SupportedLanguage(
+                resources.getString(R.string.arabic),
+                "ar",
+                DataStoreCollector.articlesLanguage
+            )
+        )
+        languages.add(
+            SupportedLanguage(
+                resources.getString(R.string.english),
+                "en",
+                DataStoreCollector.articlesLanguage
+            )
+        )
+        languages.add(
+            SupportedLanguage(
+                resources.getString(R.string.alll),
+                "all",
+                DataStoreCollector.articlesLanguage
+            )
+        )
         return languages
     }
 
@@ -58,6 +83,8 @@ class FawaedSettingFragment : Fragment(), LanguagesAdapter.LanguagListner {
     }
 
     override fun onlangPicked(language: SupportedLanguage) {
-        globalPreferences.storeArticleLocale(language.shortcut)
+
+        Log.e("TAG", "saving: ${language.shortcut}")
+        viewModel.saveLanguage(language.shortcut)
     }
 }

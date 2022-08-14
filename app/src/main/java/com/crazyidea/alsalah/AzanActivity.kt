@@ -27,11 +27,11 @@ class AzanActivity : AppCompatActivity() {
 
     @Inject
     lateinit var globalPreferences: GlobalPreferences
-    override fun attachBaseContext(newBase: Context) {
-        runBlocking{
-            super.attachBaseContext(ContextWrapper(newBase.setLocale()))
-        }
-    }
+//    override fun attachBaseContext(newBase: Context) {
+//        runBlocking{
+//            super.attachBaseContext(ContextWrapper(newBase.setLocale()))
+//        }
+//    }
 
     lateinit var mp: MediaPlayer
     private lateinit var binding: ActivityAzanBinding

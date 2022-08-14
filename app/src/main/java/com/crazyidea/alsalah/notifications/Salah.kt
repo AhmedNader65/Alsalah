@@ -9,6 +9,7 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import com.crazyidea.alsalah.AzanActivity
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.repository.BaseRepository
 import com.crazyidea.alsalah.data.repository.FajrListRepository
@@ -23,7 +24,8 @@ class Salah(
     override val CHANNEL_ID: String,
     override val globalPreferences: GlobalPreferences,
     override val context: Context,
-    override var repository: BaseRepository? = null
+    override var repository: BaseRepository? = null,
+    var notifyAzan: Boolean = false
 ) : AppNotification {
     private var listOfNumbers: List<String>? = null
 
@@ -31,14 +33,15 @@ class Salah(
     var count = 0
 
     override fun showNotification() {
-        sendNotification(
-            context,
-            CHANNEL_ID,
-            getNotificationTitle(),
-            context.getString(R.string.continue_using),
-            getSound(),
-            Intent(context, AzanActivity::class.java)
-        )
+        if (notifyAzan)
+            sendNotification(
+                context,
+                CHANNEL_ID,
+                getNotificationTitle(),
+                context.getString(R.string.continue_using),
+                getSound(),
+                Intent(context, AzanActivity::class.java)
+            )
         callList()
     }
 

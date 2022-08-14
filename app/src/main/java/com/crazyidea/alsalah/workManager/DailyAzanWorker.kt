@@ -5,20 +5,26 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.dao.AzkarDao
 import com.crazyidea.alsalah.data.room.dao.KhatmaDao
 import com.crazyidea.alsalah.data.room.dao.PrayerDao
+import com.crazyidea.alsalah.ui.setting.AppSettings
+import com.crazyidea.alsalah.ui.setting.AzanSettings
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.setAlarm
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -32,12 +38,18 @@ class DailyAzanWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     appDatabase: AppDatabase,
     val globalPreferences: GlobalPreferences,
+    val dataStoreManager: DataStoreManager,
 ) : Worker(context, workerParams) {
     private var prayerDao: PrayerDao = appDatabase.prayersDao()
     private var khatmaDao: KhatmaDao = appDatabase.khatmaDao()
     private var azkarDao: AzkarDao = appDatabase.azkarDao()
 
+    var notifyBeforePrayerPeriod = 10
     override fun doWork(): Result {
+        runBlocking {
+            val azanPref = dataStoreManager.settingsAzan.data.first()
+            notifyBeforePrayerPeriod = azanPref[AzanSettings.BEFORE_PRAYER_REMINDER_PERIOD] ?: 10
+        }
         Timber.e("setting alarms")
         val currentDate = Calendar.getInstance()
         val dueDate = Calendar.getInstance()
@@ -144,6 +156,7 @@ class DailyAzanWorker @AssistedInject constructor(
     }
 
     private fun setupPrayingAlarms() {
+        val beforePrayerPeriod = notifyBeforePrayerPeriod * 60000
         val calendar: Calendar = Calendar.getInstance(TimeZone.getDefault())
         val currentDate: Calendar = Calendar.getInstance(TimeZone.getDefault())
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -164,7 +177,7 @@ class DailyAzanWorker @AssistedInject constructor(
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "fajr", calendar.timeInMillis)
             calendar.timeInMillis =
-                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis - beforePrayerPeriod
             if (calendar.after(currentDate))
                 setAlarm(
                     applicationContext,
@@ -173,7 +186,7 @@ class DailyAzanWorker @AssistedInject constructor(
                     calendar.timeInMillis
                 )
             calendar.timeInMillis =
-                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis + beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",
@@ -189,16 +202,16 @@ class DailyAzanWorker @AssistedInject constructor(
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "zuhr", calendar.timeInMillis)
             calendar.timeInMillis =
-                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis - beforePrayerPeriod
             if (calendar.after(currentDate))
             setAlarm(
                 applicationContext,
                 "before_prayer",
                 "zuhr",
-                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis - beforePrayerPeriod
             )
             calendar.timeInMillis =
-                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis + beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",
@@ -213,16 +226,16 @@ class DailyAzanWorker @AssistedInject constructor(
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "asr", calendar.timeInMillis)
             calendar.timeInMillis =
-                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis - beforePrayerPeriod
             if (calendar.after(currentDate))
             setAlarm(
                 applicationContext,
                 "before_prayer",
                 "asr",
-                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis - beforePrayerPeriod
             )
             calendar.timeInMillis =
-                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis + beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",
@@ -237,16 +250,16 @@ class DailyAzanWorker @AssistedInject constructor(
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "maghrib", calendar.timeInMillis)
             calendar.timeInMillis =
-                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis - beforePrayerPeriod
             if (calendar.after(currentDate))
             setAlarm(
                 applicationContext,
                 "before_prayer",
                 "maghrib",
-                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis - beforePrayerPeriod
             )
             calendar.timeInMillis =
-                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis + beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",
@@ -261,16 +274,16 @@ class DailyAzanWorker @AssistedInject constructor(
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "isha", calendar.timeInMillis)
             calendar.timeInMillis =
-                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis - beforePrayerPeriod
             if (calendar.after(currentDate))
             setAlarm(
                 applicationContext,
                 "before_prayer",
                 "isha",
-                calendar.timeInMillis - (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis - beforePrayerPeriod
             )
             calendar.timeInMillis =
-                calendar.timeInMillis + (globalPreferences.beforeAzanNotificationPeriod() * 60000)
+                calendar.timeInMillis + beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",

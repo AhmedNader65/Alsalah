@@ -33,10 +33,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var globalPreferences: GlobalPreferences
     override fun attachBaseContext(newBase: Context) {
-        runBlocking {
-            super.attachBaseContext(ContextWrapper(newBase.setLocale()))
-        }
+        super.attachBaseContext(ContextWrapper(newBase.setLocale(App.instance.getAppLocale())))
     }
+
     private lateinit var binding: ActivityMainBinding
 
     private val runningQOrLater = Build.VERSION.SDK_INT >=
@@ -113,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         binding.progress.isVisible = show
     }
 
-    fun hideKeyboard(){
+    fun hideKeyboard() {
         val keyboard: InputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         keyboard.hideSoftInputFromWindow(binding.root.windowToken, 0)

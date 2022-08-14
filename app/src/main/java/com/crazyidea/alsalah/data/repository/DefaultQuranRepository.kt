@@ -1,6 +1,7 @@
 package com.crazyidea.alsalah.data.repository
 
 import androidx.lifecycle.LiveData
+import com.crazyidea.alsalah.App
 import com.crazyidea.alsalah.BuildConfig
 import com.crazyidea.alsalah.data.api.Network
 import com.crazyidea.alsalah.data.model.asAyatDatabaseModel
@@ -38,7 +39,7 @@ class DefaultQuranRepository @Inject constructor(
 
         return withContext(externalScope.coroutineContext) {
             if (appDatabase.quranDao()
-                    .getEditionByLanguage(globalPreferences.getLocale()) == null
+                    .getEditionByLanguage(App.instance.getAppLocale().language) == null
             ) {
                 val quran = Network.quran.getQuran()
                 appDatabase.quranDao().emptyAyat()

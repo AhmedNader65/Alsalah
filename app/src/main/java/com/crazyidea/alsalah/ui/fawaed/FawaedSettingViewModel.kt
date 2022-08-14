@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.repository.ArticlesRepository
+import com.crazyidea.alsalah.data.repository.AppSettingsRepository
+import com.crazyidea.alsalah.ui.setting.AppSettings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FawaedSettingViewModel @Inject constructor(
-    private val articlesRepository: ArticlesRepository
+    private val articlesRepository: ArticlesRepository,
+    private val settingsRepository: AppSettingsRepository
 ) : ViewModel() {
 
     private var fawaedDataJob: Job? = null
@@ -45,5 +48,16 @@ class FawaedSettingViewModel @Inject constructor(
     override fun onCleared() {
         fawaedDataJob?.cancel()
         super.onCleared()
+    }
+
+    fun saveLanguage(shortcut: String) {
+        viewModelScope.launch {
+            settingsRepository.updateAppSettings(AppSettings.ARTICLES_LANGUAGE, shortcut)
+        }
+    }
+    fun saveNotificationPref(notificationPref: Boolean) {
+        viewModelScope.launch {
+            settingsRepository.updateAppSettings(AppSettings.ARTICLES_NOTIFICATIONS, notificationPref)
+        }
     }
 }

@@ -823,7 +823,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:sb_checked="true"
+                    app:sb_checked="false"
                     app:sb_checked_color="?attr/colorPrimary" />
 
                 <TextView
@@ -851,6 +851,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_4sdp">
 
                 <com.suke.widget.SwitchButton

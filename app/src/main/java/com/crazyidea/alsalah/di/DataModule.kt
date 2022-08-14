@@ -103,7 +103,23 @@ class DataModule {
         coroutineScope: CoroutineScope,
         dataStoreManager: DataStoreManager,
     ): SettingsRepository =
-        DefaultSettingsRepository(coroutineScope,dataStoreManager)
+        AppSettingsRepository(coroutineScope,dataStoreManager)
+
+    @Provides
+    @Singleton
+    fun provideAzanSettingsRepository(
+        coroutineScope: CoroutineScope,
+        dataStoreManager: DataStoreManager,
+    ): AzanSettingsRepository =
+        AzanSettingsRepository(coroutineScope,dataStoreManager)
+
+    @Provides
+    @Singleton
+    fun providePrayerSettingsRepository(
+        coroutineScope: CoroutineScope,
+        dataStoreManager: DataStoreManager,
+    ): PrayerSettingsRepository =
+        PrayerSettingsRepository(coroutineScope,dataStoreManager)
 
     @Provides
     @Singleton

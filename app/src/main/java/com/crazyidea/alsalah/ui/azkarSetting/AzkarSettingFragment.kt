@@ -6,19 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.AzkarLanguagesRadioAdapter
 import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentAzkarSettingBinding
 import com.crazyidea.alsalah.ui.setting.AppSettings
+import com.crazyidea.alsalah.ui.setting.AzanSettings
+import com.crazyidea.alsalah.ui.setting.AzkarSettings
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.sql.Time
 import java.text.Format
 import java.text.SimpleDateFormat
@@ -29,7 +35,6 @@ import kotlin.collections.ArrayList
 @AndroidEntryPoint
 class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListner {
 
-    private lateinit var language : String
     private var _binding: FragmentAzkarSettingBinding? = null
 
     private var hour: Int = 10
@@ -43,6 +48,7 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
+
     @Inject
     lateinit var globalPreferences: GlobalPreferences
     override fun onCreateView(
@@ -57,16 +63,26 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
         return root
     }
 
+    var language: String = "ar"
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.languagesRV.adapter = AzkarLanguagesRadioAdapter(createLanguages(), this)
+        val adapter = AzkarLanguagesRadioAdapter(createLanguages(), this)
+        binding.languagesRV.adapter = adapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchData()
+                    .collect { preferences ->
+                        language = preferences[AzkarSettings.LANGUAGE] ?: "ar"
+                        adapter.updateSelectedLanguage( language)
+
+                    }
+            }
+        }
         binding.upDownImg.setOnClickListener {
             status = !status
             checkRecyclerView()
-        }
-
-        val languageFlow :Flow<String> = dataStoreManager.settingsDataStore.data.map { preferences ->
-            return@map preferences[AppSettings.APP_LANGUAGE] ?: "ar"
         }
         viewLifecycleOwner.lifecycleScope
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
@@ -138,16 +154,16 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
     }
 
     private fun createLanguages(): ArrayList<SupportedLanguage> {
-        var languages = ArrayList<SupportedLanguage>()
-        languages.add(SupportedLanguage(resources.getString(R.string.arabic), "ar", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.english), "en", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.frecnh), "fr", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.turkish), "tr", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.dutch), "du", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.spanish), "sp", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.indonisian), "in", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.urdu), "ur", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.igorish), "ig", false))
+        val languages = ArrayList<SupportedLanguage>()
+        languages.add(SupportedLanguage(resources.getString(R.string.arabic), "ar"))
+        languages.add(SupportedLanguage(resources.getString(R.string.english), "en"))
+        languages.add(SupportedLanguage(resources.getString(R.string.frecnh), "fr"))
+        languages.add(SupportedLanguage(resources.getString(R.string.turkish), "tr"))
+        languages.add(SupportedLanguage(resources.getString(R.string.dutch), "du"))
+        languages.add(SupportedLanguage(resources.getString(R.string.spanish), "sp"))
+        languages.add(SupportedLanguage(resources.getString(R.string.indonisian), "in"))
+        languages.add(SupportedLanguage(resources.getString(R.string.urdu), "ur"))
+        languages.add(SupportedLanguage(resources.getString(R.string.igorish), "ig"))
         return languages
     }
 
@@ -157,7 +173,7 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
     }
 
     override fun onlangPicked(language: SupportedLanguage) {
-        globalPreferences.storeAzkarLanguage(language.shortcut)
+        viewModel.update(AzkarSettings.LANGUAGE, language.shortcut)
 
     }
 }

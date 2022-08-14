@@ -1,32 +1,17 @@
 package com.crazyidea.alsalah
 
 import android.app.Application
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.media.MediaFormat
-import android.media.MediaPlayer
-import android.media.PlaybackParams
-import android.net.Uri
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
-import android.view.Window
-import android.view.WindowManager
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.Toast
-import android.widget.VideoView
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
-import com.crazyidea.alsalah.notifications.Salah
-import com.crazyidea.alsalah.utils.GlobalPreferences
-import com.crazyidea.alsalah.utils.SubtitleView
+import com.crazyidea.alsalah.data.DataStoreManager
+import com.crazyidea.alsalah.ui.setting.AppSettings
 import com.crazyidea.alsalah.workManager.RefreshDataWorker
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 import java.util.*
@@ -36,8 +21,13 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class App : Application(), Configuration.Provider {
+    private lateinit var locale: Locale
+
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
+
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
     override fun getWorkManagerConfiguration() = Configuration.Builder()
@@ -46,30 +36,39 @@ class App : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         delayedInit()
+        getFirstLanguage()
+        GlobalScope.launch {
+            dataStoreManager.settingsDataStore.data.map { preferences ->
+
+                Timber.e("getting language3")
+                preferences[AppSettings.APP_LANGUAGE] ?: "ar"
+            }.collect {
+                locale = Locale(it)
+            }
+        }
+        DataStoreCollector.startCollecting(dataStoreManager)
         // This will initialise Timber
         if (BuildConfig.DEBUG) {
             plant(Timber.DebugTree())
         }
     }
 
+    private fun getFirstLanguage() {
+        runBlocking {
+            locale = Locale(dataStoreManager.settingsDataStore.data.map { preferences ->
 
-    private fun getSubtitles(): Int {
-
-        val azanId = GlobalPreferences(this).getAzan()
-        return  when (azanId) {
-            1 -> R.raw.mecca_srt
-            2 -> R.raw.madny_srt
-            3 -> R.raw.aqsa
-            4 -> R.raw.menshawy_srt
-            5 -> R.raw.abdelbaset_srt
-            6 -> R.raw.azan_srt
-            else -> R.raw.mecca_srt
-
+                Timber.e("getting language3")
+                preferences[AppSettings.APP_LANGUAGE] ?: "ar"
+            }.first())
         }
-
     }
 
+    companion object {
+        lateinit var instance: App
+            private set
+    }
 
     private fun delayedInit() {
         applicationScope.launch {
@@ -89,15 +88,20 @@ class App : Application(), Configuration.Provider {
                 }
             }.build()
 
-        val repeatingRequest
-                = PeriodicWorkRequestBuilder<RefreshDataWorker>(1, TimeUnit.DAYS)
+        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(1, TimeUnit.DAYS)
             .setConstraints(constraints)
             .build()
 
         WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
             RefreshDataWorker.WORK_NAME,
             ExistingPeriodicWorkPolicy.REPLACE,
-            repeatingRequest)
+            repeatingRequest
+        )
+    }
+
+    fun getAppLocale(): Locale {
+        Timber.e("getting language ${locale.language}")
+        return locale
     }
 
 }

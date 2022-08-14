@@ -2,14 +2,17 @@ package com.crazyidea.alsalah.ui.refactorPrayerNotification
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.crazyidea.alsalah.data.repository.PrayerSettingsRepository
+import com.crazyidea.alsalah.ui.setting.BaseSettingViewModel
+import com.crazyidea.alsalah.ui.setting.SalahSettings
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class RefactorPrayerTimingNotificationViewModel @Inject constructor(
-    private val globalPreferences: GlobalPreferences
-) : ViewModel() {
+    prayerSettingsRepository: PrayerSettingsRepository
+) : BaseSettingViewModel(prayerSettingsRepository) {
 
     var fajrMinutes = MutableLiveData("0")
     val shrooqMinutes = MutableLiveData("0")
@@ -31,12 +34,12 @@ class RefactorPrayerTimingNotificationViewModel @Inject constructor(
     }
 
     fun applyModifications() {
-        globalPreferences.storeFajrMod(fajrMinutes.value!!.toInt())
-        globalPreferences.storeShorookMod(shrooqMinutes.value!!.toInt())
-        globalPreferences.storeZuhrMod(zuhrMinutes.value!!.toInt())
-        globalPreferences.storeAsrMod(asrMinutes.value!!.toInt())
-        globalPreferences.storeMaghribMod(maghribMinutes.value!!.toInt())
-        globalPreferences.storeIshaMod(ishaMinutes.value!!.toInt())
+        update(SalahSettings.FAJR_MARGIN,fajrMinutes.value!!.toInt())
+        update(SalahSettings.SHOROK_MARGIN,shrooqMinutes.value!!.toInt())
+        update(SalahSettings.DHUHR_MARGIN,zuhrMinutes.value!!.toInt())
+        update(SalahSettings.ASR_MARGIN,asrMinutes.value!!.toInt())
+        update(SalahSettings.MAGHRIB_MARGIN,maghribMinutes.value!!.toInt())
+        update(SalahSettings.ISHA_MARGIN,ishaMinutes.value!!.toInt())
         goBack.value = true
     }
 

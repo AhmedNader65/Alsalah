@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.PrimaryColor
@@ -72,7 +73,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        checkAvailablity(globalPreferences.getLogged())
+        checkAvailablity(DataStoreCollector.loggedIn)
 
         setSelectedSecondaryColor(globalPreferences.getPrimaryColor())
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)

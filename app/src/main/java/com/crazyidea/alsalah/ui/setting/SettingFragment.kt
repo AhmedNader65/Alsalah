@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentSettingBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,6 +97,18 @@ class SettingFragment : Fragment() {
         }
         binding.azanSoundAndImage.setOnClickListener {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToAzanSettingFragment())
+        }
+        binding.fridaySwitch.isChecked = DataStoreCollector.fridayNotifications
+        binding.fridaySwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.update(AppSettings.FRIDAY_NOTIFICATIONS, isChecked)
+        }
+        binding.fastingSwitch.isChecked = DataStoreCollector.fastingNotifications
+        binding.fastingSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.update(AppSettings.FASTING_NOTIFICATIONS, isChecked)
+        }
+        binding.silencePhoneSwitch.isChecked = DataStoreCollector.silentPhone
+        binding.silencePhoneSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.update(AppSettings.SILENT_PHONE, isChecked)
         }
     }
 

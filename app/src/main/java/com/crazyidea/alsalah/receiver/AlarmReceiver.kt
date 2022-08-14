@@ -22,15 +22,20 @@ import android.widget.ImageButton
 import android.widget.Toast
 import android.widget.VideoView
 import com.crazyidea.alsalah.R
+import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.repository.AzkarRepository
 import com.crazyidea.alsalah.data.repository.FajrListRepository
 import com.crazyidea.alsalah.notifications.*
+import com.crazyidea.alsalah.ui.setting.AppSettings
+import com.crazyidea.alsalah.ui.setting.AzanSettings
 import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.SubtitleView
 import com.crazyidea.alsalah.utils.setAlarm
 import com.crazyidea.alsalah.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -48,12 +53,28 @@ class AlarmReceiver : BroadcastReceiver() {
     lateinit var azkarRepository: AzkarRepository
 
     @Inject
+    lateinit var dataStoreManager: DataStoreManager
+
+    @Inject
     lateinit var globalPreferences: GlobalPreferences
     lateinit var CHANNEL_ID: String
+    var azanNotification = true
+    var iqamaNotification = true
+    var mosqueBackground = true
+    var beforePrayNotification = true
+    lateinit var locale: Locale
     override fun onReceive(context: Context, intent: Intent?) {
-        Log.e("receiver", "received")
+
         runBlocking {
-            val context = context.setLocale()
+            val azanPref = dataStoreManager.settingsAzan.data.first()
+            azanNotification = azanPref[AzanSettings.AZAN_NOTIFICATION] ?: true
+            beforePrayNotification = azanPref[AzanSettings.BEFORE_PRAYER_REMINDER] ?: true
+            iqamaNotification = azanPref[AzanSettings.IQAMA_NOTIFICATION] ?: true
+            mosqueBackground = azanPref[AzanSettings.AZAN_MOSQUE_BG] ?: true
+            val appPref = dataStoreManager.settingsDataStore.data.first()
+            locale = Locale(appPref[AppSettings.APP_LANGUAGE] ?: "ar")
+        }
+        val context = context.setLocale(locale)
         CHANNEL_ID = globalPreferences.getPrayerChannelId()
 
         if (intent?.hasExtra("salah") == true) {
@@ -66,12 +87,14 @@ class AlarmReceiver : BroadcastReceiver() {
                 title = intent.getStringExtra("salah")!!,
                 CHANNEL_ID = CHANNEL_ID,
                 globalPreferences = globalPreferences,
-                context = context
+                context = context,
+                notifyAzan = azanNotification
             )
             if (!overlayEnabled) {
                 showNotification(salah)
             } else {
-                showDialog(salah)
+                if (azanNotification)
+                    showDialog(salah)
                 salah.callList()
             }
 
@@ -106,7 +129,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 )
             )
         } else if (intent?.hasExtra("before_prayer") == true) {
-            if (globalPreferences.notifyBeforePrayer())
+            if (beforePrayNotification)
                 showNotification(
                     SalahSoon(
                         title = intent.getStringExtra("before_prayer").toString(),
@@ -116,7 +139,7 @@ class AlarmReceiver : BroadcastReceiver() {
                     )
                 )
         } else if (intent?.hasExtra("iqama") == true) {
-            if (globalPreferences.notifyIqama())
+            if (iqamaNotification)
                 showNotification(
                     Eqammah(
                         CHANNEL_ID = "iqama",
@@ -124,7 +147,7 @@ class AlarmReceiver : BroadcastReceiver() {
                         context = context
                     )
                 )
-        }
+
         }
     }
 
@@ -188,9 +211,10 @@ class AlarmReceiver : BroadcastReceiver() {
                 mp.stop()
             }
             try {
+
                 // ID of video file.
                 val id: Int =
-                    if (globalPreferences.getAzanBackground()) R.raw.azan_vid2 else R.raw.azan_vid
+                    if (mosqueBackground) R.raw.azan_vid2 else R.raw.azan_vid
                 val uri: Uri =
                     Uri.parse("android.resource://${context.packageName}/$id")
                 Timber.i("Video URI: $uri")

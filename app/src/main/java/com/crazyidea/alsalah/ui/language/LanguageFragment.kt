@@ -49,37 +49,30 @@ class LanguageFragment : Fragment(), LanguagesAdapter.LanguagListner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
-        viewLifecycleOwner.lifecycleScope.launch{
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.getLanguage().collect {
-                    binding.languagesRV.adapter = LanguagesAdapter(createLanguages(it), this@LanguageFragment)
-                }
-            }
-        }
-    }
+        binding.languagesRV.adapter = LanguagesAdapter(createLanguages(), this@LanguageFragment)
+}
 
-    private fun createLanguages(selectedLanguage:String): ArrayList<SupportedLanguage> {
-        val languages = ArrayList<SupportedLanguage>()
-        languages.add(SupportedLanguage(resources.getString(R.string.arabic), "ar",selectedLanguage=="ar"))
-        languages.add(SupportedLanguage(resources.getString(R.string.english), "en",selectedLanguage=="en"))
-        languages.add(SupportedLanguage(resources.getString(R.string.frecnh), "fr",selectedLanguage=="fr"))
-        languages.add(SupportedLanguage(resources.getString(R.string.turkish), "tr",selectedLanguage=="tr"))
-        languages.add(SupportedLanguage(resources.getString(R.string.dutch), "du",selectedLanguage=="du"))
-        languages.add(SupportedLanguage(resources.getString(R.string.spanish), "sp",selectedLanguage=="sp"))
-        languages.add(SupportedLanguage(resources.getString(R.string.indonisian), "in",selectedLanguage=="in"))
-        languages.add(SupportedLanguage(resources.getString(R.string.urdu), "ur",selectedLanguage=="ur"))
-        languages.add(SupportedLanguage(resources.getString(R.string.igorish), "ig",selectedLanguage=="ig"))
-        return languages
-    }
+private fun createLanguages(): ArrayList<SupportedLanguage> {
+    val languages = ArrayList<SupportedLanguage>()
+    languages.add(SupportedLanguage(resources.getString(R.string.arabic), "ar"))
+    languages.add(SupportedLanguage(resources.getString(R.string.english), "en"))
+    languages.add(SupportedLanguage(resources.getString(R.string.frecnh), "fr"))
+    languages.add(SupportedLanguage(resources.getString(R.string.turkish), "tr"))
+    languages.add(SupportedLanguage(resources.getString(R.string.dutch), "du"))
+    languages.add(SupportedLanguage(resources.getString(R.string.spanish), "sp"))
+    languages.add(SupportedLanguage(resources.getString(R.string.indonisian), "in"))
+    languages.add(SupportedLanguage(resources.getString(R.string.urdu), "ur"))
+    languages.add(SupportedLanguage(resources.getString(R.string.igorish), "ig"))
+    return languages
+}
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
+}
 
-    override fun onlangPicked(language: SupportedLanguage) {
-        viewModel.update(AppSettings.APP_LANGUAGE, language.shortcut)
-//        globalPreferences.storeLocale(language.shortcut)
-        (activity as MainActivity).restartActivity()
-    }
+override fun onlangPicked(language: SupportedLanguage) {
+    viewModel.update(AppSettings.APP_LANGUAGE, language.shortcut)
+    (activity as MainActivity).restartActivity()
+}
 }
