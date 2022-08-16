@@ -14,7 +14,4 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
-) : BaseSettingViewModel(settingsRepository) {
-
-
-}
+) : BaseSettingViewModel(settingsRepository)

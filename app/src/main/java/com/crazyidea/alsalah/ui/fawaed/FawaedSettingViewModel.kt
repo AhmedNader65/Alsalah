@@ -8,6 +8,7 @@ import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.repository.ArticlesRepository
 import com.crazyidea.alsalah.data.repository.AppSettingsRepository
 import com.crazyidea.alsalah.ui.setting.AppSettings
+import com.crazyidea.alsalah.ui.setting.BaseSettingViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -18,7 +19,7 @@ import javax.inject.Inject
 class FawaedSettingViewModel @Inject constructor(
     private val articlesRepository: ArticlesRepository,
     private val settingsRepository: AppSettingsRepository
-) : ViewModel() {
+) : BaseSettingViewModel(settingsRepository) {
 
     private var fawaedDataJob: Job? = null
 
@@ -38,7 +39,7 @@ class FawaedSettingViewModel @Inject constructor(
             articlesRepository.fetchArticle()
                 .collect {
                     if (it?.data != null)
-                        _fawaedData.value = it.data!!
+                        _fawaedData.value = it.data
                 }
         }
 
@@ -50,14 +51,4 @@ class FawaedSettingViewModel @Inject constructor(
         super.onCleared()
     }
 
-    fun saveLanguage(shortcut: String) {
-        viewModelScope.launch {
-            settingsRepository.updateAppSettings(AppSettings.ARTICLES_LANGUAGE, shortcut)
-        }
-    }
-    fun saveNotificationPref(notificationPref: Boolean) {
-        viewModelScope.launch {
-            settingsRepository.updateAppSettings(AppSettings.ARTICLES_NOTIFICATIONS, notificationPref)
-        }
-    }
 }

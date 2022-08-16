@@ -19,7 +19,7 @@ data class Khatma(
     @ColumnInfo(name = "time") var time: Long?,
     @ColumnInfo(name = "notify") var notify: Boolean = true,
     @ColumnInfo(name = "status") var status :Int= 0,
-) : Parcelable {}
+) : Parcelable
 
 @Entity
 data class KhatmaUpdate(

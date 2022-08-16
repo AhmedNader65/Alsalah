@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazyidea.alsalah.data.repository.CalendarRepository
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -15,7 +15,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
     private val calendarRepository: CalendarRepository,
-    private val globalPreferences: GlobalPreferences
 ) : ViewModel() {
 
 

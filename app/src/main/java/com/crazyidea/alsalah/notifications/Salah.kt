@@ -13,7 +13,7 @@ import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.repository.BaseRepository
 import com.crazyidea.alsalah.data.repository.FajrListRepository
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.crazyidea.alsalah.utils.sendNotification
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -22,10 +22,10 @@ import timber.log.Timber
 class Salah(
     override val title: String,
     override val CHANNEL_ID: String,
-    override val globalPreferences: GlobalPreferences,
     override val context: Context,
     override var repository: BaseRepository? = null,
-    var notifyAzan: Boolean = false
+    var notifyAzan: Boolean = false,
+    val azanSound: Int = 1
 ) : AppNotification {
     private var listOfNumbers: List<String>? = null
 
@@ -72,8 +72,7 @@ class Salah(
     }
 
     override fun getSound(): Uri {
-        val azanId = globalPreferences.getAzan()
-        val azanRes = when (azanId) {
+        val azanRes = when (azanSound) {
             1 -> R.raw.mecca
             2 -> R.raw.madny
             3 -> R.raw.aqsa
@@ -133,7 +132,7 @@ class Salah(
     private fun nextCalling(context: Context, phone_number: String) {
 
         val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$phone_number"))
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 }

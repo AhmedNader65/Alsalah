@@ -4,26 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.MainActivity
-import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.PrimaryColor
 import com.crazyidea.alsalah.databinding.FragmentProfileBinding
-import com.crazyidea.alsalah.ui.home.HomeViewModel
-import com.crazyidea.alsalah.ui.menu.MenuFragmentDirections
-import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.ui.setting.AppSettings
+import com.crazyidea.alsalah.utils.getPrimaryColor
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -32,8 +27,6 @@ class ProfileFragment : Fragment() {
     private val viewModel by viewModels<ProfileViewModel>()
     private lateinit var auth: FirebaseAuth
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -75,21 +68,21 @@ class ProfileFragment : Fragment() {
 
         checkAvailablity(DataStoreCollector.loggedIn)
 
-        setSelectedSecondaryColor(globalPreferences.getPrimaryColor())
+        setSelectedSecondaryColor(getPrimaryColor(DataStoreCollector.accentColor))
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             binding.nightModeSwitch.isChecked = true else false
         binding.blueColor.setOnClickListener {
-            globalPreferences.storePrimaryColor(PrimaryColor.BLUE)
+            viewModel.update(AppSettings.ACCENT_COLOR, 2)
             setSelectedSecondaryColor(PrimaryColor.BLUE)
             (requireActivity() as MainActivity).restartActivity()
         }
         binding.orangeColor.setOnClickListener {
-            globalPreferences.storePrimaryColor(PrimaryColor.ORANGE)
+            viewModel.update(AppSettings.ACCENT_COLOR, 0)
             setSelectedSecondaryColor(PrimaryColor.ORANGE)
             (requireActivity() as MainActivity).restartActivity()
         }
         binding.pinkColor.setOnClickListener {
-            globalPreferences.storePrimaryColor(PrimaryColor.PINK)
+            viewModel.update(AppSettings.ACCENT_COLOR, 1)
             setSelectedSecondaryColor(PrimaryColor.PINK)
             (requireActivity() as MainActivity).restartActivity()
         }

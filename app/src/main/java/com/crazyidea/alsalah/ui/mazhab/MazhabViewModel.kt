@@ -9,7 +9,4 @@ import javax.inject.Inject
 @HiltViewModel
 class MazhabViewModel @Inject constructor(
     private val settingsRepository: PrayerSettingsRepository
-) : BaseSettingViewModel(settingsRepository) {
-
-
-}
+) : BaseSettingViewModel(settingsRepository)

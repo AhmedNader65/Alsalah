@@ -16,7 +16,7 @@ import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentChooseLanguageBinding
 import com.crazyidea.alsalah.ui.setting.AppSettings
 import com.crazyidea.alsalah.ui.setting.SettingViewModel
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -32,8 +32,6 @@ class LanguageFragment : Fragment(), LanguagesAdapter.LanguagListner {
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<SettingViewModel>()
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -14,7 +14,7 @@ class BaseViewHolder<in T>(parent: ViewGroup, @LayoutRes layoutId: Int) :
 
 }
 
-public interface LayoutContainer {
+interface LayoutContainer {
     /** Returns the root holder view. */
-    public val containerView: View?
+    val containerView: View?
 }

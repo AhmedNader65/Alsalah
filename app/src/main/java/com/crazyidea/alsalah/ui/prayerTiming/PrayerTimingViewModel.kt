@@ -10,7 +10,4 @@ import javax.inject.Inject
 @HiltViewModel
 class PrayerTimingViewModel @Inject constructor(
     private val settingsRepository: PrayerSettingsRepository
-) : BaseSettingViewModel(settingsRepository) {
-
-
-}
+) : BaseSettingViewModel(settingsRepository)

@@ -54,7 +54,7 @@ class CompassScreen : Fragment(R.layout.fragment_compass) {
             val angle = if (stopped) 0f else value + orientation
             if (!stopped) checkIfA11yAnnounceIsNeeded(angle)
             azimuth = lowPass(angle, azimuth)
-            binding?.compassView?.angle = azimuth
+            binding.compassView.angle = azimuth
         }
 
         /**
@@ -202,7 +202,7 @@ class CompassScreen : Fragment(R.layout.fragment_compass) {
     // Accessibility announcing helpers on when the phone is headed on a specific direction
 
     private fun checkIfA11yAnnounceIsNeeded(angle: Float) {
-        val binding = binding ?: return
+        val binding = binding
         val qiblaHeading = binding.compassView.qiblaHeading?.heading?.toFloat()
         if (qiblaHeading != null) {
             if (qiblaHeading != 0F) {

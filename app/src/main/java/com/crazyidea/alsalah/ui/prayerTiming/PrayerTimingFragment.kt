@@ -14,11 +14,9 @@ import com.crazyidea.alsalah.adapter.PrayerTimeAdapter
 import com.crazyidea.alsalah.data.model.PrayersCalculationMethods
 import com.crazyidea.alsalah.databinding.FragmentChooseLanguageBinding
 import com.crazyidea.alsalah.ui.setting.SalahSettings
-import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class PrayerTimingFragment : Fragment() {
@@ -26,8 +24,6 @@ class PrayerTimingFragment : Fragment() {
     private var calculationMethod: Int = 0
     private var _binding: FragmentChooseLanguageBinding? = null
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
 
     val viewModel by viewModels<PrayerTimingViewModel>()
 

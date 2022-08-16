@@ -5,14 +5,13 @@ import com.crazyidea.alsalah.data.api.Network
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
 import com.crazyidea.alsalah.data.room.entity.azkar.AzkarProgress
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DefaultAzkarRepository @Inject constructor(
     private val appDatabase: AppDatabase,
-    private val globalPreferences: GlobalPreferences,
     private val externalScope: CoroutineScope
 ) : AzkarRepository {
 

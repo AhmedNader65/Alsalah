@@ -189,7 +189,7 @@ class HomeViewModel @Inject constructor(
                 articlesRepository.fetchRecentArticle()
                     .collect {
                         if (it?.data != null)
-                            _articleData.value = it.data!!
+                            _articleData.value = it.data
                     }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -324,7 +324,7 @@ class HomeViewModel @Inject constructor(
                 override fun onTick(millisUntilFinished: Long) {
                     val d = Date(millisUntilFinished)
                     val df = SimpleDateFormat("HH:mm:ss", Locale.getDefault()) // HH for 0-23
-                    df.timeZone = TimeZone.getTimeZone("GMT");
+                    df.timeZone = TimeZone.getTimeZone("GMT")
                     val time = df.format(d)
                     clickedremainingTime.value = time
                     //here you can have your logic to set text to edittext
@@ -401,7 +401,7 @@ class HomeViewModel @Inject constructor(
                     override fun onTick(millisUntilFinished: Long) {
                         val d = Date(millisUntilFinished)
                         val df = SimpleDateFormat("HH:mm:ss", Locale.getDefault()) // HH for 0-23
-                        df.timeZone = TimeZone.getTimeZone("GMT");
+                        df.timeZone = TimeZone.getTimeZone("GMT")
                         val time = df.format(d)
                         remainingTime.value = time
                         //here you can have your logic to set text to edittext

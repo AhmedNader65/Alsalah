@@ -12,7 +12,8 @@ import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.LanguagesAdapter
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentFawaedBinding
-import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.ui.setting.AppSettings
+
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,8 +22,6 @@ class FawaedSettingFragment : Fragment(), LanguagesAdapter.LanguagListner {
 
     private var _binding: FragmentFawaedBinding? = null
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -47,7 +46,7 @@ class FawaedSettingFragment : Fragment(), LanguagesAdapter.LanguagListner {
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
         binding.notificationsSwitch.isChecked = DataStoreCollector.showArticlesNotifications
         binding.notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.saveNotificationPref(isChecked)
+            viewModel.update(AppSettings.ARTICLES_NOTIFICATIONS,isChecked)
         }
     }
 
@@ -85,6 +84,6 @@ class FawaedSettingFragment : Fragment(), LanguagesAdapter.LanguagListner {
     override fun onlangPicked(language: SupportedLanguage) {
 
         Log.e("TAG", "saving: ${language.shortcut}")
-        viewModel.saveLanguage(language.shortcut)
+        viewModel.update(AppSettings.ARTICLES_LANGUAGE, language.shortcut)
     }
 }

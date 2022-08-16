@@ -151,8 +151,8 @@ class QuickAction @JvmOverloads constructor(
         if (rootWidth == 0) {
             rootWidth = mRootView.measuredWidth
         }
-        val screenWidth: Int = mWindowManager.getDefaultDisplay().getWidth()
-        val screenHeight: Int = mWindowManager.getDefaultDisplay().getHeight()
+        val screenWidth: Int = mWindowManager.defaultDisplay.width
+        val screenHeight: Int = mWindowManager.defaultDisplay.height
 
         //automatically get X coord of popup (top left)
         if (anchorRect.left + rootWidth > screenWidth) {

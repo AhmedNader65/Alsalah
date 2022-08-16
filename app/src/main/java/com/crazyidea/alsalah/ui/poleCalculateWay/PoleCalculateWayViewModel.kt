@@ -9,7 +9,4 @@ import javax.inject.Inject
 @HiltViewModel
 class PoleCalculateWayViewModel @Inject constructor(
     prayerSettingsRepository: PrayerSettingsRepository
-) : BaseSettingViewModel(prayerSettingsRepository) {
-
-
-}
+) : BaseSettingViewModel(prayerSettingsRepository)

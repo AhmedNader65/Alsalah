@@ -32,7 +32,6 @@ fun bindPrayerHeaderImage(imageView: ImageView, prayerId: Int, clickedID: Int) {
 @BindingAdapter("setupSurahInfo")
 fun bindSurahInfo(textView: TextView, surah: Surah) {
     val context = textView.context
-    val sharedPref = GlobalPreferences(context)
     var text = context.getString(R.string.surah_number)
     text += " "
     text += String.format(App.instance.getAppLocale(), "%d", surah.id)
@@ -50,7 +49,6 @@ fun bindSurahInfo(textView: TextView, surah: Surah) {
 @BindingAdapter("setupSurahPage")
 fun bindSurahPage(textView: TextView, surah: Surah) {
     val context = textView.context
-    val sharedPref = GlobalPreferences(context)
     var text = String.format(App.instance.getAppLocale(), "%d", surah.page)
 
     textView.text = text
@@ -187,7 +185,6 @@ fun bindKhatmaProgress(progressBar: ProgressBar, item: Khatma?) {
 
 @BindingAdapter("setupAyah")
 fun setupAyah(textView: TextView, item: Ayat?) {
-    val sharedPref = GlobalPreferences(textView.context)
     item?.let {
         textView.text =
             "${item.surah} : ${textView.context.getString(R.string.ayah)} ${

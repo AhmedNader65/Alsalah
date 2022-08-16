@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.databinding.FragmentMenuBinding
 import com.crazyidea.alsalah.ui.setting.SettingViewModel
 import com.crazyidea.alsalah.utils.updateStoredPreference
@@ -42,7 +43,7 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
-            updateStoredPreference(requireContext())
+            updateStoredPreference(DataStoreCollector.lat,DataStoreCollector.lng)
 
         } catch (e: Exception) {
             Log.e("TAG", "onViewCreated: " + e.localizedMessage)

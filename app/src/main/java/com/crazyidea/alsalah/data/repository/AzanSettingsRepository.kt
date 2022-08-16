@@ -14,15 +14,7 @@ class AzanSettingsRepository @Inject constructor(
     private val externalScope: CoroutineScope,
     private val dataStoreManager: DataStoreManager
 ) : SettingsRepository {
-    override suspend fun updateAppSettings(key: Preferences.Key<String>, value: String) {
-        externalScope.launch {
-            dataStoreManager.settingsAzan.edit { settings ->
-                settings[key] = value
-            }
-        }
-    }
-
-    override suspend fun updateAppSettings(key: Preferences.Key<Int>, value: Int) {
+    override suspend fun <T> updateAppSettings(key: Preferences.Key<T>, value: T) {
         externalScope.launch {
             dataStoreManager.settingsAzan.edit { settings ->
                 settings[key] = value
@@ -55,14 +47,6 @@ class AzanSettingsRepository @Inject constructor(
     }
 
     override fun fetchData(): Flow<Preferences> = dataStoreManager.settingsAzan.data
-
-    override suspend fun updateAppSettings(key: Preferences.Key<Boolean>, value: Boolean) {
-        externalScope.launch {
-            dataStoreManager.settingsAzan.edit { settings ->
-                settings[key] = value
-            }
-        }
-    }
 
 
 }

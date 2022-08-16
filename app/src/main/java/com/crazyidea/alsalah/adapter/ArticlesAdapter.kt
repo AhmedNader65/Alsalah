@@ -103,7 +103,7 @@ class ArticlesAdapter(
     }
 
 
-    public interface ArticleListner {
+    interface ArticleListner {
         fun onArticlePicked(article: Articles)
         fun onLikedClicked(article: Articles)
     }

@@ -81,6 +81,4 @@ data class Date(
     @ColumnInfo(name = "h_month_en") val h_month_en: String,
     @ColumnInfo(name = "h_month_ar") val h_month_ar: String,
     @ColumnInfo(name = "h_year") val h_year: String,
-){
-
-}
+)

@@ -1,9 +1,6 @@
 package com.crazyidea.alsalah.ui.setting
 
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.longPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 
 object AppSettings{
     val APP_LANGUAGE = stringPreferencesKey("app-language")
@@ -14,6 +11,10 @@ object AppSettings{
     val FRIDAY_NOTIFICATIONS = booleanPreferencesKey("friday_notifications")
     val FASTING_NOTIFICATIONS = booleanPreferencesKey("fasting_notifications")
     val SILENT_PHONE = booleanPreferencesKey("silent_phone")
+    val LATITUDE = doublePreferencesKey("latitude")
+    val LONGITUDE = doublePreferencesKey("longitude")
+    val ACCENT_COLOR = intPreferencesKey("accent-color")
+    val LAST_READING = intPreferencesKey("accent-color")
 }
 
 object AzanSettings{
@@ -42,6 +43,7 @@ object SalahSettings{
 object AzkarSettings{
     val LANGUAGE = stringPreferencesKey("azkar-language")
     val VIBRATE = booleanPreferencesKey("vibrate")
+    val BEEP = booleanPreferencesKey("Beep")
     val AUTO_NEXT = booleanPreferencesKey("auto-next")
     val MORNING_AZKAR = booleanPreferencesKey("morning-azkar")
     val EVENING_AZKAR = booleanPreferencesKey("evening-azkar")

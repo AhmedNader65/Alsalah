@@ -16,19 +16,7 @@ abstract class BaseSettingViewModel constructor(
 ) : ViewModel() {
 
 
-    fun update(key: Preferences.Key<String>, value: String) {
-        viewModelScope.launch {
-            settingsRepository.updateAppSettings(key, value)
-        }
-    }
-
-    fun update(key: Preferences.Key<Int>, value: Int) {
-        viewModelScope.launch {
-            settingsRepository.updateAppSettings(key, value)
-        }
-    }
-
-    fun update(key: Preferences.Key<Boolean>, value: Boolean) {
+    fun <T> update(key: Preferences.Key<T>, value: T) {
         viewModelScope.launch {
             settingsRepository.updateAppSettings(key, value)
         }

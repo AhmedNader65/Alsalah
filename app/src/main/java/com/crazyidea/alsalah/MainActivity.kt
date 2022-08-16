@@ -2,12 +2,8 @@ package com.crazyidea.alsalah
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.PowerManager
-import android.provider.Settings
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -18,20 +14,14 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.crazyidea.alsalah.data.model.PrimaryColor
 import com.crazyidea.alsalah.databinding.ActivityMainBinding
-import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.utils.getPrimaryColor
 import com.crazyidea.alsalah.utils.setLocale
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ContextWrapper(newBase.setLocale(App.instance.getAppLocale())))
     }
@@ -44,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(globalPreferences.getPrimaryColor())
+        setTheme(getPrimaryColor(DataStoreCollector.accentColor))
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val navView: BottomNavigationView = binding.navView

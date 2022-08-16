@@ -6,7 +6,7 @@ import android.net.Uri
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.repository.DefaultAzkarRepository
 import com.crazyidea.alsalah.data.repository.BaseRepository
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.crazyidea.alsalah.utils.sendNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -17,7 +17,6 @@ class Azkar(
     override val title: String,
     override val msg: String,
     override val CHANNEL_ID: String,
-    override val globalPreferences: GlobalPreferences,
     override val context: Context,
     override var repository: BaseRepository? = null
 ) : AppNotificationWithMsg {

@@ -38,7 +38,7 @@ class ImageGetter(
                     (drawable.intrinsicWidth.toFloat()) / (drawable.intrinsicHeight.toFloat())
 //                val height = width / aspectRatio
                 drawable.setBounds(0, 0, 0 + bitmap.width, 0
-                        + bitmap.height);
+                        + bitmap.height)
 //                drawable.setBounds(10, 20, width, height.toInt())
                 holder.setDrawable(drawable)
                 holder.setBounds(0, 0, 0 + bitmap.width, 0

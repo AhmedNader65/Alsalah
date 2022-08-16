@@ -7,7 +7,7 @@ import com.crazyidea.alsalah.data.api.Network
 import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.model.Comment
 import com.crazyidea.alsalah.data.model.ServerResponse
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,7 +17,6 @@ import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 
 class DefaultArticlesRepository @Inject constructor(
-    private val globalPreferences: GlobalPreferences
 ) : ArticlesRepository {
 
 

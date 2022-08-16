@@ -30,6 +30,7 @@ import com.crazyidea.alsalah.adapter.ArticlesAdapter
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
 import com.crazyidea.alsalah.ui.khatma.KhatmaFragmentDirections
+import com.crazyidea.alsalah.ui.setting.AppSettings
 import com.crazyidea.alsalah.ui.setting.SalahSettings
 import com.crazyidea.alsalah.utils.*
 import com.crazyidea.alsalah.workManager.DailyAzanWorker
@@ -80,8 +81,6 @@ class HomeFragment : Fragment(), LocationListener {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,7 +98,6 @@ class HomeFragment : Fragment(), LocationListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        globalPreferences.getAzan()
         checkPermissions()
         adapter = ArticlesAdapter(arrayListOf(), onReadMore = {
             findNavController().navigate(
@@ -141,7 +139,7 @@ class HomeFragment : Fragment(), LocationListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val window: Window = requireActivity().window
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                window.setStatusBarColor(viewModel.getStatusBarColor(it, requireContext()))
+                window.statusBarColor = viewModel.getStatusBarColor(it, requireContext())
             }
         })
 
@@ -365,8 +363,8 @@ class HomeFragment : Fragment(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         Timber.d("onLocationChanged")
-        globalPreferences.storeLatitude(location.latitude.toString())
-        globalPreferences.storeLongitude(location.longitude.toString())
+        viewModel.update(AppSettings.LATITUDE,location.latitude)
+        viewModel.update(AppSettings.LONGITUDE,location.longitude)
         viewModel.fetchPrayerData(
             location.latitude.toString(),
             location.longitude.toString(),

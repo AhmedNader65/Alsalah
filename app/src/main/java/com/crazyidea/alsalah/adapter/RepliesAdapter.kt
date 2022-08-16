@@ -10,12 +10,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.Comment
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 
 class RepliesAdapter(
     private var spots: ArrayList<Comment>
 ) : RecyclerView.Adapter<RepliesAdapter.ViewHolder>() {
-    lateinit var globalPreferences: GlobalPreferences
     lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +25,6 @@ class RepliesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val spot = spots[position]
-        globalPreferences = GlobalPreferences(context)
 //        holder.username.text = spot.owner
         holder.datetime.text = spot.created_at
         holder.review.text = spot.comment

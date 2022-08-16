@@ -23,13 +23,15 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.AzanSoundAdapter
 import com.crazyidea.alsalah.data.model.Azan
 import com.crazyidea.alsalah.databinding.FragmentAzanSettingBinding
 import com.crazyidea.alsalah.receiver.AlarmReceiver
+import com.crazyidea.alsalah.ui.setting.AppSettings
 import com.crazyidea.alsalah.ui.setting.AzanSettings
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,8 +56,6 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
     private var whereFrom = 1
     private lateinit var permissionHelper: PermissionHelper
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -197,9 +197,9 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
     override fun onAzanPicked(azan: Azan) {
         val notificationManager: NotificationManager =
             requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.deleteNotificationChannel(globalPreferences.getPrayerChannelId())
-        viewModel.update(AzanSettings.AZAN_SOUND,azan.id)
-        viewModel.update(AzanSettings.AZAN_CHANNEL,"PRAYER" + Random().nextInt())
+        notificationManager.deleteNotificationChannel(DataStoreCollector.AzanPrefs.channel)
+        viewModel.update(AzanSettings.AZAN_SOUND, azan.id)
+        viewModel.update(AzanSettings.AZAN_CHANNEL, "PRAYER" + Random().nextInt())
     }
 
     override fun onPlayClicked(azan: Azan) {

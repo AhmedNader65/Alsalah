@@ -14,7 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentChooseMazhabBinding
 import com.crazyidea.alsalah.ui.setting.SalahSettings
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.crazyidea.alsalah.utils.themeColor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -29,7 +29,6 @@ class MazhabFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel by viewModels<MazhabViewModel>()
-    lateinit var globalPreferences: GlobalPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +44,6 @@ class MazhabFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        globalPreferences = GlobalPreferences(requireContext())
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

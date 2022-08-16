@@ -9,14 +9,13 @@ import com.crazyidea.alsalah.data.model.asDatabaseModel
 import com.crazyidea.alsalah.data.model.asEditionDatabaseModel
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.entity.*
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DefaultQuranRepository @Inject constructor(
     private val appDatabase: AppDatabase,
-    private val globalPreferences: GlobalPreferences,
     private val externalScope: CoroutineScope
 ) : QuranRepository {
     override val bookmarks: LiveData<List<BookmarkWithAya>> = appDatabase.quranDao().getBookmarks()

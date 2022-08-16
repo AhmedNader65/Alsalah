@@ -135,7 +135,7 @@ class AzkarDetailsFragment : Fragment() {
 
 
     fun setSize() {
-        val display: Display = requireActivity().getWindowManager().getDefaultDisplay()
+        val display: Display = requireActivity().windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
         val width: Int = size.x

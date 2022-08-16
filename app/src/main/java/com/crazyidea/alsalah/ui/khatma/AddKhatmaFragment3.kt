@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.crazyidea.alsalah.App
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentAddKhatma3Binding
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.crazyidea.alsalah.utils.setAlarm
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -29,8 +29,6 @@ class AddKhatmaFragment3 : Fragment() {
     private var minute: Int = 10
     private var _binding: FragmentAddKhatma3Binding? = null
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
 
     // This property is only valid between onCreateView and
     // onDestroyView.

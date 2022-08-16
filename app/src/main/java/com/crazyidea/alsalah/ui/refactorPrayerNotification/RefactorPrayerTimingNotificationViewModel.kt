@@ -1,11 +1,9 @@
 package com.crazyidea.alsalah.ui.refactorPrayerNotification
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.crazyidea.alsalah.data.repository.PrayerSettingsRepository
 import com.crazyidea.alsalah.ui.setting.BaseSettingViewModel
 import com.crazyidea.alsalah.ui.setting.SalahSettings
-import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

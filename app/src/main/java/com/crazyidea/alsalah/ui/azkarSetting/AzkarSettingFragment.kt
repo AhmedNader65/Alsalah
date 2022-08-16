@@ -17,7 +17,7 @@ import com.crazyidea.alsalah.databinding.FragmentAzkarSettingBinding
 import com.crazyidea.alsalah.ui.setting.AppSettings
 import com.crazyidea.alsalah.ui.setting.AzanSettings
 import com.crazyidea.alsalah.ui.setting.AzkarSettings
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,8 +49,6 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
     @Inject
     lateinit var dataStoreManager: DataStoreManager
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,6 +62,10 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
     }
 
     var language: String = "ar"
+    var notifySleeping: Boolean = true
+    var notifyEvening: Boolean = true
+    var notifyMorning: Boolean = true
+    var notifyAfterPrayer: Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,9 +76,17 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.fetchData()
                     .collect { preferences ->
+                        notifySleeping = preferences[AzkarSettings.SLEEPING_AZKAR] ?: true
+                        notifyEvening = preferences[AzkarSettings.EVENING_AZKAR] ?: true
+                        notifyMorning = preferences[AzkarSettings.MORNING_AZKAR] ?: true
+                        notifyAfterPrayer = preferences[AzkarSettings.AFTER_PRAYER_AZKAR] ?: true
                         language = preferences[AzkarSettings.LANGUAGE] ?: "ar"
-                        adapter.updateSelectedLanguage( language)
+                        adapter.updateSelectedLanguage(language)
 
+                        binding.afterPrayerAzkarSwitch.isChecked = notifyAfterPrayer
+                        binding.morningAzkarSwitch.isChecked = notifyMorning
+                        binding.nightAzkarSwitch.isChecked = notifyEvening
+                        binding.sleepAzkarSwitch.isChecked = notifySleeping
                     }
             }
         }
@@ -86,21 +96,17 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
         }
         viewLifecycleOwner.lifecycleScope
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
-        binding.afterPrayerAzkarSwitch.isChecked = globalPreferences.isAfterPrayerNotification()
-        binding.morningAzkarSwitch.isChecked = globalPreferences.isMorningNotification()
-        binding.nightAzkarSwitch.isChecked = globalPreferences.isEveningNotification()
-        binding.sleepAzkarSwitch.isChecked = globalPreferences.isSleepingNotification()
         binding.afterPrayerAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeAfterPrayerNotification(isChecked)
+            viewModel.update(AzkarSettings.AFTER_PRAYER_AZKAR, isChecked)
         }
         binding.morningAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeMorningNotification(isChecked)
+            viewModel.update(AzkarSettings.MORNING_AZKAR, isChecked)
         }
         binding.nightAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeEveningNotification(isChecked)
+            viewModel.update(AzkarSettings.EVENING_AZKAR, isChecked)
         }
         binding.sleepAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeSleepingNotification(isChecked)
+            viewModel.update(AzkarSettings.SLEEPING_AZKAR, isChecked)
         }
         binding.notificationTimeText.setOnClickListener {
             val picker =
@@ -118,7 +124,7 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
                 val calendar = Calendar.getInstance()
                 calendar.set(Calendar.HOUR_OF_DAY, hour)
                 calendar.set(Calendar.MINUTE, minute)
-                globalPreferences.storeSleepingTime(calendar.timeInMillis)
+                viewModel.update(AzkarSettings.SLEEPING_AZKAR_TIME, calendar.timeInMillis)
                 binding.notificationTimeText.text = getTime(picker.hour, picker.minute)
             }
             picker.addOnNegativeButtonClickListener {

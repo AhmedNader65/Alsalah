@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.SupportedLanguage
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.crazyidea.alsalah.utils.themeColor
 
 
@@ -93,7 +93,7 @@ class LanguagesAdapter(
     }
 
 
-    public interface LanguagListner {
+    interface LanguagListner {
         fun onlangPicked(language: SupportedLanguage)
     }
 

@@ -15,7 +15,6 @@ import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.PoleCalculation
 import com.crazyidea.alsalah.databinding.FragmentChoosePoleCalculateWayBinding
 import com.crazyidea.alsalah.ui.setting.SalahSettings
-import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.themeColor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

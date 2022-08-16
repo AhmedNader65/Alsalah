@@ -268,7 +268,7 @@ class CompassView(context: Context, attrs: AttributeSet? = null) : View(context,
             canvas.drawCircle(cx, cy, radius + 20, circlePaint2)
         }else{
             showQebla = false
-            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC);
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
         }
         invalidate()
         requestLayout()

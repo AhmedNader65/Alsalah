@@ -6,9 +6,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.repository.PrayersRepository
-import com.crazyidea.alsalah.ui.setting.AzanSettings
+import com.crazyidea.alsalah.ui.setting.AppSettings
 import com.crazyidea.alsalah.ui.setting.SalahSettings
-import com.crazyidea.alsalah.utils.GlobalPreferences
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
@@ -21,7 +20,6 @@ class RefreshDataWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val repository: PrayersRepository,
-    private val globalPreferences: GlobalPreferences,
     val dataStoreManager: DataStoreManager,
 ) : CoroutineWorker(context, workerParams) {
     companion object {
@@ -38,6 +36,8 @@ class RefreshDataWorker @AssistedInject constructor(
         var asrMargin: Int = 0
         var maghribMargin: Int = 0
         var ishaMargin: Int = 0
+        var latitude: Double
+        var longitude: Double
         runBlocking {
             val salahPref = dataStoreManager.prayerSettings.data.first()
             calculationMethods = salahPref[SalahSettings.CALCULATION_METHOD] ?: 0
@@ -49,14 +49,17 @@ class RefreshDataWorker @AssistedInject constructor(
             asrMargin = salahPref[SalahSettings.ASR_MARGIN] ?: 0
             maghribMargin = salahPref[SalahSettings.MAGHRIB_MARGIN] ?: 0
             ishaMargin = salahPref[SalahSettings.ISHA_MARGIN] ?: 0
+            val appPref = dataStoreManager.settingsDataStore.data.first()
+            latitude = appPref[AppSettings.LATITUDE] ?: 0.0
+            longitude = appPref[AppSettings.LONGITUDE] ?: 0.0
         }
         val calendar = Calendar.getInstance()
         return try {
             repository.refreshPrayers(
                 (calendar.get(Calendar.MONTH) + 1).toString(),
                 (calendar.get(Calendar.YEAR)).toString(),
-                globalPreferences.getLatitude(),
-                globalPreferences.getLongitude(),
+                latitude.toString(),
+                longitude.toString(),
                 calculationMethods,
                 school,
                 "0,$fajrMargin,$shorokMargin,$dhuhrMargin,$asrMargin,$maghribMargin,$ishaMargin,0",

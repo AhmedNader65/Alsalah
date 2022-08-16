@@ -8,7 +8,7 @@ import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.SupportedLanguage
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 
 class AzkarLanguagesRadioAdapter(
     private val dataSet: ArrayList<SupportedLanguage>,
@@ -17,8 +17,6 @@ class AzkarLanguagesRadioAdapter(
     RecyclerView.Adapter<AzkarLanguagesRadioAdapter.ViewHolder>() {
     private var selectedLanguage: String = "ar"
     private lateinit var context: Context
-
-    lateinit var globalPreferences: GlobalPreferences
 
     /**
      * Provide a reference to the type of views that you are using
@@ -46,7 +44,6 @@ class AzkarLanguagesRadioAdapter(
         // Create a new view, which defines the UI of the list item
 
         context = viewGroup.context
-        globalPreferences = GlobalPreferences(context)
         findMyLanguage()
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.item_radio_btn, viewGroup, false)
@@ -84,7 +81,7 @@ class AzkarLanguagesRadioAdapter(
     }
 
 
-    public interface LanguagListner {
+    interface LanguagListner {
         fun onlangPicked(language: SupportedLanguage)
     }
 
