@@ -17,19 +17,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.AzanSoundAdapter
 import com.crazyidea.alsalah.data.model.Azan
 import com.crazyidea.alsalah.databinding.FragmentAzanSettingBinding
 import com.crazyidea.alsalah.receiver.AlarmReceiver
-import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.ui.setting.AppSettings
+import com.crazyidea.alsalah.ui.setting.AzanSettings
+
 import com.crazyidea.alsalah.utils.PermissionHelper
 import com.crazyidea.alsalah.utils.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -45,8 +56,6 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
     private var whereFrom = 1
     private lateinit var permissionHelper: PermissionHelper
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -75,21 +84,61 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
         }
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
 
-
         binding.notifyBeforePrayerSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeBeforePrayerNotification(isChecked)
+            Timber.e("updating change in before prayer")
+            viewModel.update(AzanSettings.BEFORE_PRAYER_REMINDER, isChecked)
         }
-        binding.notifyBeforePrayerSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeBeforePrayerNotification(isChecked)
+        binding.notifyAtIqamaSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.update(AzanSettings.IQAMA_NOTIFICATION, isChecked)
         }
-        binding.mosques.isChecked = globalPreferences.getAzanBackground()
-        binding.naturalViews.isChecked = !globalPreferences.getAzanBackground()
+        binding.notifyAtPrayerSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.update(AzanSettings.AZAN_NOTIFICATION, isChecked)
+        }
         binding.backgroundVideo.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.naturalViews -> globalPreferences.setAzanBackgroundMosque(false)
-                else -> globalPreferences.setAzanBackgroundMosque(true)
+                R.id.naturalViews -> viewModel.update(AzanSettings.AZAN_MOSQUE_BG, false)
+                else -> viewModel.update(AzanSettings.AZAN_MOSQUE_BG, true)
             }
         }
+
+        setupCollectors()
+    }
+
+    private fun setupCollectors() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchBooleanData(AzanSettings.BEFORE_PRAYER_REMINDER, default = true)
+                    .collect {
+                        binding.notifyBeforePrayerSwitch.isChecked = it
+                    }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchBooleanData(AzanSettings.AZAN_NOTIFICATION, default = true)
+                    .collect {
+                        binding.notifyAtPrayerSwitch.isChecked = it
+                    }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchBooleanData(AzanSettings.IQAMA_NOTIFICATION, default = true)
+                    .collect {
+                        binding.notifyAtIqamaSwitch.isChecked = it
+                    }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchBooleanData(AzanSettings.AZAN_MOSQUE_BG, default = true)
+                    .collect {
+                        binding.mosques.isChecked = it
+                        binding.naturalViews.isChecked = !it
+                    }
+            }
+        }
+
     }
 
 
@@ -119,7 +168,7 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
                 val uri: Uri? = data?.data
                 if (uri != null) {
 
-                    globalPreferences.saveCustomAzanUri(uri)
+//                    globalPreferences.saveCustomAzanUri(uri)
                 }
             }
         }
@@ -148,9 +197,9 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
     override fun onAzanPicked(azan: Azan) {
         val notificationManager: NotificationManager =
             requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.deleteNotificationChannel(globalPreferences.getPrayerChannelId())
-        globalPreferences.saveAzan(azan.id)
-
+        notificationManager.deleteNotificationChannel(DataStoreCollector.AzanPrefs.channel)
+        viewModel.update(AzanSettings.AZAN_SOUND, azan.id)
+        viewModel.update(AzanSettings.AZAN_CHANNEL, "PRAYER" + Random().nextInt())
     }
 
     override fun onPlayClicked(azan: Azan) {

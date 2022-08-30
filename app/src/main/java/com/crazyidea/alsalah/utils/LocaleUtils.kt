@@ -20,11 +20,7 @@ import java.util.*
 
 val Resources.isRtl get() = configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 
-suspend fun Context.setLocale(): Context {
-    val dataStoreManager = DataStoreManager(this)
-    val locale = Locale(dataStoreManager.settingsDataStore.data.map { preferences ->
-        preferences[AppSettings.APP_LANGUAGE] ?: "ar"
-    }.first())
+fun Context.setLocale(locale: Locale): Context {
     Locale.setDefault(locale)
     val config = resources.configuration
     config.setLocale(locale)

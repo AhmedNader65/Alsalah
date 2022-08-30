@@ -3,8 +3,10 @@ package com.crazyidea.alsalah.ui.azkar.sebha
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.crazyidea.alsalah.data.repository.AppSettingsRepository
 import com.crazyidea.alsalah.data.repository.AzkarRepository
 import com.crazyidea.alsalah.data.room.entity.azkar.Azkar
+import com.crazyidea.alsalah.ui.setting.BaseSettingViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -12,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SebhaViewModel @Inject constructor(
     private val azkarRepository: AzkarRepository,
-) : ViewModel() {
+    azkarSettingsRepository: AppSettingsRepository,
+) : BaseSettingViewModel(azkarSettingsRepository) {
 
     private var gettingNextAzkar: Boolean = false
     val azkar = MutableLiveData<Azkar>()

@@ -6,7 +6,7 @@ import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.repository.DefaultPrayersRepository
 import com.crazyidea.alsalah.data.repository.*
 import com.crazyidea.alsalah.data.room.AppDatabase
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,11 +24,6 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun globalPreferences(@ApplicationContext context: Context): GlobalPreferences =
-        GlobalPreferences(context)
-
-    @Provides
-    @Singleton
     fun provideDB(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(
             context,
@@ -39,9 +34,8 @@ class DataModule {
     @Provides
     @Singleton
     fun provideArticlesRepository(
-        globalPreferences: GlobalPreferences
     ): ArticlesRepository =
-        DefaultArticlesRepository(globalPreferences)
+        DefaultArticlesRepository()
 
     @Provides
     @Singleton
@@ -60,28 +54,25 @@ class DataModule {
     @Singleton
     fun provideQuranRepository(
         coroutineScope: CoroutineScope,
-        globalPreferences: GlobalPreferences,
         appDatabase: AppDatabase,
     ): QuranRepository =
-        DefaultQuranRepository(appDatabase, globalPreferences, coroutineScope)
+        DefaultQuranRepository(appDatabase, coroutineScope)
 
     @Provides
     @Singleton
     fun provideKhatmaRepository(
         coroutineScope: CoroutineScope,
-        globalPreferences: GlobalPreferences,
         appDatabase: AppDatabase,
     ): KhatmaRepository =
-        DefaultKhatmaRepository(appDatabase, globalPreferences, coroutineScope)
+        DefaultKhatmaRepository(appDatabase, coroutineScope)
 
     @Provides
     @Singleton
     fun provideAzkarRepository(
         appDatabase: AppDatabase,
-        globalPreferences: GlobalPreferences,
         coroutineScope: CoroutineScope
     ): AzkarRepository =
-        DefaultAzkarRepository(appDatabase, globalPreferences, coroutineScope)
+        DefaultAzkarRepository(appDatabase, coroutineScope)
 
     @Provides
     @Singleton
@@ -103,7 +94,23 @@ class DataModule {
         coroutineScope: CoroutineScope,
         dataStoreManager: DataStoreManager,
     ): SettingsRepository =
-        DefaultSettingsRepository(coroutineScope,dataStoreManager)
+        AppSettingsRepository(coroutineScope,dataStoreManager)
+
+    @Provides
+    @Singleton
+    fun provideAzanSettingsRepository(
+        coroutineScope: CoroutineScope,
+        dataStoreManager: DataStoreManager,
+    ): AzanSettingsRepository =
+        AzanSettingsRepository(coroutineScope,dataStoreManager)
+
+    @Provides
+    @Singleton
+    fun providePrayerSettingsRepository(
+        coroutineScope: CoroutineScope,
+        dataStoreManager: DataStoreManager,
+    ): PrayerSettingsRepository =
+        PrayerSettingsRepository(coroutineScope,dataStoreManager)
 
     @Provides
     @Singleton

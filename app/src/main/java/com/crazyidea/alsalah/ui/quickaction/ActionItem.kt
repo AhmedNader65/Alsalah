@@ -84,7 +84,7 @@ class ActionItem @JvmOverloads constructor(
      *
      * @param icon [Drawable] action icon
      */
-    constructor(icon: Drawable?) : this(-1, null, icon, -1) {}
+    constructor(icon: Drawable?) : this(-1, null, icon, -1)
 
     /**
      * Constructor
@@ -92,7 +92,7 @@ class ActionItem @JvmOverloads constructor(
      * @param actionId  Action ID of item
      * @param icon      [Drawable] action icon
      */
-    constructor(actionId: Int, icon: Drawable?) : this(actionId, null, icon, -1) {}
+    constructor(actionId: Int, icon: Drawable?) : this(actionId, null, icon, -1)
     /**
      * Constructor
      *

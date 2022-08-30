@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.crazyidea.alsalah.App
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.room.entity.Ayat
 import com.crazyidea.alsalah.data.room.entity.Khatma
@@ -31,14 +32,13 @@ fun bindPrayerHeaderImage(imageView: ImageView, prayerId: Int, clickedID: Int) {
 @BindingAdapter("setupSurahInfo")
 fun bindSurahInfo(textView: TextView, surah: Surah) {
     val context = textView.context
-    val sharedPref = GlobalPreferences(context)
     var text = context.getString(R.string.surah_number)
     text += " "
-    text += String.format(Locale(sharedPref.getLocale()), "%d", surah.id)
+    text += String.format(App.instance.getAppLocale(), "%d", surah.id)
     text += " - "
     text += context.getString(R.string.surah_ayat)
     text += " "
-    text += String.format(Locale(sharedPref.getLocale()), "%d", surah.numberOfAyahs)
+    text += String.format(App.instance.getAppLocale(), "%d", surah.numberOfAyahs)
     text += " - "
     text += if (surah.revelationType == "Meccan") context.getString(R.string.meccan) else context.getString(
         R.string.madanya
@@ -49,8 +49,7 @@ fun bindSurahInfo(textView: TextView, surah: Surah) {
 @BindingAdapter("setupSurahPage")
 fun bindSurahPage(textView: TextView, surah: Surah) {
     val context = textView.context
-    val sharedPref = GlobalPreferences(context)
-    var text = String.format(Locale(sharedPref.getLocale()), "%d", surah.page)
+    var text = String.format(App.instance.getAppLocale(), "%d", surah.page)
 
     textView.text = text
 }
@@ -186,15 +185,10 @@ fun bindKhatmaProgress(progressBar: ProgressBar, item: Khatma?) {
 
 @BindingAdapter("setupAyah")
 fun setupAyah(textView: TextView, item: Ayat?) {
-    val sharedPref = GlobalPreferences(textView.context)
     item?.let {
         textView.text =
             "${item.surah} : ${textView.context.getString(R.string.ayah)} ${
-                String.format(
-                    Locale(
-                        sharedPref.getLocale()
-                    ), "%d", item.number
-                )
+                String.format(App.instance.getAppLocale(), "%d", item.number)
             }"
     }
 }
@@ -205,33 +199,39 @@ fun setupNextPrayer(textView: TextView, item: Pair<String, String>) {
     textView.text =
         if (item.first.length < 2) {
             if (item.first == "0") {
-                context.getString(R.string.prev_prayer, when (item.second){
-                    "الفجر" -> context.getString(R.string.fajr)
-                    "الشروق" -> context.getString(R.string.shorooq)
-                    "الظهر" -> context.getString(R.string.zuhr)
-                    "العصر" -> context.getString(R.string.asr)
-                    "المغرب" -> context.getString(R.string.maghrib)
-                    else -> context.getString(R.string.eshaa)
-                })
+                context.getString(
+                    R.string.prev_prayer, when (item.second) {
+                        "الفجر" -> context.getString(R.string.fajr)
+                        "الشروق" -> context.getString(R.string.shorooq)
+                        "الظهر" -> context.getString(R.string.zuhr)
+                        "العصر" -> context.getString(R.string.asr)
+                        "المغرب" -> context.getString(R.string.maghrib)
+                        else -> context.getString(R.string.eshaa)
+                    }
+                )
             } else {
 
-                context.getString(R.string.next_prayer,  when (item.second){
+                context.getString(
+                    R.string.next_prayer, when (item.second) {
+                        "الفجر" -> context.getString(R.string.fajr)
+                        "الشروق" -> context.getString(R.string.shorooq)
+                        "الظهر" -> context.getString(R.string.zuhr)
+                        "العصر" -> context.getString(R.string.asr)
+                        "المغرب" -> context.getString(R.string.maghrib)
+                        else -> context.getString(R.string.eshaa)
+                    }
+                )
+            }
+        } else {
+            context.getString(
+                R.string.next_prayer, when (item.first) {
                     "الفجر" -> context.getString(R.string.fajr)
                     "الشروق" -> context.getString(R.string.shorooq)
                     "الظهر" -> context.getString(R.string.zuhr)
                     "العصر" -> context.getString(R.string.asr)
                     "المغرب" -> context.getString(R.string.maghrib)
                     else -> context.getString(R.string.eshaa)
-                })
-            }
-        } else {
-            context.getString(R.string.next_prayer, when (item.first){
-                "الفجر" -> context.getString(R.string.fajr)
-                "الشروق" -> context.getString(R.string.shorooq)
-                "الظهر" -> context.getString(R.string.zuhr)
-                "العصر" -> context.getString(R.string.asr)
-                "المغرب" -> context.getString(R.string.maghrib)
-                else -> context.getString(R.string.eshaa)
-            })
+                }
+            )
         }
 }

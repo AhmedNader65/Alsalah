@@ -49,7 +49,7 @@ class BlogDetailViewModel @Inject constructor(
             articlesRepository.fetchComments(id)
                 .collect {
                     if (it?.data != null)
-                        _commentData.value = it.data!!
+                        _commentData.value = it.data
                 }
         }
 
@@ -62,7 +62,7 @@ class BlogDetailViewModel @Inject constructor(
             articlesRepository.postArticleComment(id,comment)
                 .collect {
                     if (it?.data != null)
-                        _comments.value = it.data!!
+                        _comments.value = it.data
                 }
         }
 
@@ -77,7 +77,7 @@ class BlogDetailViewModel @Inject constructor(
                  articlesRepository.postArticleLike(id)
                      .collect {
                          if (it?.data != null)
-                             _likedComments.value = it.data!!
+                             _likedComments.value = it.data
                      }
         }
 
@@ -90,7 +90,7 @@ class BlogDetailViewModel @Inject constructor(
             articlesRepository.postShareArticle(id)
                 .collect {
                     if (it?.data != null)
-                        _share.value = it.data!!
+                        _share.value = it.data
                 }
         }
 

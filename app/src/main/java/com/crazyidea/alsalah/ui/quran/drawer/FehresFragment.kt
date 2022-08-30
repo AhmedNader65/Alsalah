@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -17,10 +16,8 @@ import com.crazyidea.alsalah.adapter.SurahClickListener
 import com.crazyidea.alsalah.data.room.entity.Surah
 import com.crazyidea.alsalah.databinding.FragmentFehresBinding
 import com.crazyidea.alsalah.ui.quran.SharedQuranViewModel
-import com.crazyidea.alsalah.utils.GlobalPreferences
 import com.crazyidea.alsalah.utils.withoutDiacritics
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -32,8 +29,6 @@ class FehresFragment : Fragment() {
     private var _binding: FragmentFehresBinding? = null
     private val viewModel by viewModels<SharedQuranViewModel>({ requireActivity() })
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
 
     // This property is only valid between onCreateView and
     // onDestroyView.

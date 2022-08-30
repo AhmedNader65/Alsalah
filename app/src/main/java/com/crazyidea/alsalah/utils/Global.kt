@@ -68,9 +68,17 @@ fun <T : Any> RecyclerView.withSimpleAdapter(
     return recyclerAdapter
 }
 
-fun updateStoredPreference(context: Context) {
-    val prefs = GlobalPreferences(context)
-    coordinates = Coordinates(prefs.getLatitude().toDouble(), prefs.getLongitude().toDouble(), 0.0)
+fun getPrimaryColor(color: Int): PrimaryColor {
+    return when (color) {
+        0 -> PrimaryColor.ORANGE
+        1 -> PrimaryColor.PINK
+        else -> PrimaryColor.BLUE
+    }
+}
+
+
+fun updateStoredPreference(lat: Double, lng: Double) {
+    coordinates = Coordinates(lat, lng, 0.0)
 }
 
 fun ignoreCaseOpt(ignoreCase: Boolean) =

@@ -6,19 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.AzkarLanguagesRadioAdapter
 import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.model.SupportedLanguage
 import com.crazyidea.alsalah.databinding.FragmentAzkarSettingBinding
 import com.crazyidea.alsalah.ui.setting.AppSettings
-import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.ui.setting.AzanSettings
+import com.crazyidea.alsalah.ui.setting.AzkarSettings
+
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.sql.Time
 import java.text.Format
 import java.text.SimpleDateFormat
@@ -29,7 +35,6 @@ import kotlin.collections.ArrayList
 @AndroidEntryPoint
 class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListner {
 
-    private lateinit var language : String
     private var _binding: FragmentAzkarSettingBinding? = null
 
     private var hour: Int = 10
@@ -43,8 +48,7 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,34 +61,52 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
         return root
     }
 
+    var language: String = "ar"
+    var notifySleeping: Boolean = true
+    var notifyEvening: Boolean = true
+    var notifyMorning: Boolean = true
+    var notifyAfterPrayer: Boolean = true
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.languagesRV.adapter = AzkarLanguagesRadioAdapter(createLanguages(), this)
+        val adapter = AzkarLanguagesRadioAdapter(createLanguages(), this)
+        binding.languagesRV.adapter = adapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchData()
+                    .collect { preferences ->
+                        notifySleeping = preferences[AzkarSettings.SLEEPING_AZKAR] ?: true
+                        notifyEvening = preferences[AzkarSettings.EVENING_AZKAR] ?: true
+                        notifyMorning = preferences[AzkarSettings.MORNING_AZKAR] ?: true
+                        notifyAfterPrayer = preferences[AzkarSettings.AFTER_PRAYER_AZKAR] ?: true
+                        language = preferences[AzkarSettings.LANGUAGE] ?: "ar"
+                        adapter.updateSelectedLanguage(language)
+
+                        binding.afterPrayerAzkarSwitch.isChecked = notifyAfterPrayer
+                        binding.morningAzkarSwitch.isChecked = notifyMorning
+                        binding.nightAzkarSwitch.isChecked = notifyEvening
+                        binding.sleepAzkarSwitch.isChecked = notifySleeping
+                    }
+            }
+        }
         binding.upDownImg.setOnClickListener {
             status = !status
             checkRecyclerView()
         }
-
-        val languageFlow :Flow<String> = dataStoreManager.settingsDataStore.data.map { preferences ->
-            return@map preferences[AppSettings.APP_LANGUAGE] ?: "ar"
-        }
         viewLifecycleOwner.lifecycleScope
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
-        binding.afterPrayerAzkarSwitch.isChecked = globalPreferences.isAfterPrayerNotification()
-        binding.morningAzkarSwitch.isChecked = globalPreferences.isMorningNotification()
-        binding.nightAzkarSwitch.isChecked = globalPreferences.isEveningNotification()
-        binding.sleepAzkarSwitch.isChecked = globalPreferences.isSleepingNotification()
         binding.afterPrayerAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeAfterPrayerNotification(isChecked)
+            viewModel.update(AzkarSettings.AFTER_PRAYER_AZKAR, isChecked)
         }
         binding.morningAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeMorningNotification(isChecked)
+            viewModel.update(AzkarSettings.MORNING_AZKAR, isChecked)
         }
         binding.nightAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeEveningNotification(isChecked)
+            viewModel.update(AzkarSettings.EVENING_AZKAR, isChecked)
         }
         binding.sleepAzkarSwitch.setOnCheckedChangeListener { _, isChecked ->
-            globalPreferences.storeSleepingNotification(isChecked)
+            viewModel.update(AzkarSettings.SLEEPING_AZKAR, isChecked)
         }
         binding.notificationTimeText.setOnClickListener {
             val picker =
@@ -102,7 +124,7 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
                 val calendar = Calendar.getInstance()
                 calendar.set(Calendar.HOUR_OF_DAY, hour)
                 calendar.set(Calendar.MINUTE, minute)
-                globalPreferences.storeSleepingTime(calendar.timeInMillis)
+                viewModel.update(AzkarSettings.SLEEPING_AZKAR_TIME, calendar.timeInMillis)
                 binding.notificationTimeText.text = getTime(picker.hour, picker.minute)
             }
             picker.addOnNegativeButtonClickListener {
@@ -138,16 +160,16 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
     }
 
     private fun createLanguages(): ArrayList<SupportedLanguage> {
-        var languages = ArrayList<SupportedLanguage>()
-        languages.add(SupportedLanguage(resources.getString(R.string.arabic), "ar", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.english), "en", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.frecnh), "fr", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.turkish), "tr", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.dutch), "du", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.spanish), "sp", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.indonisian), "in", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.urdu), "ur", false))
-        languages.add(SupportedLanguage(resources.getString(R.string.igorish), "ig", false))
+        val languages = ArrayList<SupportedLanguage>()
+        languages.add(SupportedLanguage(resources.getString(R.string.arabic), "ar"))
+        languages.add(SupportedLanguage(resources.getString(R.string.english), "en"))
+        languages.add(SupportedLanguage(resources.getString(R.string.frecnh), "fr"))
+        languages.add(SupportedLanguage(resources.getString(R.string.turkish), "tr"))
+        languages.add(SupportedLanguage(resources.getString(R.string.dutch), "du"))
+        languages.add(SupportedLanguage(resources.getString(R.string.spanish), "sp"))
+        languages.add(SupportedLanguage(resources.getString(R.string.indonisian), "in"))
+        languages.add(SupportedLanguage(resources.getString(R.string.urdu), "ur"))
+        languages.add(SupportedLanguage(resources.getString(R.string.igorish), "ig"))
         return languages
     }
 
@@ -157,7 +179,7 @@ class AzkarSettingFragment : Fragment(), AzkarLanguagesRadioAdapter.LanguagListn
     }
 
     override fun onlangPicked(language: SupportedLanguage) {
-        globalPreferences.storeAzkarLanguage(language.shortcut)
+        viewModel.update(AzkarSettings.LANGUAGE, language.shortcut)
 
     }
 }

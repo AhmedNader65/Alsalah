@@ -1,14 +1,11 @@
 package com.crazyidea.alsalah.ui.quran
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -17,14 +14,13 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.adapter.QuranPageAdapter
 import com.crazyidea.alsalah.databinding.FragmentQuranBinding
-import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.ui.setting.AppSettings
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -36,8 +32,6 @@ class QuranFragment : Fragment() {
     private var _binding: FragmentQuranBinding? = null
     private val viewModel by viewModels<SharedQuranViewModel>({ requireActivity() })
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -72,8 +66,8 @@ class QuranFragment : Fragment() {
                         viewModel.setCurrentPage(it.read.plus(1))
                     }
                 else
-                    if (globalPreferences.lastReadingPage() != 0) {
-                        viewModel.setCurrentPage(globalPreferences.lastReadingPage())
+                    if (DataStoreCollector.lastReading != 0) {
+                        viewModel.setCurrentPage(DataStoreCollector.lastReading)
                     }
             }
         }
@@ -122,9 +116,9 @@ class QuranFragment : Fragment() {
             if (args.type != "quran")
                 args.khatma?.let {
                     viewModel.khatma.value = it
-                    viewModel.updateKhatma(it.id!!.toLong(),position + 1)
+                    viewModel.updateKhatma(it.id!!.toLong(), position + 1)
                 }
-            globalPreferences.saveLastReadingPage(position + 1)
+            viewModel.update(AppSettings.LAST_READING, position + 1)
             viewModel.setSideDrawerPage(position + 1)
         }
     }

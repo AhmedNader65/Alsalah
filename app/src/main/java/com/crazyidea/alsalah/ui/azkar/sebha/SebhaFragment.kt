@@ -12,20 +12,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentSebhaBinding
-import com.crazyidea.alsalah.utils.GlobalPreferences
+import com.crazyidea.alsalah.ui.setting.AzkarSettings
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.math.roundToInt
 
 
@@ -34,10 +33,8 @@ const val MODE = "SEBHA_MODE"
 @AndroidEntryPoint
 class SebhaFragment : Fragment(), Animator.AnimatorListener {
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
-    private var muted: Boolean = false
-    private var vibrate: Boolean = false
+    private var muted: Boolean = !DataStoreCollector.AzkarPrefs.azkarBeep
+    private var vibrate: Boolean = DataStoreCollector.AzkarPrefs.azkarVibrate
     private var animator: ObjectAnimator? = null
     private var _binding: FragmentSebhaBinding? = null
     private val viewModel by viewModels<SebhaViewModel>()
@@ -117,12 +114,12 @@ class SebhaFragment : Fragment(), Animator.AnimatorListener {
         binding.mute.setOnClickListener {
             muted = !muted
             viewModel.muted.value = muted
-            globalPreferences.azkarMuted(muted)
+            viewModel.update(AzkarSettings.BEEP, !muted)
         }
         binding.vibration.setOnClickListener {
             vibrate = !vibrate
             viewModel.vibrate.value = vibrate
-            globalPreferences.azkarMuted(vibrate)
+            viewModel.update(AzkarSettings.VIBRATE,vibrate)
         }
         binding.count.setOnClickListener {
             viewModel.azkarCounter.value = 0

@@ -36,7 +36,8 @@ class RefactorPrayerTimingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.goBack.observe(viewLifecycleOwner) {
-            requireActivity().onBackPressed()
+            if (it)
+                requireActivity().onBackPressed()
         }
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
     }

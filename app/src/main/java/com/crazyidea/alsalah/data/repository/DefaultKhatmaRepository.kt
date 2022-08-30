@@ -6,14 +6,13 @@ import com.crazyidea.alsalah.data.room.entity.Ayat
 import com.crazyidea.alsalah.data.room.entity.BookmarkWithAya
 import com.crazyidea.alsalah.data.room.entity.Khatma
 import com.crazyidea.alsalah.data.room.entity.KhatmaUpdate
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DefaultKhatmaRepository @Inject constructor(
     private val appDatabase: AppDatabase,
-    private val globalPreferences: GlobalPreferences,
     private val externalScope: CoroutineScope
 ) : KhatmaRepository {
     override val khatmas: LiveData<List<Khatma>> = appDatabase.khatmaDao().getAll()

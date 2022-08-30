@@ -519,7 +519,7 @@
 
                             android:background="@drawable/circle_progressbar"
                             android:backgroundTint="?attr/colorPrimary"
-                            android:onClick="@{()->model.controllPrayer((false))}"
+                            android:onClick="@{()->model.controlPrayer((false))}"
                             app:cardCornerRadius="@dimen/_25sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -542,7 +542,7 @@
                             android:layout_margin="@dimen/_2sdp"
                             android:backgroundTint="#588057"
                             android:elevation="@dimen/_2sdp"
-                            android:onClick="@{()->model.controllPrayer((true))}"
+                            android:onClick="@{()->model.controlPrayer((true))}"
                             app:cardCornerRadius="@dimen/_25sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"

@@ -1,11 +1,13 @@
 package com.crazyidea.alsalah.data.repository
 
+import com.crazyidea.alsalah.App
 import com.crazyidea.alsalah.BuildConfig
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.data.api.Network
 import com.crazyidea.alsalah.data.model.Articles
 import com.crazyidea.alsalah.data.model.Comment
 import com.crazyidea.alsalah.data.model.ServerResponse
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,8 +17,7 @@ import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 
 class DefaultArticlesRepository @Inject constructor(
-    private val globalPreferences: GlobalPreferences
-) : ArticlesRepository{
+) : ArticlesRepository {
 
 
     private val infoDataMutex = Mutex()
@@ -30,8 +31,8 @@ class DefaultArticlesRepository @Inject constructor(
     override suspend fun fetchArticle(): Flow<ServerResponse<ArrayList<Articles>>?> {
         return flow {
             val result = Network.articles.getArticles(
-                language = globalPreferences.getArticlesLocale(),
-                id = globalPreferences.getUserId()
+                language = DataStoreCollector.articlesLanguage,
+                id = DataStoreCollector.userId
             )
             result.let {
                 infoDataMutex.withLock {
@@ -45,8 +46,8 @@ class DefaultArticlesRepository @Inject constructor(
     override suspend fun fetchRecentArticle(): Flow<ServerResponse<ArrayList<Articles>>?> {
         return flow {
             val result = Network.articles.getRecentArticles(
-                language = globalPreferences.getLocale(),
-                id = globalPreferences.getUserId(),
+                language = DataStoreCollector.articlesLanguage,
+                id =  DataStoreCollector.userId,
             )
             result.let {
                 infoDataMutex.withLock {
@@ -62,7 +63,7 @@ class DefaultArticlesRepository @Inject constructor(
     override suspend fun fetchComments(id: Int): Flow<ServerResponse<ArrayList<Comment>>?> {
         return flow {
             val result = Network.articles.getArticleComments(
-                language = globalPreferences.getLocale(),
+                language = DataStoreCollector.articlesLanguage,
                 url = BuildConfig.BASE_URL + "article/${id}/comment"
             )
             result.let {
@@ -75,11 +76,14 @@ class DefaultArticlesRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun postArticleComment(id: Int, comment: String): Flow<ServerResponse<Comment>?> {
+    override suspend fun postArticleComment(
+        id: Int,
+        comment: String
+    ): Flow<ServerResponse<Comment>?> {
         return flow {
             val result = Network.articles.postArticleComment(
-                globalPreferences.getLocale(),
-                userID = globalPreferences.getUserId(),
+                language = DataStoreCollector.articlesLanguage,
+                userID =  DataStoreCollector.userId,
                 article_id = id,
                 comment = comment
             )
@@ -97,7 +101,7 @@ class DefaultArticlesRepository @Inject constructor(
     override suspend fun postShareArticle(id: Int): Flow<ServerResponse<String>?> {
         return flow {
             val result = Network.articles.postShare(
-                globalPreferences.getLocale(),
+                App.instance.getAppLocale().language,
                 url = BuildConfig.BASE_URL + "share/${id}/article"
             )
             result.let {
@@ -114,9 +118,9 @@ class DefaultArticlesRepository @Inject constructor(
         return flow {
             val result = Network.articles.postArticleLike(
 
-                language = globalPreferences.getLocale(),
+                App.instance.getAppLocale().language,
                 article_id = id,
-                userID = globalPreferences.getUserId(),
+                userID =  DataStoreCollector.userId,
             )
             result.let {
                 infoDataMutex.withLock {

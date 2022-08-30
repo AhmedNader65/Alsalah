@@ -1,6 +1,7 @@
 package com.crazyidea.alsalah.data.repository
 
 import androidx.lifecycle.LiveData
+import com.crazyidea.alsalah.App
 import com.crazyidea.alsalah.BuildConfig
 import com.crazyidea.alsalah.data.api.Network
 import com.crazyidea.alsalah.data.model.asAyatDatabaseModel
@@ -8,14 +9,13 @@ import com.crazyidea.alsalah.data.model.asDatabaseModel
 import com.crazyidea.alsalah.data.model.asEditionDatabaseModel
 import com.crazyidea.alsalah.data.room.AppDatabase
 import com.crazyidea.alsalah.data.room.entity.*
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DefaultQuranRepository @Inject constructor(
     private val appDatabase: AppDatabase,
-    private val globalPreferences: GlobalPreferences,
     private val externalScope: CoroutineScope
 ) : QuranRepository {
     override val bookmarks: LiveData<List<BookmarkWithAya>> = appDatabase.quranDao().getBookmarks()
@@ -38,7 +38,7 @@ class DefaultQuranRepository @Inject constructor(
 
         return withContext(externalScope.coroutineContext) {
             if (appDatabase.quranDao()
-                    .getEditionByLanguage(globalPreferences.getLocale()) == null
+                    .getEditionByLanguage(App.instance.getAppLocale().language) == null
             ) {
                 val quran = Network.quran.getQuran()
                 appDatabase.quranDao().emptyAyat()

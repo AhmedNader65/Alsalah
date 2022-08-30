@@ -27,7 +27,7 @@ class PermissionHelper (context: Fragment,permissionListener: PermissionListener
         ) { isGranted: Boolean ->
             if (isGranted) {
                 Log.i("Permission: ", "Granted")
-                permissionListener?.isPermissionGranted(true)
+                permissionListener.isPermissionGranted(true)
             } else {
                 Log.i("Permission: ", "Denied")
             }
@@ -40,7 +40,7 @@ class PermissionHelper (context: Fragment,permissionListener: PermissionListener
             Log.i("DEBUG", "${it.key} = ${it.value}")
             if(it.value){
                 println("Successful......")
-                permissionListener?.isPermissionGranted(true)
+                permissionListener.isPermissionGranted(true)
             }
         }
     }

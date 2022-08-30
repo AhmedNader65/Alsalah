@@ -5,13 +5,12 @@ import android.content.Context
 import android.net.Uri
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.repository.BaseRepository
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.crazyidea.alsalah.utils.sendNotification
 
 class Eqammah(
     override val title: String="",
     override val CHANNEL_ID: String,
-    override val globalPreferences: GlobalPreferences,
     override val context: Context,
     override var repository: BaseRepository? = null
 ) : AppNotification {

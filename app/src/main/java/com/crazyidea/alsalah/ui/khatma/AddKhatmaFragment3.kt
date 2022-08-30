@@ -8,9 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.crazyidea.alsalah.App
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentAddKhatma3Binding
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.crazyidea.alsalah.utils.setAlarm
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -28,8 +29,6 @@ class AddKhatmaFragment3 : Fragment() {
     private var minute: Int = 10
     private var _binding: FragmentAddKhatma3Binding? = null
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -105,7 +104,7 @@ class AddKhatmaFragment3 : Fragment() {
     private fun getTime(hr: Int, min: Int): String? {
         val tme = Time(hr, min, 0) //seconds by default set to zero
         val formatter: Format
-        formatter = SimpleDateFormat("h:mm a", Locale(globalPreferences.getLocale()))
+        formatter = SimpleDateFormat("h:mm a", App.instance.getAppLocale())
         return formatter.format(tme)
     }
 

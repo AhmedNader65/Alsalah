@@ -2,36 +2,26 @@ package com.crazyidea.alsalah
 
 import android.content.ContentResolver
 import android.content.Context
-import android.content.ContextWrapper
 import android.media.MediaPlayer
 import android.media.PlaybackParams
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.crazyidea.alsalah.databinding.ActivityAzanBinding
-import com.crazyidea.alsalah.utils.GlobalPreferences
-import com.crazyidea.alsalah.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class AzanActivity : AppCompatActivity() {
     var position = 0
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
-    override fun attachBaseContext(newBase: Context) {
-        runBlocking{
-            super.attachBaseContext(ContextWrapper(newBase.setLocale()))
-        }
-    }
+//    override fun attachBaseContext(newBase: Context) {
+//        runBlocking{
+//            super.attachBaseContext(ContextWrapper(newBase.setLocale()))
+//        }
+//    }
 
     lateinit var mp: MediaPlayer
     private lateinit var binding: ActivityAzanBinding
@@ -41,7 +31,7 @@ class AzanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAzanBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        mp = MediaPlayer.create(this, getAzanSound(globalPreferences, this))
+        mp = MediaPlayer.create(this, getAzanSound( this))
         binding.videoView.setOnPreparedListener {
 
             val videoRatio = it.videoWidth / it.videoHeight.toFloat()
@@ -68,9 +58,8 @@ class AzanActivity : AppCompatActivity() {
         playVideo()
     }
 
-    private fun getAzanSound(globalPreferences: GlobalPreferences, context: Context): Uri {
-        val azanId = globalPreferences.getAzan()
-        val azanRes = when (azanId) {
+    private fun getAzanSound(context: Context): Uri {
+        val azanRes = when (DataStoreCollector.AzanPrefs.azanSound) {
             1 -> R.raw.mecca
             2 -> R.raw.madny
             3 -> R.raw.aqsa

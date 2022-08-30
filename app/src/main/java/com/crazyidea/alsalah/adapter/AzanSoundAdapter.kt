@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
+import com.crazyidea.alsalah.DataStoreCollector
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.model.Azan
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 
 class AzanSoundAdapter(
     private val dataSet: ArrayList<Azan>,
@@ -17,8 +18,6 @@ class AzanSoundAdapter(
 ) :
     RecyclerView.Adapter<AzanSoundAdapter.ViewHolder>() {
     private lateinit var context: Context
-
-    lateinit var globalPreferences: GlobalPreferences
 
     /**
      * Provide a reference to the type of views that you are using
@@ -43,7 +42,6 @@ class AzanSoundAdapter(
         // Create a new view, which defines the UI of the list item
 
         context = viewGroup.context
-        globalPreferences = GlobalPreferences(context)
         findMyAzan()
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.item_azan_radio, viewGroup, false)
@@ -55,7 +53,7 @@ class AzanSoundAdapter(
     }
 
     private fun findMyAzan() {
-        dataSet.find { it.id == globalPreferences.getAzan() }?.checked = true
+        dataSet.find { it.id == DataStoreCollector.AzanPrefs.azanSound }?.checked = true
 
     }
 
@@ -96,7 +94,7 @@ class AzanSoundAdapter(
     }
 
 
-    public interface AzanListner {
+    interface AzanListner {
         fun onAzanPicked(azan: Azan)
         fun onPlayClicked(azan: Azan)
     }

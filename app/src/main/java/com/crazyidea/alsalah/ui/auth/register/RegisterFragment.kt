@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.databinding.FragmentRegisterBinding
-import com.crazyidea.alsalah.utils.GlobalPreferences
+
 import com.crazyidea.alsalah.utils.themeColor
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
@@ -69,8 +69,6 @@ class RegisterFragment : Fragment() {
     private val viewModel by viewModels<RegisterViewModel>()
     private lateinit var auth: FirebaseAuth
 
-    @Inject
-    lateinit var globalPreferences: GlobalPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -167,7 +165,7 @@ class RegisterFragment : Fragment() {
 
 
         // Set up the Facebook login button
-        FacebookSdk.sdkInitialize(requireContext());
+        FacebookSdk.sdkInitialize(requireContext())
 //        AppEventsLogger.activateApp(requireActivity().application);
         buttonFacebookLogin = binding.facebookBTN
         buttonFacebookLogin.setFragment(this)
@@ -271,10 +269,6 @@ class RegisterFragment : Fragment() {
             }
         }
 
-        viewModel.user.observe(viewLifecycleOwner) {
-            globalPreferences.storeLogged(true)
-            globalPreferences.storeUserId(it.id)
-        }
     }
 
     private fun signIn() {
@@ -344,7 +338,7 @@ class RegisterFragment : Fragment() {
     private fun twitterFirebase() {
         val provider = OAuthProvider.newBuilder("twitter.com")
         provider.addCustomParameter("lang", "en")
-        val pendingResultTask: Task<AuthResult>? = auth.getPendingAuthResult()
+        val pendingResultTask: Task<AuthResult>? = auth.pendingAuthResult
         if (pendingResultTask != null) {
             // There's something already here! Finish the sign-in for your user.
             pendingResultTask
