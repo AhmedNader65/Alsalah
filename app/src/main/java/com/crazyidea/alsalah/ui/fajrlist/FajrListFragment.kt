@@ -13,7 +13,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.CheckBox
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -90,6 +89,7 @@ class FajrListFragment : Fragment(), PermissionListener {
 
             if (!overlayEnabled) {
                 showDOARationaleInfo()
+
             }
         }
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
@@ -149,7 +149,7 @@ class FajrListFragment : Fragment(), PermissionListener {
         val dialogBuilder = AlertDialog.Builder(requireContext())
 
         // set message of alert dialog
-        dialogBuilder.setMessage(getString(R.string.display_over_apps))
+        dialogBuilder.setMessage(getString(R.string.display_over_apps_fajr))
             // if the dialog is cancelable
             .setCancelable(false)
             // positive button text and action

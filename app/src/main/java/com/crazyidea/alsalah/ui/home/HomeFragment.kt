@@ -1,11 +1,13 @@
 package com.crazyidea.alsalah.ui.home
 
 import android.Manifest
-import android.annotation.TargetApi
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.location.*
 import android.net.Uri
 import android.os.Build
@@ -15,7 +17,8 @@ import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
+import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,7 +32,6 @@ import com.crazyidea.alsalah.*
 import com.crazyidea.alsalah.adapter.ArticlesAdapter
 import com.crazyidea.alsalah.databinding.FragmentHomeBinding
 import com.crazyidea.alsalah.ui.blogDetail.BlogDetailViewModel
-import com.crazyidea.alsalah.ui.khatma.KhatmaFragmentDirections
 import com.crazyidea.alsalah.ui.setting.AppSettings
 import com.crazyidea.alsalah.ui.setting.SalahSettings
 import com.crazyidea.alsalah.utils.*
@@ -43,8 +45,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.*
-import javax.inject.Inject
 
 private const val MIN_TIME: Long = 400
 private const val MIN_DISTANCE = 1000f
@@ -99,6 +99,12 @@ class HomeFragment : Fragment(), LocationListener {
         super.onViewCreated(view, savedInstanceState)
 
         checkPermissions()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(!Settings.canDrawOverlays(context)){
+                showDOARationaleInfo()
+            }
+
+        }
         adapter = ArticlesAdapter(arrayListOf(), onReadMore = {
             findNavController().navigate(
                 HomeFragmentDirections.actionNavigationHomeToBlogDetailFragment(
@@ -341,7 +347,53 @@ class HomeFragment : Fragment(), LocationListener {
         _binding = null
     }
 
+    fun showDOARationaleInfo() {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
 
+        // set message of alert dialog
+        dialogBuilder.setView(
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_alert, null)
+        )
+            // if the dialog is cancelable
+            .setCancelable(true)
+
+        // create dialog box
+        val alert = dialogBuilder.create()
+        // show alert dialog
+        alert.window!!.setLayout(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        )
+        alert.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alert.show()
+        val settingsBtn = alert.findViewById<Button>(R.id.action_btn)
+        val closeBtn = alert.findViewById<ImageView>(R.id.close)
+        val msg = alert.findViewById<TextView>(R.id.msg)
+        msg.text = getString(R.string.display_over_apps_azan)
+        closeBtn.setOnClickListener {
+            alert.cancel()
+        }
+        settingsBtn.setOnClickListener {
+            alert.cancel()
+            requestOverlayPermission()
+        }
+
+    }
+
+    private fun requestOverlayPermission() {
+
+        val intent = Intent(
+            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+            Uri.parse("package:" + requireActivity().packageName)
+        )
+        resultLauncher.launch(intent)
+    }
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//        if (result.resultCode == Activity.RESULT_OK) {
+//        }
+        }
     private fun getDeviceLocation() {
         Timber.d("getDeviceLocation")
 

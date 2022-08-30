@@ -234,7 +234,8 @@ He had ten necks, a hundred good deeds were written for him, a hundred bad deeds
     <string name="terms">Privacy Policy</string>
     <string name="choose_contacts">Choose Fajr List</string>
     <string name="read_contacts">The permission to read contacts is required to be able to add the Dawn list</string>
-    <string name="display_over_apps">Enable the permission to appear above the apps so that we can connect to the Fajr menu at Fajr time</string>
+    <string name="display_over_apps_fajr">Enable the permission to display over apps so that we can connect to the Fajr menu at Fajr time</string>
+    <string name="display_over_apps_azan">Enable the permission to display over apps so that we can connect to display Azan</string>
     <string name="OK">OK</string>
     <string name="cancel">Cancel</string>
     <string name="read_contacts_permission">Permission to read contacts</string>
