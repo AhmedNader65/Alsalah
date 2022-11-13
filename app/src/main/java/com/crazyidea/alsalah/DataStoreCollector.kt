@@ -35,6 +35,7 @@ object DataStoreCollector {
         var notifyAzan: Boolean = true
         var channel: String = "PRAYER" + Random().nextInt()
     }
+
     // AZKAR SETTINGS
     object AzkarPrefs {
         var azkarBeep: Boolean = true
@@ -47,6 +48,7 @@ object DataStoreCollector {
         {
 
             dataStoreManager.settingsDataStore.data.collect { preferences ->
+                Timber.e("collecting settings")
                 userId = preferences[AppSettings.USER_ID] ?: 0
                 loggedIn = preferences[AppSettings.LOGGED] ?: false
                 articlesLanguage = preferences[AppSettings.ARTICLES_LANGUAGE] ?: "all"
@@ -59,6 +61,9 @@ object DataStoreCollector {
                 accentColor = preferences[AppSettings.ACCENT_COLOR] ?: 0
                 lastReading = preferences[AppSettings.LAST_READING] ?: 1
             }
+        }
+        GlobalScope.launch(Dispatchers.IO)
+        {
             dataStoreManager.settingsAzan.data.collect { preferences ->
                 Timber.e("collecting azan settings")
                 AzanPrefs.backgroundMosqueStyle = preferences[AzanSettings.AZAN_MOSQUE_BG] ?: true
@@ -73,12 +78,16 @@ object DataStoreCollector {
                 AzanPrefs.channel =
                     preferences[AzanSettings.AZAN_CHANNEL] ?: ("PRAYER" + Random().nextInt())
             }
+        }
+        GlobalScope.launch(Dispatchers.IO)
+        {
             dataStoreManager.azkarSettings.data.collect { preferences ->
                 Timber.e("collecting azkar settings")
                 AzkarPrefs.azkarBeep = preferences[AzkarSettings.BEEP] ?: true
                 AzkarPrefs.azkarVibrate = preferences[AzkarSettings.VIBRATE] ?: true
             }
         }
+
     }
 
 }

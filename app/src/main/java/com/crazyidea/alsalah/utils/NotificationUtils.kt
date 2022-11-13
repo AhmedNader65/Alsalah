@@ -1,7 +1,6 @@
 package com.crazyidea.alsalah.utils
 
 import android.app.*
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -9,10 +8,7 @@ import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
-import androidx.core.app.TaskStackBuilder
-import com.crazyidea.alsalah.BuildConfig
 import com.crazyidea.alsalah.MainActivity
 import com.crazyidea.alsalah.R
 
@@ -23,15 +19,16 @@ fun sendNotification(
     title: String,
     msg: String,
     sound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
-    destIntent: Intent = Intent(context, MainActivity::class.java)
+    destIntent: Intent? = null
 ) {
     val notificationManager = context
         .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    val fullScreenIntent = destIntent
     val fullScreenPendingIntent = PendingIntent.getActivity(
-        context, 0,
-        fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        context,
+        0,
+        destIntent ?: Intent(context, MainActivity::class.java),
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
     // We need to create a NotificationChannel associated with our CHANNEL_ID before sending a notification.
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
@@ -42,18 +39,20 @@ fun sendNotification(
 
 
 //    build the notification object with the data to be shown
-    val notification = NotificationCompat.Builder(context, channel_ID)
-        .setSmallIcon(R.drawable.ic_after_prayer)
-        .setContentTitle(title)
-        .setContentText(msg)
-        .setAutoCancel(true)
-        .setLights(Color.GRAY, 500, 500)
-        .setPriority(NotificationCompat.PRIORITY_MAX)
-        .setDefaults(NotificationCompat.DEFAULT_ALL)
-        .setSound(sound)
-        .setContentIntent(fullScreenPendingIntent)
-        .setFullScreenIntent(fullScreenPendingIntent, true)
-        .build()
+    val notification = NotificationCompat.Builder(context, channel_ID).apply {
+
+        setSmallIcon(R.drawable.ic_after_prayer)
+        setContentTitle(title)
+        setContentText(msg)
+        setAutoCancel(true)
+        setLights(Color.GRAY, 500, 500)
+        priority = NotificationCompat.PRIORITY_MAX
+        setDefaults(NotificationCompat.DEFAULT_ALL)
+        setSound(sound)
+        setContentIntent(fullScreenPendingIntent)
+        if (destIntent != null)
+            setFullScreenIntent(fullScreenPendingIntent, true)
+    }.build()
 
     notificationManager.notify(getUniqueId(), notification)
 }

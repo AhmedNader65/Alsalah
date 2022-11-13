@@ -46,6 +46,7 @@ import kotlin.collections.ArrayList
 @AndroidEntryPoint
 class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, PermissionListener {
 
+    private lateinit var adapter: AzanSoundAdapter
     private var _binding: FragmentAzanSettingBinding? = null
 
     // This property is only valid between onCreateView and
@@ -73,7 +74,8 @@ class AzanSettingFragment : Fragment(), AzanSoundAdapter.AzanListner, Permission
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.azanRV.adapter = AzanSoundAdapter(createAzans(), this)
+        adapter = AzanSoundAdapter(createAzans(), this)
+        binding.azanRV.adapter = adapter
         binding.chooseFromGallery.setOnClickListener {
             whereFrom = 1
             openAudioPicker()

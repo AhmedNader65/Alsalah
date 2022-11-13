@@ -17,7 +17,7 @@ class PrayerSettingsRepository @Inject constructor(
 
     override suspend fun <T> updateAppSettings(key: Preferences.Key<T>, value: T) {
         externalScope.launch {
-            dataStoreManager.settingsDataStore.edit { settings ->
+            dataStoreManager.prayerSettings.edit { settings ->
                 settings[key] = value
             }
         }

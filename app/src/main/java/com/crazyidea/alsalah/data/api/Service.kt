@@ -16,10 +16,10 @@ interface PrayersApi {
         @Query("longitude") longitude: String,
         @Query("month") month: String,
         @Query("year") year: String,
-        @Query("method") method: Int,
-        @Query("school") school: Int,
+        @Query("method") method: String?,
+        @Query("school") school: String?,
         @Query("tune") tune: String?,
-        @Query("latitudeAdjustmentMethod") adjustment: Int
+        @Query("latitudeAdjustmentMethod") adjustment: String?
     ): PrayersNetworkContainer
 
 }

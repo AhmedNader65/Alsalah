@@ -27,9 +27,9 @@ class RefreshDataWorker @AssistedInject constructor(
     }
 
     override suspend fun doWork(): Result {
-        var calculationMethods = 0
-        var school = 0
-        var poleCalc = 0
+        var calculationMethods = -1
+        var school = -1
+        var poleCalc = -1
         var fajrMargin: Int = 0
         var shorokMargin: Int = 0
         var dhuhrMargin: Int = 0
@@ -40,9 +40,9 @@ class RefreshDataWorker @AssistedInject constructor(
         var longitude: Double
         runBlocking {
             val salahPref = dataStoreManager.prayerSettings.data.first()
-            calculationMethods = salahPref[SalahSettings.CALCULATION_METHOD] ?: 0
-            school = salahPref[SalahSettings.SCHOOL] ?: 0
-            poleCalc = salahPref[SalahSettings.POLE_CALCULATION] ?: 0
+            calculationMethods = salahPref[SalahSettings.CALCULATION_METHOD] ?: -1
+            school = salahPref[SalahSettings.SCHOOL] ?: -1
+            poleCalc = salahPref[SalahSettings.POLE_CALCULATION] ?: -1
             fajrMargin = salahPref[SalahSettings.FAJR_MARGIN] ?: 0
             shorokMargin = salahPref[SalahSettings.SHOROK_MARGIN] ?: 0
             dhuhrMargin = salahPref[SalahSettings.DHUHR_MARGIN] ?: 0

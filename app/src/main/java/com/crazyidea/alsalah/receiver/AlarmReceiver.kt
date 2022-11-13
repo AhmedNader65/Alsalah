@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.AudioManager
 import android.media.MediaFormat
 import android.media.MediaPlayer
 import android.net.Uri
@@ -136,6 +137,7 @@ class AlarmReceiver : BroadcastReceiver() {
                     )
                 )
         } else if (intent?.hasExtra("iqama") == true) {
+
             if (iqamaNotification)
                 showNotification(
                     Eqammah(
