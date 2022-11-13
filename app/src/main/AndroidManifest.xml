@@ -27,6 +27,7 @@
         android:name="android.permission.READ_PHONE_STATE"
         tools:remove="android:maxSdkVersion" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
     <application
         android:name=".App"

@@ -32,6 +32,7 @@ object DataStoreCollector {
         var notifyBeforePrayer: Boolean = true
         var notifyBeforePrayerPeriod: Int = 10
         var notifyIqama: Boolean = true
+        var wasSilent: Boolean = false
         var notifyAzan: Boolean = true
         var channel: String = "PRAYER" + Random().nextInt()
     }
@@ -74,6 +75,7 @@ object DataStoreCollector {
                 AzanPrefs.notifyBeforePrayerPeriod =
                     preferences[AzanSettings.BEFORE_PRAYER_REMINDER_PERIOD] ?: 10
                 AzanPrefs.notifyIqama = preferences[AzanSettings.IQAMA_NOTIFICATION] ?: true
+                AzanPrefs.wasSilent = preferences[AzanSettings.WAS_SILENT] ?: false
                 AzanPrefs.notifyAzan = preferences[AzanSettings.AZAN_NOTIFICATION] ?: true
                 AzanPrefs.channel =
                     preferences[AzanSettings.AZAN_CHANNEL] ?: ("PRAYER" + Random().nextInt())

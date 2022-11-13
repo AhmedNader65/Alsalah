@@ -1,7 +1,8 @@
 package com.crazyidea.alsalah.ui.setting
 
-import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
+import android.app.NotificationManager
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -16,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -108,9 +110,38 @@ class SettingFragment : Fragment() {
         }
         binding.silencePhoneSwitch.isChecked = DataStoreCollector.silentPhone
         binding.silencePhoneSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.update(AppSettings.SILENT_PHONE, isChecked)
+            val notificationManager =
+                (requireContext().getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager)
+            if (isChecked) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !notificationManager.isNotificationPolicyAccessGranted) {
+                    openDontDisturb()
+                } else {
+                    viewModel.update(AppSettings.SILENT_PHONE, true)
+                }
+            } else {
+                viewModel.update(AppSettings.SILENT_PHONE, false)
+
+            }
         }
     }
+
+    fun openDontDisturb() {
+        val intent = Intent(
+            Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
+        )
+        resultLauncher.launch(intent)
+    }
+
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val notificationManager =
+                (requireContext().getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager)
+                // There are no request codes
+                if (notificationManager.isNotificationPolicyAccessGranted)
+                    viewModel.update(AppSettings.SILENT_PHONE, true)
+                else
+                    binding.silencePhoneSwitch.isChecked = false
+        }
 
     private fun showRequestBatteryOptDialog() {
         val dialogBuilder = AlertDialog.Builder(requireContext())

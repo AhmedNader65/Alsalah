@@ -2,6 +2,7 @@ package com.crazyidea.alsalah
 
 import android.content.ContentResolver
 import android.content.Context
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.PlaybackParams
 import android.net.Uri
@@ -31,6 +32,7 @@ class AzanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAzanBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         mp = MediaPlayer.create(this, getAzanSound( this))
         binding.videoView.setOnPreparedListener {
 
