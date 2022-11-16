@@ -78,7 +78,7 @@ class AlarmReceiver : BroadcastReceiver() {
             azanSound = azanPref[AzanSettings.AZAN_SOUND] ?: 1
             beforePrayNotification = azanPref[AzanSettings.BEFORE_PRAYER_REMINDER] ?: true
             iqamaNotification = azanPref[AzanSettings.IQAMA_NOTIFICATION] ?: true
-            wasSilent = azanPref[AzanSettings.IQAMA_NOTIFICATION] ?: false
+            wasSilent = azanPref[AzanSettings.WAS_SILENT] ?: false
             mosqueBackground = azanPref[AzanSettings.AZAN_MOSQUE_BG] ?: true
             channel = azanPref[AzanSettings.AZAN_CHANNEL] ?: ("PRAYER" + Random().nextInt())
             val appPref = dataStoreManager.settingsDataStore.data.first()
@@ -107,13 +107,13 @@ class AlarmReceiver : BroadcastReceiver() {
                 if (azanNotification) showDialog(salah)
                 salah.callList()
             }
-             setAlarm(
-                    context,
-                    "azkar",
-                    context.getString(R.string.taqabal_allah),
-                    System.currentTimeMillis().plus(20 * 60000),
-                    category = "أذكار بعد السلام من الصلاة المفروضة"
-                )
+            setAlarm(
+                context,
+                "azkar",
+                context.getString(R.string.taqabal_allah),
+                System.currentTimeMillis().plus(20 * 60000),
+                category = "أذكار بعد السلام من الصلاة المفروضة"
+            )
 
         } else if (intent?.hasExtra("khatma") == true) {
             showNotification(
@@ -179,10 +179,12 @@ class AlarmReceiver : BroadcastReceiver() {
             val mode = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             GlobalScope.launch {
                 dataStoreManager.settingsAzan.edit { settings ->
-                    settings[WAS_SILENT] = mode.ringerMode == AudioManager.RINGER_MODE_SILENT
+                    val isSilent = mode.ringerMode != AudioManager.RINGER_MODE_NORMAL
+                    settings[WAS_SILENT] = isSilent
+                    if (!isSilent)
+                        mode.ringerMode = AudioManager.RINGER_MODE_SILENT
                 }
             }
-            mode.ringerMode = AudioManager.RINGER_MODE_SILENT
         }
     }
 

@@ -387,6 +387,7 @@ class HomeViewModel @Inject constructor(
                     diff = (ishaDate.time - currentDate.time)
                     basePrayerForNext = ishaDate
                 }else  {
+                    650
                     nextPrayerId.value = 1
                     nextPrayer.value = Pair("الفجر", "")
                     diff = (fajrDate.time - currentDate.time)
