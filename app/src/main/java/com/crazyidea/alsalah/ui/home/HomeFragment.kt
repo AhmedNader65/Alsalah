@@ -59,7 +59,7 @@ private const val REQUEST_TURN_DEVICE_LOCATION_ON = 35
 @AndroidEntryPoint
 class HomeFragment : Fragment(), LocationListener {
 
-    private var calculationMethod: Int = 0
+    private var calculationMethod: Int = -1
     private var school: Int = 0
     private var poleCalc: Int = 0
     private var fajrMargin: Int = 0
@@ -100,7 +100,7 @@ class HomeFragment : Fragment(), LocationListener {
 
         checkPermissions()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(!Settings.canDrawOverlays(context)){
+            if (!Settings.canDrawOverlays(context)) {
                 showDOARationaleInfo()
             }
 
@@ -327,7 +327,7 @@ class HomeFragment : Fragment(), LocationListener {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.fetchData().collect {
-                    calculationMethod = it[SalahSettings.CALCULATION_METHOD] ?: 0
+                    calculationMethod = it[SalahSettings.CALCULATION_METHOD] ?: -1
                     school = it[SalahSettings.SCHOOL] ?: 0
                     poleCalc = it[SalahSettings.POLE_CALCULATION] ?: 0
                     fajrMargin = it[SalahSettings.FAJR_MARGIN] ?: 0
@@ -374,7 +374,7 @@ class HomeFragment : Fragment(), LocationListener {
             alert.cancel()
         }
         settingsBtn.setOnClickListener {
-            alert.cancel()
+            alert.dismiss()
             requestOverlayPermission()
         }
 
@@ -394,6 +394,7 @@ class HomeFragment : Fragment(), LocationListener {
 //        if (result.resultCode == Activity.RESULT_OK) {
 //        }
         }
+
     private fun getDeviceLocation() {
         Timber.d("getDeviceLocation")
 
@@ -415,8 +416,8 @@ class HomeFragment : Fragment(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         Timber.d("onLocationChanged")
-        viewModel.update(AppSettings.LATITUDE,location.latitude)
-        viewModel.update(AppSettings.LONGITUDE,location.longitude)
+        viewModel.update(AppSettings.LATITUDE, location.latitude)
+        viewModel.update(AppSettings.LONGITUDE, location.longitude)
         viewModel.fetchPrayerData(
             location.latitude.toString(),
             location.longitude.toString(),

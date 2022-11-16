@@ -1,9 +1,13 @@
 package com.crazyidea.alsalah
 
+import android.app.NotificationManager
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
+import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -82,6 +86,8 @@ class MainActivity : AppCompatActivity() {
 //            .build()
 //        setAlarm("asr", System.currentTimeMillis())
     }
+
+
 
 
     private fun setTheme(primaryColor: PrimaryColor) {

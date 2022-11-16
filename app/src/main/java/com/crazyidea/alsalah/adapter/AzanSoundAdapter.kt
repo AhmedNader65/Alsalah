@@ -1,6 +1,7 @@
 package com.crazyidea.alsalah.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,7 @@ class AzanSoundAdapter(
     }
 
     private fun findMyAzan() {
+        Log.e("TAG", "findMyAzan: ${DataStoreCollector.AzanPrefs.azanSound }")
         dataSet.find { it.id == DataStoreCollector.AzanPrefs.azanSound }?.checked = true
 
     }
@@ -101,5 +103,10 @@ class AzanSoundAdapter(
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+    fun selectAzan(id: Int) {
+        val azan = dataSet.find { it.id == id }
+        azan!!.checked = true
+        notifyDataSetChanged()
+    }
 
 }

@@ -1,11 +1,13 @@
 package com.crazyidea.alsalah.receiver
 
 import android.app.Dialog
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.AudioManager
 import android.media.MediaFormat
 import android.media.MediaPlayer
 import android.net.Uri
@@ -19,6 +21,8 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.Toast
 import android.widget.VideoView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.edit
 import com.crazyidea.alsalah.R
 import com.crazyidea.alsalah.data.DataStoreManager
 import com.crazyidea.alsalah.data.repository.AzkarRepository
@@ -26,12 +30,15 @@ import com.crazyidea.alsalah.data.repository.FajrListRepository
 import com.crazyidea.alsalah.notifications.*
 import com.crazyidea.alsalah.ui.setting.AppSettings
 import com.crazyidea.alsalah.ui.setting.AzanSettings
+import com.crazyidea.alsalah.ui.setting.AzanSettings.WAS_SILENT
 import com.crazyidea.alsalah.ui.setting.AzkarSettings
 import com.crazyidea.alsalah.utils.SubtitleView
 import com.crazyidea.alsalah.utils.setAlarm
 import com.crazyidea.alsalah.utils.setLocale
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
@@ -53,8 +60,10 @@ class AlarmReceiver : BroadcastReceiver() {
     lateinit var CHANNEL_ID: String
     var azanNotification = true
     var azanSound = 1
-    var channel : String= ""
+    var channel: String = ""
     var iqamaNotification = true
+    var wasSilent = false
+    var setSilent = false
     var mosqueBackground = true
     var beforePrayNotification = true
     var afterPrayerNotification = true
@@ -69,10 +78,12 @@ class AlarmReceiver : BroadcastReceiver() {
             azanSound = azanPref[AzanSettings.AZAN_SOUND] ?: 1
             beforePrayNotification = azanPref[AzanSettings.BEFORE_PRAYER_REMINDER] ?: true
             iqamaNotification = azanPref[AzanSettings.IQAMA_NOTIFICATION] ?: true
+            wasSilent = azanPref[AzanSettings.WAS_SILENT] ?: false
             mosqueBackground = azanPref[AzanSettings.AZAN_MOSQUE_BG] ?: true
             channel = azanPref[AzanSettings.AZAN_CHANNEL] ?: ("PRAYER" + Random().nextInt())
             val appPref = dataStoreManager.settingsDataStore.data.first()
             locale = Locale(appPref[AppSettings.APP_LANGUAGE] ?: "ar")
+            setSilent = appPref[AppSettings.SILENT_PHONE] ?: false
         }
         val context = context.setLocale(locale)
         CHANNEL_ID = channel
@@ -93,21 +104,17 @@ class AlarmReceiver : BroadcastReceiver() {
             if (!overlayEnabled) {
                 showNotification(salah)
             } else {
-                if (azanNotification)
-                    showDialog(salah)
+                if (azanNotification) showDialog(salah)
                 salah.callList()
             }
+            setAlarm(
+                context,
+                "azkar",
+                context.getString(R.string.taqabal_allah),
+                System.currentTimeMillis().plus(20 * 60000),
+                category = "أذكار بعد السلام من الصلاة المفروضة"
+            )
 
-            if (afterPrayerNotification) {
-                Timber.e("SETTING AFTER PRAYER ALARM")
-                setAlarm(
-                    context,
-                    "azkar",
-                    context.getString(R.string.taqabal_allah),
-                    System.currentTimeMillis().plus(20 * 60000),
-                    category = "أذكار بعد السلام من الصلاة المفروضة"
-                )
-            }
         } else if (intent?.hasExtra("khatma") == true) {
             showNotification(
                 Khatma(
@@ -117,34 +124,74 @@ class AlarmReceiver : BroadcastReceiver() {
                 )
             )
         } else if (intent?.hasExtra("azkar") == true) {
-            showNotification(
-                Azkar(
-                    title = intent.getStringExtra("azkar").toString(),
-                    intent.getStringExtra("zekr_type").toString(),
-                    "after_prayer_" + intent.getStringExtra("azkar"),
-                    context,
-                    azkarRepository
+            val title = intent.getStringExtra("azkar").toString()
+
+            if (title == context.getString(R.string.taqabal_allah)) {
+                revertSilent(context)
+                if (afterPrayerNotification)
+                    showNotification(
+                        Azkar(
+                            title = title,
+                            intent.getStringExtra("zekr_type").toString(),
+                            "after_prayer_" + intent.getStringExtra("azkar"),
+                            context,
+                            azkarRepository
+                        )
+                    )
+            } else
+                showNotification(
+                    Azkar(
+                        title = title,
+                        intent.getStringExtra("zekr_type").toString(),
+                        "after_prayer_" + intent.getStringExtra("azkar"),
+                        context,
+                        azkarRepository
+                    )
+                )
+        } else if (intent?.hasExtra("before_prayer") == true) {
+            if (beforePrayNotification) showNotification(
+                SalahSoon(
+                    title = intent.getStringExtra("before_prayer").toString(),
+                    CHANNEL_ID = "before_prayer_",
+                    context = context
                 )
             )
-        } else if (intent?.hasExtra("before_prayer") == true) {
-            if (beforePrayNotification)
-                showNotification(
-                    SalahSoon(
-                        title = intent.getStringExtra("before_prayer").toString(),
-                        CHANNEL_ID = "before_prayer_",
-                        context = context
-                    )
-                )
         } else if (intent?.hasExtra("iqama") == true) {
-            if (iqamaNotification)
-                showNotification(
-                    Eqammah(
-                        CHANNEL_ID = "iqama",
-                        context = context
-                    )
+            if (setSilent) setSilent(context)
+            if (iqamaNotification) showNotification(
+                Eqammah(
+                    CHANNEL_ID = "iqama", context = context
                 )
+            )
 
         }
+    }
+
+    private fun setSilent(context: Context) {
+        val notificationManager =
+            (context.getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !notificationManager.isNotificationPolicyAccessGranted) {
+            val intent = Intent(
+                Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
+            )
+            context.startActivity(intent)
+        } else {
+            val mode = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            GlobalScope.launch {
+                dataStoreManager.settingsAzan.edit { settings ->
+                    val isSilent = mode.ringerMode != AudioManager.RINGER_MODE_NORMAL
+                    settings[WAS_SILENT] = isSilent
+                    if (!isSilent)
+                        mode.ringerMode = AudioManager.RINGER_MODE_SILENT
+                }
+            }
+        }
+    }
+
+    private fun revertSilent(context: Context) {
+        val mode = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        if (!wasSilent)
+            mode.ringerMode = AudioManager.RINGER_MODE_NORMAL
     }
 
     private fun showDialog(salah: Salah) {
@@ -159,14 +206,12 @@ class AlarmReceiver : BroadcastReceiver() {
             val subtitlesView: SubtitleView = dialog.findViewById(R.id.subtitles)
             val closeBtn: ImageButton = dialog.findViewById(R.id.close)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                dialog.window!!
-                    .setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+                dialog.window!!.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
             } else {
                 dialog.window!!.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
             }
             dialog.window!!.setLayout(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
             )
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -209,19 +254,15 @@ class AlarmReceiver : BroadcastReceiver() {
             try {
 
                 // ID of video file.
-                val id: Int =
-                    if (mosqueBackground) R.raw.azan_vid2 else R.raw.azan_vid
-                val uri: Uri =
-                    Uri.parse("android.resource://${context.packageName}/$id")
+                val id: Int = if (mosqueBackground) R.raw.azan_vid2 else R.raw.azan_vid
+                val uri: Uri = Uri.parse("android.resource://${context.packageName}/$id")
                 Timber.i("Video URI: $uri")
                 videoView.setVideoURI(uri)
                 videoView.requestFocus()
             } catch (e: Exception) {
                 Timber.e("Error Play Raw Video: " + e.message)
                 Toast.makeText(
-                    context,
-                    "Error Play Raw Video: " + e.message,
-                    Toast.LENGTH_SHORT
+                    context, "Error Play Raw Video: " + e.message, Toast.LENGTH_SHORT
                 ).show()
                 e.printStackTrace()
             }

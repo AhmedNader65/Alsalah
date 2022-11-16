@@ -43,15 +43,14 @@ class PrayerTimingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.title.text = resources.getString(R.string.editPrayerTime)
+        binding.title.text = resources.getString(R.string.calculateWay)
         binding.languagetext.text = resources.getString(R.string.calculateWay)
         binding.back.setOnClickListener { requireActivity().onBackPressed() }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.fetchIntegerData(SalahSettings.CALCULATION_METHOD).collect {
                     calculationMethod = it
-
                     binding.languagesRV.adapter = PrayerTimeAdapter(createPrayerRefrences()) {
                         viewModel.update(SalahSettings.CALCULATION_METHOD, it)
                     }

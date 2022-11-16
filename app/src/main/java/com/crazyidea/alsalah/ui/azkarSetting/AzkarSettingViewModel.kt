@@ -7,6 +7,7 @@ import com.crazyidea.alsalah.ui.setting.BaseSettingViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class AzkarSettingViewModel @Inject constructor(
     private val settingsRepository: AzanSettingsRepository
 ) : BaseSettingViewModel(settingsRepository)

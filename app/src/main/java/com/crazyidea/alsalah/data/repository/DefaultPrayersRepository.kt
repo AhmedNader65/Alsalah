@@ -23,7 +23,7 @@ import javax.inject.Inject
 class DefaultPrayersRepository @Inject constructor(
     private val appDatabase: AppDatabase,
     private val externalScope: CoroutineScope,
-) : PrayersRepository{
+) : PrayersRepository {
 
 
     /**
@@ -57,16 +57,25 @@ class DefaultPrayersRepository @Inject constructor(
         adjustment: Int
     ) {
 
+        var methodSt: String? = method.toString()
+        var schoolSt: String? = school.toString()
+        var adjustmentSt: String? = adjustment.toString()
         withContext(externalScope.coroutineContext) {
+            if (method == -1)
+                methodSt = null
+            if (school == -1)
+                schoolSt = null
+            if (adjustment == -1)
+                adjustmentSt = null
             val prayers = Network.prayers.getPrayersTimingByAddress(
                 lat,
                 lng,
                 month,
                 year,
-                method,
-                school,
+                methodSt,
+                schoolSt,
                 tune,
-                adjustment,
+                adjustmentSt,
             )
 
             appDatabase.prayersDao().deleteDates()

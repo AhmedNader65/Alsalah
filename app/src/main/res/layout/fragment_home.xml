@@ -20,6 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/next_prayer"
                 style="@style/mediumText"
@@ -27,9 +28,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24sdp"
                 android:elevation="@dimen/_4sdp"
-                app:bindNextPlayer="@{(model.nextPrayer)}"
                 android:textAlignment="center"
                 android:textColor="@{model.setTextColor(2,context)}"
+                app:bindNextPlayer="@{(model.nextPrayer)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -87,9 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@{model.nextPrayerId==1? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): model.clickedPrayerId==1?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked):context.getColor(com.crazyidea.alsalah.R.color.white)}"
-                    android:gravity="center"
-
-                    android:padding="@dimen/_8sdp">
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/fajr_tv"
@@ -97,6 +96,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
                         android:text="@string/fajr"
                         android:textColor="@{model.nextPrayerId==1? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         app:autoSizeMaxTextSize="@dimen/_18ssp"
@@ -110,31 +112,29 @@
                     <TextView
                         android:id="@+id/fajr_time"
                         style="@style/boldText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{model.fajrTimeFormatter.first}"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:text="@{model.fajrTimeFormatter.first + model.fajrTimeFormatter.second}"
                         android:textColor="@{model.nextPrayerId==1? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
                         android:textSize="@dimen/_10ssp"
-                        app:layout_constraintEnd_toStartOf="@+id/fajr_am"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/fajr_tv" />
-
-                    <TextView
-                        android:id="@+id/fajr_am"
-                        style="@style/lightText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.fajrTimeFormatter.second}"
-                        android:textColor="@{model.nextPrayerId==1? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
-                        android:textSize="@dimen/_9ssp"
+                        app:autoSizeMinTextSize="@dimen/_1ssp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/fajr_time"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/fajr_tv" />
 
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_32sdp"
                         android:layout_marginTop="@dimen/_9sdp"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
                         android:src="@{model.nextPrayerId==1? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_fajr_selected): context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_fajr)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -165,8 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@{model.nextPrayerId==2? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg):model.clickedPrayerId==2?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked): context.getColor(com.crazyidea.alsalah.R.color.white)}"
-                    android:gravity="center"
-                    android:padding="@dimen/_8sdp">
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/shorooq_tv"
@@ -174,6 +173,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
                         android:text="@string/shorooq"
                         android:textColor="@{model.nextPrayerId==2? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         app:autoSizeMaxTextSize="@dimen/_18ssp"
@@ -184,35 +186,33 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
+
                     <TextView
                         android:id="@+id/shorooq_time"
                         style="@style/boldText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{model.shorokTimeFormatter.first}"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:text="@{model.shorokTimeFormatter.first + model.shorokTimeFormatter.second}"
                         android:textColor="@{model.nextPrayerId==2? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
                         android:textSize="@dimen/_10ssp"
-                        app:layout_constraintEnd_toStartOf="@+id/shorooq_am"
+                        app:autoSizeMinTextSize="@dimen/_1ssp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/shorooq_tv" />
-
-                    <TextView
-                        android:id="@+id/shorooq_am"
-                        style="@style/lightText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.shorokTimeFormatter.second}"
-                        android:textColor="@{model.nextPrayerId==2? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
-                        android:textSize="@dimen/_9ssp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/shorooq_time"
-                        app:layout_constraintTop_toBottomOf="@id/shorooq_tv" />
-
 
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_32sdp"
                         android:layout_marginTop="@dimen/_9sdp"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
                         android:src="@{model.nextPrayerId==2? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_shorooq_selected): context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_shorooq)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -241,8 +241,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@{model.nextPrayerId==3? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): model.clickedPrayerId==3?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked):context.getColor(com.crazyidea.alsalah.R.color.white)}"
-                    android:gravity="center"
-                    android:padding="@dimen/_8sdp">
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/zuhr_tv"
@@ -250,6 +249,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
                         android:text="@string/zuhr"
                         android:textColor="@{model.nextPrayerId==3? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         app:autoSizeMaxTextSize="@dimen/_18ssp"
@@ -263,32 +265,31 @@
                     <TextView
                         android:id="@+id/zuhr_time"
                         style="@style/boldText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{model.zuhrTimeTimeFormatter.first}"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:text="@{model.zuhrTimeTimeFormatter.first + model.zuhrTimeTimeFormatter.second}"
                         android:textColor="@{model.nextPrayerId==3? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
                         android:textSize="@dimen/_10ssp"
-                        app:layout_constraintEnd_toStartOf="@+id/zuhr_am"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/zuhr_tv" />
-
-                    <TextView
-                        android:id="@+id/zuhr_am"
-                        style="@style/lightText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.zuhrTimeTimeFormatter.second}"
-                        android:textColor="@{model.nextPrayerId==3? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
-                        android:textSize="@dimen/_9ssp"
+                        app:autoSizeMinTextSize="@dimen/_1ssp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/zuhr_time"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/zuhr_tv" />
 
 
                     <ImageView
+
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_32sdp"
                         android:layout_marginTop="@dimen/_9sdp"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
                         android:src="@{model.nextPrayerId==3? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_zuhr_selected): context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_zuhr)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -318,8 +319,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@{model.nextPrayerId==4? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): model.clickedPrayerId==4?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked):context.getColor(com.crazyidea.alsalah.R.color.white)}"
-                    android:gravity="center"
-                    android:padding="@dimen/_8sdp">
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/asr_tv"
@@ -327,6 +327,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
                         android:text="@string/asr"
                         android:textColor="@{model.nextPrayerId==4? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         app:autoSizeMaxTextSize="@dimen/_18ssp"
@@ -340,32 +343,31 @@
                     <TextView
                         android:id="@+id/asr_time"
                         style="@style/boldText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{model.asrTimeFormatter.first}"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:text="@{model.asrTimeFormatter.first + model.asrTimeFormatter.second}"
                         android:textColor="@{model.nextPrayerId==4? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
                         android:textSize="@dimen/_10ssp"
-                        app:layout_constraintEnd_toStartOf="@+id/asr_am"
+                        app:autoSizeMinTextSize="@dimen/_1ssp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/asr_tv" />
 
-                    <TextView
-                        android:id="@+id/asr_am"
-                        style="@style/lightText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.asrTimeFormatter.second}"
-                        android:textColor="@{model.nextPrayerId==4? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
-                        android:textSize="@dimen/_9ssp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/asr_time"
-                        app:layout_constraintTop_toBottomOf="@id/asr_tv" />
 
 
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_32sdp"
                         android:layout_marginTop="@dimen/_9sdp"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
                         android:src="@{model.nextPrayerId==4? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_asr_selected): context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_asr)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -396,8 +398,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@{model.nextPrayerId==5? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg): model.clickedPrayerId==5?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked):context.getColor(com.crazyidea.alsalah.R.color.white)}"
-                    android:gravity="center"
-                    android:padding="@dimen/_8sdp">
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/maghrib_tv"
@@ -405,6 +406,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
                         android:text="@string/maghrib"
                         android:textColor="@{model.nextPrayerId==5? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
                         app:autoSizeMaxTextSize="@dimen/_18ssp"
@@ -418,25 +422,20 @@
                     <TextView
                         android:id="@+id/maghrib_time"
                         style="@style/boldText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{model.maghribTimeFormatter.first}"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:text="@{model.maghribTimeFormatter.first + model.maghribTimeFormatter.second}"
                         android:textColor="@{model.nextPrayerId==5? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
                         android:textSize="@dimen/_10ssp"
-                        app:layout_constraintEnd_toStartOf="@+id/maghrib_am"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/maghrib_tv" />
-
-                    <TextView
-                        android:id="@+id/maghrib_am"
-                        style="@style/lightText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.maghribTimeFormatter.second}"
-                        android:textColor="@{model.nextPrayerId==5? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
-                        android:textSize="@dimen/_9ssp"
+                        app:autoSizeMinTextSize="@dimen/_1ssp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/maghrib_time"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/maghrib_tv" />
 
 
@@ -444,6 +443,9 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_32sdp"
                         android:layout_marginTop="@dimen/_9sdp"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
                         android:src="@{model.nextPrayerId==5? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_maghrib_selected): context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_maghrib)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -476,7 +478,7 @@
                     android:background="@{model.nextPrayerId==6? context.getColor(com.crazyidea.alsalah.R.color.next_prayer_bg):model.clickedPrayerId==6?context.getColor(com.crazyidea.alsalah.R.color.next_green_clicked): context.getColor(com.crazyidea.alsalah.R.color.white)}"
                     android:gravity="center"
                     android:onClick="@{()->model.clickPrayer((6))}"
-                    android:padding="@dimen/_8sdp">
+                    >
 
                     <TextView
                         android:id="@+id/eshaa_tv"
@@ -484,6 +486,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_30sdp"
                         android:lines="1"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
                         android:text="@string/eshaa"
                         android:textColor="@{model.nextPrayerId==6? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.text_color)}"
 
@@ -498,25 +503,20 @@
                     <TextView
                         android:id="@+id/eshaa_time"
                         style="@style/boldText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{model.ishaTimeFormatter.first}"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:text="@{model.ishaTimeFormatter.first + model.ishaTimeFormatter.second}"
                         android:textColor="@{model.nextPrayerId==6? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
                         android:textSize="@dimen/_10ssp"
-                        app:layout_constraintEnd_toStartOf="@+id/eshaa_am"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/eshaa_tv" />
-
-                    <TextView
-                        android:id="@+id/eshaa_am"
-                        style="@style/lightText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{model.ishaTimeFormatter.second}"
-                        android:textColor="@{model.nextPrayerId==6? context.getColor(com.crazyidea.alsalah.R.color.white): context.getColor(com.crazyidea.alsalah.R.color.light_green)}"
-                        android:textSize="@dimen/_9ssp"
+                        app:autoSizeMinTextSize="@dimen/_1ssp"
+                        app:autoSizeStepGranularity="1sp"
+                        app:autoSizeTextType="uniform"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/eshaa_time"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/eshaa_tv" />
 
 
@@ -524,6 +524,9 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_32sdp"
                         android:layout_marginTop="@dimen/_9sdp"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
                         android:src="@{model.nextPrayerId==6? context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_ishaa_selected): context.getDrawable(com.crazyidea.alsalah.R.drawable.ic_ishaa)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -786,11 +789,11 @@
                             style="@style/mediumText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:mainKhatmaType="@{(model.khatma)}"
                             android:textColor="?attr/colorPrimary"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/khatma_name" />
+                            app:layout_constraintTop_toBottomOf="@id/khatma_name"
+                            app:mainKhatmaType="@{(model.khatma)}" />
 
                         <TextView
                             android:id="@+id/finish_in"
@@ -801,15 +804,15 @@
                             android:layout_marginTop="@dimen/_16sdp"
                             android:layout_marginEnd="@dimen/_8sdp"
                             android:background="@drawable/tab_layout_bg"
-                            android:paddingStart="@dimen/_8sdp"
                             android:includeFontPadding="false"
+                            android:paddingStart="@dimen/_8sdp"
                             android:paddingEnd="@dimen/_8sdp"
                             android:paddingBottom="@dimen/_1sdp"
-                            app:setupMainKhatmaRemaining="@{(model.khatma)}"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toStartOf="@id/amount"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/purpose" />
+                            app:layout_constraintTop_toBottomOf="@id/purpose"
+                            app:setupMainKhatmaRemaining="@{(model.khatma)}" />
 
                         <TextView
                             android:id="@+id/amount"
@@ -820,15 +823,15 @@
                             android:layout_marginTop="@dimen/_16sdp"
                             android:layout_marginEnd="@dimen/_16sdp"
                             android:background="@drawable/tab_layout_bg"
+                            android:includeFontPadding="false"
                             android:paddingStart="@dimen/_8sdp"
                             android:paddingEnd="@dimen/_8sdp"
-                            android:includeFontPadding="false"
                             android:paddingBottom="@dimen/_1sdp"
-                            app:setupMainKhatmaSteps="@{(model.khatma)}"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/finish_in"
-                            app:layout_constraintTop_toBottomOf="@id/purpose" />
+                            app:layout_constraintTop_toBottomOf="@id/purpose"
+                            app:setupMainKhatmaSteps="@{(model.khatma)}" />
 
                         <TextView
                             android:id="@+id/surah"
@@ -836,12 +839,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
-                            app:setupAyah="@{(model.ayah)}"
                             android:textColor="?attr/colorPrimary"
                             android:textSize="@dimen/_14ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/amount" />
+                            app:layout_constraintTop_toBottomOf="@id/amount"
+                            app:setupAyah="@{(model.ayah)}" />
 
                         <TextView
                             android:id="@+id/ayah"
@@ -851,12 +854,12 @@
                             android:layout_marginStart="@dimen/_16sdp"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:layout_marginEnd="@dimen/_16sdp"
+                            android:ellipsize="end"
+                            android:maxLines="3"
+                            android:text="@{model.ayah.text}"
                             android:textAlignment="center"
                             android:textColor="@color/inverted_text_color"
                             android:textSize="@dimen/_20ssp"
-                            android:maxLines="3"
-                            android:ellipsize="end"
-                            android:text="@{model.ayah.text}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/surah" />
@@ -911,10 +914,10 @@
                     android:background="@drawable/circle_shape"
                     android:indeterminate="false"
                     android:progressDrawable="@drawable/gradiant_progress"
-                    app:setupKhatmaProgress="@{(model.khatma)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setupKhatmaProgress="@{(model.khatma)}" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline"

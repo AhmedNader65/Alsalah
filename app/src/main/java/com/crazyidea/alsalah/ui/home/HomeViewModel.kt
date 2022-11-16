@@ -361,42 +361,38 @@ class HomeViewModel @Inject constructor(
                 nextPrayerId.value = 1
                 var diff = 30000L
                 var basePrayerForNext = fajrDate
-                if (currentDate.after(fajrDate)) {
+                if (currentDate.after(fajrDate) && currentDate.before(shorokDate)) {
                     nextPrayerId.value = 2
                     nextPrayer.value = Pair("الشروق", "")
                     diff = (shorokDate.time - currentDate.time)
                     basePrayerForNext = shorokDate
-                }
-                if (currentDate.after(shorokDate)) {
+                }else if (currentDate.after(shorokDate) && currentDate.before(zuhrDate)) {
                     nextPrayerId.value = 3
                     nextPrayer.value = Pair("الظهر", "")
                     diff = (zuhrDate.time - currentDate.time)
                     basePrayerForNext = zuhrDate
-                }
-                if (currentDate.after(zuhrDate)) {
+                }else if (currentDate.after(zuhrDate) && currentDate.before(asrDate)) {
                     nextPrayerId.value = 4
                     nextPrayer.value = Pair("العصر", "")
                     diff = (asrDate.time - currentDate.time)
                     basePrayerForNext = asrDate
-                }
-                if (currentDate.after(asrDate)) {
+                }else if (currentDate.after(asrDate) && currentDate.before(maghribDate)) {
                     nextPrayerId.value = 5
                     nextPrayer.value = Pair("المغرب", "")
                     diff = (maghribDate.time - currentDate.time)
                     basePrayerForNext = maghribDate
-                }
-                if (currentDate.after(maghribDate)) {
+                }else if (currentDate.after(maghribDate) && currentDate.before(ishaDate)) {
                     nextPrayer.value = Pair("العشاء", "")
                     nextPrayerId.value = 6
                     diff = (ishaDate.time - currentDate.time)
                     basePrayerForNext = ishaDate
-                }
-                if (currentDate.after(ishaDate)) {
+                }else  {
+                    650
                     nextPrayerId.value = 1
                     nextPrayer.value = Pair("الفجر", "")
-                    diff = (zuhrDate.time - fajrDate.time)
+                    diff = (fajrDate.time - currentDate.time)
                     basePrayerForNext = fajrDate
-                }
+                } //
                 object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val d = Date(millisUntilFinished)

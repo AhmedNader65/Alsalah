@@ -24,6 +24,7 @@ object AzanSettings{
     val BEFORE_PRAYER_REMINDER = booleanPreferencesKey("before-prayer-reminder")
     val BEFORE_PRAYER_REMINDER_PERIOD = intPreferencesKey("before-prayer-period")
     val IQAMA_NOTIFICATION = booleanPreferencesKey("iqama_notification")
+    val WAS_SILENT = booleanPreferencesKey("was_silent")
     val AZAN_NOTIFICATION = booleanPreferencesKey("azan")
 
 }

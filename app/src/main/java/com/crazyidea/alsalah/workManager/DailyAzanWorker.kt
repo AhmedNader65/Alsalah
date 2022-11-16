@@ -175,7 +175,7 @@ class DailyAzanWorker @AssistedInject constructor(
             daySt,
             month.toString()
         )
-        val type = "salah"
+        var type = "salah"
         val timings = prayers.timing
         val fajrTime = timings.Fajr.split(":")
         calendar.set(Calendar.HOUR_OF_DAY, fajrTime[0].toInt())
@@ -184,8 +184,7 @@ class DailyAzanWorker @AssistedInject constructor(
 
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "fajr", calendar.timeInMillis)
-            calendar.timeInMillis =
-                calendar.timeInMillis - beforePrayerPeriod
+            calendar.timeInMillis -= beforePrayerPeriod
             if (calendar.after(currentDate))
                 setAlarm(
                     applicationContext,
@@ -193,8 +192,7 @@ class DailyAzanWorker @AssistedInject constructor(
                     "fajr",
                     calendar.timeInMillis
                 )
-            calendar.timeInMillis =
-                calendar.timeInMillis + beforePrayerPeriod
+            calendar.timeInMillis += beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",
@@ -209,17 +207,15 @@ class DailyAzanWorker @AssistedInject constructor(
 
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "zuhr", calendar.timeInMillis)
-            calendar.timeInMillis =
-                calendar.timeInMillis - beforePrayerPeriod
+            calendar.timeInMillis -= beforePrayerPeriod
             if (calendar.after(currentDate))
-            setAlarm(
-                applicationContext,
-                "before_prayer",
-                "zuhr",
-                calendar.timeInMillis - beforePrayerPeriod
-            )
-            calendar.timeInMillis =
-                calendar.timeInMillis + beforePrayerPeriod
+                setAlarm(
+                    applicationContext,
+                    "before_prayer",
+                    "zuhr",
+                    calendar.timeInMillis
+                )
+            calendar.timeInMillis += beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",
@@ -233,17 +229,15 @@ class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.SECOND, 0)
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "asr", calendar.timeInMillis)
-            calendar.timeInMillis =
-                calendar.timeInMillis - beforePrayerPeriod
+            calendar.timeInMillis -= beforePrayerPeriod
             if (calendar.after(currentDate))
-            setAlarm(
-                applicationContext,
-                "before_prayer",
-                "asr",
-                calendar.timeInMillis - beforePrayerPeriod
-            )
-            calendar.timeInMillis =
-                calendar.timeInMillis + beforePrayerPeriod
+                setAlarm(
+                    applicationContext,
+                    "before_prayer",
+                    "asr",
+                    calendar.timeInMillis
+                )
+            calendar.timeInMillis += beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",
@@ -257,17 +251,15 @@ class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.SECOND, 0)
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "maghrib", calendar.timeInMillis)
-            calendar.timeInMillis =
-                calendar.timeInMillis - beforePrayerPeriod
+            calendar.timeInMillis -= beforePrayerPeriod
             if (calendar.after(currentDate))
-            setAlarm(
-                applicationContext,
-                "before_prayer",
-                "maghrib",
-                calendar.timeInMillis - beforePrayerPeriod
-            )
-            calendar.timeInMillis =
-                calendar.timeInMillis + beforePrayerPeriod
+                setAlarm(
+                    applicationContext,
+                    "before_prayer",
+                    "maghrib",
+                    calendar.timeInMillis
+                )
+            calendar.timeInMillis += beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",
@@ -281,23 +273,40 @@ class DailyAzanWorker @AssistedInject constructor(
         calendar.set(Calendar.SECOND, 0)
         if (calendar.after(currentDate)) {
             setAlarm(applicationContext, type, "isha", calendar.timeInMillis)
-            calendar.timeInMillis =
-                calendar.timeInMillis - beforePrayerPeriod
+            calendar.timeInMillis -= beforePrayerPeriod
+
             if (calendar.after(currentDate))
-            setAlarm(
-                applicationContext,
-                "before_prayer",
-                "isha",
-                calendar.timeInMillis - beforePrayerPeriod
-            )
-            calendar.timeInMillis =
-                calendar.timeInMillis + beforePrayerPeriod
+                setAlarm(
+                    applicationContext,
+                    "before_prayer",
+                    "isha",
+                    calendar.timeInMillis
+                )
+            calendar.timeInMillis += beforePrayerPeriod
             setAlarm(
                 applicationContext,
                 "iqama",
                 "isha",
                 calendar.timeInMillis + (10 * 60000)
             )
+        }
+
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+            type = "friday"
+            calendar.set(Calendar.HOUR_OF_DAY, 6)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            if (calendar.after(currentDate)) {
+                setAlarm(applicationContext, type, "friday1", calendar.timeInMillis)
+            }
+            calendar.set(Calendar.HOUR_OF_DAY, 9)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            while (calendar.before(currentDate))
+                calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 3)
+
+            setAlarm(applicationContext, type, "friday2", calendar.timeInMillis, repeatable = true)
+
         }
 
     }
